@@ -22,6 +22,7 @@
     "check:banned-phrases": "node scripts/check-banned-phrases.cjs",
     "check:glyphs": "node scripts/check-glyph-render.mjs",
     "test:acceptance": "node scripts/test-acceptance.mjs",
+    "verify:scenarios": "tsx scripts/verify-scenarios-e2e.ts",
     "hooks:install": "node -e \"console.log('Git hooks verified')\""
   },
   "devDependencies": {

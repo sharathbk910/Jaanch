@@ -127,6 +127,27 @@ export interface TranslationDictionary {
     consentAiSub: string;
     consentShare: string;
     consentShareSub: string;
+    consentHistory: string;
+    consentHistorySub: string;
+    channelLabel: string;
+    channels: {
+      email: string;
+      whatsapp: string;
+      telegram: string;
+      sms: string;
+      linkedin: string;
+      website: string;
+      other: string;
+    };
+    claimedOrgLabel: string;
+    claimedOrgPlaceholder: string;
+    redactionPreviewTitle: string;
+    redactionPreviewSub: string;
+    redactionPreviewCount: string;
+    redactionPreviewZero: string;
+    ocrLanguageLabel: string;
+    ocrCancelBtn: string;
+    ocrScannedPdfNotice: string;
     privacyNotice: string;
     dropzoneTitle: string;
     dropzoneSub: string;
@@ -349,6 +370,27 @@ export const translations: Record<'en' | 'hi' | 'kn', TranslationDictionary> = {
       consentAiSub: 'Runs secondary linguistic nuance evaluation with personal details redacted client-side.',
       consentShare: 'Contribute Anonymous Threat Indicators',
       consentShareSub: 'Shares non-PII salted cryptographic hashes of scam phone numbers, domains, or UPI IDs to warn other students.',
+      consentHistory: 'Save Audit to Private History',
+      consentHistorySub: 'Saves your audit in your personal dashboard for later review (requires login).',
+      channelLabel: 'Communication Channel',
+      channels: {
+        email: 'Email',
+        whatsapp: 'WhatsApp',
+        telegram: 'Telegram',
+        sms: 'SMS / Text Message',
+        linkedin: 'LinkedIn / Social Media',
+        website: 'Job Board / Website',
+        other: 'Other Channel',
+      },
+      claimedOrgLabel: 'Claimed Organization',
+      claimedOrgPlaceholder: 'Select or type organization name (e.g. TCS, Infosys, AICTE)...',
+      redactionPreviewTitle: 'Client Redaction Preview',
+      redactionPreviewSub: 'What will be sent to the server. Your raw personal identifiers are masked locally before transmission.',
+      redactionPreviewCount: 'personal details redacted client-side (phones, Aadhaar, handles)',
+      redactionPreviewZero: 'No personal PII detected in message body',
+      ocrLanguageLabel: 'OCR Document Language',
+      ocrCancelBtn: 'Cancel OCR',
+      ocrScannedPdfNotice: 'Scanned image-only PDF detected. Extracted text using local OCR fallback.',
       privacyNotice: 'Privacy Guarantee: All text is sanitized and all personal information (names, phones, emails, Aadhaar) is redacted before evaluation. Uploaded documents are read strictly in your browser and never sent to a server.',
       dropzoneTitle: 'Drop your PDF or TXT offer document here',
       dropzoneSub: 'or click to browse your device',
@@ -569,6 +611,27 @@ export const translations: Record<'en' | 'hi' | 'kn', TranslationDictionary> = {
       consentAiSub: 'निजी जानकारी हटाने के बाद भाषा विश्लेषण की अनुमति दें।',
       consentShare: 'अज्ञात धोखाधड़ी संकेतक साझा करें',
       consentShareSub: 'अन्य छात्रों की सुरक्षा के लिए केवल फ़ोन या डोमेन का कूटबद्ध हैश साझा करें।',
+      consentHistory: 'ऑडिट को निजी इतिहास में सहेजें',
+      consentHistorySub: 'बाद में देखने के लिए आपके व्यक्तिगत डैशबोर्ड में ऑडिट सहेजता है (लॉगिन आवश्यक)।',
+      channelLabel: 'संचार माध्यम',
+      channels: {
+        email: 'ईमेल',
+        whatsapp: 'व्हाट्सएप',
+        telegram: 'टेलीग्राम',
+        sms: 'एसएमएस / संदेश',
+        linkedin: 'लिंक्डइन / सोशल मीडिया',
+        website: 'जॉब पोर्टल / वेबसाइट',
+        other: 'अन्य माध्यम',
+      },
+      claimedOrgLabel: 'दावा किया गया संगठन',
+      claimedOrgPlaceholder: 'संगठन का नाम चुनें या लिखें (उदा. टीसीएस, इन्फोसिस, एआईसीटीई)...',
+      redactionPreviewTitle: 'क्लाइंट रिडेक्शन पूर्वावलोकन',
+      redactionPreviewSub: 'सर्वर को क्या भेजा जाएगा। आपके व्यक्तिगत विवरण भेजने से पहले ब्राउज़र में सुरक्षित किए जाते हैं।',
+      redactionPreviewCount: 'व्यक्तिगत विवरण ब्राउज़र में सुरक्षित किए गए (फ़ोन, आधार, यूपीआई)',
+      redactionPreviewZero: 'संदेश में कोई संवेदनशील व्यक्तिगत विवरण नहीं मिला',
+      ocrLanguageLabel: 'दस्तावेज़ की भाषा (OCR)',
+      ocrCancelBtn: 'OCR रद्द करें',
+      ocrScannedPdfNotice: 'स्कैन किया गया पीडीएफ मिला। स्थानीय ओसीआर द्वारा टेक्स्ट निकाला गया।',
       privacyNotice: 'गोपनीयता सुरक्षा: विश्लेषण से पहले सभी व्यक्तिगत जानकारी (नाम, फोन, आधार) हटा दी जाती है। दस्तावेज़ केवल आपके ब्राउज़र में पढ़े जाते हैं और सर्वर पर कभी नहीं भेजे जाते।',
       dropzoneTitle: 'अपनी PDF या TXT फ़ाइल यहाँ छोड़ें',
       dropzoneSub: 'या अपने डिवाइस से चुनने के लिए क्लिक करें',
@@ -789,6 +852,27 @@ export const translations: Record<'en' | 'hi' | 'kn', TranslationDictionary> = {
       consentAiSub: 'ವೈಯಕ್ತಿಕ ವಿವರಗಳನ್ನು ತೆಗೆದುಹಾಕಿದ ನಂತರ ಭಾಷಾ ವಿಶ್ಲೇಷಣೆ ನಡೆಸಲಾಗುತ್ತದೆ.',
       consentShare: 'ಅನಾಮಧೇಯ ವಂಚನೆ ಸಂಕೇತಗಳನ್ನು ನೀಡಿ',
       consentShareSub: 'ಇತರ ವಿದ್ಯಾರ್ಥಿಗಳನ್ನು ಎಚ್ಚರಿಸಲು ವಂಚನೆ ಫೋನ್ ಅಥವಾ ಡೊಮೇನ್ ಹ್ಯಾಶ್ ಮಾತ್ರ ಹಂಚಿಕೊಳ್ಳಿ.',
+      consentHistory: 'ಆಡಿಟ್ ಅನ್ನು ಖಾಸಗಿ ಇತಿಹಾಸದಲ್ಲಿ ಉಳಿಸಿ',
+      consentHistorySub: 'ನಂತರದ ಪರಿಶೀಲನೆಗಾಗಿ ನಿಮ್ಮ ವೈಯಕ್ತಿಕ ಡ್ಯಾಶ್ಬೋರ್ಡ್ನಲ್ಲಿ ಆಡಿಟ್ ಉಳಿಸುತ್ತದೆ (ಲಾಗಿನ್ ಅಗತ್ಯವಿದೆ).',
+      channelLabel: 'ಸಂವಹನ ಮಾಧ್ಯಮ',
+      channels: {
+        email: 'ಇಮೇಲ್',
+        whatsapp: 'ವಾಟ್ಸಾಪ್',
+        telegram: 'ಟೆಲಿಗ್ರಾಂ',
+        sms: 'ಎಸ್ಎಂಎಸ್ / ಸಂದೇಶ',
+        linkedin: 'ಲಿಂಕ್ಡ್ಇನ್ / ಸಾಮಾಜಿಕ ಮಾಧ್ಯಮ',
+        website: 'ಉದ್ಯೋಗ ಪೋರ್ಟಲ್ / ವೆಬ್ಸೈಟ್',
+        other: 'ಇತರ ಮಾಧ್ಯಮ',
+      },
+      claimedOrgLabel: 'ಘೋಷಿಸಿದ ಸಂಸ್ಥೆ',
+      claimedOrgPlaceholder: 'ಸಂಸ್ಥೆಯ ಹೆಸರನ್ನು ಆಯ್ಕೆಮಾಡಿ ಅಥವಾ ನಮೂದಿಸಿ (ಉದಾ. ಟಿಸಿಎಸ್, ಇನ್ಫೋಸಿಸ್)...',
+      redactionPreviewTitle: 'ಕ್ಲೈಂಟ್ ಮರೆಮಾಚುವಿಕೆ ಪೂರ್ವವೀಕ್ಷಣೆ',
+      redactionPreviewSub: 'ಸರ್ವರ್ಗೆ ಏನನ್ನು ಕಳುಹಿಸಲಾಗುತ್ತದೆ. ನಿಮ್ಮ ವೈಯಕ್ತಿಕ ವಿವರಗಳನ್ನು ಕಳುಹಿಸುವ ಮೊದಲು ಮರೆಮಾಡಲಾಗುತ್ತದೆ.',
+      redactionPreviewCount: 'ವೈಯಕ್ತಿಕ ವಿವರಗಳನ್ನು ಮರೆಮಾಡಲಾಗಿದೆ (ಫೋನ್, ಆಧಾರ್, ಯುಪಿಐ)',
+      redactionPreviewZero: 'ಸಂದೇಶದಲ್ಲಿ ಯಾವುದೇ ಸೂಕ್ಷ್ಮ ವೈಯಕ್ತಿಕ ವಿವರಗಳು ಪತ್ತೆಯಾಗಿಲ್ಲ',
+      ocrLanguageLabel: 'ದಾಖಲೆಯ ಭಾಷೆ (OCR)',
+      ocrCancelBtn: 'OCR ರದ್ದುಮಾಡಿ',
+      ocrScannedPdfNotice: 'ಸ್ಕ್ಯಾನ್ ಮಾಡಿದ ಪಿಡಿಎಫ್ ಕಂಡುಬಂದಿದೆ. ಸ್ಥಳೀಯ ಓಸಿಆರ್ ಮೂಲಕ ಪಠ್ಯವನ್ನು ಹೊರತೆಗೆಯಲಾಗಿದೆ.',
       privacyNotice: 'ಗೌಪ್ಯತೆ ಗ್ಯಾರಂಟಿ: ವಿಶ್ಲೇಷಣೆಗೆ ಮುನ್ನ ಎಲ್ಲಾ ವೈಯಕ್ತಿಕ ವಿವರಗಳನ್ನು (ಹೆಸರು, ಫೋನ್, ಆಧಾರ್) ರಕ್ಷಿಸಲಾಗುತ್ತದೆ. ದಾಖಲೆಗಳನ್ನು ನಿಮ್ಮ ಬ್ರೌಸರ್‌ನಲ್ಲೇ ಓದಲಾಗುತ್ತದೆ ಮತ್ತು ಎಂದಿಗೂ ಸರ್ವರ್‌ಗೆ ಕಳುಹಿಸುವುದಿಲ್ಲ.',
       dropzoneTitle: 'ನಿಮ್ಮ PDF ಅಥವಾ TXT ಫೈಲ್ ಇಲ್ಲಿ ಡ್ರಾಪ್ ಮಾಡಿ',
       dropzoneSub: 'ಅಥವಾ ಆಯ್ಕೆ ಮಾಡಲು ಕ್ಲಿಕ್ ಮಾಡಿ',

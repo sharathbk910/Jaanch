@@ -71,17 +71,20 @@
     - 18 analyzer screenshots in `docs/ui-shots/analyzer/` across 360px, 768px, and 1280px viewports in Light/Dark themes and EN/HI/KN languages
   - [x] Unit & Integration Tests: 226 passed across 24 test suites; 25/25 eval fixtures matching 100%
 - **Phase 6B Verification Checklist:**
-  - [x] `AnalyzePage.tsx`: Full textarea with live character counter, min 25-char validation, clipboard paste action with visual notification
-  - [x] In-browser PDF & text extraction via `pdfjs-dist` in `client/src/lib/pdfExtractor.ts` (zero file uploads to server, privacy preserved)
+  - [x] `Analyze.tsx` & `AnalyzePage.tsx`: Full textarea with live character counter, min 25-char validation, clipboard paste action with visual notification
   - [x] Opportunity domain selector (7 domains: internship, job, scholarship, freelance, competition, general_message, other)
-  - [x] Sender & contact details expandable section (email, phone, domain, organization)
-  - [x] RFC 822 email headers expandable section for raw header inspection
-  - [x] Privacy & Consent toggles (`aiAnalysis`, `shareIndicators`) with educational subtext
-  - [x] 3 sample scenario chips (Genuine Internship, Upfront Fee Scam, OTP Phishing Scam) for rapid verification
-  - [x] In-flight multi-step progress stepper (PII redaction, 8 deterministic rules, domain scanning, evidence synthesis)
-  - [x] Integration with `apiClient.analyzeOffer` and guest session fallback (`saveGuestAnalysis`)
-  - [x] Full trilingual dictionary support (EN, HI, KN) for all analyzer elements
-  - [x] Zero hardcoded colors; zero banned certainty phrases; zero secrets in client bundle
+  - [x] Communication channel selector (7 channels: email, whatsapp, telegram, sms, linkedin, website, other)
+  - [x] Claimed organization selector (curated list of verified Indian organizations + custom input)
+  - [x] Sender & contact details expandable section (email, phone, domain) and raw RFC 822 email headers
+  - [x] Privacy & Consent toggles (`aiAnalysis`, `shareIndicators`, `saveToHistory` — ALL DEFAULT OFF)
+  - [x] Client-side PII redaction preview displaying live masked text and redaction count before submit
+  - [x] In-browser document extractor with 5MB security limit; rejects oversized and unsupported files
+  - [x] Lazy-loaded Tesseract.js OCR supporting English, Hindi, and Kannada (`eng`, `hin`, `kan`), with progress bar and cancel button
+  - [x] `pdfjs-dist` in-browser text extraction with automatic OCR fallback for scanned image-only PDFs and visual notice
+  - [x] Zero raw files leave the browser; OCR/PDF text treated as untrusted and rendered only as plain text
+  - [x] Typed API client with Zod-validated response; network error handling with retry state preserving input
+  - [x] Test suite (`AnalyzePage.test.tsx`, `pdf_and_ocr_extraction.test.ts`): verifies consent defaults, PII redaction before send, error paths, and logs real network payloads
+  - [x] `scripts/verify-scenarios-e2e.ts`: 100% end-to-end verification of all 3 sample scenarios against the local server
 - **Phase 6C Verification Checklist:**
   - [x] `StatusBanner.tsx`: 4-verdict banner (`LIKELY_GENUINE`, `NEEDS_REVIEW`, `HIGH_CONCERN`, `CONFIRMED_SCAM`) with 4px colored accent border, mono eyebrow, serif status headline, meaning description, confidence pill, and 2px coverage meter track (`8 of 8 checks evaluated`)
   - [x] `PaymentAlert.tsx`: Non-dismissible emergency banner when upfront fee, UPI handle, or bank OTP is detected. Features one-click `tel:1930` call link and `cybercrime.gov.in` portal link

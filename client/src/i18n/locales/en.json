@@ -97,7 +97,27 @@
     "progressStep3": "Analyzing URLs, punycode & lookalike domains...",
     "progressStep4": "Synthesizing transparent evidence assessment...",
     "pasteClipboard": "Paste from Clipboard",
-    "copiedNotice": "Pasted from clipboard"
+    "copiedNotice": "Pasted from clipboard",
+    "consentHistory": "Save Audit to Private History",
+    "consentHistorySub": "Saves your audit in your personal dashboard for later review (requires login).",
+    "channelLabel": "Communication Channel",
+    "channels": {
+      "email": "Email",
+      "whatsapp": "WhatsApp",
+      "telegram": "Telegram",
+      "sms": "SMS / Text Message",
+      "linkedin": "LinkedIn / Social Media",
+      "website": "Job Board / Website",
+      "other": "Other Channel"
+    },
+    "claimedOrgLabel": "Claimed Organization",
+    "claimedOrgPlaceholder": "Select or type organization name (e.g. TCS, Infosys, AICTE)...",
+    "redactionPreviewTitle": "Client Redaction Preview",
+    "redactionPreviewSub": "What will be sent to the server. Your raw personal identifiers are masked locally before transmission.",
+    "redactionPreviewCount": "personal details redacted client-side (phones, Aadhaar, handles)",
+    "redactionPreviewZero": "No personal PII detected in message body",
+    "ocrLanguageLabel": "OCR Document Language",
+    "ocrCancelBtn": "Cancel OCR",
+    "ocrScannedPdfNotice": "Scanned image-only PDF detected. Extracted text using local OCR fallback."
   }
 }
-

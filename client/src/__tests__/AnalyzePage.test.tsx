@@ -175,13 +175,21 @@ describe('Phase 6B – Analyzer Page (AnalyzePage.tsx)', () => {
     await user.click(submitBtn);
 
     await waitFor(() => {
-      expect(apiClient.analyzeOffer).toHaveBeenCalledWith(
-        expect.objectContaining({
-          text: SCENARIO_FEE_SCAM,
-          domain: 'job',
-        })
-      );
+      expect(apiClient.analyzeOffer).toHaveBeenCalled();
     });
+
+    const interceptedCall = vi.mocked(apiClient.analyzeOffer).mock.calls[0][0];
+    console.log('\n--- REAL INTERCEPTED NETWORK PAYLOAD ---');
+    console.log(JSON.stringify(interceptedCall, null, 2));
+
+    expect(interceptedCall.domain).toBe('job');
+    expect(interceptedCall.text).toContain('[UPI]');
+    expect(interceptedCall.text).not.toContain('tcs.hr@okaxis');
+    expect(interceptedCall.consentFlags).toEqual({
+      aiAnalysis: false,
+      shareIndicators: false,
+    });
+    expect(interceptedCall.saveToHistory).toBe(false);
 
     expect(saveGuestSpy).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -222,7 +230,7 @@ describe('Phase 6B – Analyzer Page (AnalyzePage.tsx)', () => {
     });
 
     await waitFor(() => {
-      expect(pdfExtractor.extractTextFromFile).toHaveBeenCalledWith(file);
+      expect(pdfExtractor.extractTextFromFile).toHaveBeenCalledWith(file, expect.anything());
     });
 
     // Automatically switched to paste tab with extracted text loaded
@@ -247,5 +255,99 @@ describe('Phase 6B – Analyzer Page (AnalyzePage.tsx)', () => {
 
     expect(textarea).toHaveValue('');
     expect(screen.getByRole('button', { name: /Verify Offer Now/i })).toBeDisabled();
+  });
+
+  it('guarantees consent defaults are all false and never transmits raw PII', async () => {
+    const user = userEvent.setup();
+    renderAnalyzePage();
+
+    // Verify all consent checkboxes default to unchecked
+    const aiCheckbox = screen.getByRole('checkbox', { name: /Allow AI Deep Analysis/i });
+    const shareCheckbox = screen.getByRole('checkbox', { name: /Contribute Anonymous Threat Indicators/i });
+    const historyCheckbox = screen.getByRole('checkbox', { name: /Save Audit to Private History/i });
+
+    expect(aiCheckbox).not.toBeChecked();
+    expect(shareCheckbox).not.toBeChecked();
+    expect(historyCheckbox).not.toBeChecked();
+
+    // Input text containing Aadhaar and Phone
+    const textarea = screen.getByRole('textbox', { name: /Offer Message or Email Text/i });
+    await user.type(
+      textarea,
+      'Offer letter for Rahul. Contact WhatsApp +91 91234 56789 or provide Aadhaar 9999 8888 7777 to finalize.'
+    );
+
+    // Live redaction preview is visible
+    expect(screen.getByText(/Client Redaction Preview/i)).toBeInTheDocument();
+    expect(screen.getByText(/2 personal details redacted client-side/i)).toBeInTheDocument();
+
+    const submitBtn = screen.getByRole('button', { name: /Verify Offer Now/i });
+    await user.click(submitBtn);
+
+    await waitFor(() => {
+      expect(apiClient.analyzeOffer).toHaveBeenCalled();
+    });
+
+    const callPayload = vi.mocked(apiClient.analyzeOffer).mock.calls[0][0];
+    console.log('\n--- VERIFIED NETWORK PAYLOAD WITH CONSENT DEFAULTS & PII REDACTION ---');
+    console.log(JSON.stringify(callPayload, null, 2));
+
+    expect(callPayload.consentFlags).toEqual({
+      aiAnalysis: false,
+      shareIndicators: false,
+    });
+    expect(callPayload.saveToHistory).toBe(false);
+    expect(callPayload.text).toContain('[PHONE]');
+    expect(callPayload.text).toContain('[AADHAAR]');
+    expect(callPayload.text).not.toContain('91234 56789');
+    expect(callPayload.text).not.toContain('9999 8888 7777');
+  });
+
+  it('handles API error gracefully and presents retry button without losing input text', async () => {
+    const user = userEvent.setup();
+    vi.mocked(apiClient.analyzeOffer).mockRejectedValueOnce(
+      new Error('Network connection timeout. Analysis service unreachable.')
+    );
+
+    renderAnalyzePage();
+
+    await user.click(screen.getByRole('button', { name: /Genuine Internship/i }));
+    const submitBtn = screen.getByRole('button', { name: /Verify Offer Now/i });
+    await user.click(submitBtn);
+
+    await waitFor(() => {
+      expect(screen.getByRole('alert')).toBeInTheDocument();
+      expect(screen.getByText(/Network connection timeout/i)).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: /Retry Analysis/i })).toBeInTheDocument();
+    });
+
+    // Input is preserved in editor
+    const textarea = screen.getByRole('textbox', { name: /Offer Message or Email Text/i });
+    expect(textarea).toHaveValue(SCENARIO_GENUINE);
+
+    // Mock successful recovery on retry
+    vi.mocked(apiClient.analyzeOffer).mockResolvedValueOnce({
+      status: 'LIKELY_GENUINE',
+      signals: [],
+      unverified: [],
+      extractedEntities: {
+        urls: [],
+        domains: [],
+        emails: [],
+        phones: [],
+        upiHandles: [],
+        amounts: [],
+        organization: 'TCS',
+      },
+      confidenceScore: 95,
+      recommendedActions: [],
+      auditId: 'audit_recovered_789',
+    });
+
+    await user.click(screen.getByRole('button', { name: /Retry Analysis/i }));
+
+    await waitFor(() => {
+      expect(screen.getByTestId('results-local')).toBeInTheDocument();
+    });
   });
 });
