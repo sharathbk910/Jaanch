@@ -1,0 +1,75 @@
+:root {
+  /* =========================================================================
+     JAANCH EDITORIAL DESIGN TOKENS (Part G Specification)
+     Authority: docs/SPEC_ORIGINAL.md Part G & docs/reference/SPEC_PACK.md Part G
+     Note: Light theme only. No dark mode, no gradients, no shadows.
+     ========================================================================= */
+
+  /* Surface & Background Fills */
+  --bg: #FAF9F5;
+  --surface: #FFFFFF;
+  --btn: #141414;
+  --btn-hover: #2B2B2A;
+  --pill: #1E1E26;
+
+  /* Typography Colors */
+  --text: #141413;
+  --text-body: #57534E;
+  --text-muted: #6B6A66;
+  --placeholder: #767570;
+
+  /* Brand Accents */
+  --accent: #E55A12;
+  --accent-text: #C2410C;
+  --accent-light: #FFF1E6;
+
+  /* Hairlines & Control Borders */
+  --hairline: #E6E5E1;
+  --border-control: #D6D4CD;
+
+  /* Status Colors: 4-Verdict Model (icon + text, never color alone) */
+  --status-likely-genuine-fg: #0F5F5A;
+  --status-likely-genuine-bg: #E7F4F3;
+  --status-likely-genuine-border: #9ED3CF;
+
+  --status-needs-review-fg: #7A4B00;
+  --status-needs-review-bg: #FFF6E0;
+  --status-needs-review-border: #E8C77A;
+
+  --status-high-concern-fg: #9B1C1C;
+  --status-high-concern-bg: #FDEEEE;
+  --status-high-concern-border: #F0B4B4;
+
+  --status-confirmed-scam-fg: #FFFFFF;
+  --status-confirmed-scam-bg: #7F1D1D;
+  --status-confirmed-scam-border: #7F1D1D;
+
+  /* Outcome Chips */
+  --outcome-pass-fg: #14532D;
+  --outcome-pass-bg: #EAF6EE;
+  --outcome-pass-border: #A7D7B3;
+
+  --outcome-fail-fg: #9B1C1C;
+  --outcome-fail-bg: #FDEEEE;
+  --outcome-fail-border: #F0B4B4;
+
+  --outcome-unknown-fg: #7A4B00;
+  --outcome-unknown-bg: #FFF6E0;
+  --outcome-unknown-border: #E8C77A;
+
+  --outcome-neutral-fg: #6B6A66;
+  --outcome-neutral-bg: #FAF9F5;
+  --outcome-neutral-border: #E6E5E1;
+
+  /* Radii */
+  --radius-button: 4px;
+  --radius-card: 6px;
+  --radius-input: 4px;
+  --radius-chip: 3px;
+  --radius-pill: 999px;
+
+  /* Layout Metrics */
+  --header-height: 53px;
+  --container-max: 1024px;
+  --container-analyze: 700px;
+}

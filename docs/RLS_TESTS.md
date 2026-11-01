@@ -146,3 +146,4 @@ SELECT count(*) = 0 AS anon_blocked_from_reading_feedback FROM page_feedback;
 | `scam_reports`     | None | INSERT, SELECT (own) | Blocked |
 | `feedback`         | INSERT | INSERT | Blocked |
 | `page_feedback`    | INSERT | INSERT | Blocked |
+

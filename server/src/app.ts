@@ -13,6 +13,7 @@ import { resourcesRouter } from './routes/resources.js';
 import { feedbackRouter } from './routes/feedback.js';
 import { stubsRouter } from './routes/stubs.js';
 import { historyRouter } from './routes/history.js';
+import { configRouter } from './routes/config.js';
 
 export interface AppOptions {
   enableRateLimiting?: boolean;
@@ -76,6 +77,7 @@ export function createApp(options: AppOptions = {}): Application {
   app.use('/api', feedbackRouter);
   app.use('/api', stubsRouter);
   app.use('/api', historyRouter);
+  app.use('/api', configRouter);
 
   // 9. 404 Handler for unmatched routes
   app.use((req: Request, res: Response) => {
@@ -93,3 +95,4 @@ export function createApp(options: AppOptions = {}): Application {
 
   return app;
 }
+

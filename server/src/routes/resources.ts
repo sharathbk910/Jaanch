@@ -13,3 +13,4 @@ router.get('/resources', (_req: Request, res: Response) => {
 });
 
 export const resourcesRouter = router;
+

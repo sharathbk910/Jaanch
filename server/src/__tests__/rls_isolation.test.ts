@@ -120,3 +120,4 @@ describe('RLS Policies & Role Protection Verification (rls_isolation.test.ts)', 
     });
   });
 });
+

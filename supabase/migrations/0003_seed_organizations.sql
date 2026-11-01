@@ -73,3 +73,4 @@ ON CONFLICT (primary_domain) DO UPDATE SET
   official_portal_url = EXCLUDED.official_portal_url,
   is_verified = EXCLUDED.is_verified,
   needs_team_review = EXCLUDED.needs_team_review;
+

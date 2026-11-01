@@ -1,0 +1,45 @@
+{
+  "nav": {
+    "brand": "JAANCH",
+    "tagline": "Digital Trust & Safety",
+    "checkOffer": "Check Offer",
+    "linkInspector": "Link Inspector",
+    "verificationGuide": "Verification Guide",
+    "about": "About",
+    "login": "Sign In",
+    "signup": "Sign Up",
+    "history": "History",
+    "settings": "Settings",
+    "logout": "Sign Out",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
+  },
+  "footer": {
+    "helplineTitle": "National Cybercrime Reporting Portal",
+    "helplineNumber": "1930",
+    "helplineSub": "Call 1930 immediately if you have transferred money to a fraudulent recruiter.",
+    "govUrl": "cybercrime.gov.in",
+    "tagline": "A non-profit digital safety initiative for Indian students and early-career jobseekers.",
+    "privacy": "Privacy Policy",
+    "about": "About Jaanch",
+    "resources": "Verification Resources"
+  },
+  "feedback": {
+    "pillQuestion": "Was this page helpful?",
+    "yes": "Yes",
+    "no": "No",
+    "thanks": "Thank you for helping keep Indian students safe!"
+  },
+  "skipLink": "Skip to main content",
+  "status": {
+    "likelyGenuine": "Likely Genuine",
+    "needsReview": "Needs Review",
+    "highConcern": "High Concern",
+    "confirmedScam": "Confirmed Scam"
+  },
+  "languages": {
+    "en": "English",
+    "hi": "हिंदी",
+    "kn": "ಕನ್ನಡ"
+  }
+}

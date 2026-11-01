@@ -45,3 +45,4 @@ export const httpLogger = pinoHttp({
     return 'info';
   },
 });
+

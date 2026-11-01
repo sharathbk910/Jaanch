@@ -34,3 +34,4 @@ DROP TYPE IF EXISTS signal_category CASCADE;
 DROP TYPE IF EXISTS risk_level CASCADE;
 DROP TYPE IF EXISTS input_type CASCADE;
 DROP TYPE IF EXISTS opportunity_domain CASCADE;
+

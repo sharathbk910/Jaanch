@@ -20,3 +20,4 @@ export function securityMiddleware(): RequestHandler {
     referrerPolicy: { policy: 'no-referrer' },
   });
 }
+

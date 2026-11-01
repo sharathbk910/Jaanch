@@ -113,3 +113,4 @@ When an indicator is investigated and confirmed fraudulent by a human moderator:
    ```
 3. Run this query in the Supabase SQL editor.
 4. Once elevated to `confirmed`, offers containing this indicator will evaluate to `CONFIRMED_SCAM` via the `check_reported_entities` RPC function.
+

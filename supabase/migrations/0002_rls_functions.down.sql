@@ -13,3 +13,4 @@ DROP FUNCTION IF EXISTS protect_profile_role_update() CASCADE;
 DROP FUNCTION IF EXISTS submit_page_feedback(TEXT, INTEGER, TEXT) CASCADE;
 DROP FUNCTION IF EXISTS submit_scam_report(entity_type, TEXT, channel_type, TEXT) CASCADE;
 DROP FUNCTION IF EXISTS check_reported_entities(TEXT[]) CASCADE;
+

@@ -78,3 +78,4 @@ export const LINK_RISK_LEVELS = {
 } as const;
 
 export type LinkRiskLevel = (typeof LINK_RISK_LEVELS)[keyof typeof LINK_RISK_LEVELS];
+

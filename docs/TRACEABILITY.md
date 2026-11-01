@@ -40,7 +40,7 @@
 | **D2** | Status model (reconciled in Addendum: 4 verdicts `LIKELY_GENUINE, NEEDS_REVIEW, HIGH_CONCERN, CONFIRMED_SCAM`) | P3 | Phase 2 | **DONE** |
 | **D3** | Rule catalog: Negation guards, hard disqualifiers, coverage metric, `none_found` outcome | P3 | Phase 2 | **DONE** |
 | **D4** | Next steps: 3 parts, max 6 manual steps, PDF export (≤ 4 pages, ≥ 75% fill) | P3, P10 | Phase 2, Phase 6C | Pending (Next Steps UI in P6C) |
-| **D5** | UI: Light theme editorial tokens, no dark mode, specified routes | P8 | Phase 5, Phase 6 | Pending |
+| **D5** | UI: Light theme editorial tokens, no dark mode, specified routes | P8 | Phase 5, Phase 6 | **DONE (Foundation & Shell)** |
 | **D6** | Results layout: Single column, mobile section chips, collapsed evidence on mobile | P10 | Phase 6C | Pending |
 | **D7** | Guest flow: `sessionStorage` only, zero server persistence for unauthenticated | P5, P9 | Phase 3, Phase 6B | Pending |
 | **D8** | Safety rules: Safe Reply hidden on High Concern/Scam, "I already paid" defaults OFF | P3, P10 | Phase 2, Phase 6C | Pending |

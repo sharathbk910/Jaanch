@@ -49,3 +49,4 @@ export function hashEntity(type: EntityType, value: string, customPepper?: strin
     .update(`${type}:${normalized}:${pepper}`, 'utf-8')
     .digest('hex');
 }
+

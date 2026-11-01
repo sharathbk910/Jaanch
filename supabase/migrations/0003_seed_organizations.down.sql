@@ -48,3 +48,4 @@ DELETE FROM organizations WHERE primary_domain IN (
   'joinindiannavy.gov.in',
   'careerindianairforce.cdac.in'
 );
+
