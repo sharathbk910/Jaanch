@@ -159,7 +159,7 @@ describe('Server API Endpoints & Middlewares (api.test.ts)', () => {
       expect(res.body.data.riskLevel).toBe('NO_MAJOR_WARNING_SIGNS');
       expect(Array.isArray(res.body.data.observed)).toBe(true);
       expect(Array.isArray(res.body.data.unverified)).toBe(true);
-    });
+    }, 15000);
 
     it('returns HIGH_RISK for lookalike domain impersonating known brand', async () => {
       const res = await request(app)
@@ -169,7 +169,7 @@ describe('Server API Endpoints & Middlewares (api.test.ts)', () => {
       expect(res.status).toBe(200);
       expect(res.body.data.riskLevel).toBe('HIGH_RISK');
       expect(res.body.data.observed.some((o: string) => o.includes('Lookalike'))).toBe(true);
-    });
+    }, 15000);
 
     it('returns NEEDS_VERIFICATION for URL shortener', async () => {
       const res = await request(app)

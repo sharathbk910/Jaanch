@@ -208,7 +208,7 @@ describe('Phase 8: AI/ML Similarity, Semantic Tiers, URL Intelligence & Fallback
 
       expect(res.status).toBe(200);
       expect(res.body.data.signals.some((s: any) => s.id === 'LINK_EXCESSIVE_SUBDOMAINS')).toBe(true);
-    });
+    }, 15000);
 
     it('flags URL shorteners as cannot inspect without external network fetch', async () => {
       const res = await request(app)

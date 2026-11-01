@@ -45,7 +45,7 @@
 | **D7** | Guest flow: `sessionStorage` only, zero server persistence for unauthenticated | P5, P9 | Phase 3, Phase 6B | **DONE** (Session storage guest flow in Phase 6B/6C) |
 | **D8** | Safety rules: Safe Reply hidden on High Concern/Scam, "I already paid" defaults OFF | P3, P10 | Phase 2, Phase 6C | **DONE** (Implemented in Phase 6C) |
 | **D9** | Optional AI: Gemini schema-grounded with `findSpan`, fail-soft with `aiStatus` | P6 | Phase 8 | **DONE** |
-| **D10** | Third-party checks: Flagged default OFF, RDAP on, registry `needs_team_review = true` | P7 | Phase 3 | Pending |
+| **D10** | Third-party checks: Flagged default OFF, RDAP on, registry `needs_team_review = true` | P7 | Phase 3 | **DONE** (RDAP on by default, safeFetch fail-soft, flagged third-party checks default OFF) |
 | **D11** | Moderation: No ML layer, no service-role key in requests, moderator SQL/CLI confirmation | P4 | Phase 4, Phase 7 | **DONE** |
 | **D12** | Input validation: Minimum text length (`INPUT_LIMITS.textMin = 20`/25) enforced | P2, P9 | Phase 2, Phase 6B | **DONE** (Schemas in P2, UI enforced in P6B) |
 | **D13** | Multilingual: EN / HI / KN chrome translations, Indic font fallbacks | P8, P11 | Phase 5, Phase 6 | **DONE** (Complete translations in EN/HI/KN) |
@@ -95,9 +95,9 @@
 | **Phase 2** | Shared foundation: schemas, config, extraction | Phase 2 | Shared core (schemas, 8 rules, redaction, extraction, lookalike, status, 25 fixtures) | **DONE** |
 | **Phase 3** | Rules, verification logic, eval fixtures | Phase 2 | Shared core | **DONE** (Consolidated in Phase 2) |
 | **Phase 4** | Supabase database, RLS, seeds, hashing (H1) | Phase 4 | Database and auth | **DONE** (H1 reached) |
-| **Phase 5** | Express server API, safeFetch, analyzeService | Phase 3 | Server API | Pending |
+| **Phase 5** | Express server API, safeFetch, analyzeService | Phase 3 | Server API | **DONE** (Express server API, safeFetch, analyzeService, rate limits) |
 | **Phase 6** | AI layer (Gemini, grounding, fallbacks) | Phase 8 | AI / ML | **DONE** |
-| **Phase 7** | Flagged third-party checks (CT-log, Safe Browsing) | Phase 3 (flagged) | Server API |
+| **Phase 7** | Flagged third-party checks (CT-log, Safe Browsing) | Phase 3 (flagged) | Server API | **DONE** (RDAP domain age on by default, CT-log/Safe Browsing flagged default off per D10) |
 | **Phase 8** | Client foundation (tokens, shell, i18n, feedback) | Phase 5 | Client foundation |
 | **Phase 9** | Landing + Analyze pages, OCR/PDF extraction | Phase 6A, 6B | UI – Landing, UI – Analyzer |
 | **Phase 10** | Results page, PDF export, sample, remaining pages | Phase 6C, 6D | UI – Results/PDF, UI – Auth & History |

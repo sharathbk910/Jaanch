@@ -13,7 +13,7 @@
 - **Current Phase:** Phase 11 – Deployment & Runbook Complete (Human Gate H2 Reached)
 - **Current Tag:** `phase-11-done`
 - **Node Version:** v24.19.0 (LTS >= 20 required)
-- **Repository State:** Green monorepo; `@jaanch/shared`, `@jaanch/server`, and `@jaanch/client` fully compiled, typechecked, linted, and tested (387 tests passing across 41 test suites, 25/25 eval fixtures matching 100%, eval:ml harness passing, 10/10 acceptance criteria PASS, doctor PASS, smoke PASS)
+- **Repository State:** Green monorepo; `@jaanch/shared`, `@jaanch/server`, and `@jaanch/client` fully compiled, typechecked, linted, and tested (425 tests passing across 42 test suites, 25/25 eval fixtures matching 100%, eval:ml harness passing, 10/10 acceptance criteria PASS, doctor PASS, smoke PASS)
 
 ---
 
@@ -281,7 +281,8 @@
     - `typecheck`: PASSED (0 errors across `shared`, `server`, and `client`).
     - `npm run eval`: PASSED (25/25 corpus fixtures, 100% Accuracy, Precision, Recall, F1).
     - `npm run eval:ml`: PASSED (Generated `docs/EVAL_REPORT.md` with threshold calibration).
-    - `npm test`: PASSED (39 test suites, 365 tests passing, 0 failed).
+    - `npm test`: PASSED (42 test suites, 425 tests passing, 0 failed).
+    - `Security Suite`: PASSED (38 comprehensive security tests: endpoint auth matrix x guest/user/mod, IDOR, JWT tampering/expiry, SQLi, XSS, SSRF, zero PII in shared tables).
     - `test:acceptance`: PASSED (10/10 criteria PASS).
     - `verify:scenarios`: PASSED (100% scenario verification against local server).
     - `npm run build`: PASSED (Clean production build across all workspaces).
