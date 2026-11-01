@@ -38,6 +38,8 @@ import { ResponseGenerators } from '../components/results/ResponseGenerators.js'
 import { LinkInspector } from '../components/results/LinkInspector.js';
 import { ExtractedEntitiesCard } from '../components/results/ExtractedEntitiesCard.js';
 import { ReportEntityDialog } from '../components/results/ReportEntityDialog.js';
+import { IntelMatchCard } from '../components/results/IntelMatchCard.js';
+import { ReportMessageDialog } from '../components/results/ReportMessageDialog.js';
 import { NextSteps } from '../components/results/NextSteps.js';
 import { downloadPdfReport } from '../components/results/PdfExport.js';
 
@@ -156,8 +158,16 @@ export function Results() {
   const { t } = useLanguage();
   const [downloadingPdf, setDownloadingPdf] = useState(false);
   const [reportDialogOpen, setReportDialogOpen] = useState(false);
+  const [reportMessageOpen, setReportMessageOpen] = useState(false);
   const [reportEntityType, setReportEntityType] = useState<'email' | 'domain' | 'phone' | 'upi' | 'bank_account'>('upi');
   const [reportEntityValue, setReportEntityValue] = useState('');
+
+  const rawText =
+    (location.state && typeof location.state === 'object' && 'text' in location.state
+      ? (location.state as { text?: string }).text
+      : null) ||
+    getGuestAnalysis()?.inputText ||
+    '';
 
   const handleOpenReport = (type: 'email' | 'domain' | 'phone' | 'upi' | 'bank_account' = 'upi', val = '') => {
     setReportEntityType(type);
@@ -331,6 +341,13 @@ export function Results() {
               totalChecks={8}
             />
           </div>
+
+          {/* 1b. Shared Threat Intelligence Match Card */}
+          {result.intelMatch && (
+            <div id="intel-match">
+              <IntelMatchCard intelMatch={result.intelMatch} />
+            </div>
+          )}
 
           {/* 2. Stop & Protect Callout (High Concern / Payment signals) */}
           {isHighConcern && (
@@ -548,6 +565,16 @@ export function Results() {
               <Button
                 variant="outline"
                 size="sm"
+                onClick={() => setReportMessageOpen(true)}
+                className="w-full justify-center text-xs text-foreground border-border hover:bg-background"
+              >
+                <ShieldAlert size={13} className="mr-1.5 text-primary" />
+                <span>{t('results.reportMessageBtn') || 'Report This Offer'}</span>
+              </Button>
+
+              <Button
+                variant="outline"
+                size="sm"
                 onClick={() => handleOpenReport('upi', '')}
                 className="w-full justify-center text-xs text-terracotta border-border hover:bg-background"
               >
@@ -595,6 +622,19 @@ export function Results() {
         initialEntityType={reportEntityType}
         initialValue={reportEntityValue}
       />
+
+      <ReportMessageDialog
+        isOpen={reportMessageOpen}
+        onClose={() => setReportMessageOpen(false)}
+        text={rawText}
+        category={result?.status === 'CONFIRMED_SCAM' ? 'fake_job' : 'other'}
+        indicators={[
+          ...(result?.extractedEntities?.urls || []).map((u) => ({ type: 'url' as const, value: u })),
+          ...(result?.extractedEntities?.domains || []).map((d) => ({ type: 'domain' as const, value: d })),
+          ...(result?.extractedEntities?.phones || []).map((p) => ({ type: 'phone' as const, value: p })),
+          ...(result?.extractedEntities?.upiHandles || []).map((upi) => ({ type: 'upi' as const, value: upi })),
+        ]}
+      />
     </main>
   );
 }
@@ -606,8 +646,10 @@ export function SamplePage() {
   const { t } = useLanguage();
   const [activeScenario, setActiveScenario] = useState<'genuine' | 'review' | 'concern'>('genuine');
   const [reportDialogOpen, setReportDialogOpen] = useState(false);
+  const [reportMessageOpen, setReportMessageOpen] = useState(false);
   const [reportEntityType, setReportEntityType] = useState<'email' | 'domain' | 'phone' | 'upi' | 'bank_account'>('upi');
   const [reportEntityValue, setReportEntityValue] = useState('');
+  const rawText = '';
 
   const handleOpenReport = (type: 'email' | 'domain' | 'phone' | 'upi' | 'bank_account' = 'upi', val = '') => {
     setReportEntityType(type);
@@ -830,6 +872,19 @@ export function SamplePage() {
         onClose={() => setReportDialogOpen(false)}
         initialEntityType={reportEntityType}
         initialValue={reportEntityValue}
+      />
+
+      <ReportMessageDialog
+        isOpen={reportMessageOpen}
+        onClose={() => setReportMessageOpen(false)}
+        text={rawText}
+        category={result?.status === 'CONFIRMED_SCAM' ? 'fake_job' : 'other'}
+        indicators={[
+          ...(result?.extractedEntities?.urls || []).map((u) => ({ type: 'url' as const, value: u })),
+          ...(result?.extractedEntities?.domains || []).map((d) => ({ type: 'domain' as const, value: d })),
+          ...(result?.extractedEntities?.phones || []).map((p) => ({ type: 'phone' as const, value: p })),
+          ...(result?.extractedEntities?.upiHandles || []).map((upi) => ({ type: 'upi' as const, value: upi })),
+        ]}
       />
     </main>
   );

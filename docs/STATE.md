@@ -13,7 +13,7 @@
 - **Current Phase:** Phase 8 – AI/ML Complete
 - **Current Tag:** `phase-8-done`
 - **Node Version:** v24.19.0 (LTS >= 20 required)
-- **Repository State:** Green monorepo; `@jaanch/shared`, `@jaanch/server`, and `@jaanch/client` fully compiled, typechecked, linted, and tested (309 tests passing across 33 test suites, 25/25 eval fixtures matching 100%, 10/10 acceptance criteria PASS)
+- **Repository State:** Green monorepo; `@jaanch/shared`, `@jaanch/server`, and `@jaanch/client` fully compiled, typechecked, linted, and tested (322 tests passing across 34 test suites, 25/25 eval fixtures matching 100%, 10/10 acceptance criteria PASS)
 
 ---
 
@@ -124,18 +124,46 @@
     - 36 screenshots in `docs/ui-shots/auth/` covering `/login`, `/signup`, and `/history` across 360px and 1280px viewports in Light/Dark themes and EN/HI/KN languages
   - [x] Acceptance criteria harness: 10/10 PASS
   - [x] End-to-end local server scenarios (`scripts/verify-scenarios-e2e.ts`): 100% PASS
-- **Phase 7 Verification Checklist:**
-  - [x] Peppered Cryptographic Indicator Hashing: Deterministic SHA-256 peppered hashing (`REPORT_HASH_PEPPER`, >= 24 chars) for emails, domains, phones, UPI handles, and bank accounts. Zero raw indicator PII stored in DB.
-  - [x] Community Threat Reporting: `POST /api/reports/entity` (authenticated with `requireAuth`, rate-limited to 10 reports/day), starting in `unverified` status. Repeated reports increment `report_count`.
-  - [x] Threat Intelligence Lookup: `POST /api/threat-intel/lookup` (rate-limited to 60/hr). Unverified reports strictly masked to prevent defamation/abuse; only confirmed or suspicious matches returned.
-  - [x] Decision D2 & Addendum Extension P2 Invariant:
-    - `CONFIRMED_SCAM` can ONLY be produced when an indicator matches a moderator-confirmed record. Never from raw text alone.
-    - Integrated in `/api/analyze`: matching confirmed records elevates the verdict to `CONFIRMED_SCAM` (confidence >= 98, critical rule `RULE_CONFIRMED_FRAUD_RECORD`).
-  - [x] Moderator Role Guard: `requireRole('moderator')` guarding `GET /api/moderation/entities` and `POST /api/moderation/entities/:id/transition`. Rejects unauthorized users with 403 Forbidden.
-  - [x] Audit Logging: Every state transition writes an audit entry with `actor_id`, `action: 'TRANSITION_ENTITY_STATUS'`, and metadata.
-  - [x] Moderator CLI (`scripts/moderator-cli.ts`): `hash`, `list`, `confirm`, `dismiss`, and `dispute` commands for administrative workflow.
-  - [x] Client UI Component (`ReportEntityDialog.tsx`): Accessible modal dialog (`role="dialog"`, `aria-modal="true"`), authentication check with sign-in prompt for guests, pre-filled indicator type and value, channel selector, notes, loading/error/success states. Integrated in `Results.tsx` and `ExtractedEntitiesCard.tsx`.
-  - [x] Full test suite: 288 tests passing across 31 test suites; 10/10 acceptance criteria passing; 100% scenario verification passing.
+- **Phase 7 Verification Checklist (Shared Scam Intelligence + Moderation):**
+  - [x] Database Migration 0004 (`0004_shared_intel.sql` & `0004_shared_intel.down.sql`):
+    - `intel_records`: UUID id, public_id (`JNC-INTEL-XXXXXXXX`), status enum, category, scrubbed_text, normalized_hash (HMAC-SHA256 with REPORT_HASH_PEPPER), first_reported_at, confirmed_at, confirmed_by.
+    - `intel_indicators`: record_id, type (`url|domain|phone|upi`), value_hash (peppered), masked_display.
+    - `intel_reports`: record_id, reporter_id, UNIQUE(record_id, reporter_id) per-user deduplication.
+    - `moderation_actions`: immutable audit log of moderator transitions and edits.
+    - `domain_allowlist`: known-legitimate domains (`tcs.com`, `aicte-india.org`, `scholarships.gov.in`, `mca.gov.in`, `ncs.gov.in`, `sbi.co.in`, `gov.in`, `nic.in`, `ac.in`, `edu.in`, etc.) that can never be confirmed as scams.
+    - Strict Row Level Security (RLS) on all 5 tables: reporters see only their own reports, public sees only confirmed records' public fields, moderators manage queue.
+  - [x] Reporting Pipeline (`POST /api/reports`):
+    - Authenticated with `requireAuth`; requires explicit `shareIndicators: true` consent.
+    - Client-side & server-side PII scrubbing via `redactText` before hashing; zero raw student text stored in database.
+    - Normalized text hashing via HMAC-SHA256 (`REPORT_HASH_PEPPER`); exact duplicate reports deduplicated per user.
+    - Per-user rate limiting (10 reports/day) and new-account cool-off (<24h accounts do not trigger promotions).
+  - [x] Threat Promotion Rules (`docs/INTEL.md`):
+    - `reported` ──▶ `suspicious` requires $\ge 3$ distinct reports from accounts older than 24 hours.
+    - `ai_flagged` set when rule evaluation yields `HIGH_CONCERN`.
+    - **Nothing auto-confirms**; only an authorized human moderator can elevate to `confirmed`.
+    - **Allowlist Enforced:** Confirming is strictly blocked with `ALLOWLISTED_DOMAIN_BLOCKED` if any indicator domain is on `domain_allowlist`.
+  - [x] Moderator Routes (`server/src/routes/moderation.ts`):
+    - `GET /api/moderation/queue`: paginated queue of threat records.
+    - `GET /api/moderation/records/:id`: detail view returning scrubbed text only, zero raw submissions.
+    - `PATCH /api/moderation/records/:id/scrubbing`: allows moderator to sanitize stray PII.
+    - `POST /api/moderation/records/:id/action`: execute confirm, dismiss, dispute, or retract with mandatory written reason.
+  - [x] Public Dispute Endpoint (`POST /api/disputes`):
+    - Rate-limited endpoint for contesting erroneous records; marks record status as `disputed` pending review.
+  - [x] Analysis Dual-Tier Matching (`/api/analyze`):
+    - Exact normalized text match, followed by indicator peppered-hash match.
+    - Wording rule: only `confirmed` produces `CONFIRMED_SCAM` and "matches a moderator-confirmed record"; `suspicious`/`ai_flagged` produce "similar to reported messages" with the verdict unchanged; never reveals reporter identities or counts under threshold.
+  - [x] Client Frontend UI:
+    - `IntelMatchCard.tsx`: Rendered on results with status badge, public ID, explanation, masked indicators, and "Contest this record" action.
+    - `ReportMessageDialog.tsx`: Modal dialog for reporting offers with clear PII scrubbing and consent explanation.
+    - `DisputeDialog.tsx`: Dialog for contesting threat records via `POST /api/disputes`.
+    - `ModerationPage.tsx` (`/moderation`): Accessible only to moderators (`role === 'moderator'`), status tabs, detail modal, edit scrubbing modal, and action execution.
+    - Multilingual i18n (`en`, `hi`, `kn`) and narrow allowlist in `scripts/banned-phrases-allowlist.json`.
+  - [x] Documentation & Bootstrap Tool:
+    - `docs/INTEL.md`: Complete threat intelligence lifecycle, promotion rules, and threat model documentation.
+    - `scripts/bootstrap-moderator.ts`: Standalone administrative script for promoting accounts to the moderator role.
+  - [x] Verification & Test Suite:
+    - 322 tests passing across 34 test suites (11 comprehensive E2E tests in `server/src/__tests__/shared_intel_e2e.test.ts` + 18 in `threat_intelligence.test.ts` + 5 in `moderator_cli.test.ts`).
+    - 10 / 10 acceptance criteria passing; 100% scenario verification passing.
 - **Phase 8 Verification Checklist:**
   - [x] Gemini SDK Wrapper (`@google/genai` ^2.32.0): Server-only client, key exclusively from server env, model configurable (`GEMINI_MODEL`, defaults to `gemini-2.5-flash`), timeout with AbortController (20s), and single stricter retry on JSON/validation failure.
   - [x] PII Pre-Redaction: Full PII masking via `redactText` before sending any user text to Gemini; prompt injection neutralization instructions embedded in all prompts.

@@ -1,1 +1,18 @@
-[]
+[
+  {
+    "file": "client/src/i18n/translations.ts",
+    "phrase": "confirmed scam"
+  },
+  {
+    "file": "client/src/components/results/IntelMatchCard.tsx",
+    "phrase": "confirmed scam"
+  },
+  {
+    "file": "server/src/routes/analyze.ts",
+    "phrase": "confirmed scam"
+  },
+  {
+    "file": "server/src/lib/threatIntelRepository.ts",
+    "phrase": "confirmed scam"
+  }
+]

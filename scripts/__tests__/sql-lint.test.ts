@@ -8,7 +8,7 @@ const __dirname = path.dirname(__filename);
 const MIGRATIONS_DIR = path.resolve(__dirname, '..', '..', 'supabase', 'migrations');
 
 describe('Database Migration & SQL Lint Verification (sql-lint.test.ts)', () => {
-  it('confirms all 3 ordered migrations and down-migrations exist in supabase/migrations/', () => {
+  it('confirms all 4 ordered migrations and down-migrations exist in supabase/migrations/', () => {
     const files = fs.readdirSync(MIGRATIONS_DIR);
     expect(files).toContain('0001_enums_tables.sql');
     expect(files).toContain('0001_enums_tables.down.sql');
@@ -16,6 +16,8 @@ describe('Database Migration & SQL Lint Verification (sql-lint.test.ts)', () => 
     expect(files).toContain('0002_rls_functions.down.sql');
     expect(files).toContain('0003_seed_organizations.sql');
     expect(files).toContain('0003_seed_organizations.down.sql');
+    expect(files).toContain('0004_shared_intel.sql');
+    expect(files).toContain('0004_shared_intel.down.sql');
   });
 
   describe('0001_enums_tables.sql', () => {
@@ -119,6 +121,32 @@ describe('Database Migration & SQL Lint Verification (sql-lint.test.ts)', () => 
       const matches = content.match(/\('(?:[^']|'')+',/g);
       expect(matches).toBeDefined();
       expect(matches!.length).toBeGreaterThanOrEqual(40);
+    });
+  });
+
+  describe('0004_shared_intel.sql', () => {
+    const content = fs.readFileSync(path.join(MIGRATIONS_DIR, '0004_shared_intel.sql'), 'utf-8');
+
+    it('creates all Phase 7 shared threat intelligence tables and indexes', () => {
+      const requiredTables = [
+        'domain_allowlist',
+        'intel_records',
+        'intel_indicators',
+        'intel_reports',
+        'moderation_actions',
+      ];
+      for (const table of requiredTables) {
+        expect(content).toContain(`CREATE TABLE IF NOT EXISTS ${table} (`);
+        expect(content).toContain(`ALTER TABLE ${table} ENABLE ROW LEVEL SECURITY;`);
+      }
+    });
+
+    it('seeds legitimate corporate, government, and educational domains in allowlist', () => {
+      expect(content).toContain('tcs.com');
+      expect(content).toContain('aicte-india.org');
+      expect(content).toContain('scholarships.gov.in');
+      expect(content).toContain('mca.gov.in');
+      expect(content).toContain('sbi.co.in');
     });
   });
 });

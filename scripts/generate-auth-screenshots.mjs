@@ -146,3 +146,4 @@ generateScreenshots().catch((err) => {
   console.error('\n❌ Screenshot generation failed:', err.message);
   process.exit(1);
 });
+

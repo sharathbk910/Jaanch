@@ -79,3 +79,4 @@ export function buildLinkExplainTemplate(data: LinkObservationsData): LinkExplai
     whatToCheckNext: whatToCheckNext.slice(0, 4),
   };
 }
+

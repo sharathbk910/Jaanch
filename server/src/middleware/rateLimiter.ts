@@ -34,6 +34,7 @@ export function createRateLimiter(options: {
     max,
     standardHeaders: 'draft-7',
     legacyHeaders: false,
+    skip: (req: Request) => req.app?.get('enableRateLimiting') === false,
     store: storeProvider.createStore(),
     handler: (req: Request, res: Response) => {
       res.status(429).json({

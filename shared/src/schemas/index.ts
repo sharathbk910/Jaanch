@@ -57,14 +57,49 @@ export const ExtractedEntitiesSchema = z.object({
 export type ExtractedEntities = z.infer<typeof ExtractedEntitiesSchema>;
 
 export const IntelMatchSchema = z.object({
-  id: z.string(),
-  entityType: z.enum(['email', 'domain', 'phone', 'upi', 'bank_account']),
-  valueHash: z.string(),
+  tier: z.enum(['exact_text', 'indicator_match']).default('indicator_match'),
   status: z.enum(['reported', 'unverified', 'ai_flagged', 'suspicious', 'confirmed', 'dismissed', 'disputed']),
+  confidenceBand: z.enum(['very_high', 'high', 'medium', 'low']).default('medium'),
+  explanation: z.string(),
+  publicId: z.string(),
+  matchedIndicators: z.array(z.string()).default([]),
+  id: z.string().optional(),
+  entityType: z.enum(['email', 'domain', 'phone', 'upi', 'bank_account']).optional(),
+  valueHash: z.string().optional(),
   notes: z.string().optional(),
   confirmedAt: z.string().optional(),
 });
 export type IntelMatch = z.infer<typeof IntelMatchSchema>;
+
+export const SubmitReportRequestSchema = z.object({
+  text: z.string().min(25, 'Text must be at least 25 characters for reporting').max(50000),
+  category: z.string().default('other'),
+  indicators: z
+    .array(
+      z.object({
+        type: z.enum(['url', 'domain', 'phone', 'upi']),
+        value: z.string().min(2).max(255),
+        maskedDisplay: z.string().optional(),
+      })
+    )
+    .optional(),
+  shareIndicators: z.boolean(),
+});
+export type SubmitReportRequest = z.infer<typeof SubmitReportRequestSchema>;
+
+export const DisputeRecordRequestSchema = z.object({
+  publicId: z.string().min(4).max(64),
+  reason: z.string().min(10, 'Reason must be at least 10 characters').max(2000),
+  contactEmail: z.string().email().optional(),
+});
+export type DisputeRecordRequest = z.infer<typeof DisputeRecordRequestSchema>;
+
+export const ModerationActionRequestSchema = z.object({
+  action: z.enum(['confirm', 'dismiss', 'dispute', 'retract', 'edit_scrubbing']),
+  reason: z.string().min(5, 'Reason must be at least 5 characters').max(1000),
+  newScrubbedText: z.string().max(50000).optional(),
+});
+export type ModerationActionRequest = z.infer<typeof ModerationActionRequestSchema>;
 
 export const SenderDetailsSchema = z.object({
   email: z.string().optional(),

@@ -183,6 +183,104 @@ export const apiClient = {
   },
 
   /**
+   * Submits a scam intelligence report for deduplication and community protection
+   */
+  async submitIntelReport(data: {
+    text: string;
+    category?: string;
+    indicators?: Array<{ type: 'url' | 'domain' | 'phone' | 'upi'; value: string; maskedDisplay?: string }>;
+    shareIndicators: boolean;
+  }): Promise<{ recordId: string; publicId: string; status: string; deduplicated: boolean; isNewRecord: boolean; message: string }> {
+    return request<{ recordId: string; publicId: string; status: string; deduplicated: boolean; isNewRecord: boolean; message: string }>(
+      '/api/reports',
+      {
+        method: 'POST',
+        body: JSON.stringify(data),
+      }
+    );
+  },
+
+  /**
+   * Contests a threat intelligence record
+   */
+  async disputeIntelRecord(data: {
+    publicId: string;
+    reason: string;
+    contactEmail?: string;
+  }): Promise<{ publicId: string; status: string; message: string }> {
+    return request<{ publicId: string; status: string; message: string }>('/api/disputes', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
+  },
+
+  /**
+   * Moderator: fetches moderation queue of shared threat records
+   */
+  async getModerationQueue(params: { status?: string; page?: number; limit?: number } = {}): Promise<{
+    items: Array<{
+      id: string;
+      publicId: string;
+      status: string;
+      category: string;
+      scrubbedText: string;
+      firstReportedAt: string;
+      reportCount: number;
+      indicators: string[];
+    }>;
+    pagination: { page: number; limit: number; total: number; totalPages: number };
+  }> {
+    const query = new URLSearchParams();
+    if (params.status && params.status !== 'all') query.set('status', params.status);
+    if (params.page) query.set('page', String(params.page));
+    if (params.limit) query.set('limit', String(params.limit));
+
+    const qs = query.toString();
+    return request<any>(`/api/moderation/queue${qs ? `?${qs}` : ''}`);
+  },
+
+  /**
+   * Moderator: fetches full detail of an intel record (scrubbed text only)
+   */
+  async getModerationRecordDetail(id: string): Promise<{
+    id: string;
+    publicId: string;
+    status: string;
+    category: string;
+    scrubbedText: string;
+    firstReportedAt: string;
+    confirmedAt: string | null;
+    reportCount: number;
+    indicators: Array<{ type: string; maskedDisplay: string }>;
+    history: Array<{ action: string; reason: string; createdAt: string; newStatus: string | null }>;
+  }> {
+    return request<any>(`/api/moderation/records/${id}`);
+  },
+
+  /**
+   * Moderator: edits scrubbed text to sanitize sensitive information
+   */
+  async editModerationScrubbing(id: string, data: { newScrubbedText: string; reason: string }): Promise<{ id: string; scrubbedText: string }> {
+    return request<{ id: string; scrubbedText: string }>(`/api/moderation/records/${id}/scrubbing`, {
+      method: 'PATCH',
+      body: JSON.stringify(data),
+    });
+  },
+
+  /**
+   * Moderator: executes confirm, dismiss, dispute, or retract with mandatory reason
+   */
+  async executeModerationAction(
+    id: string,
+    data: { action: 'confirm' | 'dismiss' | 'dispute' | 'retract'; reason: string }
+  ): Promise<{ id: string; status: string; message: string }> {
+    return request<{ id: string; status: string; message: string }>(`/api/moderation/records/${id}/action`, {
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
+  },
+
+  /**
    * Generates recruiter challenge email or safe reply draft
    */
   async generateChallengeEmail(data: {

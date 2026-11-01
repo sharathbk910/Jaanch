@@ -12,6 +12,9 @@ const EMAIL_REGEX = /\b([A-Za-z0-9._%+-]+)@([A-Za-z0-9.-]+\.[A-Za-z]{2,})\b/g;
 // 4. Known UPI / VPA banking handles
 const UPI_REGEX = /\b[a-zA-Z0-9._-]{2,}@(okhdfcbank|okaxis|oksbi|okicici|paytm|ybl|apl|upi|axl|ibl|barodampay|federal|idfcbank|icici|kotak|postbank|sbi|hdfcbank|axisbank|pnb)\b/gi;
 
+// 5. Introductory student names ("My name is Rahul Sharma", "I am Priya", "Student Name: ...")
+const NAME_INTRO_REGEX = /\b(?:My name is|I am|Student Name:?)\s+([A-Za-z]+(?:\s+[A-Za-z]+)?)\b/gi;
+
 export interface RedactionResult {
   redactedText: string;
   redactionCount: number;
@@ -54,6 +57,12 @@ export function redactText(rawText: string): RedactionResult {
   text = text.replace(EMAIL_REGEX, (_match, _local, domain) => {
     count++;
     return `[EMAIL]@${domain}`;
+  });
+
+  // 5. Redact introductory student names
+  text = text.replace(NAME_INTRO_REGEX, () => {
+    count++;
+    return 'My name is [NAME]';
   });
 
   return {

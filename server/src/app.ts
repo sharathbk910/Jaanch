@@ -49,6 +49,8 @@ export function createApp(options: AppOptions = {}): Application {
   const { enableRateLimiting = true } = options;
   const app = express();
 
+  app.set('enableRateLimiting', enableRateLimiting);
+
   // 1. Request ID tracking
   app.use(requestIdMiddleware);
 

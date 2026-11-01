@@ -311,6 +311,33 @@ export interface TranslationDictionary {
       bank_account: string;
     };
   };
+  intelMatch: {
+    confirmedBadge: string;
+    suspiciousBadge: string;
+    matchedIndicatorsLabel: string;
+    confirmedFooter: string;
+    suspiciousFooter: string;
+    contestButton: string;
+  };
+  disputeDialog: {
+    title: string;
+    guideline: string;
+    reasonLabel: string;
+    emailLabel: string;
+    submit: string;
+    successTitle: string;
+    successMessage: string;
+  };
+  reportMessage: {
+    title: string;
+    subtitle: string;
+    authRequiredTitle: string;
+    authRequiredDesc: string;
+    categoryLabel: string;
+    submitButton: string;
+    successTitle: string;
+    dedupeTitle: string;
+  };
 
   // Compatibility and short-key aliases
   nav: {
@@ -656,6 +683,33 @@ export const translations: Record<'en' | 'hi' | 'kn', TranslationDictionary> = {
         bank_account: 'Bank Account Number',
       },
     },
+    intelMatch: {
+      confirmedBadge: 'Confirmed Fraud Match',
+      suspiciousBadge: 'Community Threat Match',
+      matchedIndicatorsLabel: 'Matching Contact / Payment Indicators:',
+      confirmedFooter: 'This pattern has been investigated and validated by authorized moderators. Do not pay any money or share sensitive documents.',
+      suspiciousFooter: 'Similar messages have been reported by students. Always corroborate credentials directly on official portals before taking action.',
+      contestButton: 'Contest this record',
+    },
+    disputeDialog: {
+      title: 'Contest Threat Record',
+      guideline: 'If you represent the organization or believe this message was flagged mistakenly, provide official domain credentials or clarification. Submissions are reviewed by human moderators.',
+      reasonLabel: 'Reason for Contest *',
+      emailLabel: 'Official Contact Email (Optional)',
+      submit: 'Submit Contest',
+      successTitle: 'Dispute Received',
+      successMessage: 'This record has been marked as disputed and queued for moderator investigation.',
+    },
+    reportMessage: {
+      title: 'Report to Community Intelligence',
+      subtitle: 'Protect fellow students across India',
+      authRequiredTitle: 'Account Required to Report',
+      authRequiredDesc: 'To prevent false reporting and spam, threat reports require an authenticated student account.',
+      categoryLabel: 'Scam Category',
+      submitButton: 'Submit Threat Report',
+      successTitle: 'Report Added to Intelligence Queue',
+      dedupeTitle: 'Report Confirmed & Deduplicated',
+    },
 
     // Compatibility aliases
     nav: {
@@ -999,6 +1053,33 @@ export const translations: Record<'en' | 'hi' | 'kn', TranslationDictionary> = {
         bank_account: 'बैंक खाता संख्या',
       },
     },
+    intelMatch: {
+      confirmedBadge: 'पुष्ट धोखाधड़ी रिकॉर्ड',
+      suspiciousBadge: 'सामुदायिक चेतावनी रिकॉर्ड',
+      matchedIndicatorsLabel: 'मेल खाते संपर्क / भुगतान संकेतक:',
+      confirmedFooter: 'इस पैटर्न की जांच अधिकृत मॉडरेटर द्वारा की गई है और इसे धोखाधड़ी पाया गया है। कोई शुल्क न दें या संवेदनशील दस्तावेज साझा न करें।',
+      suspiciousFooter: 'छात्रों द्वारा इसी तरह के संदेशों की सूचना दी गई है। कोई भी कदम उठाने से पहले हमेशा आधिकारिक पोर्टल पर विवरण सत्यापित करें।',
+      contestButton: 'इस रिकॉर्ड को चुनौती दें',
+    },
+    disputeDialog: {
+      title: 'धमकी रिकॉर्ड को चुनौती दें',
+      guideline: 'यदि आप संगठन का प्रतिनिधित्व करते हैं या मानते हैं कि यह संदेश गलती से चिह्नित हुआ है, तो आधिकारिक क्रेडेंशियल प्रदान करें। मानव मॉडरेटर द्वारा समीक्षा की जाती है।',
+      reasonLabel: 'चुनौती का कारण *',
+      emailLabel: 'आधिकारिक संपर्क ईमेल (वैकल्पिक)',
+      submit: 'चुनौती सबमिट करें',
+      successTitle: 'चुनौती प्राप्त हुई',
+      successMessage: 'इस रिकॉर्ड को विवादित चिह्नित किया गया है और मॉडरेटर जांच के लिए भेजा गया है।',
+    },
+    reportMessage: {
+      title: 'सामुदायिक खुफिया नेटवर्क में रिपोर्ट करें',
+      subtitle: 'पूरे भारत के अन्य छात्रों की सुरक्षा करें',
+      authRequiredTitle: 'रिपोर्ट करने के लिए खाता आवश्यक है',
+      authRequiredDesc: 'झूठी रिपोर्टिंग रोकने के लिए, खतरे की रिपोर्ट के लिए एक प्रमाणित छात्र खाता आवश्यक है।',
+      categoryLabel: 'धोखाधड़ी श्रेणी',
+      submitButton: 'खतरे की रिपोर्ट सबमिट करें',
+      successTitle: 'रिपोर्ट खुफिया कतार में जोड़ी गई',
+      dedupeTitle: 'रिपोर्ट की पुष्टि और डुप्लिकेट हटाना',
+    },
 
     // Compatibility aliases
     nav: {
@@ -1341,6 +1422,33 @@ export const translations: Record<'en' | 'hi' | 'kn', TranslationDictionary> = {
         domain: 'ವೆಬ್‌ಸೈಟ್ / ನಕಲಿ ಡೊಮೇನ್',
         bank_account: 'ಬ್ಯಾಂಕ್ ಖಾತೆ ಸಂಖ್ಯೆ',
       },
+    },
+    intelMatch: {
+      confirmedBadge: 'ದೃಢಪಡಿಸಿದ ವಂಚನೆ ದಾಖಲೆ',
+      suspiciousBadge: 'ಸಮುದಾಯ ಎಚ್ಚರಿಕೆ ದಾಖಲೆ',
+      matchedIndicatorsLabel: 'ಹೊಂದಾಣಿಕೆಯಾಗುವ ಸಂಪರ್ಕ / ಪಾವತಿ ಸೂಚಕಗಳು:',
+      confirmedFooter: 'ಈ ಮಾದರಿಯನ್ನು ಅಧಿಕೃತ ಮಾಡರೇಟರ್‌ಗಳು ತನಿಖೆ ಮಾಡಿ ದೃಢಪಡಿಸಿದ್ದಾರೆ. ಯಾವುದೇ ಹಣವನ್ನು ಪಾವತಿಸಬೇಡಿ ಅಥವಾ ಸೂಕ್ಷ್ಮ ದಾಖಲೆಗಳನ್ನು ಹಂಚಿಕೊಳ್ಳಬೇಡಿ.',
+      suspiciousFooter: 'ಇದೇ ರೀತಿಯ ಸಂದೇಶಗಳನ್ನು ವಿದ್ಯಾರ್ಥಿಗಳು ವರದಿ ಮಾಡಿದ್ದಾರೆ. ಯಾವುದೇ ಕ್ರಮ ಕೈಗೊಳ್ಳುವ ಮೊದಲು ಯಾವಾಗಲೂ ಅಧಿಕೃತ ಪೋರ್ಟಲ್‌ಗಳಲ್ಲಿ ದೃಢೀಕರಿಸಿ.',
+      contestButton: 'ಈ ದಾಖಲೆಯನ್ನು ಪ್ರಶ್ನಿಸಿ',
+    },
+    disputeDialog: {
+      title: 'ಬೆದರಿಕೆ ದಾಖಲೆಯನ್ನು ಪ್ರಶ್ನಿಸಿ',
+      guideline: 'ನೀವು ಸಂಸ್ಥೆಯನ್ನು ಪ್ರತಿನಿಧಿಸುತ್ತಿದ್ದರೆ ಅಥವಾ ಈ ಸಂದೇಶವನ್ನು ತಪ್ಪಾಗಿ ಫ್ಲ್ಯಾಗ್ ಮಾಡಲಾಗಿದೆ ಎಂದು ನಂಬಿದರೆ, ಅಧಿಕೃತ ರುಜುವಾತುಗಳನ್ನು ಒದಗಿಸಿ. ಮಾನವ ಮಾಡರೇಟರ್‌ಗಳು ಪರಿಶೀಲಿಸುತ್ತಾರೆ.',
+      reasonLabel: 'ಪ್ರಶ್ನಿಸಲು ಕಾರಣ *',
+      emailLabel: 'ಅಧಿಕೃತ ಸಂಪರ್ಕ ಇಮೇಲ್ (ಐಚ್ಛಿಕ)',
+      submit: 'ಸವಾಲನ್ನು ಸಲ್ಲಿಸಿ',
+      successTitle: 'ವಿವಾದ ಸ್ವೀಕರಿಸಲಾಗಿದೆ',
+      successMessage: 'ಈ ದಾಖಲೆಯನ್ನು ವಿವಾದಿತ ಎಂದು ಗುರುತಿಸಲಾಗಿದೆ ಮತ್ತು ತನಿಖೆಗೆ ಕಳುಹಿಸಲಾಗಿದೆ.',
+    },
+    reportMessage: {
+      title: 'ಸಮುದಾಯ ಗುಪ್ತಚರಕ್ಕೆ ವರದಿ ಮಾಡಿ',
+      subtitle: 'ಭಾರತದಾದ್ಯಂತ ಇರುವ ವಿದ್ಯಾರ್ಥಿಗಳನ್ನು ರಕ್ಷಿಸಿ',
+      authRequiredTitle: 'ವರದಿ ಮಾಡಲು ಖಾತೆ ಅಗತ್ಯವಿದೆ',
+      authRequiredDesc: 'ಸುಳ್ಳು ವರದಿಗಳನ್ನು ತಡೆಯಲು, ಬೆದರಿಕೆ ವರದಿಗಳಿಗೆ ದೃಢೀಕೃತ ವಿದ್ಯಾರ್ಥಿ ಖಾತೆಯ ಅಗತ್ಯವಿದೆ.',
+      categoryLabel: 'ವಂಚನೆ ವರ್ಗ',
+      submitButton: 'ಬೆದರಿಕೆ ವರದಿಯನ್ನು ಸಲ್ಲಿಸಿ',
+      successTitle: 'ವರದಿಯನ್ನು ಪರಿಶೀಲನಾ ಸರದಿಗೆ ಸೇರಿಸಲಾಗಿದೆ',
+      dedupeTitle: 'ವರದಿ ದೃಢೀಕರಿಸಲಾಗಿದೆ ಮತ್ತು ನಕಲು ನಿವಾರಿಸಲಾಗಿದೆ',
     },
 
     // Compatibility aliases

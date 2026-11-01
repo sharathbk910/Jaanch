@@ -17,3 +17,4 @@ WHAT GOOD LOOKS LIKE
 - Observed signs: payment requests, pressure/urgency, requests for sensitive data, missing/vague details, unusual channels, unrealistic promises.
 - Unverified facts: who the sender really is, whether the organization exists and is registered, whether the claimed program/scholarship/competition exists on an official source, whether the user actually applied.
 - Verify-next steps: actionable, safe, and independent of the message (find the official site yourself; contact through official channels; never pay or share OTP/bank/ID details first).`;
+

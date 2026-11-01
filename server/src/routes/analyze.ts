@@ -70,40 +70,89 @@ router.post(
       }
     }
 
-    const intelMatches = await ThreatIntelRepository.checkReportedEntities(
-      req.supabase || null,
-      indicatorsToCheck
-    );
+    // 1. Dual-Tier Shared Threat Intelligence Check (exact normalized text match + indicator match)
+    const intelMatch = await ThreatIntelRepository.matchIntel(req.supabase || null, {
+      text: input.text,
+      indicators: indicatorsToCheck,
+    });
 
-    const confirmedMatch = intelMatches.find((m) => m.status === 'confirmed');
-    const suspiciousMatch = intelMatches.find((m) => m.status === 'suspicious' || m.status === 'ai_flagged');
+    if (intelMatch) {
+      result.intelMatch = intelMatch;
 
-    if (confirmedMatch) {
-      // Invariant: CONFIRMED_SCAM is only reachable via moderator-confirmed intelligence record
-      result.status = 'CONFIRMED_SCAM';
-      result.confidenceScore = 99;
-      result.signals.unshift({
-        id: `sig_intel_${confirmedMatch.id}`,
-        ruleId: 'RULE_CONFIRMED_FRAUD_RECORD',
-        title: 'Confirmed Fraud Record Match',
-        whyItMatters:
-          'This opportunity contains a contact indicator that has been independently investigated and confirmed fraudulent by a human moderator.',
-        evidence: `Matches confirmed safety registry record #${confirmedMatch.id.slice(0, 8)} (${confirmedMatch.entityType})`,
-        severity: 'critical',
-      });
-    } else if (suspiciousMatch) {
-      if (result.status === 'LIKELY_GENUINE' || result.status === 'NEEDS_REVIEW') {
-        result.status = 'HIGH_CONCERN';
+      if (intelMatch.status === 'confirmed') {
+        // Invariant: ONLY confirmed produces CONFIRMED_SCAM and "matches a moderator-confirmed record"
+        result.status = 'CONFIRMED_SCAM';
+        result.confidenceScore = 99;
+        result.signals.unshift({
+          id: `sig_intel_${intelMatch.publicId}`,
+          ruleId: 'RULE_CONFIRMED_FRAUD_RECORD',
+          title: 'Confirmed Fraud Record Match',
+          whyItMatters:
+            'This opportunity matches a moderator-confirmed record in the shared scam intelligence network.',
+          evidence: `Matches confirmed safety registry record #${intelMatch.publicId} (${intelMatch.tier})`,
+          severity: 'critical',
+        });
+      } else if (intelMatch.status === 'suspicious' || intelMatch.status === 'ai_flagged') {
+        // suspicious/ai_flagged produce "similar to reported messages" with the verdict unchanged
+        result.signals.unshift({
+          id: `sig_intel_${intelMatch.publicId}`,
+          ruleId: 'RULE_SUSPICIOUS_REPORTED_RECORD',
+          title: 'Similar to Reported Messages',
+          whyItMatters:
+            'This message or its indicators are similar to reported messages under community review.',
+          evidence: `Matches reported community record #${intelMatch.publicId}`,
+          severity: 'high',
+        });
       }
-      result.signals.unshift({
-        id: `sig_intel_${suspiciousMatch.id}`,
-        ruleId: 'RULE_SUSPICIOUS_REPORTED_RECORD',
-        title: 'Community Reported Suspicious Identifier',
-        whyItMatters:
-          'This contact identifier has been reported by students and is under active investigation in the trust & safety database.',
-        evidence: `Matches reported community indicator #${suspiciousMatch.id.slice(0, 8)} (${suspiciousMatch.reportCount} reports)`,
-        severity: 'high',
-      });
+    } else {
+      // Fallback check for individual entity indicator lookup
+      const legacyMatches = await ThreatIntelRepository.checkReportedEntities(
+        req.supabase || null,
+        indicatorsToCheck
+      );
+
+      const confirmedMatch = legacyMatches.find((m) => m.status === 'confirmed');
+      const suspiciousMatch = legacyMatches.find((m) => m.status === 'suspicious' || m.status === 'ai_flagged');
+
+      if (confirmedMatch) {
+        result.status = 'CONFIRMED_SCAM';
+        result.confidenceScore = 99;
+        result.intelMatch = {
+          tier: 'indicator_match',
+          status: 'confirmed',
+          confidenceBand: 'high',
+          explanation: 'Matches a moderator-confirmed record in the trust safety network.',
+          publicId: confirmedMatch.id.slice(0, 8),
+          matchedIndicators: [confirmedMatch.entityType],
+        };
+        result.signals.unshift({
+          id: `sig_intel_${confirmedMatch.id}`,
+          ruleId: 'RULE_CONFIRMED_FRAUD_RECORD',
+          title: 'Confirmed Fraud Record Match',
+          whyItMatters:
+            'This opportunity contains a contact indicator that has been independently investigated and confirmed fraudulent by a human moderator.',
+          evidence: `Matches confirmed safety registry record #${confirmedMatch.id.slice(0, 8)} (${confirmedMatch.entityType})`,
+          severity: 'critical',
+        });
+      } else if (suspiciousMatch) {
+        result.intelMatch = {
+          tier: 'indicator_match',
+          status: suspiciousMatch.status,
+          confidenceBand: 'medium',
+          explanation: 'Similar to reported messages under community review.',
+          publicId: suspiciousMatch.id.slice(0, 8),
+          matchedIndicators: [suspiciousMatch.entityType],
+        };
+        result.signals.unshift({
+          id: `sig_intel_${suspiciousMatch.id}`,
+          ruleId: 'RULE_SUSPICIOUS_REPORTED_RECORD',
+          title: 'Similar to Reported Messages',
+          whyItMatters:
+            'This contact identifier has been reported by students and is under active investigation in the trust & safety database.',
+          evidence: `Matches reported community indicator #${suspiciousMatch.id.slice(0, 8)}`,
+          severity: 'high',
+        });
+      }
     }
 
     // Invariant: Record post-intel status; AI can NEVER change it

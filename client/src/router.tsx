@@ -16,6 +16,7 @@ import {
   LogoutPage,
   ProtectedRoute,
 } from './pages/AuthPages.js';
+import { ModerationPage } from './pages/ModerationPage.js';
 
 export const router = createBrowserRouter([
   {
@@ -33,6 +34,7 @@ export const router = createBrowserRouter([
       { path: 'privacy', element: <PrivacyPage /> },
       { path: 'history', element: <HistoryPage /> },
       { path: 'dashboard', element: <ProtectedRoute><HistoryPage /></ProtectedRoute> },
+      { path: 'moderation', element: <ModerationPage /> },
       { path: 'login', element: <LoginPage /> },
       { path: 'signup', element: <SignupPage /> },
       { path: 'logout', element: <LogoutPage /> },
