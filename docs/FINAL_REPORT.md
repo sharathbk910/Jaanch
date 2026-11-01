@@ -3,7 +3,7 @@
 > **Document Status:** FINAL (Human Gate H2 Review)  
 > **Repository:** Green monorepo (`@jaanch/shared`, `@jaanch/server`, `@jaanch/client`)  
 > **Node Version:** v24.19.0 (LTS $\ge$ 20.0.0 required)  
-> **Test Suite:** 41 test files, 387 tests passing (100% pass rate)  
+> **Test Suite:** 42 test files, 425 tests passing (100% pass rate)  
 > **Golden Corpus:** 25/25 benchmark fixtures (100.0% Accuracy, 100.0% Precision, 100.0% Recall, 100.0% F1)  
 > **Acceptance Criteria:** 10 / 10 PASS  
 > **Feature Parity:** 24 / 24 Feature Inventory items verified  
@@ -96,8 +96,8 @@ Every feature operates on real, deterministic code—with **zero placeholder imp
 ===============================================================
                      TEST SUITE SUMMARY                        
 ===============================================================
- Test Files  41 passed (41/41)
- Tests       387 passed (387/387)
+ Test Files  42 passed (42/42)
+ Tests       425 passed (425/425)
  Duration    ~14s
 
 --- Acceptance Criteria Harness (scripts/test-acceptance.mjs) ---

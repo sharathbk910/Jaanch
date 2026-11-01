@@ -6,7 +6,7 @@
 [![TypeScript Strict](https://img.shields.io/badge/TypeScript-Strict-blue.svg)](https://www.typescriptlang.org/)
 [![Node Version](https://img.shields.io/badge/Node->=%2020.0.0-green.svg)](https://nodejs.org/)
 [![WCAG AA](https://img.shields.io/badge/Accessibility-WCAG%202.2%20AA-success.svg)](https://www.w3.org/WAI/standards-guidelines/wcag/)
-[![Tests Passing](https://img.shields.io/badge/Tests-385%20Passing-brightgreen.svg)]()
+[![Tests Passing](https://img.shields.io/badge/Tests-425%20Passing-brightgreen.svg)]()
 [![Corpus Eval](https://img.shields.io/badge/Eval-25%2F25%20(100%25)-brightgreen.svg)]()
 
 ---
@@ -132,7 +132,7 @@ npm run dev
 
 | Command | Purpose |
 |---|---|
-| `npm test` | Runs all 41 test suites (385 passing tests) |
+| `npm test` | Runs all 42 test suites (425 passing tests) |
 | `npm run eval` | Evaluates 25 golden corpus fixtures (100% Accuracy) |
 | `npm run eval:ml` | Calibrates similarity & semantic embedding thresholds |
 | `npm run doctor` | Validates environment variables, Node version, and reachability |
