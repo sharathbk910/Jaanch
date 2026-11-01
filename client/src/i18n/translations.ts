@@ -148,6 +148,46 @@ export interface TranslationDictionary {
     pasteClipboard: string;
     copiedNotice: string;
   };
+  results: {
+    eyebrow: string;
+    verdictLabel: string;
+    meterLabel: string;
+    confidenceLabel: string;
+    paymentAlertTitle: string;
+    paymentAlertDesc: string;
+    paymentAlertCall1930: string;
+    whyTitle: string;
+    signalsTitle: string;
+    signalsEmpty: string;
+    evidenceQuote: string;
+    whyItMatters: string;
+    unverifiedTitle: string;
+    unverifiedDesc: string;
+    entitiesTitle: string;
+    upiLabel: string;
+    phonesLabel: string;
+    domainsLabel: string;
+    amountsLabel: string;
+    orgLabel: string;
+    nextStepsTitle: string;
+    stepCheckedTitle: string;
+    stepYourTurnTitle: string;
+    stepProtectTitle: string;
+    iPaidToggle: string;
+    iPaidNotice: string;
+    exportPdf: string;
+    exportPrint: string;
+    exportJson: string;
+    checkAnother: string;
+    sampleWalkthroughTitle: string;
+    sampleWalkthroughSubtitle: string;
+    sampleTabGenuine: string;
+    sampleTabReview: string;
+    sampleTabConcern: string;
+    emptyTitle: string;
+    emptyDesc: string;
+    emptyCta: string;
+  };
 
   // Compatibility and short-key aliases
   nav: {
@@ -330,6 +370,46 @@ export const translations: Record<'en' | 'hi' | 'kn', TranslationDictionary> = {
       pasteClipboard: 'Paste from Clipboard',
       copiedNotice: 'Pasted from clipboard',
     },
+    results: {
+      eyebrow: 'VERIFICATION RESULT',
+      verdictLabel: 'Verification Status',
+      meterLabel: 'Independent checks evaluated',
+      confidenceLabel: 'Assessment Confidence',
+      paymentAlertTitle: 'Payment & Banking Security Advisory',
+      paymentAlertDesc: 'This communication demands an upfront fee, deposit, or banking OTP. Legitimate employers and scholarship bodies never ask for money or OTPs.',
+      paymentAlertCall1930: 'Dial 1930 immediately or file a complaint at cybercrime.gov.in if you have already sent funds.',
+      whyTitle: 'Why this status was reached',
+      signalsTitle: 'Observed Risk Indicators & Signals',
+      signalsEmpty: 'No hard scam indicators detected in the submitted communication.',
+      evidenceQuote: 'Extracted Evidence',
+      whyItMatters: 'Why it matters',
+      unverifiedTitle: 'Pending & Unverified Details',
+      unverifiedDesc: 'The following critical details could not be corroborated from official sources. Exercise caution until independently verified:',
+      entitiesTitle: 'Extracted Opportunity Indicators',
+      upiLabel: 'UPI / Payment Handles',
+      phonesLabel: 'Phone & WhatsApp Numbers',
+      domainsLabel: 'Websites & Links',
+      amountsLabel: 'Mentioned Amounts',
+      orgLabel: 'Claimed Organization',
+      nextStepsTitle: 'Actionable Next Steps',
+      stepCheckedTitle: '1. What Jaanch Checked',
+      stepYourTurnTitle: '2. Your Turn: Student Verification Checklist',
+      stepProtectTitle: '3. Emergency & Fraud Prevention',
+      iPaidToggle: 'I already transferred money or shared sensitive documents',
+      iPaidNotice: 'Emergency Action: Call 1930 (National Cyber Crime Helpline) within the golden hour to freeze the beneficiary account. Lodge an official complaint at cybercrime.gov.in and block the recruiter on all platforms.',
+      exportPdf: 'Download PDF Report',
+      exportPrint: 'Print Report',
+      exportJson: 'Export JSON',
+      checkAnother: 'Audit Another Offer',
+      sampleWalkthroughTitle: 'Sample Report Walkthrough',
+      sampleWalkthroughSubtitle: 'Interactive reference reports illustrating the four-verdict model and evidence architecture.',
+      sampleTabGenuine: 'Genuine Offer Sample',
+      sampleTabReview: 'Needs Review Sample',
+      sampleTabConcern: 'Fee Scam Sample',
+      emptyTitle: 'No Audit Result Loaded',
+      emptyDesc: 'Please enter offer text on the Analyze page to view deterministic verification results.',
+      emptyCta: 'Audit an Offer',
+    },
 
     // Compatibility aliases
     nav: {
@@ -510,6 +590,46 @@ export const translations: Record<'en' | 'hi' | 'kn', TranslationDictionary> = {
       pasteClipboard: 'क्लिपबोर्ड से पेस्ट करें',
       copiedNotice: 'क्लिपबोर्ड से पेस्ट किया गया',
     },
+    results: {
+      eyebrow: 'सत्यापन परिणाम',
+      verdictLabel: 'सत्यापन स्थिति',
+      meterLabel: 'स्वतंत्र सुरक्षा परीक्षण',
+      confidenceLabel: 'मूल्यांकन विश्वसनीयता',
+      paymentAlertTitle: 'भुगतान और बैंकिंग सुरक्षा चेतावनी',
+      paymentAlertDesc: 'इस संदेश में अग्रिम शुल्क, जमा राशि या बैंक OTP मांगा गया है। वैध नियोक्ता कभी पैसे या OTP नहीं मांगते।',
+      paymentAlertCall1930: 'यदि आपने पहले ही पैसे भेजे हैं, तो तुरंत 1930 डायल करें या cybercrime.gov.in पर शिकायत दर्ज करें।',
+      whyTitle: 'इस निर्णय का आधार',
+      signalsTitle: 'पहचाने गए जोखिम संकेत',
+      signalsEmpty: 'सबमिट किए गए संदेश में कोई धोखाधड़ी संकेत नहीं मिला।',
+      evidenceQuote: 'निकाला गया साक्ष्य',
+      whyItMatters: 'यह क्यों महत्वपूर्ण है',
+      unverifiedTitle: 'लंबित और असत्यापित विवरण',
+      unverifiedDesc: 'निम्नलिखित महत्वपूर्ण विवरण आधिकारिक स्रोतों से सत्यापित नहीं हो सके। स्वयं पुष्टि करने तक सावधानी बरतें:',
+      entitiesTitle: 'पहचाने गए अवसर संकेतक',
+      upiLabel: 'UPI / भुगतान पते',
+      phonesLabel: 'फ़ोन और व्हाट्सएप नंबर',
+      domainsLabel: 'वेबसाइट और लिंक',
+      amountsLabel: 'उल्लिखित राशियाँ',
+      orgLabel: 'दावा किया गया संगठन',
+      nextStepsTitle: 'कार्रवाई योग्य अगले कदम',
+      stepCheckedTitle: '1. जांच द्वारा परखे गए नियम',
+      stepYourTurnTitle: '2. आपकी बारी: छात्र सत्यापन चेकलिस्ट',
+      stepProtectTitle: '3. आपातकालीन धोखाधड़ी रोकथाम',
+      iPaidToggle: 'मैंने पहले ही पैसे भेजे हैं या संवेदनशील दस्तावेज़ साझा किए हैं',
+      iPaidNotice: 'आपातकालीन कार्रवाई: लाभार्थी खाते को फ्रीज कराने के लिए 1930 (राष्ट्रीय साइबर हेल्पलाइन) पर तुरंत कॉल करें। cybercrime.gov.in पर औपचारिक शिकायत दर्ज करें।',
+      exportPdf: 'PDF रिपोर्ट डाउनलोड करें',
+      exportPrint: 'रिपोर्ट प्रिंट करें',
+      exportJson: 'JSON निर्यात करें',
+      checkAnother: 'अन्य ऑफ़र की जांच करें',
+      sampleWalkthroughTitle: 'नमूना रिपोर्ट वॉकथ्रू',
+      sampleWalkthroughSubtitle: 'चार-निर्णय मॉडल और साक्ष्य वास्तुकला को समझाने वाली संदर्भ रिपोर्टें।',
+      sampleTabGenuine: 'वास्तविक ऑफ़र नमूना',
+      sampleTabReview: 'समीक्षा आवश्यक नमूना',
+      sampleTabConcern: 'शुल्क धोखाधड़ी नमूना',
+      emptyTitle: 'कोई ऑडिट परिणाम लोड नहीं हुआ',
+      emptyDesc: 'सत्यापन परिणाम देखने के लिए कृपया जांच पृष्ठ पर ऑफ़र विवरण दर्ज करें।',
+      emptyCta: 'ऑफ़र की जांच करें',
+    },
 
     // Compatibility aliases
     nav: {
@@ -689,6 +809,46 @@ export const translations: Record<'en' | 'hi' | 'kn', TranslationDictionary> = {
       progressStep4: 'ಪಾರದರ್ಶಕ ಸಾಕ್ಷ್ಯ ವರದಿ ಸಿದ್ಧಪಡಿಸಲಾಗುತ್ತಿದೆ...',
       pasteClipboard: 'ಕ್ಲಿಪ್‌ಬೋರ್ಡ್‌ನಿಂದ ಅಂಟಿಸಿ',
       copiedNotice: 'ಕ್ಲಿಪ್‌ಬೋರ್ಡ್‌ನಿಂದ ಅಂಟಿಸಲಾಗಿದೆ',
+    },
+    results: {
+      eyebrow: 'ದೃಢೀಕರಣ ಫಲಿತಾಂಶ',
+      verdictLabel: 'ಪರಿಶೀಲನಾ ಸ್ಥಿತಿ',
+      meterLabel: 'ಸ್ವತಂತ್ರ ತಪಾಸಣೆಗಳು',
+      confidenceLabel: 'ಮೌಲ್ಯಮಾಪನ ವಿಶ್ವಾಸಾರ್ಹತೆ',
+      paymentAlertTitle: 'ಪಾವತಿ ಮತ್ತು ಬ್ಯಾಂಕಿಂಗ್ ಸುರಕ್ಷತಾ ಎಚ್ಚರಿಕೆ',
+      paymentAlertDesc: 'ಈ ಸಂದೇಶದಲ್ಲಿ ಮುಂಗಡ ಶುಲ್ಕ, ಠೇವಣಿ ಅಥವಾ ಬ್ಯಾಂಕಿಂಗ್ OTP ಕೇಳಲಾಗಿದೆ. ಅಧಿಕೃತ ಉದ್ಯೋಗದಾತರು ಎಂದಿಗೂ ಹಣ ಅಥವಾ OTP ಕೇಳುವುದಿಲ್ಲ.',
+      paymentAlertCall1930: 'ನೀವು ಈಗಾಗಲೇ ಹಣ ಪಾವತಿಸಿದ್ದರೆ ತಕ್ಷಣವೇ 1930 ಗೆ ಕರೆ ಮಾಡಿ ಅಥವಾ cybercrime.gov.in ನಲ್ಲಿ ದೂರು ದಾಖಲಿಸಿ.',
+      whyTitle: 'ಈ ನಿರ್ಧಾರಕ್ಕೆ ಕಾರಣಗಳು',
+      signalsTitle: 'ಪತ್ತೆಯಾದ ಅಪಾಯಕಾರಿ ಸಂಕೇತಗಳು',
+      signalsEmpty: 'ಸಲ್ಲಿಸಲಾದ ಸಂದೇಶದಲ್ಲಿ ಯಾವುದೇ ವಂಚನೆ ಸಂಕೇತಗಳು ಕಂಡುಬಂದಿಲ್ಲ.',
+      evidenceQuote: 'ಪಡೆಯಲಾದ ಸಾಕ್ಷ್ಯ',
+      whyItMatters: 'ಇದು ಏಕೆ ಮುಖ್ಯ',
+      unverifiedTitle: 'ಬಾಕಿ ಉಳಿದಿರುವ ಮತ್ತು ಪರಿಶೀಲಿಸದ ವಿವರಗಳು',
+      unverifiedDesc: 'ಕೆಳಗಿನ ಪ್ರಮುಖ ವಿವರಗಳನ್ನು ಅಧಿಕೃತ ಮೂಲಗಳಿಂದ ದೃಢೀಕರಿಸಲು ಸಾಧ್ಯವಾಗಿಲ್ಲ. ಸ್ವತಂತ್ರವಾಗಿ ಪರಿಶೀಲಿಸುವವರೆಗೆ ಎಚ್ಚರವಹಿಸಿ:',
+      entitiesTitle: 'ಪತ್ತೆಯಾದ ಅವಕಾಶದ ವಿವರಗಳು',
+      upiLabel: 'UPI / ಪಾವತಿ ಖಾತೆಗಳು',
+      phonesLabel: 'ಫೋನ್ ಮತ್ತು ವಾಟ್ಸಾಪ್ ಸಂಖ್ಯೆಗಳು',
+      domainsLabel: 'ವೆಬ್‌ಸೈಟ್‌ಗಳು ಮತ್ತು ಲಿಂಕ್‌ಗಳು',
+      amountsLabel: 'ಉಲ್ಲೇಖಿಸಲಾದ ಮೊತ್ತ',
+      orgLabel: 'ಸಂಬಂಧಿತ ಸಂಸ್ಥೆ',
+      nextStepsTitle: 'ಮುಂದಿನ ನಿರ್ಣಾಯಕ ಕ್ರಮಗಳು',
+      stepCheckedTitle: '1. ಜಾಂಚ್ ಪರಿಶೀಲಿಸಿದ ನಿಯಮಗಳು',
+      stepYourTurnTitle: '2. ನಿಮ್ಮ ಸರದಿ: ವಿದ್ಯಾರ್ಥಿ ಪರಿಶೀಲನಾ ಚೆಕ್‌ಲಿಸ್ಟ್',
+      stepProtectTitle: '3. ತುರ್ತು ವಂಚನೆ ತಡೆಗಟ್ಟುವಿಕೆ',
+      iPaidToggle: 'ನಾನು ಈಗಾಗಲೇ ಹಣ ವರ್ಗಾಯಿಸಿದ್ದೇನೆ ಅಥವಾ ಸೂಕ್ಷ್ಮ ದಾಖಲೆಗಳನ್ನು ಹಂಚಿಕೊಂಡಿದ್ದೇನೆ',
+      iPaidNotice: 'ತುರ್ತು ಕ್ರಮ: ಖಾತೆಯನ್ನು ಸ್ಥಗಿತಗೊಳಿಸಲು 1930 (ರಾಷ್ಟ್ರೀಯ ಸೈಬರ್ ಹೆಲ್ಪ್‌ಲೈನ್) ಗೆ ತಕ್ಷಣ ಕರೆ ಮಾಡಿ. cybercrime.gov.in ನಲ್ಲಿ ದೂರು ದಾಖಲಿಸಿ.',
+      exportPdf: 'PDF ವರದಿ ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ',
+      exportPrint: 'ವರದಿ ಪ್ರಿಂಟ್ ಮಾಡಿ',
+      exportJson: 'JSON ರಫ್ತು ಮಾಡಿ',
+      checkAnother: 'ಇನ್ನೊಂದು ಆಫರ್ ಪರಿಶೀಲಿಸಿ',
+      sampleWalkthroughTitle: 'ಮಾದರಿ ವರದಿ ಪರಿಶೀಲನೆ',
+      sampleWalkthroughSubtitle: 'ನಾಲ್ಕು-ತೀರ್ಪು ಮಾದರಿ ಮತ್ತು ಸಾಕ್ಷ್ಯ ರಚನೆಯನ್ನು ವಿವರಿಸುವ ಉಲ್ಲೇಖ ವರದಿಗಳು.',
+      sampleTabGenuine: 'ನೈಜ ಆಫರ್ ಮಾದರಿ',
+      sampleTabReview: 'ಪರಿಶೀಲನೆ ಅಗತ್ಯವಿರುವ ಮಾದರಿ',
+      sampleTabConcern: 'ವಂಚನೆ ಆಫರ್ ಮಾದರಿ',
+      emptyTitle: 'ಯಾವುದೇ ಫಲಿತಾಂಶ ಲಭ್ಯವಿಲ್ಲ',
+      emptyDesc: 'ಪರಿಶೀಲನಾ ಫಲಿತಾಂಶಗಳನ್ನು ನೋಡಲು ದಯವಿಟ್ಟು ವಿಶ್ಲೇಷಣಾ ಪುಟದಲ್ಲಿ ಆಫರ್ ವಿವರಗಳನ್ನು ನಮೂದಿಸಿ.',
+      emptyCta: 'ಆಫರ್ ಪರಿಶೀಲಿಸಿ',
     },
 
     // Compatibility aliases

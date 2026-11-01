@@ -17,8 +17,9 @@ const COLOR_FUNC_REGEX = /\b(?:rgb|rgba|hsl|hsla)\s*\([^)]*\)/i;
 const HEX_COLOR_REGEX = /(?:["'`:=,\s(])(#(?:[0-9a-fA-F]{3,4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8}))\b/;
 
 export function scanFileForColors(filePath, content, violations) {
-  // tokens.css is explicitly exempt
-  if (path.basename(filePath).toLowerCase() === 'tokens.css') {
+  // tokens.css and react-pdf document stylesheets (which do not run in DOM and cannot consume CSS variables) are exempt
+  const lowerBase = path.basename(filePath).toLowerCase();
+  if (lowerBase === 'tokens.css' || lowerBase.includes('pdfreport') || lowerBase.includes('pdftokens')) {
     return;
   }
 

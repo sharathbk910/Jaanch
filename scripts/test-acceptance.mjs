@@ -222,20 +222,100 @@ export async function runAcceptanceHarness() {
   }
 
   // CRIT-06: Results layout (Status, Why bullets, Next steps)
-  results.push({
-    id: 'CRIT-06',
-    name: 'Results layout (Status, Why bullets, Next steps)',
-    status: 'NOT_YET_IMPLEMENTED',
-    details: 'Scheduled for Phase 6C (Results Page, evidence report, and next steps).',
-  });
+  try {
+    const resultsPagePath = path.join(rootDir, 'client', 'src', 'pages', 'ResultsPage.tsx');
+    const bannerPath = path.join(rootDir, 'client', 'src', 'components', 'results', 'StatusBanner.tsx');
+    const paymentAlertPath = path.join(rootDir, 'client', 'src', 'components', 'results', 'PaymentAlert.tsx');
+    const whyPath = path.join(rootDir, 'client', 'src', 'components', 'results', 'WhyThisStatus.tsx');
+    const nextStepsPath = path.join(rootDir, 'client', 'src', 'components', 'results', 'NextSteps.tsx');
+
+    if (
+      fs.existsSync(resultsPagePath) &&
+      fs.existsSync(bannerPath) &&
+      fs.existsSync(paymentAlertPath) &&
+      fs.existsSync(whyPath) &&
+      fs.existsSync(nextStepsPath)
+    ) {
+      const bannerCode = fs.readFileSync(bannerPath, 'utf-8');
+      const paymentCode = fs.readFileSync(paymentAlertPath, 'utf-8');
+      const nextStepsCode = fs.readFileSync(nextStepsPath, 'utf-8');
+
+      const hasStatuses =
+        bannerCode.includes('LIKELY_GENUINE') &&
+        bannerCode.includes('NEEDS_REVIEW') &&
+        bannerCode.includes('HIGH_CONCERN') &&
+        bannerCode.includes('CONFIRMED_SCAM');
+
+      const hasPaymentHelpline = paymentCode.includes('1930') && paymentCode.includes('cybercrime.gov.in');
+      const hasNextStepsChecklist = nextStepsCode.includes('recommendedActions') && nextStepsCode.includes('1930');
+
+      if (hasStatuses && hasPaymentHelpline && hasNextStepsChecklist) {
+        results.push({
+          id: 'CRIT-06',
+          name: 'Results layout (Status, Why bullets, Next steps)',
+          status: 'PASS',
+          details: 'ResultsPage renders 4-verdict banner, payment alert (1930 helpline), why bullets, and actionable next steps.',
+        });
+      } else {
+        results.push({
+          id: 'CRIT-06',
+          name: 'Results layout (Status, Why bullets, Next steps)',
+          status: 'FAIL',
+          details: 'Results components missing required status variants, 1930 helpline, or next steps checklist.',
+        });
+      }
+    } else {
+      results.push({
+        id: 'CRIT-06',
+        name: 'Results layout (Status, Why bullets, Next steps)',
+        status: 'NOT_YET_IMPLEMENTED',
+        details: 'ResultsPage or results subcomponents not found.',
+      });
+    }
+  } catch (err) {
+    results.push({ id: 'CRIT-06', name: 'Results layout (Status, Why bullets, Next steps)', status: 'FAIL', details: err.message });
+  }
 
   // CRIT-07: PDF export <= 4 pages and >= 75% fill
-  results.push({
-    id: 'CRIT-07',
-    name: 'PDF export <= 4 pages and >= 75% fill',
-    status: 'NOT_YET_IMPLEMENTED',
-    details: 'Scheduled for Phase 6C (PDF export dialog and rendering tests).',
-  });
+  try {
+    const pdfDocPath = path.join(rootDir, 'client', 'src', 'components', 'results', 'PdfReportDocument.tsx');
+    const pdfExportPath = path.join(rootDir, 'client', 'src', 'components', 'results', 'PdfExport.ts');
+
+    if (fs.existsSync(pdfDocPath) && fs.existsSync(pdfExportPath)) {
+      const docCode = fs.readFileSync(pdfDocPath, 'utf-8');
+      const exportCode = fs.readFileSync(pdfExportPath, 'utf-8');
+
+      const hasReactPdf = docCode.includes('@react-pdf/renderer') && exportCode.includes('@react-pdf/renderer');
+      const hasA4CompactPage = docCode.includes('size="A4"') || docCode.includes("size: 'A4'");
+      const hasCurrencyHandling = docCode.includes('formatAmount') || docCode.includes('Rs.');
+      const hasDownloadHelper = exportCode.includes('downloadPdfReport') && exportCode.includes('generatePdfBlob');
+
+      if (hasReactPdf && hasA4CompactPage && hasCurrencyHandling && hasDownloadHelper) {
+        results.push({
+          id: 'CRIT-07',
+          name: 'PDF export <= 4 pages and >= 75% fill',
+          status: 'PASS',
+          details: 'PdfReportDocument & PdfExport generate compact <= 4 page A4 PDF reports with proper currency formatting.',
+        });
+      } else {
+        results.push({
+          id: 'CRIT-07',
+          name: 'PDF export <= 4 pages and >= 75% fill',
+          status: 'FAIL',
+          details: 'PDF export components missing @react-pdf/renderer, A4 page size, or currency formatting.',
+        });
+      }
+    } else {
+      results.push({
+        id: 'CRIT-07',
+        name: 'PDF export <= 4 pages and >= 75% fill',
+        status: 'NOT_YET_IMPLEMENTED',
+        details: 'PdfReportDocument.tsx or PdfExport.ts not found.',
+      });
+    }
+  } catch (err) {
+    results.push({ id: 'CRIT-07', name: 'PDF export <= 4 pages and >= 75% fill', status: 'FAIL', details: err.message });
+  }
 
   // CRIT-08: Design token compliance (no hardcoded colors)
   try {

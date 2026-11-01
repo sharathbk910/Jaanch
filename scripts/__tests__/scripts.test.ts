@@ -155,14 +155,15 @@ describe('Security & Tooling Scripts Validation', () => {
   });
 
   describe('test-acceptance.mjs', () => {
-    it('accurately reports verified status for implemented criteria and pending for Phase 6C', async () => {
+    it('accurately reports 10/10 verified status for all core acceptance criteria', async () => {
       const results = await runAcceptanceHarness();
       expect(results.length).toBe(10);
       const passed = results.filter((r) => r.status === 'PASS');
+      const failed = results.filter((r) => r.status === 'FAIL');
       const pending = results.filter((r) => r.status === 'NOT_YET_IMPLEMENTED');
-      expect(passed.length).toBe(8);
-      expect(pending.length).toBe(2);
-      expect(pending.map((p) => p.id)).toEqual(['CRIT-06', 'CRIT-07']);
+      expect(passed.length).toBe(10);
+      expect(failed.length).toBe(0);
+      expect(pending.length).toBe(0);
     });
   });
 });

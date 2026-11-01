@@ -17,6 +17,7 @@
     "@fontsource/noto-sans-devanagari": "^5.1.1",
     "@fontsource/noto-sans-kannada": "^5.1.1",
     "@jaanch/shared": "*",
+    "@react-pdf/renderer": "^3.4.5",
     "@supabase/supabase-js": "^2.47.10",
     "@tanstack/react-query": "^5.62.7",
     "clsx": "^2.1.1",

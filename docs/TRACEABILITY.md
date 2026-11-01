@@ -36,21 +36,21 @@
 
 | Decision | Summary | Original Spec Phase | Approved Addendum Phase | Status |
 |---|---|---|---|---|
-| **D1** | Stack: TypeScript, workspaces `client`, `server`, `shared`. Vitest, supertest, Playwright, axe | P1, P5, P8 | Phase 1, 3, 5 | **DONE** (Phase 1 part) |
+| **D1** | Stack: TypeScript, workspaces `client`, `server`, `shared`. Vitest, supertest, Playwright, axe | P1, P5, P8 | Phase 1, 3, 5 | **DONE** |
 | **D2** | Status model (reconciled in Addendum: 4 verdicts `LIKELY_GENUINE, NEEDS_REVIEW, HIGH_CONCERN, CONFIRMED_SCAM`) | P3 | Phase 2 | **DONE** |
 | **D3** | Rule catalog: Negation guards, hard disqualifiers, coverage metric, `none_found` outcome | P3 | Phase 2 | **DONE** |
-| **D4** | Next steps: 3 parts, max 6 manual steps, PDF export (≤ 4 pages, ≥ 75% fill) | P3, P10 | Phase 2, Phase 6C | Pending (Next Steps UI in P6C) |
-| **D5** | UI: Light theme editorial tokens, no dark mode, specified routes | P8 | Phase 5, Phase 6 | **DONE (Foundation & Shell)** |
-| **D6** | Results layout: Single column, mobile section chips, collapsed evidence on mobile | P10 | Phase 6C | Pending |
-| **D7** | Guest flow: `sessionStorage` only, zero server persistence for unauthenticated | P5, P9 | Phase 3, Phase 6B | Pending |
-| **D8** | Safety rules: Safe Reply hidden on High Concern/Scam, "I already paid" defaults OFF | P3, P10 | Phase 2, Phase 6C | Pending |
+| **D4** | Next steps: 3 parts, max 6 manual steps, PDF export (≤ 4 pages, ≥ 75% fill) | P3, P10 | Phase 2, Phase 6C | **DONE** (Implemented in Phase 6C) |
+| **D5** | UI: Light theme editorial tokens, no dark mode, specified routes | P8 | Phase 5, Phase 6 | **DONE** (Tokens, routing, accessible layout) |
+| **D6** | Results layout: Single column, mobile section chips, collapsed evidence on mobile | P10 | Phase 6C | **DONE** (Implemented in Phase 6C) |
+| **D7** | Guest flow: `sessionStorage` only, zero server persistence for unauthenticated | P5, P9 | Phase 3, Phase 6B | **DONE** (Session storage guest flow in Phase 6B/6C) |
+| **D8** | Safety rules: Safe Reply hidden on High Concern/Scam, "I already paid" defaults OFF | P3, P10 | Phase 2, Phase 6C | **DONE** (Implemented in Phase 6C) |
 | **D9** | Optional AI: Gemini schema-grounded with `findSpan`, fail-soft with `aiStatus` | P6 | Phase 8 | Pending |
 | **D10** | Third-party checks: Flagged default OFF, RDAP on, registry `needs_team_review = true` | P7 | Phase 3 | Pending |
 | **D11** | Moderation: No ML layer, no service-role key in requests, moderator SQL/CLI confirmation | P4 | Phase 4, Phase 7 | **DONE** |
-| **D12** | Input validation: Minimum text length (`INPUT_LIMITS.textMin = 20`) enforced | P2, P9 | Phase 2, Phase 6B | **DONE** (Schemas in P2) |
-| **D13** | Multilingual: EN / HI / KN chrome translations,Indic font fallbacks | P8, P11 | Phase 5, Phase 6 | Pending |
+| **D12** | Input validation: Minimum text length (`INPUT_LIMITS.textMin = 20`/25) enforced | P2, P9 | Phase 2, Phase 6B | **DONE** (Schemas in P2, UI enforced in P6B) |
+| **D13** | Multilingual: EN / HI / KN chrome translations, Indic font fallbacks | P8, P11 | Phase 5, Phase 6 | **DONE** (Complete translations in EN/HI/KN) |
 | **D14** | Database: Consolidated final schema migration with RLS on all tables | P4 | Phase 4 | **DONE** |
-| **D15** | Fonts & assets: Self-hosted fonts, zero external CDNs, locally bundled workers | P8, P9 | Phase 5, Phase 6 | Pending |
+| **D15** | Fonts & assets: Self-hosted fonts, zero external CDNs, locally bundled workers | P8, P9 | Phase 5, Phase 6 | **DONE** (Self-hosted fallbacks & bundled pdf.worker) |
 | **D16** | Privacy accuracy: Audit all privacy claims against code | P9, P12 | Phase 10 | Pending |
 
 ---
@@ -59,29 +59,29 @@
 
 | ID | Feature Description | Original Spec Phase | Approved Addendum Phase | Status |
 |---|---|---|---|---|
-| **F01** | Landing page (hero + official portals card, facts band, how-it-works, guidelines card, helpline, footer) | P9 | Phase 6A | Pending |
-| **F02** | Header/nav/mobile sheet/skip link/footer/floating feedback pill, hash navigation | P8 | Phase 5, Phase 6A | Pending |
-| **F03** | Language switch EN / HI / KN (persisted, `<html lang>`) | P8, P11 | Phase 5, Phase 6 | Pending |
-| **F04** | Analyze page: paste text, file upload OCR/PDF extraction, sample chips, More options | P9 | Phase 6B | Pending |
-| **F05** | Input routing (misplaced email/URL/phone/UPI) with visible notices | P2, P9 | Phase 2, Phase 6B | **DONE** (Extraction in P2) |
+| **F01** | Landing page (hero + official portals card, facts band, how-it-works, guidelines card, helpline, footer) | P9 | Phase 6A | **DONE** |
+| **F02** | Header/nav/mobile sheet/skip link/footer/floating feedback pill, hash navigation | P8 | Phase 5, Phase 6A | **DONE** |
+| **F03** | Language switch EN / HI / KN (persisted, `<html lang>`) | P8, P11 | Phase 5, Phase 6 | **DONE** |
+| **F04** | Analyze page: paste text, file upload OCR/PDF extraction, sample chips, More options | P9 | Phase 6B | **DONE** |
+| **F05** | Input routing (misplaced email/URL/phone/UPI) with visible notices | P2, P9 | Phase 2, Phase 6B | **DONE** |
 | **F06** | Extraction: entities, organization, role, 10-detail completeness with clean whole-word quotes | P2 | Phase 2 | **DONE** |
 | **F07** | Rule engine (catalog, negation guards, hard disqualifiers) | P3 | Phase 2 | **DONE** |
 | **F08** | Sender email analysis, header parsing (SPF/DKIM/DMARC), DNS policy lookup | P3, P5 | Phase 2, Phase 3 | Pending (Email in P2, DNS in P3) |
-| **F09** | Lookalike/impersonation detection, link inspector, reserved-domain note | P3, P5, P10 | Phase 2, Phase 3 | **DONE** (Lookalike utils in P2) |
+| **F09** | Lookalike/impersonation detection, link inspector, reserved-domain note | P3, P5, P10 | Phase 2, Phase 3 | **DONE** |
 | **F10** | Organization registry match; reported-entities lookup & reporting (peppered hash) | P4, P5, P10 | Phase 4, Phase 7 | Pending |
-| **F11** | Status engine (verdicts, reasons), paymentAlert, coverage k-of-8, pattern insights | P3 | Phase 2 | **DONE** (Status engine in P2) |
+| **F11** | Status engine (verdicts, reasons), paymentAlert, coverage k-of-8, pattern insights | P3 | Phase 2 | **DONE** |
 | **F12** | RDAP domain age; (flagged) CT-log, Safe Browsing, official listing fetch/compare | P5, P7 | Phase 3 | Pending |
 | **F13** | Optional Gemini context, challenge email, safe reply, link explanation (with fallbacks) | P5, P6 | Phase 8 | Pending |
-| **F14** | Results page (verdict banner, payment alert, why, next steps, signals, evidence report) | P10 | Phase 6C | Pending |
-| **F15** | Attestations + checklist persistence (saved) / session state (guest) | P5, P10 | Phase 4, Phase 6C | Pending |
-| **F16** | Export: PDF (react-pdf, ≤ 4 pages, ₹ renders, ≥ 75% fill), Print, JSON | P10 | Phase 6C | Pending |
-| **F17** | `/sample` fictional report walkthrough | P10 | Phase 6C | Pending |
+| **F14** | Results page (verdict banner, payment alert, why, next steps, signals, evidence report) | P10 | Phase 6C | **DONE** |
+| **F15** | Attestations + checklist persistence (saved) / session state (guest) | P5, P10 | Phase 4, Phase 6C | **DONE** |
+| **F16** | Export: PDF (react-pdf, ≤ 4 pages, ₹ renders, ≥ 75% fill), Print, JSON | P10 | Phase 6C | **DONE** |
+| **F17** | `/sample` fictional report walkthrough | P10 | Phase 6C | **DONE** |
 | **F18** | Dedicated link checker page (`/link-check`) | P10 | Phase 6C | Pending |
-| **F19** | Verification Guide (`/resources`), About, Privacy pages | P10 | Phase 6A, 6C | Pending |
-| **F20** | Auth (email/password + Google), history (filters, delete one/all), settings, account deletion | P5, P10 | Phase 4, Phase 6D | **DONE (Backend)** |
+| **F19** | Verification Guide (`/resources`), About, Privacy pages | P10 | Phase 6A, 6C | **DONE** |
+| **F20** | Auth (email/password + Google), history (filters, delete one/all), settings, account deletion | P5, P10 | Phase 4, Phase 6D | **DONE (Backend)** / Pending (UI) |
 | **F21** | Security: helmet, CORS allowlist, rate limits, body limits, SSRF safeFetch, RLS | P4, P5 | Phase 3, Phase 4 | **DONE** |
 | **F22** | Fixtures/corpus regression suite + `npm run eval` | P3 | Phase 2 | **DONE** (25/25 100%) |
-| **F23** | Accessibility (WCAG 2.2 AA), responsive 360–1920px, performance budgets | P8–P12 | Phase 10 | Pending |
+| **F23** | Accessibility (WCAG 2.2 AA), responsive 360–1920px, performance budgets | P8–P12 | Phase 10 | In Progress (WCAG AA & 360px verified) |
 | **F24** | Runbook, doctor/smoke scripts, deployment configuration | P13 | Phase 11 | Pending |
 
 ---
