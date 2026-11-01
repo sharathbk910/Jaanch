@@ -1,50 +1,102 @@
 :root {
   /* =========================================================================
-     JAANCH EDITORIAL DESIGN TOKENS (Part G Specification)
-     Authority: docs/SPEC_ORIGINAL.md Part G & docs/reference/SPEC_PACK.md Part G
-     Note: Light theme only. No dark mode, no gradients, no shadows.
+     JAANCH EDITORIAL DESIGN TOKENS (Phase 5 Foundation)
+     Authority: SPEC_ORIGINAL Phase 4 / Phase 5 Specification
+     Exact Variables:
+       --color-background: #F9F8F3
+       --color-surface
+       --color-foreground
+       --color-muted-foreground
+       --color-muted-subtle
+       --color-terracotta
+       --color-primary
+       --color-border-pill
+       --color-border
+     Semantic Status Colors (high-concern, needs-review, likely-genuine, confirmed)
+     Focus rings, fonts, radii, dark-mode overrides.
      ========================================================================= */
 
-  /* Surface & Background Fills */
-  --bg: #FAF9F5;
-  --surface: #FFFFFF;
-  --btn: #141414;
-  --btn-hover: #2B2B2A;
-  --pill: #1E1E26;
+  /* Exact Spec Variables (Light Mode) */
+  --color-background: #F9F8F3;
+  --color-surface: #FFFFFF;
+  --color-foreground: #141413;
+  --color-muted-foreground: #57534E;
+  --color-muted-subtle: #6B6A66;
+  --color-terracotta: #C2410C;
+  --color-primary: #141414;
+  --color-border-pill: #1E1E26;
+  --color-border: #E6E5E1;
+  --color-ring: #E55A12;
 
-  /* Typography Colors */
-  --text: #141413;
-  --text-body: #57534E;
-  --text-muted: #6B6A66;
+  /* Semantic Tokens for Status Colors (Light Mode) */
+  --color-status-high-concern-bg: #FDEEEE;
+  --color-status-high-concern-fg: #9B1C1C;
+  --color-status-high-concern-border: #F0B4B4;
+
+  --color-status-needs-review-bg: #FFF6E0;
+  --color-status-needs-review-fg: #7A4B00;
+  --color-status-needs-review-border: #E8C77A;
+
+  --color-status-likely-genuine-bg: #E7F4F3;
+  --color-status-likely-genuine-fg: #0F5F5A;
+  --color-status-likely-genuine-border: #9ED3CF;
+
+  --color-status-confirmed-bg: #7F1D1D;
+  --color-status-confirmed-fg: #FFFFFF;
+  --color-status-confirmed-border: #7F1D1D;
+
+  /* Fonts */
+  --font-sans: 'Plus Jakarta Sans', 'Inter', 'Noto Sans Devanagari', 'Noto Sans Kannada', sans-serif;
+  --font-serif: 'Newsreader', Georgia, serif;
+  --font-mono: 'JetBrains Mono', Menlo, monospace;
+  --font-devanagari: 'Noto Sans Devanagari', sans-serif;
+  --font-kannada: 'Noto Sans Kannada', sans-serif;
+
+  /* Radii */
+  --radius: 4px;
+  --radius-button: 4px;
+  --radius-card: 6px;
+  --radius-input: 4px;
+  --radius-chip: 3px;
+  --radius-pill: 999px;
+
+  /* Layout Metrics */
+  --header-height: 53px;
+  --container-max: 1024px;
+  --container-analyze: 700px;
+
+  /* Aliases for Component Backward Compatibility */
+  --bg: var(--color-background);
+  --surface: var(--color-surface);
+  --text: var(--color-foreground);
+  --text-body: var(--color-muted-foreground);
+  --text-muted: var(--color-muted-subtle);
   --placeholder: #767570;
-
-  /* Brand Accents */
+  --btn: var(--color-primary);
+  --btn-hover: #2B2B2A;
+  --pill: var(--color-border-pill);
   --accent: #E55A12;
-  --accent-text: #C2410C;
+  --accent-text: var(--color-terracotta);
   --accent-light: #FFF1E6;
-
-  /* Hairlines & Control Borders */
-  --hairline: #E6E5E1;
+  --hairline: var(--color-border);
   --border-control: #D6D4CD;
 
-  /* Status Colors: 4-Verdict Model (icon + text, never color alone) */
-  --status-likely-genuine-fg: #0F5F5A;
-  --status-likely-genuine-bg: #E7F4F3;
-  --status-likely-genuine-border: #9ED3CF;
+  --status-likely-genuine-fg: var(--color-status-likely-genuine-fg);
+  --status-likely-genuine-bg: var(--color-status-likely-genuine-bg);
+  --status-likely-genuine-border: var(--color-status-likely-genuine-border);
 
-  --status-needs-review-fg: #7A4B00;
-  --status-needs-review-bg: #FFF6E0;
-  --status-needs-review-border: #E8C77A;
+  --status-needs-review-fg: var(--color-status-needs-review-fg);
+  --status-needs-review-bg: var(--color-status-needs-review-bg);
+  --status-needs-review-border: var(--color-status-needs-review-border);
 
-  --status-high-concern-fg: #9B1C1C;
-  --status-high-concern-bg: #FDEEEE;
-  --status-high-concern-border: #F0B4B4;
+  --status-high-concern-fg: var(--color-status-high-concern-fg);
+  --status-high-concern-bg: var(--color-status-high-concern-bg);
+  --status-high-concern-border: var(--color-status-high-concern-border);
 
-  --status-confirmed-scam-fg: #FFFFFF;
-  --status-confirmed-scam-bg: #7F1D1D;
-  --status-confirmed-scam-border: #7F1D1D;
+  --status-confirmed-scam-fg: var(--color-status-confirmed-fg);
+  --status-confirmed-scam-bg: var(--color-status-confirmed-bg);
+  --status-confirmed-scam-border: var(--color-status-confirmed-border);
 
-  /* Outcome Chips */
   --outcome-pass-fg: #14532D;
   --outcome-pass-bg: #EAF6EE;
   --outcome-pass-border: #A7D7B3;
@@ -58,18 +110,70 @@
   --outcome-unknown-border: #E8C77A;
 
   --outcome-neutral-fg: #6B6A66;
-  --outcome-neutral-bg: #FAF9F5;
-  --outcome-neutral-border: #E6E5E1;
+  --outcome-neutral-bg: var(--color-background);
+  --outcome-neutral-border: var(--color-border);
+}
 
-  /* Radii */
-  --radius-button: 4px;
-  --radius-card: 6px;
-  --radius-input: 4px;
-  --radius-chip: 3px;
-  --radius-pill: 999px;
+/* Dark Mode Overrides (WCAG AA Compliant contrast >= 4.5:1 on text/bg pairs) */
+.dark,
+[data-theme="dark"] {
+  --color-background: #121212;
+  --color-surface: #1E1E1E;
+  --color-foreground: #F9F8F3;
+  --color-muted-foreground: #A8A29E;
+  --color-muted-subtle: #D6D3D1;
+  --color-terracotta: #FB923C;
+  --color-primary: #F9F8F3;
+  --color-border-pill: #4B5563;
+  --color-border: #2E2E2E;
+  --color-ring: #FB923C;
 
-  /* Layout Metrics */
-  --header-height: 53px;
-  --container-max: 1024px;
-  --container-analyze: 700px;
+  /* Dark Semantic Status Colors (contrast tested >= 7:1) */
+  --color-status-high-concern-bg: #3B1212;
+  --color-status-high-concern-fg: #FFB4B4;
+  --color-status-high-concern-border: #7F1D1D;
+
+  --color-status-needs-review-bg: #382505;
+  --color-status-needs-review-fg: #FFE082;
+  --color-status-needs-review-border: #855609;
+
+  --color-status-likely-genuine-bg: #062E2A;
+  --color-status-likely-genuine-fg: #80EEDD;
+  --color-status-likely-genuine-border: #115E59;
+
+  --color-status-confirmed-bg: #581414;
+  --color-status-confirmed-fg: #FFEBEB;
+  --color-status-confirmed-border: #991B1B;
+
+  /* Dark Mode Aliases */
+  --bg: var(--color-background);
+  --surface: var(--color-surface);
+  --text: var(--color-foreground);
+  --text-body: var(--color-muted-foreground);
+  --text-muted: var(--color-muted-subtle);
+  --placeholder: #A8A29E;
+  --btn: var(--color-foreground);
+  --btn-hover: #E5E5E0;
+  --pill: var(--color-border-pill);
+  --accent: #FB923C;
+  --accent-text: var(--color-terracotta);
+  --accent-light: #3D2214;
+  --hairline: var(--color-border);
+  --border-control: #3E3E3E;
+
+  --outcome-pass-fg: #86EFAC;
+  --outcome-pass-bg: #0E361F;
+  --outcome-pass-border: #166534;
+
+  --outcome-fail-fg: #FFB4B4;
+  --outcome-fail-bg: #3B1212;
+  --outcome-fail-border: #7F1D1D;
+
+  --outcome-unknown-fg: #FFE082;
+  --outcome-unknown-bg: #382505;
+  --outcome-unknown-border: #855609;
+
+  --outcome-neutral-fg: #D6D3D1;
+  --outcome-neutral-bg: var(--color-background);
+  --outcome-neutral-border: var(--color-border);
 }

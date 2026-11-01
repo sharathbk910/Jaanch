@@ -13,7 +13,7 @@
 - **Current Phase:** Phase 5 – Client Foundation Complete
 - **Current Tag:** `phase-5-done`
 - **Node Version:** v24.19.0 (LTS >= 20 required)
-- **Repository State:** Green monorepo; `@jaanch/shared`, `@jaanch/server`, and `@jaanch/client` fully compiled, typechecked, linted, and tested (186 tests passing across 20 test suites, 25/25 eval fixtures matching 100%)
+- **Repository State:** Green monorepo; `@jaanch/shared`, `@jaanch/server`, and `@jaanch/client` fully compiled, typechecked, linted, and tested (211 tests passing across 22 test suites, 25/25 eval fixtures matching 100%)
 
 ---
 
@@ -32,7 +32,7 @@
   2. Shared core (schemas, 8 rules, redaction, extraction, lookalike, status, 25 fixtures) (**DONE**)
   3. Server (Express, Helmet API CSP, CORS, Pino redaction, safeFetch with pinned IP, rate limiting, routes, invariants) (**DONE**)
   4. Database and auth (SQL migrations, down-migrations, RLS on every table, multi-user accounts, private history, audit logs, JWT verification, role guard, docs/DB.md) (**DONE**)
-  5. Client foundation (Vite React, Part G editorial tokens, shell, 53px header, i18n scaffolding, routing, primitives) (**DONE**)
+  5. Client foundation (Vite React, exact spec tokens, dark-mode overrides, fonts, tailwind.config.ts, translations.ts, LanguageContext, ThemeProvider, WCAG AA contrast tests, 360px glyph check, I18N_REVIEW.md) (**DONE**)
   6. UI implementation (6A Landing, 6B Analyzer, 6C Results/PDF, 6D Auth UI) (Next)
   7. Shared intelligence and moderation
   8. AI/ML
@@ -43,28 +43,37 @@
 ---
 
 ## 4. Current Tooling & Verification Status
-- **Root Scripts:** `dev`, `build`, `test`, `typecheck`, `lint`, `eval`, `check:no-secrets`, `check:colors`, `check:banned-phrases`, `test:acceptance`.
+- **Root Scripts:** `dev`, `build`, `test`, `typecheck`, `lint`, `eval`, `check:no-secrets`, `check:colors`, `check:banned-phrases`, `check:glyphs`, `test:acceptance`.
 - **Workspaces:**
   - `@jaanch/shared`: Production deterministic core library, compiles to `dist/` (ESM + types), exports map.
   - `@jaanch/server`: Express REST API server with security middlewares, SSRF safeFetch with pinned IP, Pino redaction, rate limiting, JWT verification, user isolation, history persistence, audit logging, healthcheck, link inspection, offer analysis, and entity hashing.
-  - `@jaanch/client`: Vite React 18 SPA with Part G editorial design system, self-hosted Fontsource fonts, responsive shell, accessible navigation, i18n EN/HI/KN, TanStack Query, typed API client, and guest session store.
+  - `@jaanch/client`: Vite React 18 SPA with exact spec tokens, Google Fonts + self-hosted fallbacks, responsive shell, accessible navigation, i18n EN/HI/KN, TanStack Query, typed API client, and guest session store.
 - **Phase 5 Verification Checklist:**
-  - [x] Vite + React 18 + Tailwind setup compiling to `client/dist/`
-  - [x] Part G Editorial Design Tokens in `client/src/styles/tokens.css` (warm off-white `#FAF9F5`, `#141413`, accent `#E55A12` / `#C2410C`, 4-verdict status colors, outcome chips)
-  - [x] Zero hardcoded colors in `.ts`/`.tsx` verified by `check-no-hardcoded-colors.mjs`
-  - [x] Self-hosted Fontsource fonts (Newsreader, Inter, JetBrains Mono, Noto Sans Devanagari, Noto Sans Kannada) with zero external CDNs
-  - [x] Editorial UI primitives: `Button`, `Card`, `VerdictBadge` (icon + label, never color alone), `OutcomeChip`, `Input`, `Textarea`, `SegmentedControl`
-  - [x] App shell: `Header` with exact 53px height (`h-[53px]`), wordmark `JAANCH.`, desktop nav links per G §4.1 (`/analyze`, `/link-check`, `/resources`, `/about`), `MobileSheet`, `Footer` with 1930 helpline card, `SkipLink` to `#main-content`, `FeedbackPill` (`/api/feedback/page`), `ErrorBoundary`
-  - [x] Multilingual scaffolding: `useT()`, `I18nProvider`, `LangSwitch`, `en.json`, `hi.json`, `kn.json`, persisting to `localStorage` and updating `<html lang>`
-  - [x] Client data layer: typed `apiClient` with Zod validation, `getSupabase()` runtime loader preventing secret embedding in bundle, `guestSession` store using `sessionStorage` (Decision D7)
-  - [x] Routing for all Decision D5 routes (`/`, `/analyze`, `/results/:id`, `/results/local`, `/sample`, `/link-check`, `/resources`, `/about`, `/privacy`, `/history`, `/login`, `/signup`, `/settings`, `*`)
-  - [x] Server endpoint `GET /api/config` for runtime public Supabase configuration
-  - [x] 186 unit/integration tests passing across 20 test suites; 25/25 corpus fixtures evaluated with 100% accuracy; zero secrets detected in client bundle
+  - [x] Vite + React 18 + TS + Tailwind + React Router compiling to `client/dist/`
+  - [x] Exact spec variables in `client/src/styles/tokens.css` (`--color-background #F9F8F3`, `--color-surface`, `--color-foreground`, `--color-muted-foreground`, `--color-muted-subtle`, `--color-terracotta`, `--color-primary`, `--color-border-pill`, `--color-border`), fonts, radii, focus rings, dark-mode overrides
+  - [x] Semantic status tokens for 4-verdict model: `high-concern`, `needs-review`, `likely-genuine`, `confirmed`
+  - [x] Zero raw colors anywhere else (`npm run check:colors` passes cleanly)
+  - [x] `index.html`: Google Fonts (Newsreader, Plus Jakarta Sans, Noto Sans Devanagari, Noto Sans Kannada, JetBrains Mono) + inline flash prevention script (`jaanch_theme` and `jaanch_language`)
+  - [x] `client/tailwind.config.ts`: Mapping colors and fonts to CSS variables with Indic font stack fallbacks
+  - [x] `translations.ts`: Complete EN/HI/KN dictionaries across 10 sections (`navigation`, `hero`, `features`, `submissionCard`, `auditSteps`, `guidelines`, `footer`, `auth`, `errors`, `statusLabels`)
+  - [x] `LanguageContext.tsx`: `currentLang`, `setLang`, `t`, `localStorage` key `jaanch_language`, dynamic `<html lang>` sync, wrapped in `main.tsx`
+  - [x] `ThemeProvider`: Persisted `light` / `dark` / `system` with `localStorage` key `jaanch_theme`, dark class / data-theme sync, wrapped in `main.tsx`
+  - [x] `docs/I18N_REVIEW.md`: Complete enumeration of all HI and KN strings for native-speaker review (clearly marked unreviewed draft)
+  - [x] Unit/Integration Tests:
+    - Every key exists in EN, HI, KN
+    - Language switch persists and updates `<html lang>`
+    - Dark mode and light mode tokens meet WCAG AA contrast ($\ge 4.5:1$ text/bg pairs computed)
+    - Total tests: 211 passing across 22 test suites; 25/25 fixtures evaluated
+  - [x] Automated glyph render verification at 360px:
+    - Headless Chromium screenshot verification of Hindi and Kannada glyphs
+    - Zero tofu / replacement `\uFFFD` characters detected
+    - Screenshots captured in `docs/ui-shots/glyph-render-hi-360px.png` and `docs/ui-shots/glyph-render-kn-360px.png`
+    - Check automated via `npm run check:glyphs`
 
 ---
 
 ## 5. Next Steps
-- Commit Phase 5 files and tag `phase-5-done`.
+- Commit Phase 5 updates and update git tag `phase-5-done`.
 - Proceed to **Phase 6A – UI Implementation: Landing Page**:
   - Hero section with CTA and official portal notice
   - Facts band (3 cards)

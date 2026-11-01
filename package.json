@@ -20,12 +20,14 @@
     "check:no-secrets": "node scripts/check-no-secrets.cjs",
     "check:colors": "node scripts/check-no-hardcoded-colors.mjs",
     "check:banned-phrases": "node scripts/check-banned-phrases.cjs",
+    "check:glyphs": "node scripts/check-glyph-render.mjs",
     "test:acceptance": "node scripts/test-acceptance.mjs",
     "hooks:install": "node -e \"console.log('Git hooks verified')\""
   },
   "devDependencies": {
     "@types/node": "^20.17.10",
     "concurrently": "^9.1.2",
+    "playwright": "^1.64.1",
     "tsx": "^4.19.2",
     "typescript": "^5.7.2",
     "vitest": "^2.1.8"

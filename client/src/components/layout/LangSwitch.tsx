@@ -1,11 +1,11 @@
 import React from 'react';
-import { useT, type SupportedLanguage } from '../../i18n/I18nContext.js';
+import { useLanguage, type Language } from '../../i18n/LanguageContext.js';
 import { SegmentedControl } from '../ui/SegmentedControl.js';
 
 export function LangSwitch() {
-  const { language, setLanguage, t } = useT();
+  const { currentLang, setLang } = useLanguage();
 
-  const options: { value: SupportedLanguage; label: string }[] = [
+  const options: { value: Language; label: string }[] = [
     { value: 'en', label: 'EN' },
     { value: 'hi', label: 'HI' },
     { value: 'kn', label: 'KN' },
@@ -16,8 +16,8 @@ export function LangSwitch() {
       <SegmentedControl
         size="sm"
         options={options}
-        value={language}
-        onChange={(lang) => setLanguage(lang)}
+        value={currentLang}
+        onChange={(lang) => setLang(lang as Language)}
       />
     </div>
   );
