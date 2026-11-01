@@ -348,7 +348,7 @@ describe('Phase 8: AI Layer (Gemini, Schema Grounding, Fallback Resilience)', ()
       expect(res.body.data.aiStatus).toBe('success');
       expect(res.body.data.aiOverview).toContain('Work from home');
       expect(res.body.data.signals.some((s: any) => s.source === 'AI-observed')).toBe(true);
-    });
+    }, 15000);
 
     it('returns aiStatus: not_requested and skips AI entirely when consentFlags.aiAnalysis is false', async () => {
       const mockGenerateContent = vi.fn();

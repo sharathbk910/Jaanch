@@ -16,9 +16,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       primary: 'bg-btn text-surface hover:bg-btn-hover active:bg-btn',
       outline: 'bg-surface text-primary border border-hairline hover:bg-page active:bg-hairline',
       ghost: 'bg-transparent text-body hover:text-primary hover:bg-page active:bg-hairline',
-      neo: 'bg-neo-sky text-foreground border-2 border-neo-border shadow-neo hover:bg-foreground hover:text-background hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-neo-sm active:translate-x-[3px] active:translate-y-[3px] active:shadow-none transition-all rounded-none',
-      'neo-secondary': 'bg-surface text-foreground border-2 border-neo-border shadow-neo hover:bg-foreground hover:text-background hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-neo-sm active:translate-x-[3px] active:translate-y-[3px] active:shadow-none transition-all rounded-none',
-      'neo-yellow': 'bg-neo-yellow text-foreground border-2 border-neo-border shadow-neo-sm hover:bg-foreground hover:text-background hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none active:translate-x-[2px] active:translate-y-[2px] transition-all rounded-none',
+      neo: 'bg-neo-sky text-foreground border-2 border-neo-border shadow-neo hover:bg-neo-sky-hover hover:text-white hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-neo-sm active:translate-x-[3px] active:translate-y-[3px] active:shadow-none transition-all rounded-none',
+      'neo-secondary': 'bg-surface text-foreground border-2 border-neo-border shadow-neo hover:bg-neo-sky hover:text-foreground hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-neo-sm active:translate-x-[3px] active:translate-y-[3px] active:shadow-none transition-all rounded-none',
+      'neo-yellow': 'bg-neo-yellow text-foreground border-2 border-neo-border shadow-neo-sm hover:bg-neo-sky-hover hover:text-white hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none active:translate-x-[2px] active:translate-y-[2px] transition-all rounded-none',
     }[variant];
 
     const sizeClasses = {

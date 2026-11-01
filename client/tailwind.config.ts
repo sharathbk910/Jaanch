@@ -30,6 +30,8 @@ export default {
           sky: {
             DEFAULT: 'var(--color-neo-sky)',
             light: 'var(--color-neo-sky-light)',
+            hover: 'var(--color-neo-sky-hover)',
+            'hover-fg': 'var(--color-neo-sky-hover-fg)',
           },
           peach: 'var(--color-neo-peach)',
           blue: 'var(--color-neo-blue)',

@@ -96,10 +96,10 @@ export function GuidelinesAndHelpline() {
                 href="https://cybercrime.gov.in"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 font-bold border border-neo-border bg-surface px-3 py-1.5 shadow-neo-sm text-status-high-concern-fg hover:bg-foreground hover:text-background hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all min-h-[44px] sm:min-h-0 flex items-center group"
+                className="inline-flex items-center gap-1.5 font-bold border border-neo-border bg-surface px-3 py-1.5 shadow-neo-sm text-status-high-concern-fg hover:bg-neo-sky hover:text-foreground hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all min-h-[44px] sm:min-h-0 flex items-center group"
               >
                 <span>cybercrime.gov.in</span>
-                <ExternalLink size={13} className="group-hover:text-background" aria-hidden="true" />
+                <ExternalLink size={13} aria-hidden="true" />
               </a>
             </div>
           </div>

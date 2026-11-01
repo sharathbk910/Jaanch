@@ -43,25 +43,25 @@ export function Hero() {
               {t('hero.subtitle')}
             </p>
 
-            {/* The Two Neo-Brutalist CTAs with Hover Background & Text Color Inversion */}
+            {/* The Two Neo-Brutalist CTAs: Blue Button that transitions from Sky Blue to Deep Blue with White Text */}
             <div className="mt-8 flex flex-wrap items-center gap-4">
               <Button
                 variant="primary"
                 size="lg"
                 onClick={scrollToCard}
-                className="group border-2 border-neo-border shadow-neo bg-neo-sky text-foreground font-bold uppercase tracking-wider hover:bg-foreground hover:text-background hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-neo-sm active:translate-x-[3px] active:translate-y-[3px] active:shadow-none transition-all rounded-none px-6 py-3.5 h-auto"
+                className="group border-2 border-neo-border shadow-neo bg-neo-sky text-foreground font-bold uppercase tracking-wider hover:bg-neo-sky-hover hover:text-white hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-neo-sm active:translate-x-[3px] active:translate-y-[3px] active:shadow-none transition-all rounded-none px-6 py-3.5 h-auto"
               >
                 <span>{t('hero.cta')}</span>
-                <ArrowRight size={16} className="ml-2.5 group-hover:translate-x-1 group-hover:text-background transition-transform" />
+                <ArrowRight size={16} className="ml-2.5 group-hover:translate-x-1 group-hover:text-white transition-transform" />
               </Button>
 
               <Link to="/link-check">
                 <Button
                   variant="outline"
                   size="lg"
-                  className="group border-2 border-neo-border shadow-neo bg-surface text-foreground font-bold uppercase tracking-wider hover:bg-foreground hover:text-background hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-neo-sm active:translate-x-[3px] active:translate-y-[3px] active:shadow-none transition-all rounded-none px-6 py-3.5 h-auto"
+                  className="group border-2 border-neo-border shadow-neo bg-surface text-foreground font-bold uppercase tracking-wider hover:bg-neo-sky hover:text-foreground hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-neo-sm active:translate-x-[3px] active:translate-y-[3px] active:shadow-none transition-all rounded-none px-6 py-3.5 h-auto"
                 >
-                  <Link2 size={16} className="mr-2 text-foreground group-hover:text-background" />
+                  <Link2 size={16} className="mr-2 text-foreground" />
                   <span>{t('hero.secondaryCta')}</span>
                 </Button>
               </Link>
@@ -110,14 +110,14 @@ export function Hero() {
                 </div>
               </div>
 
-              {/* Tap Button with Hover Inversion */}
+              {/* Tap Button with Blue Hover Transition */}
               <div className="mt-5 pt-3 border-t-2 border-neo-border flex items-center justify-between">
                 <button
                   type="button"
                   onClick={scrollToCard}
-                  className="bg-neo-yellow border-2 border-neo-border shadow-neo-sm px-3.5 py-2 font-sans font-bold uppercase tracking-wider text-xs text-foreground flex items-center gap-2 hover:bg-foreground hover:text-background hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none active:translate-x-[2px] active:translate-y-[2px] transition-all group"
+                  className="bg-neo-yellow border-2 border-neo-border shadow-neo-sm px-3.5 py-2 font-sans font-bold uppercase tracking-wider text-xs text-foreground flex items-center gap-2 hover:bg-neo-sky-hover hover:text-white hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none active:translate-x-[2px] active:translate-y-[2px] transition-all group"
                 >
-                  <Volume2 size={14} className="group-hover:text-background" />
+                  <Volume2 size={14} className="group-hover:text-white" />
                   <span>Audit Your Offer Now</span>
                 </button>
                 <span className="text-[10px] font-mono text-muted-foreground uppercase font-bold">
@@ -144,12 +144,12 @@ export function Hero() {
               href="https://www.mca.gov.in"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2.5 p-2.5 border-2 border-neo-border shadow-neo-sm bg-background hover:bg-foreground hover:text-background hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all text-xs font-medium text-foreground group"
+              className="flex items-center gap-2.5 p-2.5 border-2 border-neo-border shadow-neo-sm bg-background hover:bg-neo-sky hover:text-foreground hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all text-xs font-medium text-foreground group"
             >
-              <Building size={16} className="text-terracotta shrink-0 group-hover:text-background" aria-hidden="true" />
+              <Building size={16} className="text-terracotta shrink-0" aria-hidden="true" />
               <div className="truncate">
-                <div className="font-bold truncate group-hover:text-background">MCA Portal</div>
-                <div className="text-[10px] text-muted-foreground truncate font-mono group-hover:text-background/80">mca.gov.in</div>
+                <div className="font-bold truncate">MCA Portal</div>
+                <div className="text-[10px] text-muted-foreground truncate font-mono">mca.gov.in</div>
               </div>
             </a>
 
@@ -157,12 +157,12 @@ export function Hero() {
               href="https://www.ncs.gov.in"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2.5 p-2.5 border-2 border-neo-border shadow-neo-sm bg-background hover:bg-foreground hover:text-background hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all text-xs font-medium text-foreground group"
+              className="flex items-center gap-2.5 p-2.5 border-2 border-neo-border shadow-neo-sm bg-background hover:bg-neo-sky hover:text-foreground hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all text-xs font-medium text-foreground group"
             >
-              <Briefcase size={16} className="text-terracotta shrink-0 group-hover:text-background" aria-hidden="true" />
+              <Briefcase size={16} className="text-terracotta shrink-0" aria-hidden="true" />
               <div className="truncate">
-                <div className="font-bold truncate group-hover:text-background">NCS India</div>
-                <div className="text-[10px] text-muted-foreground truncate font-mono group-hover:text-background/80">ncs.gov.in</div>
+                <div className="font-bold truncate">NCS India</div>
+                <div className="text-[10px] text-muted-foreground truncate font-mono">ncs.gov.in</div>
               </div>
             </a>
 
@@ -170,12 +170,12 @@ export function Hero() {
               href="https://scholarships.gov.in"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2.5 p-2.5 border-2 border-neo-border shadow-neo-sm bg-background hover:bg-foreground hover:text-background hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all text-xs font-medium text-foreground group"
+              className="flex items-center gap-2.5 p-2.5 border-2 border-neo-border shadow-neo-sm bg-background hover:bg-neo-sky hover:text-foreground hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all text-xs font-medium text-foreground group"
             >
-              <GraduationCap size={16} className="text-terracotta shrink-0 group-hover:text-background" aria-hidden="true" />
+              <GraduationCap size={16} className="text-terracotta shrink-0" aria-hidden="true" />
               <div className="truncate">
-                <div className="font-bold truncate group-hover:text-background">NSP Portal</div>
-                <div className="text-[10px] text-muted-foreground truncate font-mono group-hover:text-background/80">scholarships.gov.in</div>
+                <div className="font-bold truncate">NSP Portal</div>
+                <div className="text-[10px] text-muted-foreground truncate font-mono">scholarships.gov.in</div>
               </div>
             </a>
 
@@ -183,12 +183,12 @@ export function Hero() {
               href="https://internship.aicte-india.org"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2.5 p-2.5 border-2 border-neo-border shadow-neo-sm bg-background hover:bg-foreground hover:text-background hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all text-xs font-medium text-foreground group"
+              className="flex items-center gap-2.5 p-2.5 border-2 border-neo-border shadow-neo-sm bg-background hover:bg-neo-sky hover:text-foreground hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all text-xs font-medium text-foreground group"
             >
-              <ShieldCheck size={16} className="text-terracotta shrink-0 group-hover:text-background" aria-hidden="true" />
+              <ShieldCheck size={16} className="text-terracotta shrink-0" aria-hidden="true" />
               <div className="truncate">
-                <div className="font-bold truncate group-hover:text-background">AICTE Portal</div>
-                <div className="text-[10px] text-muted-foreground truncate font-mono group-hover:text-background/80">aicte-india.org</div>
+                <div className="font-bold truncate">AICTE Portal</div>
+                <div className="text-[10px] text-muted-foreground truncate font-mono">aicte-india.org</div>
               </div>
             </a>
           </div>
