@@ -247,27 +247,14 @@ describe('Phase 6C – Results & PDF (Results.tsx / ResultsPage.tsx)', () => {
     expect(screen.getAllByText(/<script>alert\("xss-title"\)<\/script>/i).length).toBeGreaterThan(0);
   });
 
-  it('triggers PDF download, Print, and JSON export on button clicks', async () => {
-    const user = userEvent.setup();
-    const printSpy = vi.spyOn(window, 'print').mockImplementation(() => {});
-
+  it('does not render PDF export, Print, JSON, or report buttons per user request', () => {
     renderResultsWithResult(SAMPLE_CONCERN_RESULT);
 
-    // PDF download
-    const downloadPdfBtn = screen.getByRole('button', { name: /Download PDF Report/i });
-    await user.click(downloadPdfBtn);
-    await waitFor(() => {
-      expect(pdfExport.downloadPdfReport).toHaveBeenCalled();
-    });
-
-    // Print
-    const printBtn = screen.getByRole('button', { name: /Print/i });
-    await user.click(printBtn);
-    expect(printSpy).toHaveBeenCalled();
-
-    // Export JSON
-    const jsonBtn = screen.getByRole('button', { name: /Export JSON/i });
-    expect(jsonBtn).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /Download PDF Report/i })).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /Print/i })).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /Export JSON/i })).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /Report This Offer/i })).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /Report Suspicious/i })).not.toBeInTheDocument();
   });
 
   it('renders SamplePage walkthrough and switches scenarios seamlessly', async () => {

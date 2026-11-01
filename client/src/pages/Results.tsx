@@ -425,7 +425,6 @@ export function Results() {
           <div id="extracted-entities">
             <ExtractedEntitiesCard
               entities={result.extractedEntities}
-              onReportEntity={handleOpenReport}
             />
           </div>
 
@@ -522,39 +521,6 @@ export function Results() {
             </span>
 
             <div className="flex flex-col gap-2">
-              <Button
-                variant="primary"
-                size="sm"
-                onClick={handleDownloadPdf}
-                disabled={downloadingPdf}
-                className="w-full justify-center"
-              >
-                <Download size={13} className="mr-1.5" />
-                <span>{downloadingPdf ? 'Generating PDF...' : t('results.exportPdf')}</span>
-              </Button>
-
-              <div className="grid grid-cols-2 gap-2">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={handlePrint}
-                  className="w-full justify-center text-xs"
-                >
-                  <Printer size={13} className="mr-1" />
-                  <span>{t('results.exportPrint')}</span>
-                </Button>
-
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={handleExportJson}
-                  className="w-full justify-center text-xs"
-                >
-                  <FileJson size={13} className="mr-1" />
-                  <span>{t('results.exportJson')}</span>
-                </Button>
-              </div>
-
               <WhatsAppShareButton
                 status={result.status}
                 publicId={result.intelMatch?.publicId}
@@ -564,26 +530,6 @@ export function Results() {
 
               <Button
                 variant="outline"
-                size="sm"
-                onClick={() => setReportMessageOpen(true)}
-                className="w-full justify-center text-xs text-foreground border-border hover:bg-background"
-              >
-                <ShieldAlert size={13} className="mr-1.5 text-primary" />
-                <span>{t('results.reportMessageBtn') || 'Report This Offer'}</span>
-              </Button>
-
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => handleOpenReport('upi', '')}
-                className="w-full justify-center text-xs text-terracotta border-border hover:bg-background"
-              >
-                <ShieldAlert size={13} className="mr-1.5 text-terracotta" />
-                <span>{t('reportDialog.triggerBtn')}</span>
-              </Button>
-
-              <Button
-                variant="ghost"
                 size="sm"
                 onClick={() => navigate('/analyze')}
                 className="w-full justify-center text-xs text-muted-foreground hover:text-foreground"
@@ -644,6 +590,7 @@ export function Results() {
  */
 export function SamplePage() {
   const { t } = useLanguage();
+  const navigate = useNavigate();
   const [activeScenario, setActiveScenario] = useState<'genuine' | 'review' | 'concern'>('genuine');
   const [reportDialogOpen, setReportDialogOpen] = useState(false);
   const [reportMessageOpen, setReportMessageOpen] = useState(false);
@@ -819,7 +766,6 @@ export function SamplePage() {
 
           <ExtractedEntitiesCard
             entities={result.extractedEntities}
-            onReportEntity={handleOpenReport}
           />
 
           <NextSteps
@@ -835,31 +781,13 @@ export function SamplePage() {
               REFERENCE ACTIONS
             </span>
             <Button
-              variant="primary"
-              size="sm"
-              onClick={() => downloadPdfReport(result)}
-              className="w-full justify-center"
-            >
-              <Download size={13} className="mr-1.5" />
-              <span>{t('results.exportPdf')}</span>
-            </Button>
-            <Button
               variant="outline"
               size="sm"
-              onClick={() => handleOpenReport('upi', '')}
-              className="w-full justify-center text-xs text-terracotta border-border hover:bg-background"
-            >
-              <ShieldAlert size={13} className="mr-1.5 text-terracotta" />
-              <span>{t('reportDialog.triggerBtn')}</span>
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => window.print()}
+              onClick={() => navigate('/analyze')}
               className="w-full justify-center text-xs"
             >
-              <Printer size={13} className="mr-1.5" />
-              <span>{t('results.exportPrint')}</span>
+              <RotateCcw size={13} className="mr-1.5" />
+              <span>{t('results.checkAnother')}</span>
             </Button>
           </div>
         </aside>
