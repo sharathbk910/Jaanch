@@ -27,7 +27,7 @@
 | **0.4.7** | Zero stubs, TODOs, or placeholder implementations | All | All | Active |
 | **0.4.8** | Stop at human gates (H0, H1, H2) | Phase 0, 4, 13 | Phase 1, 4, 11 | Active |
 | **0.7.H0** | Human Gate H0: Confirm machine, Node >= 20, Git | Phase 0 | Phase 1 | **DONE** |
-| **0.7.H1** | Human Gate H1: Database setup & user auth verification | Phase 4 | Phase 4 | Pending |
+| **0.7.H1** | Human Gate H1: Database setup & user auth verification | Phase 4 | Phase 4 | **REACHED** (SQL files generated, standing by for user setup) |
 | **0.7.H2** | Human Gate H2: Review final report, smoke tests, deploy readiness | Phase 13 | Phase 11 | Pending |
 
 ---
@@ -46,10 +46,10 @@
 | **D8** | Safety rules: Safe Reply hidden on High Concern/Scam, "I already paid" defaults OFF | P3, P10 | Phase 2, Phase 6C | Pending |
 | **D9** | Optional AI: Gemini schema-grounded with `findSpan`, fail-soft with `aiStatus` | P6 | Phase 8 | Pending |
 | **D10** | Third-party checks: Flagged default OFF, RDAP on, registry `needs_team_review = true` | P7 | Phase 3 | Pending |
-| **D11** | Moderation: No ML layer, no service-role key in requests, moderator SQL/CLI confirmation | P4 | Phase 4, Phase 7 | Pending |
+| **D11** | Moderation: No ML layer, no service-role key in requests, moderator SQL/CLI confirmation | P4 | Phase 4, Phase 7 | **DONE** |
 | **D12** | Input validation: Minimum text length (`INPUT_LIMITS.textMin = 20`) enforced | P2, P9 | Phase 2, Phase 6B | **DONE** (Schemas in P2) |
 | **D13** | Multilingual: EN / HI / KN chrome translations,Indic font fallbacks | P8, P11 | Phase 5, Phase 6 | Pending |
-| **D14** | Database: Consolidated final schema migration with RLS on all tables | P4 | Phase 4 | Pending |
+| **D14** | Database: Consolidated final schema migration with RLS on all tables | P4 | Phase 4 | **DONE** |
 | **D15** | Fonts & assets: Self-hosted fonts, zero external CDNs, locally bundled workers | P8, P9 | Phase 5, Phase 6 | Pending |
 | **D16** | Privacy accuracy: Audit all privacy claims against code | P9, P12 | Phase 10 | Pending |
 
@@ -94,7 +94,7 @@
 | **Phase 1** | Monorepo scaffold, scripts, linters, env templates | Phase 1 | Workspace & tooling setup | **DONE** |
 | **Phase 2** | Shared foundation: schemas, config, extraction | Phase 2 | Shared core (schemas, 8 rules, redaction, extraction, lookalike, status, 25 fixtures) | **DONE** |
 | **Phase 3** | Rules, verification logic, eval fixtures | Phase 2 | Shared core | **DONE** (Consolidated in Phase 2) |
-| **Phase 4** | Supabase database, RLS, seeds, hashing (H1) | Phase 4 | Database and auth | Pending |
+| **Phase 4** | Supabase database, RLS, seeds, hashing (H1) | Phase 4 | Database and auth | **DONE** (H1 reached) |
 | **Phase 5** | Express server API, safeFetch, analyzeService | Phase 3 | Server API | Pending |
 | **Phase 6** | AI layer (Gemini, grounding, fallbacks) | Phase 8 | AI / ML |
 | **Phase 7** | Flagged third-party checks (CT-log, Safe Browsing) | Phase 3 (flagged) | Server API |
