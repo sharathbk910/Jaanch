@@ -7,6 +7,7 @@ import { loadEnv } from '../config/env.js';
 import { logger } from '../lib/logger.js';
 import { validateBody } from '../middleware/validate.js';
 import { ThreatIntelRepository } from '../lib/threatIntelRepository.js';
+import { writeAuditLog } from '../lib/auditLog.js';
 
 const router = Router();
 
@@ -253,5 +254,34 @@ router.post(
     });
   }
 );
+
+const AuditShareSchema = z.object({
+  publicId: z.string().max(64),
+  action: z.enum(['share_opened', 'copied']).default('share_opened'),
+});
+
+/**
+ * POST /api/whatsapp/audit-share
+ * Records an optional audit event "share_opened" with NO message content.
+ */
+router.post('/audit-share', validateBody(AuditShareSchema), async (req: Request, res: Response) => {
+  const { publicId, action } = req.body as z.infer<typeof AuditShareSchema>;
+
+  await writeAuditLog({
+    action,
+    entity: 'intel_record',
+    entity_id: publicId,
+    meta: {
+      channel: 'whatsapp',
+      ip: req.ip,
+    },
+  });
+
+  res.status(200).json({
+    status: 'logged',
+    action,
+    publicId,
+  });
+});
 
 export const whatsappRouter = router;

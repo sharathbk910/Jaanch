@@ -169,5 +169,34 @@ describe('WhatsApp Channel Webhook & Sharing (Phase 9)', () => {
       expect(res.status).toBe(400);
     });
   });
+
+  describe('POST /api/whatsapp/audit-share (Share Opened Audit Logger)', () => {
+    it('records share_opened audit event without logging message content', async () => {
+      const res = await request(app)
+        .post('/api/whatsapp/audit-share')
+        .send({
+          publicId: 'JNC-INTEL-SHARE123',
+          action: 'share_opened',
+        })
+        .set('Content-Type', 'application/json');
+
+      expect(res.status).toBe(200);
+      expect(res.body.status).toBe('logged');
+      expect(res.body.publicId).toBe('JNC-INTEL-SHARE123');
+      expect(res.body.action).toBe('share_opened');
+      // Invariant: Response and audit event store NO user text or message content
+      expect(res.body.message).toBeUndefined();
+      expect(res.body.text).toBeUndefined();
+    });
+
+    it('rejects invalid or missing publicId', async () => {
+      const res = await request(app)
+        .post('/api/whatsapp/audit-share')
+        .send({})
+        .set('Content-Type', 'application/json');
+
+      expect(res.status).toBe(400);
+    });
+  });
 });
 

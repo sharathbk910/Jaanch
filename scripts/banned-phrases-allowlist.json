@@ -14,5 +14,13 @@
   {
     "file": "server/src/lib/threatIntelRepository.ts",
     "phrase": "confirmed scam"
+  },
+  {
+    "file": "shared/src/share/alertBuilder.ts",
+    "phrase": "confirmed scam"
+  },
+  {
+    "file": "client/src/components/results/ShareAlert.tsx",
+    "phrase": "confirmed scam"
   }
 ]

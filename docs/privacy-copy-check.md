@@ -168,3 +168,4 @@ All public-facing claims made in `PrivacyPage.tsx`, `AnalyzePage.tsx`, `LandingP
 | **Peppered Hashes** | SPEC_ORIGINAL Part B §7.2 | HMAC-SHA256 (`REPORT_HASH_PEPPER`) | `hashing.test.ts` | **CONFORMANT** |
 | **Right to Erasure** | DPDP Act 2023 §12(3) | `DELETE /api/account/data` | `auth_and_history.test.ts` | **CONFORMANT** |
 | **Zero SSRF / Fetch** | Decision D10 | Pure structural URL inspection | `ai_ml_phase8.test.ts` | **CONFORMANT** |
+

@@ -98,3 +98,4 @@
 4. **Zero Outbound URL Fetching Invariant:** Links submitted in offers are parsed structurally; destination servers are never queried over HTTP, preventing SSRF and tracker beaconing.
 5. **No ML Confirmation Invariant:** Similarity and semantic embeddings match strictly against `confirmed` or `suspicious` records; elevation to `confirmed` requires human moderator sign-off.
 6. **No Client Service-Role Key Invariant:** The client uses exclusively `VITE_SUPABASE_ANON_KEY`; service-role key does not exist in client configuration.
+

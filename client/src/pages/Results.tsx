@@ -43,6 +43,7 @@ import { ReportMessageDialog } from '../components/results/ReportMessageDialog.j
 import { NextSteps } from '../components/results/NextSteps.js';
 import { downloadPdfReport } from '../components/results/PdfExport.js';
 import { WhatsAppShareButton } from '../components/results/WhatsAppShareButton.js';
+import { ShareAlert } from '../components/results/ShareAlert.js';
 
 // Realistic reference scenarios for /sample walkthrough
 export const SAMPLE_GENUINE_RESULT: AnalyzeResult = {
@@ -343,10 +344,16 @@ export function Results() {
             />
           </div>
 
-          {/* 1b. Shared Threat Intelligence Match Card */}
+          {/* 1b. Shared Threat Intelligence Match Card & WhatsApp Scam Alert */}
           {result.intelMatch && (
-            <div id="intel-match">
+            <div id="intel-match" className="space-y-4">
               <IntelMatchCard intelMatch={result.intelMatch} />
+              {result.intelMatch.status === 'confirmed' && (
+                <ShareAlert
+                  intelMatch={result.intelMatch}
+                  originalText={rawText}
+                />
+              )}
             </div>
           )}
 

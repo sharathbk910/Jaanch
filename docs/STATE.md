@@ -13,7 +13,7 @@
 - **Current Phase:** Phase 10 – Verification & QA Complete
 - **Current Tag:** `phase-10-done`
 - **Node Version:** v24.19.0 (LTS >= 20 required)
-- **Repository State:** Green monorepo; `@jaanch/shared`, `@jaanch/server`, and `@jaanch/client` fully compiled, typechecked, linted, and tested (365 tests passing across 39 test suites, 25/25 eval fixtures matching 100%, eval:ml harness passing, 10/10 acceptance criteria PASS)
+- **Repository State:** Green monorepo; `@jaanch/shared`, `@jaanch/server`, and `@jaanch/client` fully compiled, typechecked, linted, and tested (385 tests passing across 41 test suites, 25/25 eval fixtures matching 100%, eval:ml harness passing, 10/10 acceptance criteria PASS)
 
 ---
 
@@ -220,30 +220,41 @@
 
 ---
 
-- **Phase 9 Verification Checklist (WhatsApp Channel Integration):**
-  - [x] Inbound Webhook Handshake (`GET /api/whatsapp/webhook`):
-    - Validates Meta `hub.mode === 'subscribe'` and verifies token against `WHATSAPP_VERIFY_TOKEN`.
-    - Returns HTTP 200 with challenge string on match; returns HTTP 403 on mismatch.
-  - [x] Webhook Signature Validation (`verifyWhatsAppSignature`):
-    - Timing-safe HMAC-SHA256 signature verification comparing `X-Hub-Signature-256` against `WHATSAPP_APP_SECRET`.
-    - Enforces buffer length equality to prevent timing attacks and buffer mismatch errors.
-  - [x] Deterministic Inbound Message Processing (`POST /api/whatsapp/webhook`):
-    - Parses inbound text messages, runs deterministic rule analysis via `analyzeOffer`.
-    - Corroborates extracted indicators against confirmed threat intelligence records via `ThreatIntelRepository.matchIntel`.
-    - Generates localized safety advisory replies with direct references to 1930 / `cybercrime.gov.in` and `jaanch.ai`.
-  - [x] Strict Invariant Enforcement:
-    - **Zero Auto-Send (`SPEC_ADDENDUM.md §5`):** Responds synchronously with generated replies in the HTTP response; system initiates zero unsolicited outbound network dispatches or SMS blasts.
-    - **Confirmed Only (`SPEC_ADDENDUM.md §5`):** Outgoing share intents share strictly confirmed indicator public IDs (`JNC-INTEL-...`), verified organizational warnings, and official helplines. Zero student message text or unredacted PII is ever transmitted.
-  - [x] Share Intent Endpoint (`POST /api/whatsapp/share-intent`):
-    - Validated with Zod schema (`WhatsAppShareIntentSchema`); generates safe `https://api.whatsapp.com/send?text=...` links.
-  - [x] Client Integration & Frontend Component:
-    - `client/src/lib/whatsappShare.ts`: shared formatter and URL generator.
-    - `client/src/components/results/WhatsAppShareButton.tsx`: accessible button with SVG WhatsApp branding, tooltip, and new-tab navigation.
-    - Integrated directly in `Results.tsx` Quick Actions sidebar for 1-click sharing of verified scam warnings and official verification checklists.
-  - [x] Multilingual Support:
-    - Complete localized copy for WhatsApp sharing across English, Hindi, and Kannada (`translations.ts`).
-  - [x] Full Verification & Test Suite:
-    - 336 tests passing across 36 test suites (8 dedicated backend channel tests in `server/src/__tests__/whatsapp_channel.test.ts` + 6 client component/invariant tests in `client/src/__tests__/WhatsAppShare.test.tsx`).
+- **Phase 9 Verification Checklist (WhatsApp Scam-Alert Sharing):**
+  - [x] Deterministic Localized Alert Builder (`shared/src/share/alertBuilder.ts`):
+    - Localized warning headline across English, Hindi, and Kannada (`en`, `hi`, `kn`).
+    - Classification and verification line with public ID and confirmed date (e.g., `"Matched a moderator-confirmed scam record [JNC-INTEL-...], confirmed on <date>"`).
+    - Redacted excerpt of the original message ($\le 300$ chars, toggleable by user).
+    - 4 localized safety tips (never pay deposit, verify on official portals, do not share OTP, report to 1930).
+    - Official helplines: National Cyber Crime Helpline `1930` and `cybercrime.gov.in`.
+    - Jaanch verification link `https://jaanch.ai`.
+    - Sanitizes control chars (`[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F-\u009F]`) and bidi overrides (`[\u200E\u200F\u202A-\u202E\u2066-\u2069]`).
+    - URL length budgeting: gracefully steps down excerpt (300 -> 200 -> 100 -> 50 -> 0) and reduces tips if needed to stay within safe URL limit (`maxEncodedUrlLength`), raising `isTrimmed: true` and localized `trimmedReason`.
+    - Round-trip URL encoding invariant: `decodeURIComponent(shareUrl.replace('https://wa.me/?text=', '')) === fullMessage` strictly verified for Hindi, Kannada, emoji (⚠️, 🚨), ₹, newlines, and special characters (`&`, `#`, `%`).
+  - [x] Frontend `ShareAlert` Component (`client/src/components/results/ShareAlert.tsx`):
+    - **Strict Guard:** Shown **ONLY** when `intelMatch.status === 'confirmed'`; returns `null` for `reported`, `unverified`, `ai_flagged`, `suspicious`, `dismissed`, `disputed`.
+    - Preview modal dialog (`role="dialog"`, accessible overlay and close button).
+    - Excerpt inclusion toggle switch (`includeExcerpt`) and trim warning notice.
+    - Editable `<textarea>` that updates the encoded `https://wa.me/?text=...` link dynamically in real time.
+    - Live character counter.
+    - "Open WhatsApp" action: opens `https://wa.me/?text=<encoded>` in a new tab with `rel="noopener noreferrer"`, letting the user choose any contact or group inside WhatsApp.
+    - "Copy message" fallback with visual confirmation ("Copied!").
+    - Pure CSS tokens only: `bg-surface`, `bg-canvas`, `border-border`, `text-primary`, `text-body`, `text-muted`, `text-terracotta`. Zero hardcoded hex/rgb.
+  - [x] Strict Safety & Privacy Invariants:
+    - **Zero Auto-Send:** Zero server-side dispatches, zero unsolicited messages, zero WhatsApp Business API calls. The user must manually click Send inside WhatsApp.
+    - **Privacy Isolation:** No student PII or reporter info is ever included; only scrubbed excerpts and moderator-confirmed public record metadata.
+    - **Audit Trail Without Message Content:** Optional `POST /api/whatsapp/audit-share` endpoint logs `share_opened` or `copied` with `publicId` and `action` only; zero message text is stored or logged.
+  - [x] Narrow Banned-Phrases Allowlist:
+    - Allowlisted `"confirmed scam"` strictly for `shared/src/share/alertBuilder.ts` and `client/src/components/results/ShareAlert.tsx` in `scripts/banned-phrases-allowlist.json`.
+  - [x] Verification & Test Suite:
+    - 41 test suites, 385 tests passing (9/9 in `shared/src/__tests__/share_alert.test.ts`, 9/9 in `client/src/__tests__/ShareAlertComponent.test.tsx`, 10/10 in `server/src/__tests__/whatsapp_channel.test.ts`).
+    - Manual proof screenshots committed in `docs/ui-shots/share-alert/`:
+      - `share-alert-card-en-360px.png` & `share-alert-modal-en-360px.png`
+      - `share-alert-card-hi-360px.png` & `share-alert-modal-hi-360px.png`
+      - `share-alert-card-kn-360px.png` & `share-alert-modal-kn-360px.png`
+      - `share-alert-card-en-1280px.png` & `share-alert-modal-en-1280px.png`
+      - `share-alert-card-hi-1280px.png` & `share-alert-modal-hi-1280px.png`
+      - `share-alert-card-kn-1280px.png` & `share-alert-modal-kn-1280px.png`
     - 10 / 10 acceptance criteria passing; 100% scenario verification passing; 25/25 eval fixtures matching 100%.
 
 - **Phase 10 Verification Checklist (Verification & QA):**
