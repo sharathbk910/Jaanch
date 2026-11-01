@@ -55,7 +55,7 @@ describe('Phase 7: ReportEntityDialog UI Component', () => {
       signUp: vi.fn(),
       signInWithGoogle: vi.fn(),
       signOut: vi.fn(),
-    });
+    } as any);
 
     const { container } = renderDialog({
       isOpen: true,
@@ -89,7 +89,7 @@ describe('Phase 7: ReportEntityDialog UI Component', () => {
       signUp: vi.fn(),
       signInWithGoogle: vi.fn(),
       signOut: vi.fn(),
-    });
+    } as any);
 
     renderDialog({ isOpen: true });
 
@@ -113,7 +113,7 @@ describe('Phase 7: ReportEntityDialog UI Component', () => {
       signUp: vi.fn(),
       signInWithGoogle: vi.fn(),
       signOut: vi.fn(),
-    });
+    } as any);
 
     (apiClient.reportEntity as any).mockResolvedValue({
       reportId: 'rep_123',
@@ -163,7 +163,7 @@ describe('Phase 7: ReportEntityDialog UI Component', () => {
       signUp: vi.fn(),
       signInWithGoogle: vi.fn(),
       signOut: vi.fn(),
-    });
+    } as any);
 
     renderDialog({ isOpen: true, onClose: handleClose });
 

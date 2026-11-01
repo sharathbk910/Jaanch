@@ -13,7 +13,7 @@
 - **Current Phase:** Phase 7 – Shared Intelligence and Moderation Complete
 - **Current Tag:** `phase-7-done`
 - **Node Version:** v24.19.0 (LTS >= 20 required)
-- **Repository State:** Green monorepo; `@jaanch/shared`, `@jaanch/server`, and `@jaanch/client` fully compiled, typechecked, linted, and tested (288 tests passing across 31 test suites, 25/25 eval fixtures matching 100%, 10/10 acceptance criteria PASS)
+- **Repository State:** Green monorepo; `@jaanch/shared`, `@jaanch/server`, and `@jaanch/client` fully compiled, typechecked, linted, and tested (295 tests passing across 32 test suites, 25/25 eval fixtures matching 100%, 10/10 acceptance criteria PASS)
 
 ---
 
@@ -97,20 +97,31 @@
   - [x] Axe accessibility testing (`ResultsPage.test.tsx`): 0 critical or serious violations across all 3 statuses (`LIKELY_GENUINE`, `NEEDS_REVIEW`, `HIGH_CONCERN`)
   - [x] Full test suite: 260 tests passing across 28 test suites; 10/10 acceptance criteria passing; 100% scenario verification passing
 - **Phase 6D Verification Checklist:**
-  - [x] `LoginPage.tsx`: Accessible email/password form, client validation, "Sign In with Email", Google OAuth sign-in integration, guest education notice, error alert banner
-  - [x] `SignupPage.tsx`: Account creation form with password length & match validation, Google OAuth button, redirect on success
-  - [x] `HistoryPage.tsx`:
+  - [x] `LoginPage.tsx`: Accessible email/password form, client validation, "Sign In with Email", Google OAuth sign-in integration, guest education notice, "Forgot password?" link, prominent "Continue as guest" link, error alert banner
+  - [x] `SignupPage.tsx`: Account creation form with password length & match validation, Google OAuth button, "Continue as guest" link, redirect on success
+  - [x] `ForgotPasswordPage.tsx`: Email input form requesting Supabase password reset link, success message, "Continue as guest" link
+  - [x] `ResetPasswordPage.tsx`: Secure password reset with minimum 8 characters validation and password matching
+  - [x] `VerifyEmailPage.tsx`: Email verification instructions, sign-in CTA, "Continue as guest" link
+  - [x] `LogoutPage.tsx`: Clean session termination redirecting to login
+  - [x] Protected routes (`<ProtectedRoute>`): Guards `/dashboard`, `/history`, and `/settings`; redirects unauthenticated users to `/login` preserving intended location in state
+  - [x] `HistoryPage.tsx` / `DashboardPage.tsx`:
     - Unauthenticated state: Educational welcome card with "Sign In", "Create Account", and "Verify Offer as Guest" actions
     - Authenticated state: Paginated submission history fetched from `GET /api/history`, domain filter toolbar, 4-verdict status badges, confidence meters, channel information
     - Single item deletion (`DELETE /api/history/:id`) with browser confirmation and optimistic list update
-    - Direct link to full audit result (`/results/:id`)
+    - Direct link to full audit result (`/results/:id`), supported by owner-isolated `GET /api/history/:id` endpoint
   - [x] `SettingsPage.tsx`:
     - Unauthenticated prompt to sign in
     - User Profile display: Email, masked ID, account role (`user`/`moderator`), join date
     - Language switcher wired to `LanguageContext` (`en`, `hi`, `kn`)
     - GDPR / Digital Personal Data Protection Act permanent account data erasure flow (`DELETE /api/account/data`) requiring exact "DELETE" typed confirmation
-  - [x] `AuthContext.tsx`: Full auth provider wiring `signInWithPassword`, `signUp`, `signInWithGoogle`, `signOut`, role detection
-  - [x] Component test suite (`client/src/__tests__/AuthPages.test.tsx`): 8/8 tests covering sign-in, sign-up validation, history filters, deletion, and settings data erasure
+  - [x] `AuthContext.tsx`: Full auth provider wiring `signInWithPassword`, `signUp`, `signInWithGoogle`, `signOut`, `resetPasswordForEmail`, `updatePassword`, role detection
+  - [x] Multi-user isolation test suite (`server/src/__tests__/auth_dashboard_e2e.test.ts`):
+    - Register -> login -> analyze with save -> history -> delete flow against real Express stack
+    - Two browser / user contexts proving user B never sees user A's history; cross-tenant get/delete returns 404
+    - Guest flow unchanged: guest analyses require no auth, persist zero records to DB, and unauthenticated `/api/history` rejected with 401
+  - [x] Component test suite (`client/src/__tests__/AuthPages.test.tsx`): 12/12 tests covering sign-in, sign-up validation, history filters, deletion, settings data erasure, forgot password, reset password, verify email, and continue as guest
+  - [x] Visual Proof Screenshots (`scripts/generate-auth-screenshots.mjs`):
+    - 36 screenshots in `docs/ui-shots/auth/` covering `/login`, `/signup`, and `/history` across 360px and 1280px viewports in Light/Dark themes and EN/HI/KN languages
   - [x] Acceptance criteria harness: 10/10 PASS
   - [x] End-to-end local server scenarios (`scripts/verify-scenarios-e2e.ts`): 100% PASS
 - **Phase 7 Verification Checklist:**

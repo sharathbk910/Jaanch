@@ -71,7 +71,8 @@ router.post(
   '/entities/:id/transition',
   validateBody(TransitionStatusSchema),
   async (req: Request, res: Response) => {
-    const { id } = req.params;
+    const rawId = req.params.id;
+    const entityId = Array.isArray(rawId) ? rawId[0] : String(rawId);
     const { toStatus, notes } = req.body as z.infer<typeof TransitionStatusSchema>;
     const moderatorId = req.user!.id;
 
@@ -79,7 +80,7 @@ router.post(
       const updated = await ThreatIntelRepository.transitionEntityStatus(
         req.supabase || null,
         {
-          entityId: id,
+          entityId,
           toStatus,
           notes,
           moderatorId,
@@ -90,7 +91,7 @@ router.post(
         {
           requestId: req.id,
           moderatorId,
-          entityId: id,
+          entityId,
           toStatus,
         },
         'Moderator transitioned reported entity status'

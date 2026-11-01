@@ -2,7 +2,7 @@ import React, { createContext, useContext, useEffect, useState, type ReactNode }
 import type { User, Session } from '@supabase/supabase-js';
 import { supabase } from './supabase.js';
 
-interface AuthContextType {
+export interface AuthContextType {
   user: User | null;
   session: Session | null;
   isLoading: boolean;
@@ -11,7 +11,22 @@ interface AuthContextType {
   signUp: (credentials: { email: string; password: string; options?: any }) => Promise<{ error: any; data?: any }>;
   signInWithGoogle: () => Promise<{ error: any }>;
   signOut: () => Promise<void>;
+  resetPasswordForEmail: (email: string) => Promise<{ error: any; data?: any }>;
+  updatePassword: (password: string) => Promise<{ error: any; data?: any }>;
 }
+
+const defaultAuthContext: AuthContextType = {
+  user: null,
+  session: null,
+  isLoading: false,
+  isModerator: false,
+  signInWithPassword: async () => ({ error: new Error('AuthProvider not found') }),
+  signUp: async () => ({ error: new Error('AuthProvider not found') }),
+  signInWithGoogle: async () => ({ error: new Error('AuthProvider not found') }),
+  signOut: async () => {},
+  resetPasswordForEmail: async () => ({ error: new Error('AuthProvider not found') }),
+  updatePassword: async () => ({ error: new Error('AuthProvider not found') }),
+};
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
@@ -64,6 +79,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     });
   };
 
+  const resetPasswordForEmail = async (email: string) => {
+    const redirectTo = typeof window !== 'undefined' ? `${window.location.origin}/reset-password` : undefined;
+    return supabase.auth.resetPasswordForEmail(email, { redirectTo });
+  };
+
+  const updatePassword = async (password: string) => {
+    return supabase.auth.updateUser({ password });
+  };
+
   const role =
     user?.app_metadata?.role ||
     user?.user_metadata?.role ||
@@ -81,6 +105,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         signUp,
         signInWithGoogle,
         signOut,
+        resetPasswordForEmail,
+        updatePassword,
       }}
     >
       {children}
@@ -88,20 +114,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   );
 }
 
-export function useAuth() {
+export function useAuth(): AuthContextType {
   const context = useContext(AuthContext);
-  if (!context) {
-    return {
-      user: null,
-      session: null,
-      isLoading: false,
-      isModerator: false,
-      signInWithPassword: async () => ({ error: new Error('AuthProvider not found') }),
-      signUp: async () => ({ error: new Error('AuthProvider not found') }),
-      signInWithGoogle: async () => ({ error: new Error('AuthProvider not found') }),
-      signOut: async () => {},
-    };
-  }
-  return context;
+  return context || defaultAuthContext;
 }
 

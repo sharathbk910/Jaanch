@@ -77,6 +77,17 @@ export interface TranslationDictionary {
     googleBtn: string;
     noAccount: string;
     haveAccount: string;
+    continueAsGuest: string;
+    forgotPasswordLink: string;
+    forgotPasswordTitle: string;
+    forgotPasswordSubtitle: string;
+    sendResetLinkBtn: string;
+    resetPasswordTitle: string;
+    resetPasswordSubtitle: string;
+    updatePasswordBtn: string;
+    verifyEmailTitle: string;
+    verifyEmailSubtitle: string;
+    backToLogin: string;
   };
   history: {
     eyebrow: string;
@@ -411,6 +422,17 @@ export const translations: Record<'en' | 'hi' | 'kn', TranslationDictionary> = {
       googleBtn: 'Continue with Google',
       noAccount: "Don't have an account? Sign up",
       haveAccount: 'Already have an account? Sign in',
+      continueAsGuest: 'Continue as Guest',
+      forgotPasswordLink: 'Forgot password?',
+      forgotPasswordTitle: 'Reset Your Password',
+      forgotPasswordSubtitle: 'Enter your email address and we will send you a password reset link.',
+      sendResetLinkBtn: 'Send Reset Link',
+      resetPasswordTitle: 'Set New Password',
+      resetPasswordSubtitle: 'Choose a strong new password for your account.',
+      updatePasswordBtn: 'Update Password',
+      verifyEmailTitle: 'Verify Your Email',
+      verifyEmailSubtitle: 'Please check your email inbox to verify your account.',
+      backToLogin: 'Back to Sign In',
     },
     history: {
       eyebrow: 'AUDIT LOG',
@@ -743,6 +765,17 @@ export const translations: Record<'en' | 'hi' | 'kn', TranslationDictionary> = {
       googleBtn: 'गूगल से जारी रखें',
       noAccount: 'खाता नहीं है? साइन अप करें',
       haveAccount: 'पहले से खाता है? साइन इन करें',
+      continueAsGuest: 'अतिथि के रूप में जारी रखें',
+      forgotPasswordLink: 'पासवर्ड भूल गए?',
+      forgotPasswordTitle: 'पासवर्ड रीसेट करें',
+      forgotPasswordSubtitle: 'अपना ईमेल पता दर्ज करें और हम आपको पासवर्ड रीसेट लिंक भेजेंगे।',
+      sendResetLinkBtn: 'रीसेट लिंक भेजें',
+      resetPasswordTitle: 'नया पासवर्ड सेट करें',
+      resetPasswordSubtitle: 'अपने खाते के लिए एक नया मजबूत पासवर्ड चुनें।',
+      updatePasswordBtn: 'पासवर्ड अपडेट करें',
+      verifyEmailTitle: 'अपना ईमेल सत्यापित करें',
+      verifyEmailSubtitle: 'कृपया अपना खाता सत्यापित करने के लिए अपने ईमेल इनबॉक्स की जांच करें।',
+      backToLogin: 'साइन इन पर वापस जाएं',
     },
     history: {
       eyebrow: 'ऑडिट लॉग',
@@ -1075,6 +1108,17 @@ export const translations: Record<'en' | 'hi' | 'kn', TranslationDictionary> = {
       googleBtn: 'ಗೂಗಲ್ ಮೂಲಕ ಮುಂದುವರಿಯಿರಿ',
       noAccount: 'ಖಾತೆ ಇಲ್ಲವೇ? ಸೈನ್ ಅಪ್ ಮಾಡಿ',
       haveAccount: 'ಈಗಾಗಲೇ ಖಾತೆ ಇದೆಯೇ? ಸೈನ್ ಇನ್ ಮಾಡಿ',
+      continueAsGuest: 'ಅತಿಥಿಯಾಗಿ ಮುಂದುವರಿಯಿರಿ',
+      forgotPasswordLink: 'ಗುಪ್ತಪದ ಮರೆತಿರಾ?',
+      forgotPasswordTitle: 'ಪಾಸ್‌ವರ್ಡ್ ಮರುಹೊಂದಿಸಿ',
+      forgotPasswordSubtitle: 'ನಿಮ್ಮ ಇಮೇಲ್ ವಿಳಾಸವನ್ನು ನಮೂದಿಸಿ ಮತ್ತು ನಾವು ಪಾಸ್‌ವರ್ಡ್ ಮರುಹೊಂದಿಸುವ ಲಿಂಕ್ ಕಳುಹಿಸುತ್ತೇವೆ.',
+      sendResetLinkBtn: 'ರೀಸೆಟ್ ಲಿಂಕ್ ಕಳುಹಿಸಿ',
+      resetPasswordTitle: 'ಹೊಸ ಗುಪ್ತಪದ ಹೊಂದಿಸಿ',
+      resetPasswordSubtitle: 'ನಿಮ್ಮ ಖಾತೆಗಾಗಿ ಹೊಸ ಬಲವಾದ ಪಾಸ್‌ವರ್ಡ್ ಆಯ್ಕೆಮಾಡಿ.',
+      updatePasswordBtn: 'ಪಾಸ್‌ವರ್ಡ್ ನವೀಕರಿಸಿ',
+      verifyEmailTitle: 'ನಿಮ್ಮ ಇಮೇಲ್ ಪರಿಶೀಲಿಸಿ',
+      verifyEmailSubtitle: 'ನಿಮ್ಮ ಖಾತೆಯನ್ನು ಪರಿಶೀಲಿಸಲು ದಯವಿಟ್ಟು ಇಮೇಲ್ ಇನ್‌ಬಾಕ್ಸ್ ಪರಿಶೀಲಿಸಿ.',
+      backToLogin: 'ಸೈನ್ ಇನ್‌ಗೆ ಹಿಂತಿರುಗಿ',
     },
     history: {
       eyebrow: 'ಆಡಿಟ್ ಲಾಗ್',

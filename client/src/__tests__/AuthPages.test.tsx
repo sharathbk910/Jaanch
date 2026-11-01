@@ -5,7 +5,16 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter, Routes, Route } from 'react-router-dom';
-import { LoginPage, SignupPage, HistoryPage, SettingsPage } from '../pages/AuthPages.js';
+import {
+  LoginPage,
+  SignupPage,
+  HistoryPage,
+  SettingsPage,
+  ForgotPasswordPage,
+  ResetPasswordPage,
+  VerifyEmailPage,
+  ProtectedRoute,
+} from '../pages/AuthPages.js';
 import { LanguageProvider } from '../i18n/LanguageContext.js';
 import { apiClient } from '../lib/apiClient.js';
 import * as authContext from '../lib/AuthContext.js';
@@ -26,6 +35,9 @@ function renderWithProviders(element: React.ReactElement, initialEntries = ['/']
           <Route path="/" element={element} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
+          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+          <Route path="/reset-password" element={<ResetPasswordPage />} />
+          <Route path="/verify-email" element={<VerifyEmailPage />} />
           <Route path="/history" element={<HistoryPage />} />
           <Route path="/settings" element={<SettingsPage />} />
           <Route path="/results/:id" element={<div data-testid="results-view">Results View</div>} />
@@ -35,6 +47,22 @@ function renderWithProviders(element: React.ReactElement, initialEntries = ['/']
   );
 }
 
+function createMockAuth(overrides?: Partial<authContext.AuthContextType>): authContext.AuthContextType {
+  return {
+    user: null,
+    session: null,
+    isLoading: false,
+    isModerator: false,
+    signInWithPassword: vi.fn(),
+    signUp: vi.fn(),
+    signInWithGoogle: vi.fn(),
+    signOut: vi.fn(),
+    resetPasswordForEmail: vi.fn(),
+    updatePassword: vi.fn(),
+    ...overrides,
+  };
+}
+
 describe('Phase 6D – Auth UI & History (AuthPages.tsx)', () => {
   beforeEach(() => {
     vi.clearAllMocks();
@@ -42,16 +70,7 @@ describe('Phase 6D – Auth UI & History (AuthPages.tsx)', () => {
 
   describe('LoginPage', () => {
     it('renders login form with email, password inputs, submit and Google buttons', () => {
-      vi.spyOn(authContext, 'useAuth').mockReturnValue({
-        user: null,
-        session: null,
-        isLoading: false,
-        isModerator: false,
-        signInWithPassword: vi.fn(),
-        signUp: vi.fn(),
-        signInWithGoogle: vi.fn(),
-        signOut: vi.fn(),
-      });
+      vi.spyOn(authContext, 'useAuth').mockReturnValue(createMockAuth());
 
       renderWithProviders(<LoginPage />);
 
@@ -67,16 +86,9 @@ describe('Phase 6D – Auth UI & History (AuthPages.tsx)', () => {
       const user = userEvent.setup();
       const signInMock = vi.fn().mockResolvedValue({ error: null });
 
-      vi.spyOn(authContext, 'useAuth').mockReturnValue({
-        user: null,
-        session: null,
-        isLoading: false,
-        isModerator: false,
-        signInWithPassword: signInMock,
-        signUp: vi.fn(),
-        signInWithGoogle: vi.fn(),
-        signOut: vi.fn(),
-      });
+      vi.spyOn(authContext, 'useAuth').mockReturnValue(
+        createMockAuth({ signInWithPassword: signInMock })
+      );
 
       renderWithProviders(<LoginPage />);
 
@@ -96,16 +108,9 @@ describe('Phase 6D – Auth UI & History (AuthPages.tsx)', () => {
         error: { message: 'Invalid login credentials' },
       });
 
-      vi.spyOn(authContext, 'useAuth').mockReturnValue({
-        user: null,
-        session: null,
-        isLoading: false,
-        isModerator: false,
-        signInWithPassword: signInMock,
-        signUp: vi.fn(),
-        signInWithGoogle: vi.fn(),
-        signOut: vi.fn(),
-      });
+      vi.spyOn(authContext, 'useAuth').mockReturnValue(
+        createMockAuth({ signInWithPassword: signInMock })
+      );
 
       renderWithProviders(<LoginPage />);
 
@@ -122,16 +127,7 @@ describe('Phase 6D – Auth UI & History (AuthPages.tsx)', () => {
   describe('SignupPage', () => {
     it('validates password mismatch and enforces minimum password length', async () => {
       const user = userEvent.setup();
-      vi.spyOn(authContext, 'useAuth').mockReturnValue({
-        user: null,
-        session: null,
-        isLoading: false,
-        isModerator: false,
-        signInWithPassword: vi.fn(),
-        signUp: vi.fn(),
-        signInWithGoogle: vi.fn(),
-        signOut: vi.fn(),
-      });
+      vi.spyOn(authContext, 'useAuth').mockReturnValue(createMockAuth());
 
       renderWithProviders(<SignupPage />);
 
@@ -155,16 +151,7 @@ describe('Phase 6D – Auth UI & History (AuthPages.tsx)', () => {
 
   describe('HistoryPage', () => {
     it('renders unauthenticated prompt when user is not signed in', () => {
-      vi.spyOn(authContext, 'useAuth').mockReturnValue({
-        user: null,
-        session: null,
-        isLoading: false,
-        isModerator: false,
-        signInWithPassword: vi.fn(),
-        signUp: vi.fn(),
-        signInWithGoogle: vi.fn(),
-        signOut: vi.fn(),
-      });
+      vi.spyOn(authContext, 'useAuth').mockReturnValue(createMockAuth());
 
       renderWithProviders(<HistoryPage />);
 
@@ -176,16 +163,12 @@ describe('Phase 6D – Auth UI & History (AuthPages.tsx)', () => {
 
     it('loads and displays saved audits with domain filters for authenticated user', async () => {
       const user = userEvent.setup();
-      vi.spyOn(authContext, 'useAuth').mockReturnValue({
-        user: { id: 'user_123', email: 'student@example.com' } as any,
-        session: {} as any,
-        isLoading: false,
-        isModerator: false,
-        signInWithPassword: vi.fn(),
-        signUp: vi.fn(),
-        signInWithGoogle: vi.fn(),
-        signOut: vi.fn(),
-      });
+      vi.spyOn(authContext, 'useAuth').mockReturnValue(
+        createMockAuth({
+          user: { id: 'user_123', email: 'student@example.com' } as any,
+          session: {} as any,
+        })
+      );
 
       const mockHistory = {
         items: [
@@ -238,16 +221,12 @@ describe('Phase 6D – Auth UI & History (AuthPages.tsx)', () => {
       const user = userEvent.setup();
       window.confirm = vi.fn().mockReturnValue(true);
 
-      vi.spyOn(authContext, 'useAuth').mockReturnValue({
-        user: { id: 'user_123', email: 'student@example.com' } as any,
-        session: {} as any,
-        isLoading: false,
-        isModerator: false,
-        signInWithPassword: vi.fn(),
-        signUp: vi.fn(),
-        signInWithGoogle: vi.fn(),
-        signOut: vi.fn(),
-      });
+      vi.spyOn(authContext, 'useAuth').mockReturnValue(
+        createMockAuth({
+          user: { id: 'user_123', email: 'student@example.com' } as any,
+          session: {} as any,
+        })
+      );
 
       vi.mocked(apiClient.getHistory).mockResolvedValue({
         items: [
@@ -292,21 +271,18 @@ describe('Phase 6D – Auth UI & History (AuthPages.tsx)', () => {
       const user = userEvent.setup();
       const signOutMock = vi.fn().mockResolvedValue(undefined);
 
-      vi.spyOn(authContext, 'useAuth').mockReturnValue({
-        user: {
-          id: 'usr_secure_999',
-          email: 'verified_student@college.in',
-          created_at: '2026-01-15T10:00:00Z',
-          app_metadata: { role: 'user' },
-        } as any,
-        session: {} as any,
-        isLoading: false,
-        isModerator: false,
-        signInWithPassword: vi.fn(),
-        signUp: vi.fn(),
-        signInWithGoogle: vi.fn(),
-        signOut: signOutMock,
-      });
+      vi.spyOn(authContext, 'useAuth').mockReturnValue(
+        createMockAuth({
+          user: {
+            id: 'usr_secure_999',
+            email: 'verified_student@college.in',
+            created_at: '2026-01-15T10:00:00Z',
+            app_metadata: { role: 'user' },
+          } as any,
+          session: {} as any,
+          signOut: signOutMock,
+        })
+      );
 
       vi.mocked(apiClient.eraseAccountData).mockResolvedValue({
         success: true,
@@ -339,6 +315,153 @@ describe('Phase 6D – Auth UI & History (AuthPages.tsx)', () => {
         expect(apiClient.eraseAccountData).toHaveBeenCalled();
         expect(screen.getByText(/All your account submissions and history have been permanently erased/i)).toBeInTheDocument();
       });
+    });
+  });
+
+  describe('ForgotPasswordPage', () => {
+    it('renders password reset request form and submits email successfully', async () => {
+      const user = userEvent.setup();
+      const mockReset = vi.fn().mockResolvedValue({ error: null });
+
+      vi.spyOn(authContext, 'useAuth').mockReturnValue({
+        user: null,
+        session: null,
+        isLoading: false,
+        isModerator: false,
+        signInWithPassword: vi.fn(),
+        signUp: vi.fn(),
+        signInWithGoogle: vi.fn(),
+        signOut: vi.fn(),
+        resetPasswordForEmail: mockReset,
+        updatePassword: vi.fn(),
+      });
+
+      renderWithProviders(<ForgotPasswordPage />);
+
+      expect(screen.getByRole('heading', { level: 1, name: /Reset Your Password/i })).toBeInTheDocument();
+      expect(screen.getByLabelText(/Email address/i)).toBeInTheDocument();
+      expect(screen.getByRole('link', { name: /Continue as Guest/i })).toBeInTheDocument();
+
+      const emailInput = screen.getByLabelText(/Email address/i);
+      await user.type(emailInput, 'student@campus.edu.in');
+
+      const submitBtn = screen.getByRole('button', { name: /Send Reset Link/i });
+      await user.click(submitBtn);
+
+      await waitFor(() => {
+        expect(mockReset).toHaveBeenCalledWith('student@campus.edu.in');
+        expect(screen.getByText(/Password reset link sent!/i)).toBeInTheDocument();
+      });
+    });
+  });
+
+  describe('ResetPasswordPage', () => {
+    it('validates minimum 8 characters and password confirmation before calling updatePassword', async () => {
+      const user = userEvent.setup();
+      const mockUpdate = vi.fn().mockResolvedValue({ error: null });
+
+      vi.spyOn(authContext, 'useAuth').mockReturnValue({
+        user: { id: 'u1' } as any,
+        session: null,
+        isLoading: false,
+        isModerator: false,
+        signInWithPassword: vi.fn(),
+        signUp: vi.fn(),
+        signInWithGoogle: vi.fn(),
+        signOut: vi.fn(),
+        resetPasswordForEmail: vi.fn(),
+        updatePassword: mockUpdate,
+      });
+
+      renderWithProviders(<ResetPasswordPage />);
+
+      expect(screen.getByRole('heading', { level: 1, name: /Set New Password/i })).toBeInTheDocument();
+
+      const passInput = screen.getByLabelText(/^New Password/i);
+      const confirmInput = screen.getByLabelText(/Confirm New Password/i);
+      const submitBtn = screen.getByRole('button', { name: /Update Password/i });
+
+      // Short password
+      await user.type(passInput, 'short');
+      await user.type(confirmInput, 'short');
+      await user.click(submitBtn);
+      expect(screen.getByText(/Password must be at least 8 characters long/i)).toBeInTheDocument();
+
+      // Mismatched password
+      await user.clear(passInput);
+      await user.clear(confirmInput);
+      await user.type(passInput, 'strongPassword123');
+      await user.type(confirmInput, 'differentPassword123');
+      await user.click(submitBtn);
+      expect(screen.getByText(/Passwords do not match/i)).toBeInTheDocument();
+
+      // Matching valid password
+      await user.clear(confirmInput);
+      await user.type(confirmInput, 'strongPassword123');
+      await user.click(submitBtn);
+
+      await waitFor(() => {
+        expect(mockUpdate).toHaveBeenCalledWith('strongPassword123');
+        expect(screen.getByText(/Password updated successfully!/i)).toBeInTheDocument();
+      });
+    });
+  });
+
+  describe('VerifyEmailPage', () => {
+    it('renders email verification instructions with continue as guest link', () => {
+      renderWithProviders(<VerifyEmailPage />);
+      expect(screen.getByRole('heading', { level: 1, name: /Verify Your Email/i })).toBeInTheDocument();
+      expect(screen.getByRole('link', { name: /Continue as Guest/i })).toBeInTheDocument();
+    });
+  });
+
+  describe('ProtectedRoute', () => {
+    it('redirects unauthenticated users to /login and renders children when authenticated', () => {
+      // 1. Unauthenticated -> redirects to /login
+      vi.spyOn(authContext, 'useAuth').mockReturnValue({
+        user: null,
+        session: null,
+        isLoading: false,
+        isModerator: false,
+        signInWithPassword: vi.fn(),
+        signUp: vi.fn(),
+        signInWithGoogle: vi.fn(),
+        signOut: vi.fn(),
+        resetPasswordForEmail: vi.fn(),
+        updatePassword: vi.fn(),
+      });
+
+      const { unmount } = renderWithProviders(
+        <ProtectedRoute>
+          <div data-testid="secret-dashboard">Protected Content</div>
+        </ProtectedRoute>
+      );
+
+      expect(screen.queryByTestId('secret-dashboard')).not.toBeInTheDocument();
+      expect(screen.getByRole('heading', { level: 1, name: /Sign In to Jaanch/i })).toBeInTheDocument();
+      unmount();
+
+      // 2. Authenticated -> renders protected content
+      vi.spyOn(authContext, 'useAuth').mockReturnValue({
+        user: { id: 'u123', email: 'student@campus.edu.in' } as any,
+        session: null,
+        isLoading: false,
+        isModerator: false,
+        signInWithPassword: vi.fn(),
+        signUp: vi.fn(),
+        signInWithGoogle: vi.fn(),
+        signOut: vi.fn(),
+        resetPasswordForEmail: vi.fn(),
+        updatePassword: vi.fn(),
+      });
+
+      renderWithProviders(
+        <ProtectedRoute>
+          <div data-testid="secret-dashboard">Protected Content</div>
+        </ProtectedRoute>
+      );
+
+      expect(screen.getByTestId('secret-dashboard')).toBeInTheDocument();
     });
   });
 });

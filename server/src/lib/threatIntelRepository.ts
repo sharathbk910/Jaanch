@@ -65,21 +65,63 @@ export function getInMemoryThreatIntel(): {
   };
 }
 
-export function seedReportedEntity(record: Partial<ReportedEntityRecord> & { entity_type: EntityType; value_hash: string; status: ThreatEntityStatus }): ReportedEntityRecord {
+export function seedReportedEntity(
+  record:
+    | (Partial<ReportedEntityRecord> & { entity_type: EntityType; value_hash: string; status: ThreatEntityStatus })
+    | {
+        id?: string;
+        entityType: EntityType;
+        value: string;
+        status: ThreatEntityStatus;
+        confidence?: number;
+        reportCount?: number;
+        notes?: string | null;
+        confirmedAt?: string | null;
+      }
+): ReportedEntityRecord {
+  const entityType = 'entity_type' in record ? record.entity_type : record.entityType;
+  const valueHash = 'value_hash' in record ? record.value_hash : hashEntity(entityType, record.value);
+  const status = record.status;
+  const reportCount =
+    'report_count' in record && record.report_count !== undefined
+      ? record.report_count
+      : 'reportCount' in record && record.reportCount !== undefined
+        ? record.reportCount
+        : 1;
+  const notes = record.notes || null;
+  const confirmedAt =
+    'confirmed_at' in record
+      ? record.confirmed_at
+      : 'confirmedAt' in record
+        ? record.confirmedAt
+        : status === 'confirmed'
+          ? new Date().toISOString()
+          : null;
+
   const fullRecord: ReportedEntityRecord = {
     id: record.id || crypto.randomUUID(),
-    entity_type: record.entity_type,
-    value_hash: record.value_hash,
-    status: record.status,
-    report_count: record.report_count || 1,
-    notes: record.notes || null,
-    confirmed_at: record.confirmed_at || (record.status === 'confirmed' ? new Date().toISOString() : null),
-    created_at: record.created_at || new Date().toISOString(),
-    updated_at: record.updated_at || new Date().toISOString(),
+    entity_type: entityType,
+    value_hash: valueHash,
+    status,
+    report_count: reportCount,
+    notes,
+    confirmed_at: confirmedAt || null,
+    created_at: ('created_at' in record && record.created_at) || new Date().toISOString(),
+    updated_at: ('updated_at' in record && record.updated_at) || new Date().toISOString(),
   };
 
-  inMemoryEntities.set(record.value_hash, fullRecord);
+  inMemoryEntities.set(valueHash, fullRecord);
   return fullRecord;
+}
+
+function shouldCallRemote(supabase: SupabaseClient | null): supabase is SupabaseClient {
+  if (!supabase) return false;
+  const env = loadEnv();
+  return (
+    (env.NODE_ENV !== 'test' || process.env.TEST_LIVE_SUPABASE === 'true') &&
+    Boolean(env.SUPABASE_URL) &&
+    !env.SUPABASE_URL.includes('placeholder')
+  );
 }
 
 export class ThreatIntelRepository {
@@ -107,7 +149,7 @@ export class ThreatIntelRepository {
     const channel = data.channel || 'other';
     const description = data.description || '';
 
-    if (supabase) {
+    if (shouldCallRemote(supabase)) {
       try {
         // Execute atomic stored procedure submit_scam_report
         const { data: rpcReportId, error } = await supabase.rpc('submit_scam_report', {
@@ -203,9 +245,9 @@ export class ThreatIntelRepository {
       return [];
     }
 
-    if (supabase) {
+    if (shouldCallRemote(supabase)) {
       try {
-        const { data: rows, error } = await supabase.rpc('check_reported_entities', {
+        const { data: rows, error } = await supabase!.rpc('check_reported_entities', {
           p_hashes: hashes,
         });
 
@@ -256,9 +298,9 @@ export class ThreatIntelRepository {
     const limit = Math.min(100, Math.max(1, options.limit || 20));
     const offset = (page - 1) * limit;
 
-    if (supabase) {
+    if (shouldCallRemote(supabase)) {
       try {
-        let query = supabase
+        let query = supabase!
           .from('reported_entities')
           .select('*', { count: 'exact' })
           .order('report_count', { ascending: false })
@@ -311,7 +353,7 @@ export class ThreatIntelRepository {
     const now = new Date().toISOString();
     const confirmedAt = toStatus === 'confirmed' ? now : null;
 
-    if (supabase) {
+    if (shouldCallRemote(supabase)) {
       try {
         const updatePayload: Record<string, unknown> = {
           status: toStatus,

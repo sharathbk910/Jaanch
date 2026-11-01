@@ -247,6 +247,89 @@ export class HistoryRepository {
   }
 
   /**
+   * Retrieves a single submission by ID owned strictly by userId.
+   */
+  static async getSubmissionById(
+    client: SupabaseClient | null,
+    userId: string,
+    submissionId: string
+  ): Promise<any | null> {
+    const env = loadEnv();
+    const shouldCallRemote =
+      client &&
+      (env.NODE_ENV !== 'test' || process.env.TEST_LIVE_SUPABASE === 'true') &&
+      env.SUPABASE_URL &&
+      !env.SUPABASE_URL.includes('placeholder');
+
+    if (shouldCallRemote) {
+      try {
+        const { data: sub, error } = await client
+          .from('submissions')
+          .select(`
+            id,
+            input_type,
+            domain,
+            channel,
+            text_hash,
+            redacted_text,
+            created_at,
+            detection_results (
+              id,
+              status,
+              confidence,
+              signals,
+              schema_version
+            )
+          `)
+          .eq('id', submissionId)
+          .eq('user_id', userId)
+          .single();
+
+        if (!error && sub) {
+          const det = Array.isArray(sub.detection_results)
+            ? sub.detection_results[0]
+            : sub.detection_results;
+          return {
+            id: sub.id,
+            inputType: sub.input_type,
+            domain: sub.domain,
+            channel: sub.channel,
+            createdAt: sub.created_at,
+            result: det
+              ? {
+                  status: det.status,
+                  confidenceScore: det.confidence,
+                  signals: det.signals,
+                }
+              : null,
+          };
+        }
+      } catch (err) {
+        logger.warn({ err }, 'Supabase getSubmissionById failed, trying in-memory');
+      }
+    }
+
+    const sub = inMemorySubmissions.find((s) => s.id === submissionId && s.user_id === userId);
+    if (!sub) return null;
+
+    const det = inMemoryResults.find((r) => r.submission_id === submissionId);
+    return {
+      id: sub.id,
+      inputType: sub.input_type,
+      domain: sub.domain,
+      channel: sub.channel,
+      createdAt: sub.created_at,
+      result: det
+        ? {
+            status: det.status,
+            confidenceScore: det.confidence,
+            signals: det.signals,
+          }
+        : null,
+    };
+  }
+
+  /**
    * Deletes a specific submission owned by userId.
    * Returns true if deleted, false if not found or unowned.
    */

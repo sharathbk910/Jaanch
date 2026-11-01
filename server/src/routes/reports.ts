@@ -113,13 +113,14 @@ router.post(
   async (req: Request, res: Response) => {
     const { entities, hashes } = req.body as z.infer<typeof ThreatIntelLookupSchema>;
 
-    const indicatorsToCheck: Array<{ type: EntityType; value: string }> | string[] = [];
+    let indicatorsToCheck: Array<{ type: EntityType; value: string }> | string[] = [];
     if (entities && entities.length > 0) {
-      for (const e of entities) {
-        indicatorsToCheck.push({ type: e.entityType as EntityType, value: e.value });
-      }
+      indicatorsToCheck = entities.map((e) => ({
+        type: e.entityType as EntityType,
+        value: e.value,
+      }));
     } else if (hashes && hashes.length > 0) {
-      indicatorsToCheck.push(...hashes);
+      indicatorsToCheck = hashes;
     }
 
     try {

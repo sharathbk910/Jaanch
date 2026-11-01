@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation, Link } from 'react-router-dom';
+import { useNavigate, useLocation, Link, Navigate } from 'react-router-dom';
 import {
   Lock,
   Mail,
@@ -127,9 +127,17 @@ export function LoginPage() {
           </div>
 
           <div>
-            <label htmlFor="login-password" className="block text-xs font-semibold text-primary mb-1">
-              {t.auth.passwordLabel}
-            </label>
+            <div className="flex items-center justify-between mb-1">
+              <label htmlFor="login-password" className="block text-xs font-semibold text-primary">
+                {t.auth.passwordLabel}
+              </label>
+              <Link
+                to="/forgot-password"
+                className="text-[11px] text-terracotta hover:underline"
+              >
+                {t.auth.forgotPasswordLink}
+              </Link>
+            </div>
             <Input
               id="login-password"
               type="password"
@@ -196,14 +204,25 @@ export function LoginPage() {
           <span>{t.auth.googleBtn}</span>
         </Button>
 
-        <div className="mt-6 text-center text-xs text-muted">
-          <Link
-            to="/signup"
-            state={location.state}
-            className="text-primary hover:text-terracotta underline focus:outline-none"
-          >
-            {t.auth.noAccount}
-          </Link>
+        <div className="mt-6 text-center text-xs text-muted space-y-3">
+          <div>
+            <Link
+              to="/signup"
+              state={location.state}
+              className="text-primary hover:text-terracotta underline focus:outline-none"
+            >
+              {t.auth.noAccount}
+            </Link>
+          </div>
+          <div className="pt-2 border-t border-border/60">
+            <Link
+              to="/analyze"
+              className="text-xs text-muted hover:text-primary font-medium inline-flex items-center gap-1 underline"
+            >
+              <span>{t.auth.continueAsGuest}</span>
+              <span>&rarr;</span>
+            </Link>
+          </div>
         </div>
       </Card>
 
@@ -445,14 +464,25 @@ export function SignupPage() {
           <span>{t.auth.googleBtn}</span>
         </Button>
 
-        <div className="mt-6 text-center text-xs text-muted">
-          <Link
-            to="/login"
-            state={location.state}
-            className="text-primary hover:text-terracotta underline focus:outline-none"
-          >
-            {t.auth.haveAccount}
-          </Link>
+        <div className="mt-6 text-center text-xs text-muted space-y-3">
+          <div>
+            <Link
+              to="/login"
+              state={location.state}
+              className="text-primary hover:text-terracotta underline focus:outline-none"
+            >
+              {t.auth.haveAccount}
+            </Link>
+          </div>
+          <div className="pt-2 border-t border-border/60">
+            <Link
+              to="/analyze"
+              className="text-xs text-muted hover:text-primary font-medium inline-flex items-center gap-1 underline"
+            >
+              <span>{t.auth.continueAsGuest}</span>
+              <span>&rarr;</span>
+            </Link>
+          </div>
         </div>
       </Card>
     </div>
@@ -1023,3 +1053,371 @@ export function SettingsPage() {
     </div>
   );
 }
+
+/* -------------------------------------------------------------------------- */
+/*                            FORGOT PASSWORD PAGE                            */
+/* -------------------------------------------------------------------------- */
+
+export function ForgotPasswordPage() {
+  const { resetPasswordForEmail, user } = useAuth();
+  const { dictionary } = useLanguage();
+  const t = dictionary;
+  const navigate = useNavigate();
+
+  const [email, setEmail] = useState('');
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (user) {
+      navigate('/history', { replace: true });
+    }
+  }, [user, navigate]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email) {
+      setError('Please provide your email address.');
+      return;
+    }
+
+    setError(null);
+    setIsLoading(true);
+
+    try {
+      const { error: resetError } = await resetPasswordForEmail(email);
+      if (resetError) {
+        setError(resetError.message || 'Failed to send password reset link.');
+      } else {
+        setSuccess(true);
+      }
+    } catch {
+      setError('An unexpected error occurred. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <div className="w-full max-w-sm mx-auto px-4 py-12 sm:py-20">
+      <Card padding="lg">
+        <div className="text-center mb-6">
+          <div className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-surface border border-border text-terracotta mb-3">
+            <Key className="w-5 h-5" aria-hidden="true" />
+          </div>
+          <h1 className="font-serif text-2xl font-bold text-primary">
+            {t.auth.forgotPasswordTitle}
+          </h1>
+          <p className="text-xs text-muted mt-1 leading-relaxed">
+            {t.auth.forgotPasswordSubtitle}
+          </p>
+        </div>
+
+        {success ? (
+          <div className="space-y-4 text-center">
+            <div className="p-4 rounded-md bg-surface border border-primary/40 text-xs text-primary space-y-2">
+              <CheckCircle2 className="w-6 h-6 text-primary mx-auto" />
+              <p className="font-medium">Password reset link sent!</p>
+              <p className="text-muted leading-relaxed">
+                If an account exists for {email}, you will receive a secure password reset link shortly.
+              </p>
+            </div>
+            <Link
+              to="/login"
+              className="inline-block text-xs text-primary hover:text-terracotta underline font-medium"
+            >
+              {t.auth.backToLogin}
+            </Link>
+          </div>
+        ) : (
+          <form onSubmit={handleSubmit} className="space-y-4">
+            {error && (
+              <div
+                role="alert"
+                className="flex items-start gap-2 p-3 rounded-md bg-surface border border-terracotta text-xs text-terracotta"
+              >
+                <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" aria-hidden="true" />
+                <span>{error}</span>
+              </div>
+            )}
+
+            <div>
+              <label htmlFor="reset-email" className="block text-xs font-semibold text-primary mb-1">
+                {t.auth.emailLabel}
+              </label>
+              <Input
+                id="reset-email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="student@university.edu.in"
+                required
+                className="text-xs"
+              />
+            </div>
+
+            <Button
+              type="submit"
+              variant="primary"
+              size="md"
+              disabled={isLoading}
+              className="w-full justify-center text-xs mt-2"
+            >
+              {isLoading ? (
+                <span className="inline-flex items-center gap-2">
+                  <Loader2 className="w-3.5 h-3.5 animate-spin" aria-hidden="true" />
+                  <span>Sending Link...</span>
+                </span>
+              ) : (
+                <span>{t.auth.sendResetLinkBtn}</span>
+              )}
+            </Button>
+
+            <div className="pt-2 text-center text-xs">
+              <Link
+                to="/login"
+                className="text-primary hover:text-terracotta underline focus:outline-none"
+              >
+                {t.auth.backToLogin}
+              </Link>
+            </div>
+          </form>
+        )}
+
+        <div className="mt-4 pt-4 border-t border-hairline text-center">
+          <Link
+            to="/analyze"
+            className="text-xs text-muted hover:text-primary font-medium inline-flex items-center gap-1 underline"
+          >
+            <span>{t.auth.continueAsGuest}</span>
+            <span>&rarr;</span>
+          </Link>
+        </div>
+      </Card>
+    </div>
+  );
+}
+
+/* -------------------------------------------------------------------------- */
+/*                            RESET PASSWORD PAGE                             */
+/* -------------------------------------------------------------------------- */
+
+export function ResetPasswordPage() {
+  const { updatePassword } = useAuth();
+  const { dictionary } = useLanguage();
+  const t = dictionary;
+  const navigate = useNavigate();
+
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (password.length < 8) {
+      setError('Password must be at least 8 characters long.');
+      return;
+    }
+    if (password !== confirmPassword) {
+      setError('Passwords do not match.');
+      return;
+    }
+
+    setError(null);
+    setIsLoading(true);
+
+    try {
+      const { error: updateError } = await updatePassword(password);
+      if (updateError) {
+        setError(updateError.message || 'Failed to update password.');
+      } else {
+        setSuccess(true);
+        setTimeout(() => {
+          navigate('/history', { replace: true });
+        }, 2000);
+      }
+    } catch {
+      setError('An unexpected error occurred. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <div className="w-full max-w-sm mx-auto px-4 py-12 sm:py-20">
+      <Card padding="lg">
+        <div className="text-center mb-6">
+          <div className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-surface border border-border text-terracotta mb-3">
+            <Lock className="w-5 h-5" aria-hidden="true" />
+          </div>
+          <h1 className="font-serif text-2xl font-bold text-primary">
+            {t.auth.resetPasswordTitle}
+          </h1>
+          <p className="text-xs text-muted mt-1 leading-relaxed">
+            {t.auth.resetPasswordSubtitle}
+          </p>
+        </div>
+
+        {success ? (
+          <div className="p-4 rounded-md bg-surface border border-primary text-xs text-primary text-center space-y-2">
+            <CheckCircle2 className="w-6 h-6 text-primary mx-auto" />
+            <p className="font-medium">Password updated successfully!</p>
+            <p className="text-muted">Redirecting you to your account...</p>
+          </div>
+        ) : (
+          <form onSubmit={handleSubmit} className="space-y-4">
+            {error && (
+              <div
+                role="alert"
+                className="flex items-start gap-2 p-3 rounded-md bg-surface border border-terracotta text-xs text-terracotta"
+              >
+                <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" aria-hidden="true" />
+                <span>{error}</span>
+              </div>
+            )}
+
+            <div>
+              <label htmlFor="new-password" className="block text-xs font-semibold text-primary mb-1">
+                New Password
+              </label>
+              <Input
+                id="new-password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="••••••••"
+                required
+                minLength={8}
+                className="text-xs"
+              />
+              <span className="block text-[10px] text-muted mt-0.5">Minimum 8 characters</span>
+            </div>
+
+            <div>
+              <label htmlFor="confirm-new-password" className="block text-xs font-semibold text-primary mb-1">
+                Confirm New Password
+              </label>
+              <Input
+                id="confirm-new-password"
+                type="password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                placeholder="••••••••"
+                required
+                minLength={8}
+                className="text-xs"
+              />
+            </div>
+
+            <Button
+              type="submit"
+              variant="primary"
+              size="md"
+              disabled={isLoading}
+              className="w-full justify-center text-xs mt-2"
+            >
+              {isLoading ? (
+                <span className="inline-flex items-center gap-2">
+                  <Loader2 className="w-3.5 h-3.5 animate-spin" aria-hidden="true" />
+                  <span>Updating Password...</span>
+                </span>
+              ) : (
+                <span>{t.auth.updatePasswordBtn}</span>
+              )}
+            </Button>
+          </form>
+        )}
+      </Card>
+    </div>
+  );
+}
+
+/* -------------------------------------------------------------------------- */
+/*                             VERIFY EMAIL PAGE                              */
+/* -------------------------------------------------------------------------- */
+
+export function VerifyEmailPage() {
+  const { dictionary } = useLanguage();
+  const t = dictionary;
+
+  return (
+    <div className="w-full max-w-sm mx-auto px-4 py-12 sm:py-20 text-center">
+      <Card padding="lg">
+        <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-surface border border-border text-terracotta mb-4">
+          <Mail className="w-6 h-6" aria-hidden="true" />
+        </div>
+        <h1 className="font-serif text-2xl font-bold text-primary mb-2">
+          {t.auth.verifyEmailTitle}
+        </h1>
+        <p className="text-xs text-muted leading-relaxed mb-6">
+          {t.auth.verifyEmailSubtitle}
+        </p>
+        <div className="space-y-3">
+          <Link
+            to="/login"
+            className="inline-block w-full py-2 px-4 rounded-md bg-btn text-surface text-xs font-medium hover:bg-btn-hover"
+          >
+            {t.auth.signInBtn}
+          </Link>
+          <Link
+            to="/analyze"
+            className="inline-block text-xs text-muted hover:text-primary font-medium underline"
+          >
+            {t.auth.continueAsGuest} &rarr;
+          </Link>
+        </div>
+      </Card>
+    </div>
+  );
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                LOGOUT PAGE                                 */
+/* -------------------------------------------------------------------------- */
+
+export function LogoutPage() {
+  const { signOut } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    signOut().finally(() => {
+      navigate('/login', { replace: true });
+    });
+  }, [signOut, navigate]);
+
+  return (
+    <div className="min-h-[50vh] flex flex-col items-center justify-center gap-3">
+      <Loader2 className="w-6 h-6 animate-spin text-terracotta" />
+      <span className="text-xs text-muted font-mono uppercase">Signing Out...</span>
+    </div>
+  );
+}
+
+/* -------------------------------------------------------------------------- */
+/*                              PROTECTED ROUTE                               */
+/* -------------------------------------------------------------------------- */
+
+export function ProtectedRoute({ children }: { children: React.ReactNode }) {
+  const { user, isLoading } = useAuth();
+  const location = useLocation();
+
+  if (isLoading) {
+    return (
+      <div className="min-h-[50vh] flex items-center justify-center">
+        <Loader2 className="w-6 h-6 animate-spin text-terracotta" />
+      </div>
+    );
+  }
+
+  if (!user) {
+    return <Navigate to="/login" state={{ from: location }} replace />;
+  }
+
+  return <>{children}</>;
+}
+
+export const DashboardPage = HistoryPage;
+

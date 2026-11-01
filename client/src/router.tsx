@@ -5,7 +5,17 @@ import { LandingPage } from './pages/LandingPage.js';
 import { AnalyzePage } from './pages/AnalyzePage.js';
 import { ResultsPage, SamplePage, LinkCheckPage } from './pages/ResultsPage.js';
 import { ResourcesPage, AboutPage, PrivacyPage, NotFoundPage } from './pages/StaticPages.js';
-import { LoginPage, SignupPage, HistoryPage, SettingsPage } from './pages/AuthPages.js';
+import {
+  LoginPage,
+  SignupPage,
+  HistoryPage,
+  SettingsPage,
+  ForgotPasswordPage,
+  ResetPasswordPage,
+  VerifyEmailPage,
+  LogoutPage,
+  ProtectedRoute,
+} from './pages/AuthPages.js';
 
 export const router = createBrowserRouter([
   {
@@ -22,9 +32,14 @@ export const router = createBrowserRouter([
       { path: 'about', element: <AboutPage /> },
       { path: 'privacy', element: <PrivacyPage /> },
       { path: 'history', element: <HistoryPage /> },
+      { path: 'dashboard', element: <ProtectedRoute><HistoryPage /></ProtectedRoute> },
       { path: 'login', element: <LoginPage /> },
       { path: 'signup', element: <SignupPage /> },
-      { path: 'settings', element: <SettingsPage /> },
+      { path: 'logout', element: <LogoutPage /> },
+      { path: 'forgot-password', element: <ForgotPasswordPage /> },
+      { path: 'reset-password', element: <ResetPasswordPage /> },
+      { path: 'verify-email', element: <VerifyEmailPage /> },
+      { path: 'settings', element: <ProtectedRoute><SettingsPage /></ProtectedRoute> },
       { path: '*', element: <NotFoundPage /> },
     ],
   },

@@ -4,6 +4,7 @@ import { z } from 'zod';
 import {
   AnalyzeRequestSchema,
   analyzeOffer,
+  extractEntities,
   redactText,
   type AnalyzeRequestInput,
   type AnalyzeResult,
@@ -46,24 +47,25 @@ router.post(
     const result: AnalyzeResult = analyzeOffer(input);
 
     // 1b. Check threat intelligence repository for confirmed or suspicious indicators
+    const rawEntities = extractEntities(input.text);
     const indicatorsToCheck: Array<{ type: EntityType; value: string }> = [];
-    if (result.extractedEntities.emails) {
-      for (const email of result.extractedEntities.emails) {
+    if (rawEntities.emails) {
+      for (const email of rawEntities.emails) {
         indicatorsToCheck.push({ type: 'email', value: email });
       }
     }
-    if (result.extractedEntities.domains) {
-      for (const domain of result.extractedEntities.domains) {
+    if (rawEntities.domains) {
+      for (const domain of rawEntities.domains) {
         indicatorsToCheck.push({ type: 'domain', value: domain });
       }
     }
-    if (result.extractedEntities.phones) {
-      for (const phone of result.extractedEntities.phones) {
+    if (rawEntities.phones) {
+      for (const phone of rawEntities.phones) {
         indicatorsToCheck.push({ type: 'phone', value: phone });
       }
     }
-    if (result.extractedEntities.upiHandles) {
-      for (const upi of result.extractedEntities.upiHandles) {
+    if (rawEntities.upiHandles) {
+      for (const upi of rawEntities.upiHandles) {
         indicatorsToCheck.push({ type: 'upi', value: upi });
       }
     }

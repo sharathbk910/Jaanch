@@ -4,6 +4,7 @@ import { requireAuth, requireRole } from '../middleware/auth.js';
 import { historyRateLimiter } from '../middleware/rateLimiter.js';
 import { HistoryRepository } from '../lib/historyRepository.js';
 import { writeAuditLog } from '../lib/auditLog.js';
+import { logger } from '../lib/logger.js';
 
 const router = Router();
 
@@ -56,6 +57,59 @@ router.get('/history', requireAuth, historyRateLimiter(), async (req: Request, r
       },
     },
   });
+});
+
+/**
+ * GET /api/history/:id
+ * Fetches a specific submission owned strictly by the authenticated user.
+ */
+router.get('/history/:id', requireAuth, historyRateLimiter(), async (req: Request, res: Response) => {
+  const parseResult = UuidParamSchema.safeParse(req.params);
+  if (!parseResult.success) {
+    res.status(400).json({
+      error: {
+        code: 'VALIDATION_ERROR',
+        message: 'Submission ID must be a valid UUID.',
+        requestId: req.id,
+      },
+    });
+    return;
+  }
+
+  const { id } = parseResult.data;
+  const user = req.user!;
+
+  try {
+    const item = await HistoryRepository.getSubmissionById(
+      req.supabase || null,
+      user.id,
+      id
+    );
+
+    if (!item) {
+      res.status(404).json({
+        error: {
+          code: 'NOT_FOUND',
+          message: 'Submission not found or access denied.',
+          requestId: req.id,
+        },
+      });
+      return;
+    }
+
+    res.status(200).json({
+      data: item,
+    });
+  } catch (err) {
+    logger.error({ err }, 'Failed to fetch submission details');
+    res.status(500).json({
+      error: {
+        code: 'HISTORY_FETCH_FAILED',
+        message: 'Could not retrieve submission record.',
+        requestId: req.id,
+      },
+    });
+  }
 });
 
 /**

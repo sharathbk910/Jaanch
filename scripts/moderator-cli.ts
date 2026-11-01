@@ -94,8 +94,13 @@ Statuses: reported | unverified | ai_flagged | suspicious | confirmed | dismisse
   if (command === 'hash') {
     const type = args[1] as EntityType;
     const value = args[2];
+    const VALID_TYPES = ['email', 'domain', 'phone', 'upi', 'bank_account'];
     if (!type || !value) {
       console.error('Error: type and value required. E.g.: hash phone "+919876543210"');
+      process.exit(1);
+    }
+    if (!VALID_TYPES.includes(type)) {
+      console.error(`Error: Invalid entity type "${type}". Allowed types: ${VALID_TYPES.join(', ')}`);
       process.exit(1);
     }
     const hash = computeHash(type, value);

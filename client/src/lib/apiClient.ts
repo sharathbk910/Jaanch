@@ -105,6 +105,13 @@ export const apiClient = {
   },
 
   /**
+   * Retrieves a specific submission details owned by the authenticated user
+   */
+  async getHistoryItem(id: string): Promise<any> {
+    return request<any>(`/api/history/${id}`);
+  },
+
+  /**
    * Deletes a specific submission owned by the authenticated user
    */
   async deleteHistory(id: string): Promise<{ success: boolean; deletedId: string }> {
