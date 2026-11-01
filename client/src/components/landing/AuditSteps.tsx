@@ -42,30 +42,6 @@ export function AuditSteps() {
               <p className="text-xs sm:text-sm text-foreground/85 leading-relaxed font-normal mb-5">
                 {t('auditSteps.step1Desc')}
               </p>
-
-              {/* Inner Mini Mock Panel */}
-              <div className="bg-surface border-2 border-neo-border shadow-neo-sm p-3.5 my-3 font-mono text-xs space-y-2">
-                <div className="flex items-center justify-between text-muted-foreground pb-1.5 border-b border-neo-border/20 text-xs uppercase font-bold">
-                  <span>Audit Task</span>
-                  <span>Latest Status</span>
-                </div>
-                <div className="flex items-center justify-between text-foreground">
-                  <span>pii_sanitization</span>
-                  <span className="bg-neo-blue/40 border border-neo-border px-1.5 py-0.5 text-xs font-bold">12ms RUNNING</span>
-                </div>
-                <div className="flex items-center justify-between text-foreground">
-                  <span>fee_pattern_scan</span>
-                  <span className="bg-neo-mint border border-neo-border px-1.5 py-0.5 text-xs font-bold text-foreground">2m 18s CLEAN</span>
-                </div>
-                <div className="flex items-center justify-between text-foreground">
-                  <span>qr_seal_audit</span>
-                  <span className="bg-neo-pink border border-neo-border px-1.5 py-0.5 text-xs font-bold text-foreground">48.3s VERIFIED</span>
-                </div>
-                <div className="pt-2 border-t border-neo-border/20 flex items-center justify-between text-xs text-muted-foreground">
-                  <span>Deterministic checks active</span>
-                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                </div>
-              </div>
             </div>
 
             <div className="mt-5 pt-3 border-t-2 border-neo-border/20 flex items-center justify-between">
@@ -96,26 +72,6 @@ export function AuditSteps() {
               <p className="text-xs sm:text-sm text-foreground/85 leading-relaxed font-normal mb-5">
                 {t('auditSteps.step2Desc')}
               </p>
-
-              {/* Inner Mini Mock Panel */}
-              <div className="bg-surface border-2 border-neo-border shadow-neo-sm p-3.5 my-3 font-mono text-xs space-y-2">
-                <div className="text-xs text-muted-foreground font-semibold">
-                  Guides &gt; Regulatory Definitions
-                </div>
-                <div className="font-sans font-bold text-xs text-foreground">
-                  Official Verification Directives
-                </div>
-                <div className="text-xs text-muted-foreground">
-                  How we classify legitimate hiring in India:
-                </div>
-                <div className="p-2 bg-neo-yellow/30 border border-neo-border text-xs font-mono">
-                  <code>UPFRONT_FEE == ZERO_TOLERANCE</code>
-                </div>
-                <div className="text-xs text-foreground/80 flex items-center gap-1.5">
-                  <span className="text-terracotta font-bold">•</span>
-                  <span>Always cross-reference CIN against MCA21 master registry</span>
-                </div>
-              </div>
             </div>
 
             <div className="mt-5 pt-3 border-t-2 border-neo-border/20 flex items-center justify-between">
@@ -146,23 +102,6 @@ export function AuditSteps() {
               <p className="text-xs sm:text-sm text-foreground/85 leading-relaxed font-normal mb-5">
                 {t('auditSteps.step3Desc')}
               </p>
-
-              {/* Inner Mini Mock Panel */}
-              <div className="bg-surface border-2 border-neo-border shadow-neo-sm p-3.5 my-3 font-mono text-xs space-y-2">
-                <div className="flex items-center justify-between text-muted-foreground pb-1 border-b border-neo-border/20 text-xs">
-                  <span>Telemetry alerts flagged / day</span>
-                  <span className="text-emerald-700 font-bold">▲ 18% WoW</span>
-                </div>
-                {/* Visual SVG Wave Graph */}
-                <div className="h-14 w-full bg-background border border-neo-border p-1 flex items-end">
-                  <svg viewBox="0 0 100 40" className="w-full h-full stroke-primary fill-neo-mint/40" preserveAspectRatio="none">
-                    <path d="M0,35 Q20,30 35,22 T70,18 T100,6 L100,40 L0,40 Z" strokeWidth="2" />
-                  </svg>
-                </div>
-                <div className="text-xs text-muted-foreground truncate">
-                  Break this down by recruiter domain...
-                </div>
-              </div>
             </div>
 
             <div className="mt-5 pt-3 border-t-2 border-neo-border/20 flex items-center justify-between">
