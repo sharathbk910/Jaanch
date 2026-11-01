@@ -9,6 +9,9 @@
 -- -----------------------------------------------------------------------------
 
 ALTER TABLE profiles ENABLE ROW LEVEL SECURITY;
+ALTER TABLE submissions ENABLE ROW LEVEL SECURITY;
+ALTER TABLE detection_results ENABLE ROW LEVEL SECURITY;
+ALTER TABLE audit_logs ENABLE ROW LEVEL SECURITY;
 ALTER TABLE organizations ENABLE ROW LEVEL SECURITY;
 ALTER TABLE analyses ENABLE ROW LEVEL SECURITY;
 ALTER TABLE analysis_signals ENABLE ROW LEVEL SECURITY;
@@ -31,11 +34,97 @@ CREATE POLICY "Users can read own profile"
   TO authenticated
   USING (auth.uid() = id);
 
+CREATE POLICY "Users can insert own profile"
+  ON profiles FOR INSERT
+  TO authenticated
+  WITH CHECK (auth.uid() = id);
+
 CREATE POLICY "Users can update own profile"
   ON profiles FOR UPDATE
   TO authenticated
   USING (auth.uid() = id)
   WITH CHECK (auth.uid() = id);
+
+CREATE POLICY "Users can delete own profile"
+  ON profiles FOR DELETE
+  TO authenticated
+  USING (auth.uid() = id);
+
+-- -----------------------------------------------------------------------------
+-- 2B. SUBMISSIONS & DETECTION RESULTS POLICIES (User isolation)
+-- -----------------------------------------------------------------------------
+-- Requirements:
+-- - Users select/insert/delete only their own rows.
+-- - Moderators get NO blanket read of private submissions.
+
+CREATE POLICY "Users can view own submissions"
+  ON submissions FOR SELECT
+  TO authenticated
+  USING (auth.uid() = user_id);
+
+CREATE POLICY "Users can insert own submissions"
+  ON submissions FOR INSERT
+  TO authenticated
+  WITH CHECK (auth.uid() = user_id);
+
+CREATE POLICY "Users can update own submissions"
+  ON submissions FOR UPDATE
+  TO authenticated
+  USING (auth.uid() = user_id)
+  WITH CHECK (auth.uid() = user_id);
+
+CREATE POLICY "Users can delete own submissions"
+  ON submissions FOR DELETE
+  TO authenticated
+  USING (auth.uid() = user_id);
+
+CREATE POLICY "Users can view detection results for own submissions"
+  ON detection_results FOR SELECT
+  TO authenticated
+  USING (EXISTS (
+    SELECT 1 FROM submissions
+    WHERE submissions.id = detection_results.submission_id
+      AND submissions.user_id = auth.uid()
+  ));
+
+CREATE POLICY "Users can insert detection results for own submissions"
+  ON detection_results FOR INSERT
+  TO authenticated
+  WITH CHECK (EXISTS (
+    SELECT 1 FROM submissions
+    WHERE submissions.id = detection_results.submission_id
+      AND submissions.user_id = auth.uid()
+  ));
+
+CREATE POLICY "Users can update detection results for own submissions"
+  ON detection_results FOR UPDATE
+  TO authenticated
+  USING (EXISTS (
+    SELECT 1 FROM submissions
+    WHERE submissions.id = detection_results.submission_id
+      AND submissions.user_id = auth.uid()
+  ))
+  WITH CHECK (EXISTS (
+    SELECT 1 FROM submissions
+    WHERE submissions.id = detection_results.submission_id
+      AND submissions.user_id = auth.uid()
+  ));
+
+CREATE POLICY "Users can delete detection results for own submissions"
+  ON detection_results FOR DELETE
+  TO authenticated
+  USING (EXISTS (
+    SELECT 1 FROM submissions
+    WHERE submissions.id = detection_results.submission_id
+      AND submissions.user_id = auth.uid()
+  ));
+
+-- -----------------------------------------------------------------------------
+-- 2C. AUDIT LOGS POLICIES
+-- -----------------------------------------------------------------------------
+-- Requirement: insert via service role only; no user select.
+-- RLS is enabled above and NO policies are defined for authenticated or anon.
+-- Service role bypasses RLS in Supabase; ordinary users have zero access.
 
 -- -----------------------------------------------------------------------------
 -- 3. ORGANIZATIONS POLICIES (Public read-only registry)
@@ -220,10 +309,11 @@ CREATE POLICY "Anyone can submit page feedback"
 CREATE OR REPLACE FUNCTION handle_new_user()
 RETURNS TRIGGER AS $$
 BEGIN
-  INSERT INTO public.profiles (id, full_name, preferred_language)
+  INSERT INTO public.profiles (id, display_name, role, preferred_language)
   VALUES (
     NEW.id,
-    COALESCE(NEW.raw_user_meta_data->>'full_name', ''),
+    COALESCE(NEW.raw_user_meta_data->>'display_name', NEW.raw_user_meta_data->>'full_name', NEW.email),
+    'user',
     COALESCE(NEW.raw_user_meta_data->>'preferred_language', 'en')
   );
   RETURN NEW;
@@ -235,6 +325,25 @@ DROP TRIGGER IF EXISTS on_auth_user_created ON auth.users;
 CREATE TRIGGER on_auth_user_created
   AFTER INSERT ON auth.users
   FOR EACH ROW EXECUTE FUNCTION handle_new_user();
+
+-- Trigger function: Protect profiles.role from being updated by regular users
+CREATE OR REPLACE FUNCTION protect_profile_role_update()
+RETURNS TRIGGER AS $$
+BEGIN
+  IF NEW.role IS DISTINCT FROM OLD.role THEN
+    IF current_setting('request.jwt.claim.role', true) IS DISTINCT FROM 'service_role'
+       AND current_user NOT IN ('postgres', 'supabase_admin', 'service_role') THEN
+      RAISE EXCEPTION 'Modifying profile role is forbidden';
+    END IF;
+  END IF;
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+
+DROP TRIGGER IF EXISTS trg_protect_profile_role ON profiles;
+CREATE TRIGGER trg_protect_profile_role
+  BEFORE UPDATE ON profiles
+  FOR EACH ROW EXECUTE FUNCTION protect_profile_role_update();
 
 -- RPC Function: Check reported entities (Hashed lookup)
 -- Returns confirmed or suspicious matches without leaking private reports

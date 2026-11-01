@@ -78,8 +78,8 @@
 | **F17** | `/sample` fictional report walkthrough | P10 | Phase 6C | Pending |
 | **F18** | Dedicated link checker page (`/link-check`) | P10 | Phase 6C | Pending |
 | **F19** | Verification Guide (`/resources`), About, Privacy pages | P10 | Phase 6A, 6C | Pending |
-| **F20** | Auth (email/password + Google), history (filters, delete one/all), settings, account deletion | P5, P10 | Phase 4, Phase 6D | Pending |
-| **F21** | Security: helmet, CORS allowlist, rate limits, body limits, SSRF safeFetch, RLS | P4, P5 | Phase 3, Phase 4 | Pending |
+| **F20** | Auth (email/password + Google), history (filters, delete one/all), settings, account deletion | P5, P10 | Phase 4, Phase 6D | **DONE (Backend)** |
+| **F21** | Security: helmet, CORS allowlist, rate limits, body limits, SSRF safeFetch, RLS | P4, P5 | Phase 3, Phase 4 | **DONE** |
 | **F22** | Fixtures/corpus regression suite + `npm run eval` | P3 | Phase 2 | **DONE** (25/25 100%) |
 | **F23** | Accessibility (WCAG 2.2 AA), responsive 360–1920px, performance budgets | P8–P12 | Phase 10 | Pending |
 | **F24** | Runbook, doctor/smoke scripts, deployment configuration | P13 | Phase 11 | Pending |

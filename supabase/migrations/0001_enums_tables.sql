@@ -13,6 +13,11 @@ CREATE EXTENSION IF NOT EXISTS "pg_trgm";
 -- 1. ENUM TYPES
 -- -----------------------------------------------------------------------------
 
+CREATE TYPE user_role AS ENUM (
+  'user',
+  'moderator'
+);
+
 CREATE TYPE opportunity_domain AS ENUM (
   'job',
   'internship',
@@ -121,12 +126,62 @@ CREATE TYPE org_kind AS ENUM (
 
 CREATE TABLE profiles (
   id UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
-  full_name TEXT,
+  display_name TEXT,
+  role user_role NOT NULL DEFAULT 'user',
   preferred_language TEXT NOT NULL DEFAULT 'en' CHECK (preferred_language IN ('en', 'hi', 'kn')),
   default_share_indicators BOOLEAN NOT NULL DEFAULT false,
   created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
   updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
+
+-- -----------------------------------------------------------------------------
+-- 2B. SUBMISSIONS & DETECTION RESULTS (Private user history)
+-- -----------------------------------------------------------------------------
+
+CREATE TABLE submissions (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+  input_type TEXT NOT NULL,
+  domain TEXT,
+  channel TEXT,
+  text_hash TEXT NOT NULL,
+  redacted_text TEXT,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+CREATE INDEX idx_submissions_user_id ON submissions(user_id);
+CREATE INDEX idx_submissions_created_at ON submissions(created_at DESC);
+CREATE INDEX idx_submissions_user_created ON submissions(user_id, created_at DESC);
+
+CREATE TABLE detection_results (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  submission_id UUID NOT NULL REFERENCES submissions(id) ON DELETE CASCADE,
+  status TEXT NOT NULL,
+  confidence NUMERIC NOT NULL,
+  signals JSONB NOT NULL DEFAULT '[]'::jsonb,
+  schema_version TEXT NOT NULL DEFAULT '1.0.0',
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+CREATE INDEX idx_detection_results_submission_id ON detection_results(submission_id);
+
+-- -----------------------------------------------------------------------------
+-- 2C. AUDIT LOGS (Service-role insertion only, no user select)
+-- -----------------------------------------------------------------------------
+
+CREATE TABLE audit_logs (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  actor_id UUID REFERENCES auth.users(id) ON DELETE SET NULL,
+  action TEXT NOT NULL,
+  entity TEXT NOT NULL,
+  entity_id TEXT,
+  meta JSONB NOT NULL DEFAULT '{}'::jsonb,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+CREATE INDEX idx_audit_logs_actor_id ON audit_logs(actor_id);
+CREATE INDEX idx_audit_logs_action ON audit_logs(action);
+CREATE INDEX idx_audit_logs_created_at ON audit_logs(created_at DESC);
 
 -- -----------------------------------------------------------------------------
 -- 3. ORGANIZATIONS REGISTRY

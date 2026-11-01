@@ -75,3 +75,12 @@ export function linkCheckRateLimiter(): RateLimitRequestHandler {
     code: 'LINK_RATE_LIMIT_EXCEEDED',
   });
 }
+
+export function historyRateLimiter(): RateLimitRequestHandler {
+  return createRateLimiter({
+    windowMs: 15 * 60 * 1000,
+    max: 100,
+    message: 'Too many history requests. Please try again later.',
+    code: 'HISTORY_RATE_LIMIT_EXCEEDED',
+  });
+}

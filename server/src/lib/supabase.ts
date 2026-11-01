@@ -21,10 +21,19 @@ export function getPublicSupabaseClient(): SupabaseClient {
 }
 
 /**
- * Creates a per-request user-scoped Supabase client using the caller's JWT.
- * Authoritative Rule D11: Never use the service-role key in runtime request handling.
- * RLS is enforced at the database level using auth.uid() from the provided JWT.
+ * Returns service-role Supabase client for server-only administrative tasks (e.g. audit_logs insertion).
+ * Security Requirement: service-role key server-only. Never expose to client or use for user data queries.
  */
+export function getServiceRoleClient(): SupabaseClient {
+  const env = loadEnv();
+  const serviceKey = env.SUPABASE_SERVICE_ROLE_KEY || env.SUPABASE_ANON_KEY;
+  return createClient(env.SUPABASE_URL, serviceKey, {
+    auth: {
+      persistSession: false,
+      autoRefreshToken: false,
+    },
+  });
+}
 export function createUserScopedSupabaseClient(token: string): SupabaseClient {
   const env = loadEnv();
 

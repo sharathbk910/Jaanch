@@ -14,6 +14,8 @@ const RawEnvSchema = z.object({
   // Supabase
   SUPABASE_URL: z.string().url().optional(),
   SUPABASE_ANON_KEY: z.string().optional(),
+  SUPABASE_SERVICE_ROLE_KEY: z.string().optional(),
+  SUPABASE_JWT_SECRET: z.string().optional(),
 
   // Salt pepper for SHA-256 entity hashing (required, >= 24 characters)
   REPORT_HASH_PEPPER: z.string().optional(),
@@ -54,6 +56,8 @@ export interface ServerEnv {
   CLIENT_ORIGINS: string;
   SUPABASE_URL: string;
   SUPABASE_ANON_KEY: string;
+  SUPABASE_SERVICE_ROLE_KEY?: string;
+  SUPABASE_JWT_SECRET?: string;
   REPORT_HASH_PEPPER: string;
   GEMINI_API_KEY?: string;
   GEMINI_MODEL: string;
@@ -114,6 +118,8 @@ export function loadEnv(): ServerEnv {
     CLIENT_ORIGINS: raw.CLIENT_ORIGINS,
     SUPABASE_URL: supabaseUrl,
     SUPABASE_ANON_KEY: supabaseAnonKey,
+    SUPABASE_SERVICE_ROLE_KEY: raw.SUPABASE_SERVICE_ROLE_KEY,
+    SUPABASE_JWT_SECRET: raw.SUPABASE_JWT_SECRET,
     REPORT_HASH_PEPPER: pepper,
     GEMINI_API_KEY: raw.GEMINI_API_KEY,
     GEMINI_MODEL: raw.GEMINI_MODEL,

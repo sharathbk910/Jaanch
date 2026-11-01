@@ -8,11 +8,14 @@ const __dirname = path.dirname(__filename);
 const MIGRATIONS_DIR = path.resolve(__dirname, '..', '..', 'supabase', 'migrations');
 
 describe('Database Migration & SQL Lint Verification (sql-lint.test.ts)', () => {
-  it('confirms all 3 ordered migrations exist in supabase/migrations/', () => {
+  it('confirms all 3 ordered migrations and down-migrations exist in supabase/migrations/', () => {
     const files = fs.readdirSync(MIGRATIONS_DIR);
     expect(files).toContain('0001_enums_tables.sql');
+    expect(files).toContain('0001_enums_tables.down.sql');
     expect(files).toContain('0002_rls_functions.sql');
+    expect(files).toContain('0002_rls_functions.down.sql');
     expect(files).toContain('0003_seed_organizations.sql');
+    expect(files).toContain('0003_seed_organizations.down.sql');
   });
 
   describe('0001_enums_tables.sql', () => {
@@ -20,6 +23,7 @@ describe('Database Migration & SQL Lint Verification (sql-lint.test.ts)', () => 
 
     it('creates all required enumerated types', () => {
       const requiredEnums = [
+        'user_role',
         'opportunity_domain',
         'input_type',
         'risk_level',
@@ -39,9 +43,12 @@ describe('Database Migration & SQL Lint Verification (sql-lint.test.ts)', () => 
       }
     });
 
-    it('creates all 13 core tables', () => {
+    it('creates core tables including submissions, detection_results, audit_logs', () => {
       const requiredTables = [
         'profiles',
+        'submissions',
+        'detection_results',
+        'audit_logs',
         'organizations',
         'analyses',
         'analysis_signals',
@@ -68,6 +75,9 @@ describe('Database Migration & SQL Lint Verification (sql-lint.test.ts)', () => 
     it('enables Row Level Security (RLS) on every single table', () => {
       const requiredTables = [
         'profiles',
+        'submissions',
+        'detection_results',
+        'audit_logs',
         'organizations',
         'analyses',
         'analysis_signals',
@@ -90,6 +100,8 @@ describe('Database Migration & SQL Lint Verification (sql-lint.test.ts)', () => 
     it('deploys all required RPC functions and triggers', () => {
       expect(content).toContain('CREATE OR REPLACE FUNCTION handle_new_user()');
       expect(content).toContain('CREATE TRIGGER on_auth_user_created');
+      expect(content).toContain('CREATE OR REPLACE FUNCTION protect_profile_role_update()');
+      expect(content).toContain('CREATE TRIGGER trg_protect_profile_role');
       expect(content).toContain('CREATE OR REPLACE FUNCTION check_reported_entities');
       expect(content).toContain('CREATE OR REPLACE FUNCTION submit_scam_report');
       expect(content).toContain('CREATE OR REPLACE FUNCTION submit_page_feedback');
