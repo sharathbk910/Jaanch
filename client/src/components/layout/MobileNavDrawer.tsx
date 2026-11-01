@@ -264,3 +264,4 @@ export function MobileNavDrawer({ isOpen, onClose }: MobileNavDrawerProps) {
     </div>
   );
 }
+

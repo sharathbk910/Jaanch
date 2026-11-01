@@ -91,6 +91,63 @@ export interface TranslationDictionary {
     confirmedScam: string;
     confirmedScamDesc: string;
   };
+  analyzer: {
+    title: string;
+    subtitle: string;
+    badge: string;
+    tabPaste: string;
+    tabUpload: string;
+    textLabel: string;
+    textPlaceholder: string;
+    charCounter: string;
+    charMinAlert: string;
+    domainLabel: string;
+    domainHelp: string;
+    domains: {
+      job: string;
+      internship: string;
+      scholarship: string;
+      freelance: string;
+      competition: string;
+      general_message: string;
+      other: string;
+    };
+    senderToggle: string;
+    senderEmail: string;
+    senderEmailPlaceholder: string;
+    senderPhone: string;
+    senderPhonePlaceholder: string;
+    senderDomain: string;
+    senderDomainPlaceholder: string;
+    senderOrg: string;
+    senderOrgPlaceholder: string;
+    headersToggle: string;
+    headersPlaceholder: string;
+    consentAi: string;
+    consentAiSub: string;
+    consentShare: string;
+    consentShareSub: string;
+    privacyNotice: string;
+    dropzoneTitle: string;
+    dropzoneSub: string;
+    dropzoneSupported: string;
+    extractingPdf: string;
+    extractedFile: string;
+    removeFile: string;
+    samplesPrompt: string;
+    sampleGenuine: string;
+    sampleFeeScam: string;
+    sampleOtpScam: string;
+    verifyBtn: string;
+    verifyingBtn: string;
+    clearBtn: string;
+    progressStep1: string;
+    progressStep2: string;
+    progressStep3: string;
+    progressStep4: string;
+    pasteClipboard: string;
+    copiedNotice: string;
+  };
 
   // Compatibility and short-key aliases
   nav: {
@@ -216,6 +273,63 @@ export const translations: Record<'en' | 'hi' | 'kn', TranslationDictionary> = {
       confirmedScam: 'Confirmed Fraud',
       confirmedScamDesc: 'Matched a verified fraudulent entity in the student safety database.',
     },
+    analyzer: {
+      title: 'Verify Offer Legitimacy',
+      subtitle: 'Inspect appointment letters, WhatsApp recruitment messages, and scholarships before you pay or share documents.',
+      badge: 'ANALYSIS ENGINE',
+      tabPaste: 'Paste Message Text',
+      tabUpload: 'Upload Document',
+      textLabel: 'Offer Message or Email Text',
+      textPlaceholder: 'Paste the full message, email body, job description, or WhatsApp message here (minimum 25 characters)...',
+      charCounter: 'characters',
+      charMinAlert: 'Minimum 25 characters required to analyze reliably',
+      domainLabel: 'Opportunity Category',
+      domainHelp: 'Select the type of offer for targeted heuristic checks',
+      domains: {
+        job: 'Job Offer',
+        internship: 'Internship Program',
+        scholarship: 'Scholarship / Grant',
+        freelance: 'Freelance / Gig Work',
+        competition: 'Hackathon / Competition',
+        general_message: 'General Message / SMS',
+        other: 'Other Opportunity',
+      },
+      senderToggle: 'Add Sender & Contact Details (Optional)',
+      senderEmail: 'Recruiter / Sender Email',
+      senderEmailPlaceholder: 'e.g. hr@company-careers.org',
+      senderPhone: 'Recruiter Phone / WhatsApp',
+      senderPhonePlaceholder: 'e.g. +91 98765 43210',
+      senderDomain: 'Company Website / Domain',
+      senderDomainPlaceholder: 'e.g. company.com',
+      senderOrg: 'Claimed Organization',
+      senderOrgPlaceholder: 'e.g. Infosys, TCS, Wipro',
+      headersToggle: 'Raw Email Headers (Optional, for SPF/DKIM inspection)',
+      headersPlaceholder: 'Paste RFC 822 email headers (Received, From, Return-Path, DKIM-Signature)...',
+      consentAi: 'Allow AI Deep Analysis (Zero PII transmitted)',
+      consentAiSub: 'Runs secondary linguistic nuance evaluation with personal details redacted client-side.',
+      consentShare: 'Contribute Anonymous Threat Indicators',
+      consentShareSub: 'Shares non-PII salted cryptographic hashes of scam phone numbers, domains, or UPI IDs to warn other students.',
+      privacyNotice: 'Privacy Guarantee: All text is sanitized and all personal information (names, phones, emails, Aadhaar) is redacted before evaluation. Uploaded documents are read strictly in your browser and never sent to a server.',
+      dropzoneTitle: 'Drop your PDF or TXT offer document here',
+      dropzoneSub: 'or click to browse your device',
+      dropzoneSupported: 'Supports PDF (.pdf) and text (.txt) up to 10MB',
+      extractingPdf: 'Extracting text locally in browser...',
+      extractedFile: 'Document loaded',
+      removeFile: 'Remove file',
+      samplesPrompt: 'Or test with a sample scenario:',
+      sampleGenuine: 'Genuine Internship',
+      sampleFeeScam: 'Upfront Fee Scam',
+      sampleOtpScam: 'OTP Phishing Scam',
+      verifyBtn: 'Verify Offer Now',
+      verifyingBtn: 'Running Safety Analysis...',
+      clearBtn: 'Clear',
+      progressStep1: 'Redacting sensitive student PII locally...',
+      progressStep2: 'Scanning 8 deterministic scam detection rules...',
+      progressStep3: 'Analyzing URLs, punycode & lookalike domains...',
+      progressStep4: 'Synthesizing transparent evidence assessment...',
+      pasteClipboard: 'Paste from Clipboard',
+      copiedNotice: 'Pasted from clipboard',
+    },
 
     // Compatibility aliases
     nav: {
@@ -339,6 +453,63 @@ export const translations: Record<'en' | 'hi' | 'kn', TranslationDictionary> = {
       confirmedScam: 'पुष्टि किया गया धोखा',
       confirmedScamDesc: 'छात्र सुरक्षा डेटाबेस में पुष्टि किए गए फर्जी रिकॉर्ड से मेल खाता है।',
     },
+    analyzer: {
+      title: 'ऑफ़र की प्रामाणिकता जाँचें',
+      subtitle: 'पैसे देने या दस्तावेज़ साझा करने से पहले नियुक्ति पत्र, व्हाट्सएप संदेश या छात्रवृत्ति की जाँच करें।',
+      badge: 'विश्लेषण इंजन',
+      tabPaste: 'संदेश टेक्स्ट पेस्ट करें',
+      tabUpload: 'दस्तावेज़ अपलोड करें',
+      textLabel: 'ऑफ़र संदेश या ईमेल टेक्स्ट',
+      textPlaceholder: 'पूरा संदेश, ईमेल सामग्री या व्हाट्सएप संदेश यहाँ पेस्ट करें (कम से कम 25 अक्षर)...',
+      charCounter: 'अक्षर',
+      charMinAlert: 'सटीक विश्लेषण के लिए कम से कम 25 अक्षर आवश्यक हैं',
+      domainLabel: 'अवसर की श्रेणी',
+      domainHelp: 'लक्षित सुरक्षा जाँच के लिए अवसर का प्रकार चुनें',
+      domains: {
+        job: 'नौकरी का ऑफ़र',
+        internship: 'इंटर्नशिप कार्यक्रम',
+        scholarship: 'छात्रवृत्ति / अनुदान',
+        freelance: 'फ्रीलांस / प्रोजेक्ट',
+        competition: 'प्रतियोगिता / हैकाथॉन',
+        general_message: 'सामान्य संदेश / एसएमएस',
+        other: 'अन्य अवसर',
+      },
+      senderToggle: 'प्रेषक और संपर्क विवरण जोड़ें (वैकल्पिक)',
+      senderEmail: 'भर्तीकर्ता / प्रेषक ईमेल',
+      senderEmailPlaceholder: 'उदा. hr@company-careers.org',
+      senderPhone: 'भर्तीकर्ता फोन / व्हाट्सएप',
+      senderPhonePlaceholder: 'उदा. +91 98765 43210',
+      senderDomain: 'कंपनी वेबसाइट / डोमेन',
+      senderDomainPlaceholder: 'उदा. company.com',
+      senderOrg: 'संबंधित संस्था / कंपनी',
+      senderOrgPlaceholder: 'उदा. Infosys, TCS, Wipro',
+      headersToggle: 'कच्चा ईमेल हेडर (वैकल्पिक, SPF/DKIM जाँच के लिए)',
+      headersPlaceholder: 'RFC 822 ईमेल हेडर यहाँ पेस्ट करें...',
+      consentAi: 'AI गहन विश्लेषण की अनुमति दें (शून्य PII साझा)',
+      consentAiSub: 'निजी जानकारी हटाने के बाद भाषा विश्लेषण की अनुमति दें।',
+      consentShare: 'अज्ञात धोखाधड़ी संकेतक साझा करें',
+      consentShareSub: 'अन्य छात्रों की सुरक्षा के लिए केवल फ़ोन या डोमेन का कूटबद्ध हैश साझा करें।',
+      privacyNotice: 'गोपनीयता सुरक्षा: विश्लेषण से पहले सभी व्यक्तिगत जानकारी (नाम, फोन, आधार) हटा दी जाती है। दस्तावेज़ केवल आपके ब्राउज़र में पढ़े जाते हैं और सर्वर पर कभी नहीं भेजे जाते।',
+      dropzoneTitle: 'अपनी PDF या TXT फ़ाइल यहाँ छोड़ें',
+      dropzoneSub: 'या अपने डिवाइस से चुनने के लिए क्लिक करें',
+      dropzoneSupported: 'PDF (.pdf) और टेक्स्ट (.txt) 10MB तक समर्थित',
+      extractingPdf: 'ब्राउज़र में टेक्स्ट निकाला जा रहा है...',
+      extractedFile: 'दस्तावेज़ लोड किया गया',
+      removeFile: 'फ़ाइल हटाएं',
+      samplesPrompt: 'या नमूना परिदृश्य आज़माएँ:',
+      sampleGenuine: 'वास्तविक इंटर्नशिप',
+      sampleFeeScam: 'अग्रिम शुल्क धोखा',
+      sampleOtpScam: 'OTP फ़िशिंग धोखा',
+      verifyBtn: 'अभी ऑफ़र जाँचें',
+      verifyingBtn: 'सुरक्षा विश्लेषण जारी है...',
+      clearBtn: 'साफ़ करें',
+      progressStep1: 'निजी जानकारी का स्थानीय शोधन किया जा रहा है...',
+      progressStep2: '8 स्वचालित सुरक्षा नियमों की जाँच जारी है...',
+      progressStep3: 'लिंक और नकली डोमेन का विश्लेषण किया जा रहा है...',
+      progressStep4: 'पारदर्शी साक्ष्य रिपोर्ट तैयार की जा रही है...',
+      pasteClipboard: 'क्लिपबोर्ड से पेस्ट करें',
+      copiedNotice: 'क्लिपबोर्ड से पेस्ट किया गया',
+    },
 
     // Compatibility aliases
     nav: {
@@ -461,6 +632,63 @@ export const translations: Record<'en' | 'hi' | 'kn', TranslationDictionary> = {
       highConcernDesc: 'ಗಂಭೀರ ಅಪಾಯದ ಸಂಕೇತಗಳು ಪತ್ತೆಯಾಗಿವೆ (ಮುಂಗಡ ಶುಲ್ಕ, OTP ಬೇಡಿಕೆ ಅಥವಾ ನಕಲಿ ಡೊಮೇನ್).',
       confirmedScam: 'ಖಚಿತ ವಂಚನೆ',
       confirmedScamDesc: 'ವಿದ್ಯಾರ್ಥಿ ಸುರಕ್ಷತಾ ಡೇಟಾಬೇಸ್‌ನಲ್ಲಿ ಖಚಿತಪಡಿಸಲಾದ ವಂಚನೆಯ ದಾಖಲೆಗೆ ಹೊಂದಿಕೆಯಾಗುತ್ತದೆ.',
+    },
+    analyzer: {
+      title: 'ಆಫರ್ ಅಧಿಕೃತತೆಯನ್ನು ಪರಿಶೀಲಿಸಿ',
+      subtitle: 'ಹಣ ಪಾವತಿಸುವ ಅಥವಾ ದಾಖಲೆ ಹಂಚಿಕೊಳ್ಳುವ ಮುನ್ನ ನೇಮಕಾತಿ ಪತ್ರ, ವಾಟ್ಸಾಪ್ ಸಂದೇಶ ಅಥವಾ ವಿದ್ಯಾರ್ಥಿವೇತನವನ್ನು ಪರೀಕ್ಷಿಸಿ.',
+      badge: 'ವಿಶ್ಲೇಷಣಾ ಎಂಜಿನ್',
+      tabPaste: 'ಸಂದೇಶ ಪಠ್ಯ ಅಂಟಿಸಿ',
+      tabUpload: 'ದಾಖಲೆ ಅಪ್‌ಲೋಡ್ ಮಾಡಿ',
+      textLabel: 'ಆಫರ್ ಸಂದೇಶ ಅಥವಾ ಇಮೇಲ್ ಪಠ್ಯ',
+      textPlaceholder: 'ಸಂಪೂರ್ಣ ಸಂದೇಶ, ಇಮೇಲ್ ವಿವರ ಅಥವಾ ವಾಟ್ಸಾಪ್ ಸಂದೇಶವನ್ನು ಇಲ್ಲಿ ಅಂಟಿಸಿ (ಕನಿಷ್ಠ 25 ಅಕ್ಷರಗಳು)...',
+      charCounter: 'ಅಕ್ಷರಗಳು',
+      charMinAlert: 'ವಿಶ್ವಾಸಾರ್ಹ ವಿಶ್ಲೇಷಣೆಗೆ ಕನಿಷ್ಠ 25 ಅಕ್ಷರಗಳು ಅಗತ್ಯವಿದೆ',
+      domainLabel: 'ಅವಕಾಶದ ವರ್ಗ',
+      domainHelp: 'ಉದ್ದೇಶಿತ ಪರಿಶೀಲನೆಗಾಗಿ ಅವಕಾಶದ ಪ್ರಕಾರವನ್ನು ಆಯ್ಕೆಮಾಡಿ',
+      domains: {
+        job: 'ಉದ್ಯೋಗ ಆಫರ್',
+        internship: 'ಇಂಟರ್ನ್‌ಶಿಪ್ ಪ್ರೋಗ್ರಾಂ',
+        scholarship: 'ವಿದ್ಯಾರ್ಥಿವೇತನ / ಅನುದಾನ',
+        freelance: 'ಫ್ರೀಲ್ಯಾನ್ಸ್ / ಗಿಗ್ ಕೆಲಸ',
+        competition: 'ಸ್ಪರ್ಧೆ / ಹ್ಯಾಕಥಾನ್',
+        general_message: 'ಸಾಮಾನ್ಯ ಸಂದೇಶ / SMS',
+        other: 'ಇತರ ಅವಕಾಶ',
+      },
+      senderToggle: 'ಕಳುಹಿಸುವವರ ವಿವರಗಳು (ಐಚ್ಛಿಕ)',
+      senderEmail: 'ಕಳುಹಿಸಿದವರ ಇಮೇಲ್',
+      senderEmailPlaceholder: 'ಉದಾ. hr@company-careers.org',
+      senderPhone: 'ಕಳುಹಿಸಿದವರ ಫೋನ್ / ವಾಟ್ಸಾಪ್',
+      senderPhonePlaceholder: 'ಉದಾ. +91 98765 43210',
+      senderDomain: 'ಕಂಪನಿ ವೆಬ್‌ಸೈಟ್ / ಡೊಮೇನ್',
+      senderDomainPlaceholder: 'ಉದಾ. company.com',
+      senderOrg: 'ಸಂಬಂಧಿತ ಸಂಸ್ಥೆ / ಕಂಪನಿ',
+      senderOrgPlaceholder: 'ಉದಾ. Infosys, TCS, Wipro',
+      headersToggle: 'ಕಚ್ಚಾ ಇಮೇಲ್ ಹೆಡರ್‌ಗಳು (ಐಚ್ಛಿಕ, SPF/DKIM ಗಾಗಿ)',
+      headersPlaceholder: 'RFC 822 ಇಮೇಲ್ ಹೆಡರ್‌ಗಳನ್ನು ಇಲ್ಲಿ ಅಂಟಿಸಿ...',
+      consentAi: 'AI ಆಳವಾದ ವಿಶ್ಲೇಷಣೆಗೆ ಅನುಮತಿಸಿ (ವೈಯಕ್ತಿಕ ಮಾಹಿತಿ ಹಂಚಿಕೊಳ್ಳುವುದಿಲ್ಲ)',
+      consentAiSub: 'ವೈಯಕ್ತಿಕ ವಿವರಗಳನ್ನು ತೆಗೆದುಹಾಕಿದ ನಂತರ ಭಾಷಾ ವಿಶ್ಲೇಷಣೆ ನಡೆಸಲಾಗುತ್ತದೆ.',
+      consentShare: 'ಅನಾಮಧೇಯ ವಂಚನೆ ಸಂಕೇತಗಳನ್ನು ನೀಡಿ',
+      consentShareSub: 'ಇತರ ವಿದ್ಯಾರ್ಥಿಗಳನ್ನು ಎಚ್ಚರಿಸಲು ವಂಚನೆ ಫೋನ್ ಅಥವಾ ಡೊಮೇನ್ ಹ್ಯಾಶ್ ಮಾತ್ರ ಹಂಚಿಕೊಳ್ಳಿ.',
+      privacyNotice: 'ಗೌಪ್ಯತೆ ಗ್ಯಾರಂಟಿ: ವಿಶ್ಲೇಷಣೆಗೆ ಮುನ್ನ ಎಲ್ಲಾ ವೈಯಕ್ತಿಕ ವಿವರಗಳನ್ನು (ಹೆಸರು, ಫೋನ್, ಆಧಾರ್) ರಕ್ಷಿಸಲಾಗುತ್ತದೆ. ದಾಖಲೆಗಳನ್ನು ನಿಮ್ಮ ಬ್ರೌಸರ್‌ನಲ್ಲೇ ಓದಲಾಗುತ್ತದೆ ಮತ್ತು ಎಂದಿಗೂ ಸರ್ವರ್‌ಗೆ ಕಳುಹಿಸುವುದಿಲ್ಲ.',
+      dropzoneTitle: 'ನಿಮ್ಮ PDF ಅಥವಾ TXT ಫೈಲ್ ಇಲ್ಲಿ ಡ್ರಾಪ್ ಮಾಡಿ',
+      dropzoneSub: 'ಅಥವಾ ಆಯ್ಕೆ ಮಾಡಲು ಕ್ಲಿಕ್ ಮಾಡಿ',
+      dropzoneSupported: 'PDF (.pdf) ಮತ್ತು ಪಠ್ಯ (.txt) 10MB ವರೆಗೆ ಬೆಂಬಲಿತವಾಗಿದೆ',
+      extractingPdf: 'ಬ್ರೌಸರ್‌ನಲ್ಲಿ ಪಠ್ಯವನ್ನು ಹೊರತೆಗೆಯಲಾಗುತ್ತಿದೆ...',
+      extractedFile: 'ದಾಖಲೆ ಲೋಡ್ ಆಗಿದೆ',
+      removeFile: 'ಫೈಲ್ ತೆಗೆದುಹಾಕಿ',
+      samplesPrompt: 'ಅಥವಾ ಮಾದರಿಯೊಂದಿಗೆ ಪರೀಕ್ಷಿಸಿ:',
+      sampleGenuine: 'ನೈಜ ಇಂಟರ್ನ್‌ಶಿಪ್',
+      sampleFeeScam: 'ಮುಂಗಡ ಶುಲ್ಕ ವಂಚನೆ',
+      sampleOtpScam: 'OTP ಫಿಶಿಂಗ್ ವಂಚನೆ',
+      verifyBtn: 'ಈಗಲೇ ಆಫರ್ ಪರಿಶೀಲಿಸಿ',
+      verifyingBtn: 'ಸುರಕ್ಷತಾ ವಿಶ್ಲೇಷಣೆ ನಡೆಯುತ್ತಿದೆ...',
+      clearBtn: 'ಅಳಿಸಿ',
+      progressStep1: 'ವೈಯಕ್ತಿಕ ಮಾಹಿತಿಯನ್ನು ಸ್ಥಳೀಯವಾಗಿ ಸ್ವಚ್ಛಗೊಳಿಸಲಾಗುತ್ತಿದೆ...',
+      progressStep2: '8 ಸ್ವಯಂಚಾಲಿತ ನಿಯಮಗಳ ಪರಿಶೀಲನೆ ನಡೆಯುತ್ತಿದೆ...',
+      progressStep3: 'ಲಿಂಕ್‌ಗಳು ಮತ್ತು ನಕಲಿ ಡೊಮೇನ್‌ಗಳನ್ನು ವಿಶ್ಲೇಷಿಸಲಾಗುತ್ತಿದೆ...',
+      progressStep4: 'ಪಾರದರ್ಶಕ ಸಾಕ್ಷ್ಯ ವರದಿ ಸಿದ್ಧಪಡಿಸಲಾಗುತ್ತಿದೆ...',
+      pasteClipboard: 'ಕ್ಲಿಪ್‌ಬೋರ್ಡ್‌ನಿಂದ ಅಂಟಿಸಿ',
+      copiedNotice: 'ಕ್ಲಿಪ್‌ಬೋರ್ಡ್‌ನಿಂದ ಅಂಟಿಸಲಾಗಿದೆ',
     },
 
     // Compatibility aliases

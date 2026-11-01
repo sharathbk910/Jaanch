@@ -147,25 +147,27 @@ export async function runAcceptanceHarness() {
   // CRIT-04: 3 test scenarios / sample chips
   try {
     const subPath = path.join(rootDir, 'client', 'src', 'components', 'landing', 'SubmissionCard.tsx');
-    if (fs.existsSync(subPath)) {
+    const analyzePath = path.join(rootDir, 'client', 'src', 'pages', 'AnalyzePage.tsx');
+    if (fs.existsSync(subPath) && fs.existsSync(analyzePath)) {
       const subCode = fs.readFileSync(subPath, 'utf-8');
-      const hasScenario1 = subCode.includes('SCENARIO_GENUINE');
-      const hasScenario2 = subCode.includes('SCENARIO_FEE_SCAM');
-      const hasScenario3 = subCode.includes('SCENARIO_OTP_SCAM');
+      const analyzeCode = fs.readFileSync(analyzePath, 'utf-8');
+      const hasScenario1 = subCode.includes('SCENARIO_GENUINE') && analyzeCode.includes('SCENARIO_GENUINE');
+      const hasScenario2 = subCode.includes('SCENARIO_FEE_SCAM') && analyzeCode.includes('SCENARIO_FEE_SCAM');
+      const hasScenario3 = subCode.includes('SCENARIO_OTP_SCAM') && analyzeCode.includes('SCENARIO_OTP_SCAM');
 
       if (hasScenario1 && hasScenario2 && hasScenario3) {
         results.push({
           id: 'CRIT-04',
           name: '3 test scenarios / sample chips',
           status: 'PASS',
-          details: 'SubmissionCard.tsx renders 3 interactive scenarios: Genuine Internship, Upfront Fee Scam, OTP Phishing Scam.',
+          details: 'SubmissionCard.tsx & AnalyzePage.tsx render 3 interactive scenarios: Genuine Internship, Upfront Fee Scam, OTP Phishing Scam.',
         });
       } else {
         results.push({
           id: 'CRIT-04',
           name: '3 test scenarios / sample chips',
           status: 'FAIL',
-          details: 'SubmissionCard does not declare all 3 required test scenarios.',
+          details: 'SubmissionCard or AnalyzePage does not declare all 3 required test scenarios.',
         });
       }
     } else {
@@ -173,7 +175,7 @@ export async function runAcceptanceHarness() {
         id: 'CRIT-04',
         name: '3 test scenarios / sample chips',
         status: 'NOT_YET_IMPLEMENTED',
-        details: 'SubmissionCard.tsx not found.',
+        details: 'SubmissionCard.tsx or AnalyzePage.tsx not found.',
       });
     }
   } catch (err) {
@@ -183,25 +185,28 @@ export async function runAcceptanceHarness() {
   // CRIT-05: 25-character minimum input validation
   try {
     const subPath = path.join(rootDir, 'client', 'src', 'components', 'landing', 'SubmissionCard.tsx');
-    if (fs.existsSync(subPath)) {
+    const analyzePath = path.join(rootDir, 'client', 'src', 'pages', 'AnalyzePage.tsx');
+    if (fs.existsSync(subPath) && fs.existsSync(analyzePath)) {
       const subCode = fs.readFileSync(subPath, 'utf-8');
-      const has25Check = subCode.includes('charCount >= 25') || subCode.includes('.length >= 25');
-      const hasCounter = subCode.includes('charCount');
-      const hasDisabled = subCode.includes('disabled={!isMinMet}');
+      const analyzeCode = fs.readFileSync(analyzePath, 'utf-8');
+      const has25Check = (subCode.includes('charCount >= 25') || subCode.includes('.length >= 25')) &&
+                         (analyzeCode.includes('charCount >= 25') || analyzeCode.includes('.length >= 25'));
+      const hasCounter = subCode.includes('charCount') && analyzeCode.includes('charCount');
+      const hasDisabled = subCode.includes('disabled={!isMinMet}') && analyzeCode.includes('disabled={!isMinMet');
 
       if (has25Check && hasCounter && hasDisabled) {
         results.push({
           id: 'CRIT-05',
           name: '25-character minimum input validation',
           status: 'PASS',
-          details: 'SubmissionCard enforces 25-character minimum rule with live counter, alert message, and disabled submit.',
+          details: 'SubmissionCard & AnalyzePage enforce 25-character minimum rule with live counter, alert message, and disabled submit.',
         });
       } else {
         results.push({
           id: 'CRIT-05',
           name: '25-character minimum input validation',
           status: 'FAIL',
-          details: '25-character validation or disabled state not found in SubmissionCard.',
+          details: '25-character validation or disabled state not found in SubmissionCard or AnalyzePage.',
         });
       }
     } else {
@@ -209,7 +214,7 @@ export async function runAcceptanceHarness() {
         id: 'CRIT-05',
         name: '25-character minimum input validation',
         status: 'NOT_YET_IMPLEMENTED',
-        details: 'SubmissionCard.tsx not found.',
+        details: 'SubmissionCard.tsx or AnalyzePage.tsx not found.',
       });
     }
   } catch (err) {

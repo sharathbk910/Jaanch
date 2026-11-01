@@ -58,7 +58,7 @@ describe('Application Routing (Decision D5)', () => {
 
   it('renders AnalyzePage at "/analyze"', () => {
     renderRoute('/analyze');
-    expect(screen.getByRole('heading', { level: 1, name: /Check an Opportunity/i })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { level: 1, name: /Verify Offer Legitimacy/i })).toBeInTheDocument();
   });
 
   it('renders ResultsPage at "/results/local"', () => {

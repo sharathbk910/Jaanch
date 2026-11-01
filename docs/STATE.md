@@ -10,10 +10,10 @@
 ## 2. Project Overview
 - **Project Name:** Jaanch (Student Offer Verification & Trust Safety Platform)
 - **Problem Statement:** "Fake or Real" (Digital Trust & Safety for Indian Students)
-- **Current Phase:** Phase 6A – Layout & Landing Complete
-- **Current Tag:** `phase-6a-done`
+- **Current Phase:** Phase 6B – Analyzer Page Complete
+- **Current Tag:** `phase-6b-done`
 - **Node Version:** v24.19.0 (LTS >= 20 required)
-- **Repository State:** Green monorepo; `@jaanch/shared`, `@jaanch/server`, and `@jaanch/client` fully compiled, typechecked, linted, and tested (218 tests passing across 23 test suites, 25/25 eval fixtures matching 100%)
+- **Repository State:** Green monorepo; `@jaanch/shared`, `@jaanch/server`, and `@jaanch/client` fully compiled, typechecked, linted, and tested (226 tests passing across 24 test suites, 25/25 eval fixtures matching 100%)
 
 ---
 
@@ -35,8 +35,8 @@
   5. Client foundation (Vite React, exact spec tokens, dark-mode overrides, fonts, tailwind.config.ts, translations.ts, LanguageContext, ThemeProvider, WCAG AA contrast tests, 360px glyph check, I18N_REVIEW.md) (**DONE**)
   6. UI implementation:
      - 6A: Layout + Landing page (**DONE**)
-     - 6B: Analyzer page (Next)
-     - 6C: Results page & client-side PDF export
+     - 6B: Analyzer page (**DONE**)
+     - 6C: Results page & client-side PDF export (Next)
      - 6D: Auth UI & History
   7. Shared intelligence and moderation
   8. AI/ML
@@ -66,17 +66,31 @@
   - [x] Acceptance Criteria Harness (`scripts/test-acceptance.mjs`):
     - 8 / 10 PASS with concrete code/runtime evidence
     - CRIT-06 and CRIT-07 honestly reported as `NOT_YET_IMPLEMENTED: Scheduled for Phase 6C`
-  - [x] Visual Proof Screenshots (`scripts/generate-landing-screenshots.mjs`):
-    - 18 full-page screenshots generated across 360px, 768px, and 1280px viewports in Light/Dark themes and EN/HI/KN languages in `docs/ui-shots/landing/`
-  - [x] Unit & Integration Tests: 218 passed across 23 test suites; 25/25 eval fixtures matching 100%
+  - [x] Visual Proof Screenshots (`scripts/generate-landing-screenshots.mjs` & `scripts/generate-analyzer-screenshots.mjs`):
+    - 18 landing screenshots in `docs/ui-shots/landing/`
+    - 18 analyzer screenshots in `docs/ui-shots/analyzer/` across 360px, 768px, and 1280px viewports in Light/Dark themes and EN/HI/KN languages
+  - [x] Unit & Integration Tests: 226 passed across 24 test suites; 25/25 eval fixtures matching 100%
+- **Phase 6B Verification Checklist:**
+  - [x] `AnalyzePage.tsx`: Full textarea with live character counter, min 25-char validation, clipboard paste action with visual notification
+  - [x] In-browser PDF & text extraction via `pdfjs-dist` in `client/src/lib/pdfExtractor.ts` (zero file uploads to server, privacy preserved)
+  - [x] Opportunity domain selector (7 domains: internship, job, scholarship, freelance, competition, general_message, other)
+  - [x] Sender & contact details expandable section (email, phone, domain, organization)
+  - [x] RFC 822 email headers expandable section for raw header inspection
+  - [x] Privacy & Consent toggles (`aiAnalysis`, `shareIndicators`) with educational subtext
+  - [x] 3 sample scenario chips (Genuine Internship, Upfront Fee Scam, OTP Phishing Scam) for rapid verification
+  - [x] In-flight multi-step progress stepper (PII redaction, 8 deterministic rules, domain scanning, evidence synthesis)
+  - [x] Integration with `apiClient.analyzeOffer` and guest session fallback (`saveGuestAnalysis`)
+  - [x] Full trilingual dictionary support (EN, HI, KN) for all analyzer elements
+  - [x] Zero hardcoded colors; zero banned certainty phrases; zero secrets in client bundle
 
 ---
 
 ## 5. Next Steps
-- Commit Phase 6A files and tag `phase-6a-done`.
-- Proceed to **Phase 6B – UI Implementation: Analyzer Page (`/analyze`)**:
-  - Full textarea with live character counter and 25-char validation
-  - In-browser PDF extraction via `pdfjs-dist` (zero file uploads)
-  - Offer type dropdown, sender detail fields, and headers dialog
-  - Consent toggles (`aiAnalysis`, `shareIndicators`)
-  - Integration with `POST /api/analyze` and client progress steps.
+- Commit Phase 6B files and tag `phase-6b-done`.
+- Proceed to **Phase 6C – UI Implementation: Results Page (`/results/:id`, `/results/local`) & Client-Side PDF Export**:
+  - 4-verdict banner (`LIKELY_GENUINE`, `NEEDS_REVIEW`, `HIGH_CONCERN`, `CONFIRMED_SCAM`)
+  - Transparent "Why" evidence cards and triggered signals list
+  - "Unverified Details" panel explaining what corroboration is missing
+  - Concrete student next steps & golden hour 1930 / cybercrime.gov.in warnings
+  - Client-side PDF export (≤ 3–4 pages, ≥ 75% fill, ₹ currency symbol rendering)
+  - Fictional `/sample` walkthrough report.
