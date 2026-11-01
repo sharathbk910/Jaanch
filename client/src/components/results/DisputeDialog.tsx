@@ -184,3 +184,4 @@ export function DisputeDialog({ isOpen, onClose, publicId }: DisputeDialogProps)
     </div>
   );
 }
+

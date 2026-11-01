@@ -34,9 +34,27 @@ export const SignalSeveritySchema = z.enum([
 ]);
 export type SignalSeverity = z.infer<typeof SignalSeveritySchema>;
 
+export const SignalCategorySchema = z.enum([
+  'financial_demand',
+  'credential_theft',
+  'urgency_pressure',
+  'unverified_contact',
+  'brand_impersonation',
+  'gov_scheme_abuse',
+  'unverified_listing',
+  'official_disclaimer',
+  'phishing_lure',
+  'task_fraud',
+  'remote_access',
+  'suspicious_link',
+  'other',
+]);
+export type SignalCategory = z.infer<typeof SignalCategorySchema>;
+
 export const SignalSchema = z.object({
   id: z.string(),
   ruleId: z.string(),
+  category: SignalCategorySchema.optional(),
   title: z.string(),
   whyItMatters: z.string(),
   evidence: z.string(),
@@ -57,14 +75,16 @@ export const ExtractedEntitiesSchema = z.object({
 export type ExtractedEntities = z.infer<typeof ExtractedEntitiesSchema>;
 
 export const IntelMatchSchema = z.object({
-  tier: z.enum(['exact_text', 'indicator_match']).default('indicator_match'),
+  tier: z.enum(['exact_text', 'indicator_match', 'similarity', 'semantic']).default('indicator_match'),
   status: z.enum(['reported', 'unverified', 'ai_flagged', 'suspicious', 'confirmed', 'dismissed', 'disputed']),
   confidenceBand: z.enum(['very_high', 'high', 'medium', 'low']).default('medium'),
   explanation: z.string(),
   publicId: z.string(),
   matchedIndicators: z.array(z.string()).default([]),
+  matchedTokens: z.array(z.string()).optional(),
+  similarityScore: z.number().optional(),
   id: z.string().optional(),
-  entityType: z.enum(['email', 'domain', 'phone', 'upi', 'bank_account']).optional(),
+  entityType: z.enum(['email', 'domain', 'phone', 'upi', 'bank_account', 'text']).optional(),
   valueHash: z.string().optional(),
   notes: z.string().optional(),
   confirmedAt: z.string().optional(),

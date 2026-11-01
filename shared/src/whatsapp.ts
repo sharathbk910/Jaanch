@@ -53,3 +53,4 @@ export function buildWhatsAppShareUrl(options: WhatsAppShareOptions): string {
   const text = formatWhatsAppShareText(options);
   return `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
 }
+

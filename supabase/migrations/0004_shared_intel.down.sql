@@ -18,3 +18,4 @@ DROP TABLE IF EXISTS intel_reports CASCADE;
 DROP TABLE IF EXISTS intel_indicators CASCADE;
 DROP TABLE IF EXISTS intel_records CASCADE;
 DROP TABLE IF EXISTS domain_allowlist CASCADE;
+

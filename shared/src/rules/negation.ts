@@ -14,6 +14,11 @@ const NEGATION_WORDS = [
   "doesn't",
   'zero',
   'none',
+  'never share',
+  'never download',
+  'do not download',
+  'do not share',
+  'beware of',
   // Hindi & Hinglish
   'nahi',
   'nahin',
@@ -24,6 +29,11 @@ const NEGATION_WORDS = [
   'shulk rahit',
   'bina kisi',
   'mat',
+  'kisi ko na bataye',
+  'kisi ko na de',
+  'share na kare',
+  'download na kare',
+  'savdhan',
   // Kannada
   'illa',
   'illave',
@@ -32,6 +42,10 @@ const NEGATION_WORDS = [
   'kodabedi',
   'beda',
   'illade',
+  'share madabedi',
+  'kodabaradu',
+  'download madabedi',
+  'hechharike',
 ];
 
 /**

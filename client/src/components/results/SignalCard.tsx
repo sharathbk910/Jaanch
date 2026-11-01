@@ -58,9 +58,16 @@ export function SignalCard({ signal }: SignalCardProps) {
     <div className="p-4 sm:p-5 bg-surface border border-border rounded-card shadow-sm space-y-3">
       {/* Title & Severity Header */}
       <div className="flex items-center justify-between gap-2 flex-wrap">
-        <h4 className="text-xs sm:text-sm font-bold text-foreground tracking-tight">
-          {signal.title}
-        </h4>
+        <div className="flex items-center gap-2 flex-wrap">
+          <h4 className="text-xs sm:text-sm font-bold text-foreground tracking-tight">
+            {signal.title}
+          </h4>
+          {signal.category && signal.category !== 'other' && (
+            <span className="px-2 py-0.5 rounded-chip text-[10px] font-mono uppercase bg-background border border-border text-muted-foreground">
+              {signal.category.replace(/_/g, ' ')}
+            </span>
+          )}
+        </div>
         <span
           className={`inline-flex items-center gap-1 px-2 py-0.5 text-[11px] font-semibold border rounded-chip uppercase tracking-wider ${badge.bg} ${badge.text} ${badge.border}`}
         >

@@ -64,9 +64,9 @@ The schema is partitioned into five tables with Row Level Security (RLS) on each
 ---
 
 ## 4. Matching Rules in `/api/analyze`
-Offer analysis matches threat intelligence using a two-tier strategy:
+Offer analysis matches threat intelligence using a four-tier hierarchical strategy:
 
-1. **Tier 1: Exact Normalized Text Match**
+1. **Tier 1: Exact Normalized Text Match (`exact_text`)**
    - The analyzed text is canonically normalized (`NFKC`, homoglyphs folded, whitespace collapsed) and hashed with `REPORT_HASH_PEPPER`.
    - Checks `intel_records(normalized_hash)`.
    - If matched and `status === 'confirmed'`:
@@ -78,14 +78,31 @@ Offer analysis matches threat intelligence using a two-tier strategy:
      - Informational signal: `RULE_SUSPICIOUS_REPORTED_RECORD`.
      - Explanation: *"Similar to reported messages under active community review."*
 
-2. **Tier 2: Indicator Peppered-Hash Match**
+2. **Tier 2: Indicator Peppered-Hash Match (`indicator_match`)**
    - Extracted UPI handles, emails, phones, URLs, and domains are peppered-hashed and queried against `intel_indicators`.
    - If matched to a confirmed record:
      - Verdict becomes `CONFIRMED_SCAM` (Confidence: 98%).
    - If matched to a suspicious or flagged record:
      - Verdict is UNCHANGED.
 
-3. **Privacy & Reporting Anonymity Rule**:
+3. **Tier 3: Trigram & Shingle-Jaccard Text Similarity Match (`similarity`)**
+   - Evaluated via `pg_trgm` GIN index (`match_intel_similarity` RPC) and TypeScript character-shingle Jaccard ($k=3$).
+   - **Calibrated Operating Thresholds:**
+     - **Minimum Matching Cutoff:** `0.45` (Medium Confidence Band)
+     - **High Confidence Cutoff:** `0.65` (High Confidence Band)
+   - **Strict Invariant:** Evaluates **only** against records where `status IN ('confirmed', 'suspicious')`. Unverified, reported, or disputed records can never trigger similarity matches.
+   - Provides matched tokens/shingles for explainability.
+
+4. **Tier 4: Semantic Vector Embedding Match (`semantic`)**
+   - Evaluated using Google Gemini `text-embedding-004` (768 dimensions) via pgvector HNSW index (`match_intel_semantic` RPC) or in-memory cosine fallback.
+   - **Calibrated Operating Thresholds:**
+     - **Minimum Matching Cutoff:** `0.75` (Medium Confidence Band)
+     - **High Confidence Cutoff:** `0.85` (High Confidence Band)
+   - **Strict Invariant:** Evaluates **only** against scrubbed text embeddings of records where `status IN ('confirmed', 'suspicious')`.
+   - Embeddings are generated **strictly** on server-side scrubbed text; raw student text is never embedded or stored in pgvector.
+   - Keyless Fallback: If `GEMINI_API_KEY` is unset or times out, semantic tier gracefully skips without throwing or failing requests.
+
+5. **Privacy & Reporting Anonymity Rule**:
    - Public analysis responses never reveal individual reporter identities or timestamps.
    - Reporter counts are aggregated and never exposed under threshold values.
 
@@ -121,3 +138,4 @@ npx tsx scripts/bootstrap-moderator.ts --user-id 018fa34c-1234-7000-8000-0000000
 1. `SUPABASE_SERVICE_ROLE_KEY` is required in the server environment (`server/.env`).
 2. The service role key is **never** bundled or accessible to the client (`check:no-secrets` enforced).
 3. The promotion writes an audit log entry (`BOOTSTRAP_MODERATOR_ROLE`) into `audit_logs`.
+

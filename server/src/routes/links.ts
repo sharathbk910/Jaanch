@@ -4,6 +4,7 @@ import {
   detectLookalikeDomain,
   isPunycode,
   isUrlShortener,
+  hasExcessiveSubdomains,
   LINK_RISK_LEVELS,
   type LinkRiskLevel,
 } from '@jaanch/shared';
@@ -34,7 +35,7 @@ const LinkCheckSchema = z.object({
 
 interface LinkSignal {
   id: string;
-  type: 'lookalike' | 'punycode' | 'shortener' | 'ip_address' | 'insecure_scheme' | 'new_domain';
+  type: 'lookalike' | 'punycode' | 'shortener' | 'ip_address' | 'insecure_scheme' | 'new_domain' | 'excessive_subdomains';
   message: string;
   severity: 'critical' | 'warning' | 'info';
 }
@@ -181,10 +182,21 @@ router.post(
       signals.push({
         id: 'LINK_SHORTENER',
         type: 'shortener',
-        message: 'Link uses a URL shortener service that obscures the real destination address.',
+        message: 'Link uses a URL shortener service that obscures the real destination address (flagged: cannot inspect without external fetch).',
         severity: 'warning',
       });
-      observed.push('URL shortener obscures destination');
+      observed.push('URL shortener obscures destination (cannot inspect)');
+    }
+
+    // 4b. Structural check: Excessive subdomains
+    if (hasExcessiveSubdomains(hostname)) {
+      signals.push({
+        id: 'LINK_EXCESSIVE_SUBDOMAINS',
+        type: 'excessive_subdomains',
+        message: 'Link uses excessive subdomain nesting (>= 4 levels), often used to disguise deceptive landing pages.',
+        severity: 'warning',
+      });
+      observed.push('Excessive subdomain nesting detected');
     }
 
     // 5. Structural check: Insecure HTTP

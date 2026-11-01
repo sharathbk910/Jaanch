@@ -13,7 +13,15 @@ import {
   type IndicatorType,
 } from './hashing.js';
 import { writeAuditLog } from './auditLog.js';
-import { type IntelMatch } from '@jaanch/shared';
+import { type IntelMatch, computeShingleJaccard } from '@jaanch/shared';
+import { getEmbeddingProvider, cosineSimilarity } from './embeddings.js';
+
+export const INTEL_THRESHOLDS = {
+  SIMILARITY_JACCARD_MIN: 0.45,
+  SIMILARITY_HIGH_CONFIDENCE: 0.65,
+  SEMANTIC_COSINE_MIN: 0.75,
+  SEMANTIC_HIGH_CONFIDENCE: 0.85,
+};
 
 export type ThreatEntityStatus =
   | 'reported'
@@ -110,6 +118,7 @@ export interface IntelRecord {
   first_reported_at: string;
   confirmed_at: string | null;
   confirmed_by: string | null;
+  embedding?: number[] | null;
   created_at: string;
   updated_at: string;
 }
@@ -352,6 +361,7 @@ export class ThreatIntelRepository {
         // New record creation
         const publicId = generateIntelPublicId();
         const initialStatus: ThreatEntityStatus = isHighConcern ? 'ai_flagged' : 'reported';
+        const embedding = await getEmbeddingProvider().generateEmbedding(scrubbedText);
 
         const { data: createdRecord, error: createError } = await supabase
           .from('intel_records')
@@ -361,6 +371,7 @@ export class ThreatIntelRepository {
             category,
             scrubbed_text: scrubbedText,
             normalized_hash: normalizedHash,
+            ...(embedding ? { embedding } : {}),
           })
           .select('id, public_id, status')
           .single();
@@ -452,6 +463,7 @@ export class ThreatIntelRepository {
     const recordId = crypto.randomUUID();
     const publicId = generateIntelPublicId();
     const initialStatus: ThreatEntityStatus = isHighConcern ? 'ai_flagged' : 'reported';
+    const embedding = await getEmbeddingProvider().generateEmbedding(scrubbedText);
 
     const newRecord: IntelRecord = {
       id: recordId,
@@ -460,6 +472,7 @@ export class ThreatIntelRepository {
       category,
       scrubbed_text: scrubbedText,
       normalized_hash: normalizedHash,
+      embedding: embedding || null,
       first_reported_at: now,
       confirmed_at: null,
       confirmed_by: null,
@@ -588,91 +601,221 @@ export class ThreatIntelRepository {
       ['url', 'domain', 'phone', 'upi'].includes(ind.type)
     ) as Array<{ type: IndicatorType; value: string }>;
 
-    if (validIndicators.length === 0) {
-      return null;
-    }
+    if (validIndicators.length > 0) {
+      const indicatorHashes = validIndicators.map((ind) => ({
+        type: ind.type,
+        hash: hashIndicatorPeppered(ind.type, ind.value),
+        value: ind.value,
+      }));
 
-    const indicatorHashes = validIndicators.map((ind) => ({
-      type: ind.type,
-      hash: hashIndicatorPeppered(ind.type, ind.value),
-      value: ind.value,
-    }));
+      if (shouldCallRemote(supabase)) {
+        try {
+          const hashesOnly = indicatorHashes.map((i) => i.hash);
+          const { data: matchedInds } = await supabase
+            .from('intel_indicators')
+            .select('record_id, masked_display, intel_records!inner(id, public_id, status)')
+            .in('value_hash', hashesOnly);
 
-    if (shouldCallRemote(supabase)) {
-      try {
-        const hashesOnly = indicatorHashes.map((i) => i.hash);
-        const { data: matchedInds } = await supabase
-          .from('intel_indicators')
-          .select('record_id, masked_display, intel_records!inner(id, public_id, status)')
-          .in('value_hash', hashesOnly);
+          if (matchedInds && matchedInds.length > 0) {
+            const confirmed = matchedInds.find((m: any) => m.intel_records?.status === 'confirmed');
+            if (confirmed) {
+              return {
+                tier: 'indicator_match',
+                status: 'confirmed',
+                confidenceBand: 'high',
+                explanation: 'One or more contact/payment indicators match a moderator-confirmed record.',
+                publicId: (confirmed as any).intel_records.public_id,
+                matchedIndicators: matchedInds.map((m: any) => m.masked_display),
+              };
+            }
 
-        if (matchedInds && matchedInds.length > 0) {
-          const confirmed = matchedInds.find((m: any) => m.intel_records?.status === 'confirmed');
-          if (confirmed) {
+            const suspicious = matchedInds.find(
+              (m: any) => m.intel_records?.status === 'suspicious' || m.intel_records?.status === 'ai_flagged'
+            );
+            if (suspicious) {
+              return {
+                tier: 'indicator_match',
+                status: (suspicious as any).intel_records.status,
+                confidenceBand: 'medium',
+                explanation: 'Similar to reported messages under community review.',
+                publicId: (suspicious as any).intel_records.public_id,
+                matchedIndicators: matchedInds.map((m: any) => m.masked_display),
+              };
+            }
+          }
+        } catch (err) {
+          logger.error({ err }, 'Indicator intel match query failed in Supabase');
+        }
+      } else {
+        // In-memory indicator search
+        const matched = inMemoryIntelIndicators.filter((ind) =>
+          indicatorHashes.some((h) => h.hash === ind.value_hash)
+        );
+
+        if (matched.length > 0) {
+          // Collect parent records
+          const parentRecords = Array.from(inMemoryIntelRecords.values()).filter((r) =>
+            matched.some((m) => m.record_id === r.id)
+          );
+
+          const confirmedRecord = parentRecords.find((r) => r.status === 'confirmed');
+          if (confirmedRecord) {
             return {
               tier: 'indicator_match',
               status: 'confirmed',
               confidenceBand: 'high',
               explanation: 'One or more contact/payment indicators match a moderator-confirmed record.',
-              publicId: (confirmed as any).intel_records.public_id,
-              matchedIndicators: matchedInds.map((m: any) => m.masked_display),
+              publicId: confirmedRecord.public_id,
+              matchedIndicators: matched.map((m) => m.masked_display),
             };
           }
 
-          const suspicious = matchedInds.find(
-            (m: any) => m.intel_records?.status === 'suspicious' || m.intel_records?.status === 'ai_flagged'
+          const suspiciousRecord = parentRecords.find(
+            (r) => r.status === 'suspicious' || r.status === 'ai_flagged'
           );
-          if (suspicious) {
+          if (suspiciousRecord) {
             return {
               tier: 'indicator_match',
-              status: (suspicious as any).intel_records.status,
+              status: suspiciousRecord.status,
               confidenceBand: 'medium',
               explanation: 'Similar to reported messages under community review.',
-              publicId: (suspicious as any).intel_records.public_id,
-              matchedIndicators: matchedInds.map((m: any) => m.masked_display),
+              publicId: suspiciousRecord.public_id,
+              matchedIndicators: matched.map((m) => m.masked_display),
             };
+          }
+        }
+      }
+    }
+
+    // -------------------------------------------------------------------------
+    // 3. Similarity Tier: Trigram & Shingle-Jaccard matching
+    // INVARIANT: Matches ONLY against confirmed or suspicious records
+    // -------------------------------------------------------------------------
+    if (shouldCallRemote(supabase)) {
+      try {
+        const { data: simRows, error: simError } = await supabase.rpc('match_intel_similarity', {
+          query_text: text,
+          similarity_threshold: INTEL_THRESHOLDS.SIMILARITY_JACCARD_MIN,
+          match_limit: 1,
+        });
+
+        if (!simError && simRows && simRows.length > 0) {
+          const top = simRows[0];
+          const shingleExp = computeShingleJaccard(text, top.scrubbed_text);
+          const score = typeof top.similarity_score === 'number' ? top.similarity_score : shingleExp.similarity;
+          return {
+            tier: 'similarity',
+            status: top.status as ThreatEntityStatus,
+            confidenceBand: score >= INTEL_THRESHOLDS.SIMILARITY_HIGH_CONFIDENCE ? 'high' : 'medium',
+            explanation: top.status === 'confirmed'
+              ? 'High textual similarity to a confirmed scam report in the Jaanch Intelligence Network.'
+              : 'Textually similar to reported messages under active community review.',
+            publicId: top.public_id,
+            matchedIndicators: [],
+            matchedTokens: shingleExp.matchedTokens,
+            similarityScore: Math.round(score * 1000) / 1000,
+          };
+        }
+      } catch (err) {
+        logger.error({ err }, 'Similarity RPC query failed in Supabase');
+      }
+    } else {
+      // In-memory similarity matching against eligible records
+      const eligibleRecords = Array.from(inMemoryIntelRecords.values()).filter(
+        (r) => r.status === 'confirmed' || r.status === 'suspicious'
+      );
+
+      let bestMatch: { record: IntelRecord; shingleRes: ReturnType<typeof computeShingleJaccard> } | null = null;
+      for (const rec of eligibleRecords) {
+        const shingleRes = computeShingleJaccard(text, rec.scrubbed_text);
+        if (shingleRes.similarity >= INTEL_THRESHOLDS.SIMILARITY_JACCARD_MIN) {
+          if (!bestMatch || shingleRes.similarity > bestMatch.shingleRes.similarity) {
+            bestMatch = { record: rec, shingleRes };
+          }
+        }
+      }
+
+      if (bestMatch) {
+        const score = bestMatch.shingleRes.similarity;
+        return {
+          tier: 'similarity',
+          status: bestMatch.record.status,
+          confidenceBand: score >= INTEL_THRESHOLDS.SIMILARITY_HIGH_CONFIDENCE ? 'high' : 'medium',
+          explanation: bestMatch.record.status === 'confirmed'
+            ? 'High textual similarity to a confirmed scam report in the Jaanch Intelligence Network.'
+            : 'Textually similar to reported messages under active community review.',
+          publicId: bestMatch.record.public_id,
+          matchedIndicators: [],
+          matchedTokens: bestMatch.shingleRes.matchedTokens,
+          similarityScore: score,
+        };
+      }
+    }
+
+    // -------------------------------------------------------------------------
+    // 4. Semantic Tier: Vector embedding matching (Optional, off without a key)
+    // INVARIANT: Matches ONLY against confirmed or suspicious records
+    // -------------------------------------------------------------------------
+    const embeddingProvider = getEmbeddingProvider();
+    if (embeddingProvider.modelId !== 'none') {
+      try {
+        const queryEmbedding = await embeddingProvider.generateEmbedding(text);
+        if (queryEmbedding) {
+          if (shouldCallRemote(supabase)) {
+            const { data: semRows, error: semError } = await supabase.rpc('match_intel_semantic', {
+              query_embedding: queryEmbedding,
+              similarity_threshold: INTEL_THRESHOLDS.SEMANTIC_COSINE_MIN,
+              match_limit: 1,
+            });
+
+            if (!semError && semRows && semRows.length > 0) {
+              const top = semRows[0];
+              const score = typeof top.similarity_score === 'number' ? top.similarity_score : INTEL_THRESHOLDS.SEMANTIC_COSINE_MIN;
+              return {
+                tier: 'semantic',
+                status: top.status as ThreatEntityStatus,
+                confidenceBand: score >= INTEL_THRESHOLDS.SEMANTIC_HIGH_CONFIDENCE ? 'high' : 'medium',
+                explanation: top.status === 'confirmed'
+                  ? 'Semantically matches confirmed fraud patterns in the Jaanch Scam Intelligence Network.'
+                  : 'Semantically similar to reported patterns under review.',
+                publicId: top.public_id,
+                matchedIndicators: [],
+                similarityScore: Math.round(score * 1000) / 1000,
+              };
+            }
+          } else {
+            // In-memory semantic evaluation
+            const eligibleSemantic = Array.from(inMemoryIntelRecords.values()).filter(
+              (r) => (r.status === 'confirmed' || r.status === 'suspicious') && r.embedding
+            );
+
+            let bestSemantic: { record: IntelRecord; score: number } | null = null;
+            for (const rec of eligibleSemantic) {
+              const score = cosineSimilarity(queryEmbedding, rec.embedding!);
+              if (score >= INTEL_THRESHOLDS.SEMANTIC_COSINE_MIN) {
+                if (!bestSemantic || score > bestSemantic.score) {
+                  bestSemantic = { record: rec, score };
+                }
+              }
+            }
+
+            if (bestSemantic) {
+              return {
+                tier: 'semantic',
+                status: bestSemantic.record.status,
+                confidenceBand: bestSemantic.score >= INTEL_THRESHOLDS.SEMANTIC_HIGH_CONFIDENCE ? 'high' : 'medium',
+                explanation: bestSemantic.record.status === 'confirmed'
+                  ? 'Semantically matches confirmed fraud patterns in the Jaanch Scam Intelligence Network.'
+                  : 'Semantically similar to reported patterns under review.',
+                publicId: bestSemantic.record.public_id,
+                matchedIndicators: [],
+                similarityScore: Math.round(bestSemantic.score * 1000) / 1000,
+              };
+            }
           }
         }
       } catch (err) {
-        logger.error({ err }, 'Indicator intel match query failed in Supabase');
-      }
-    } else {
-      // In-memory indicator search
-      const matched = inMemoryIntelIndicators.filter((ind) =>
-        indicatorHashes.some((h) => h.hash === ind.value_hash)
-      );
-
-      if (matched.length > 0) {
-        // Collect parent records
-        const parentRecords = Array.from(inMemoryIntelRecords.values()).filter((r) =>
-          matched.some((m) => m.record_id === r.id)
-        );
-
-        const confirmedRecord = parentRecords.find((r) => r.status === 'confirmed');
-        if (confirmedRecord) {
-          return {
-            tier: 'indicator_match',
-            status: 'confirmed',
-            confidenceBand: 'high',
-            explanation: 'One or more contact/payment indicators match a moderator-confirmed record.',
-            publicId: confirmedRecord.public_id,
-            matchedIndicators: matched.map((m) => m.masked_display),
-          };
-        }
-
-        const suspiciousRecord = parentRecords.find(
-          (r) => r.status === 'suspicious' || r.status === 'ai_flagged'
-        );
-        if (suspiciousRecord) {
-          return {
-            tier: 'indicator_match',
-            status: suspiciousRecord.status,
-            confidenceBand: 'medium',
-            explanation: 'Similar to reported messages under community review.',
-            publicId: suspiciousRecord.public_id,
-            matchedIndicators: matched.map((m) => m.masked_display),
-          };
-        }
+        logger.warn({ err }, 'Semantic tier matching failed soft');
       }
     }
 

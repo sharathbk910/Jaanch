@@ -56,6 +56,31 @@ export function levenshteinDistance(a: string, b: string): number {
 }
 
 /**
+ * Detects whether a host is an IP-literal (IPv4 or IPv6)
+ */
+export function isIpAddressHost(host: string): boolean {
+  if (!host) return false;
+  const clean = host.replace(/^\[|\]$/g, '').trim();
+  const ipv4 = /^(\d{1,3}\.){3}\d{1,3}(:\d+)?$/;
+  if (ipv4.test(clean)) {
+    const parts = clean.split(':')[0].split('.').map(Number);
+    return parts.every((p) => p >= 0 && p <= 255);
+  }
+  return clean.includes(':');
+}
+
+/**
+ * Checks if a domain has excessive subdomain nesting (>= 4 dots / labels)
+ * e.g. login.verify.update.bank.attacker.com
+ */
+export function hasExcessiveSubdomains(domain: string): boolean {
+  if (!domain) return false;
+  const clean = domain.toLowerCase().replace(/^https?:\/\//i, '').replace(/\/.*$/, '').replace(/^www\./, '');
+  const labels = clean.split('.').filter(Boolean);
+  return labels.length >= 4;
+}
+
+/**
  * Checks if a domain uses Punycode / IDN encoding
  */
 export function isPunycode(domain: string): boolean {

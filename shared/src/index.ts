@@ -20,6 +20,7 @@ export * from './rules/negation.js';
 export * from './status/computeStatus.js';
 export * from './config/constants.js';
 export * from './whatsapp.js';
+export * from './similarity/shingle.js';
 
 export const JAANCH_VERSION = '1.0.0';
 export const JAANCH_SHARED_VERSION = '1.0.0';

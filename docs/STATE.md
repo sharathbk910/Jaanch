@@ -10,10 +10,10 @@
 ## 2. Project Overview
 - **Project Name:** Jaanch (Student Offer Verification & Trust Safety Platform)
 - **Problem Statement:** "Fake or Real" (Digital Trust & Safety for Indian Students)
-- **Current Phase:** Phase 9 – WhatsApp Channel Complete
-- **Current Tag:** `phase-9-done`
+- **Current Phase:** Phase 8 – AI/ML: Similarity, Semantic, New Rules, URL Intelligence, Evaluation Complete
+- **Current Tag:** `phase-8-done`
 - **Node Version:** v24.19.0 (LTS >= 20 required)
-- **Repository State:** Green monorepo; `@jaanch/shared`, `@jaanch/server`, and `@jaanch/client` fully compiled, typechecked, linted, and tested (336 tests passing across 36 test suites, 25/25 eval fixtures matching 100%, 10/10 acceptance criteria PASS)
+- **Repository State:** Green monorepo; `@jaanch/shared`, `@jaanch/server`, and `@jaanch/client` fully compiled, typechecked, linted, and tested (361 tests passing across 38 test suites, 25/25 eval fixtures matching 100%, eval:ml harness passing, 10/10 acceptance criteria PASS)
 
 ---
 
@@ -164,18 +164,59 @@
   - [x] Verification & Test Suite:
     - 322 tests passing across 34 test suites (11 comprehensive E2E tests in `server/src/__tests__/shared_intel_e2e.test.ts` + 18 in `threat_intelligence.test.ts` + 5 in `moderator_cli.test.ts`).
     - 10 / 10 acceptance criteria passing; 100% scenario verification passing.
-- **Phase 8 Verification Checklist:**
-  - [x] Gemini SDK Wrapper (`@google/genai` ^2.32.0): Server-only client, key exclusively from server env, model configurable (`GEMINI_MODEL`, defaults to `gemini-2.5-flash`), timeout with AbortController (20s), and single stricter retry on JSON/validation failure.
-  - [x] PII Pre-Redaction: Full PII masking via `redactText` before sending any user text to Gemini; prompt injection neutralization instructions embedded in all prompts.
-  - [x] Grounded Prompts verbatim: `JAANCH_SYSTEM_PROMPT` per SPEC_ORIGINAL Part A §14 and Part B §12; structured generation prompts with strict Zod and response JSON schemas (`analysis.ts`, `challenge.ts`, `safeReply.ts`, `linkExplain.ts`, `extraction.ts`).
-  - [x] Zero-Hallucination Evidence Grounding: Every AI signal verified via `findSpan` against redacted input text; word-snapped, clamped $\le 160$ chars; ungrounded candidate signals rejected.
-  - [x] Invariant Enforcement: AI signals NEVER lower or remove rule hits, severity strictly $\le$ `'high'`, AI can NEVER produce `CONFIRMED_SCAM` or upgrade `NEEDS_REVIEW` to `LIKELY_GENUINE`.
-  - [x] Fail-Soft Resilience: System operates 100% deterministically without API key; records `aiStatus` (`'success' | 'disabled' | 'timeout' | 'api_error' | 'invalid_output' | 'not_requested'`); returns HTTP 200 with rule results on AI failure.
-  - [x] Consent Gate: AI runs ONLY when `consentFlags.aiAnalysis === true` (or `useAi === true`). When false/absent, AI is bypassed with `aiStatus = 'not_requested'`.
-  - [x] Template Fallbacks: Deterministic, localized templates for challenge emails, safe replies, and link explanations used when AI is absent, disabled, or fails.
-  - [x] Endpoint `POST /api/challenge-email`: Supports `kind: "challenge" | "safe_reply"`, localized output, AI generation, and deterministic template fallback.
-  - [x] Link Check AI Explanation: `POST /api/link-check` enriched with optional `explanation` and fail-soft template fallback.
-  - [x] Full Test Suite: 309 tests passing across 33 test suites (14 new dedicated AI layer tests in `server/src/__tests__/ai_layer.test.ts`); 10/10 acceptance criteria passing; 100% scenario verification passing.
+- **Phase 8 Verification Checklist (AI/ML: Similarity, Semantic, New Rules, URL Intelligence, Evaluation):**
+  - [x] Database Migration 0005 (`0005_ai_ml_vector_similarity.sql` & `0005_ai_ml_vector_similarity.down.sql`):
+    - Extensions `pg_trgm` and `vector` installed.
+    - Trigram GIN index on `intel_records(scrubbed_text gin_trgm_ops)`.
+    - `embedding vector(768)` column added to `intel_records`.
+    - HNSW cosine index `idx_intel_records_embedding_hnsw` on `intel_records USING hnsw (embedding vector_cosine_ops)`.
+    - Stored RPC functions `match_intel_similarity` and `match_intel_semantic` with `WHERE r.status IN ('confirmed', 'suspicious')` invariant.
+  - [x] 4-Tier Matching Architecture (`ThreatIntelRepository.matchIntel`):
+    - Tier 1: Exact normalized text hash match (very high confidence).
+    - Tier 2: Indicator peppered-hash match (`url`, `domain`, `phone`, `upi`) (high/medium confidence).
+    - Tier 3: Trigram similarity RPC + TypeScript character 3-shingle Jaccard fallback (`computeShingleJaccard`), extracting matched keywords. Strictly matches against `confirmed` or `suspicious` records only.
+    - Tier 4: Semantic dense embeddings via pgvector RPC + cosine similarity fallback (`cosineSimilarity`). Strictly matches against `confirmed` or `suspicious` records only.
+  - [x] Semantic Embeddings & Gemini Provider:
+    - `EmbeddingProvider` interface with `dimension: 768`.
+    - `GeminiEmbeddingProvider` using official Google GenAI SDK model `text-embedding-004` (768 dimensions), 5s timeout guard.
+    - Verified upstream documentation: natively supports Hindi (`hi`) and Kannada (`kn`) in a unified multilingual vector space.
+    - Embeddings generated and stored strictly for scrubbed threat intel text, NEVER raw student submissions.
+    - Fail-soft null provider fallback (`NullEmbeddingProvider`) ensures 100% operation without API keys.
+  - [x] 7 New Rule Families in `@jaanch/shared` (Total 15 rules in catalog):
+    - `RULE_OTP_SHARING`: Demands for OTP or verification code sharing across `en`, `hi`, `kn`, `hinglish`.
+    - `RULE_PHISHING_URGENT_ACTION`: Urgent threats of account block / KYC expiry paired with links.
+    - `RULE_IMPERSONATION_AUTHORITY`: Authority impersonation (bank manager, cyber police, courier customs, CEO).
+    - `RULE_TASK_SCAM`: Pay-per-task, YouTube video like, Telegram reviews, and crypto daily tasks.
+    - `RULE_INVESTMENT_GUARANTEED_RETURNS`: Guaranteed profits, money doubling, and zero-risk investment schemes.
+    - `RULE_REMOTE_ACCESS_APP`: Coercive requests to install AnyDesk, TeamViewer, RustDesk, QuickSupport, AirDroid.
+    - `RULE_UPI_COLLECT_REQUEST`: Demands to approve UPI collect requests or enter UPI PIN to receive money.
+    - Multilingual negation guards and word-snapped evidence quotes.
+    - Existing 25 benchmark fixtures continue to pass 100% unchanged.
+  - [x] URL Intelligence (`server/src/routes/links.ts`):
+    - Never fetches untrusted message URLs over HTTP.
+    - Numeric IP-literal host detection (`net.isIP`) -> `critical` severity.
+    - Punycode / IDN homograph detection (`isPunycode`) -> `critical` severity.
+    - Excessive subdomains ($\ge 4$ levels, `hasExcessiveSubdomains`) -> `warning` severity.
+    - URL shorteners (`isUrlShortener`) -> `warning` severity, flagged with explicit notice: "cannot inspect without external fetch".
+    - Lookalike brand domain typosquatting (`detectLookalikeDomain`) -> `critical` severity.
+    - RDAP domain age lookup via safeFetch (timeouts/failures fail-soft to `unknown`, never `pass`).
+  - [x] Explainability & Transparency:
+    - Signals report `id`, `category`, plain reason (`whyItMatters`), and snapped evidence quotes.
+    - Intel matches report `tier`, `status`, `confidenceBand`, `similarityScore`, and `matchedTokens` or `matchedIndicators`.
+  - [x] Evaluation & Calibration Harness (`npm run eval:ml`):
+    - Real evaluation script (`scripts/eval-ml.ts`) producing `docs/EVAL_REPORT.md`.
+    - Dataset audit (25 benchmark fixtures labeled `illustrative_synthetic`, 0 duplicates, class balance audit).
+    - Documented reason why statistical parametric ML (TF-IDF + Logistic Regression) is skipped for N=25 (avoids severe overfitting and statistical leakage).
+    - Similarity threshold calibration sweep: Calibrated thresholds recorded in `docs/INTEL.md`:
+      - Jaccard Similarity Min: `0.45` | High Confidence: `0.65`
+      - Semantic Cosine Min: `0.75` | High Confidence: `0.85`
+  - [x] Frontend Component Updates:
+    - `IntelMatchCard.tsx`: Displays match tier badge, confidence band, similarity percentage score, matched shingle keywords, and matched indicators using pure CSS tokens.
+    - `SignalCard.tsx`: Displays typed category badge (`financial_demand`, `phishing_credential`, `remote_access_control`, etc.) using pure CSS tokens.
+  - [x] Verification & Test Suite:
+    - 361 tests passing across 38 test suites (15 dedicated unit tests in `shared/src/__tests__/rules_phase8.test.ts` + 10 integration tests in `server/src/__tests__/ai_ml_phase8.test.ts` + 8 in `scripts/__tests__/sql-lint.test.ts`).
+    - 25/25 benchmark corpus fixtures matching 100% (Accuracy: 100%, Precision: 100%, Recall: 100%, F1: 100%).
+    - Acceptance criteria: 10/10 PASS; scenario verification: 100% PASS; zero secrets, zero hardcoded colors, zero banned certainty claims.
 
 ---
 

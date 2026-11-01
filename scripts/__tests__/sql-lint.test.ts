@@ -8,7 +8,7 @@ const __dirname = path.dirname(__filename);
 const MIGRATIONS_DIR = path.resolve(__dirname, '..', '..', 'supabase', 'migrations');
 
 describe('Database Migration & SQL Lint Verification (sql-lint.test.ts)', () => {
-  it('confirms all 4 ordered migrations and down-migrations exist in supabase/migrations/', () => {
+  it('confirms all 5 ordered migrations and down-migrations exist in supabase/migrations/', () => {
     const files = fs.readdirSync(MIGRATIONS_DIR);
     expect(files).toContain('0001_enums_tables.sql');
     expect(files).toContain('0001_enums_tables.down.sql');
@@ -18,6 +18,8 @@ describe('Database Migration & SQL Lint Verification (sql-lint.test.ts)', () => 
     expect(files).toContain('0003_seed_organizations.down.sql');
     expect(files).toContain('0004_shared_intel.sql');
     expect(files).toContain('0004_shared_intel.down.sql');
+    expect(files).toContain('0005_ai_ml_vector_similarity.sql');
+    expect(files).toContain('0005_ai_ml_vector_similarity.down.sql');
   });
 
   describe('0001_enums_tables.sql', () => {

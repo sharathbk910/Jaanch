@@ -205,3 +205,4 @@ CREATE POLICY "Moderators access moderation actions"
       AND profiles.role = 'moderator'
     )
   );
+
