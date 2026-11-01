@@ -1,0 +1,15 @@
+{
+  "name": "@jaanch/server",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node -e \"console.log('Server dev placeholder')\"",
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@jaanch/shared": "*"
+  }
+}
