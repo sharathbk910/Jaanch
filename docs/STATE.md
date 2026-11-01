@@ -1,23 +1,23 @@
 # JAANCH – Project State
 
 ## 1. Specification Status Notice
-> [!WARNING]
-> **`docs/SPEC_ORIGINAL.md` status:** **UNVERIFIED**.
-> The verbatim content for `docs/SPEC_ORIGINAL.md` will be provided directly by the user. It is preserved without modifications and treated as unverified until confirmed.
+> [!NOTE]
+> **`docs/SPEC_ORIGINAL.md` status:** **VERIFIED** (Primary specification, read-only).
+> Spec verification completed in Phase 1.5. All numbered sections, decisions D1–D16, feature inventory F01–F24, and phase mappings are tracked in `docs/TRACEABILITY.md`. Differences with `docs/SPEC_ADDENDUM.md` have been documented for user review.
 
 ---
 
 ## 2. Project Overview
 - **Project Name:** Jaanch (Student Offer Verification & Trust Safety Platform)
 - **Problem Statement:** "Fake or Real" (Digital Trust & Safety for Indian Students)
-- **Current Phase:** Phase 1 – Workspace, Spec Files, Root Tooling (Correction Completed)
+- **Current Phase:** Phase 1.5 – Spec Verification Complete
 - **Node Version:** v24.19.0 (LTS >= 20 required)
-- **Repository State:** Clean monorepo foundation
+- **Repository State:** Clean monorepo foundation, all tooling verified green
 
 ---
 
 ## 3. Approved Decision & Architecture Summary
-- **Verdicts:**
+- **Verdicts (Approved 4-Verdict Model):**
   - `LIKELY_GENUINE`: Passed corroborating checks; no scam indicators found.
   - `NEEDS_REVIEW`: Incomplete details, missing verification, or unverified contact.
   - `HIGH_CONCERN`: Hard disqualifiers present (fees, credential demands, urgency).
@@ -56,4 +56,5 @@
 ---
 
 ## 5. Next Steps
-- Next Phase: **Phase 2 – Shared core** (schemas, 8 rules, redaction, extraction, lookalike, status, 25 fixtures).
+- Await user review of reported differences and go-ahead for:
+  **Phase 2 – Shared core** (schemas, 8 rules, redaction, extraction, lookalike, status, 25 fixtures).
