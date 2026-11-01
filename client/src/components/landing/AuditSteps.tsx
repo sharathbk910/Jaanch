@@ -174,32 +174,6 @@ export function AuditSteps() {
             </div>
           </div>
         </div>
-
-        {/* Wide Testimonial / Story Card (Exact MotherDuck Layout under the 3 cards) */}
-        <div className="mt-12 sm:mt-16 bg-surface border-2 border-neo-border shadow-neo-xl p-6 sm:p-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
-          <div className="flex items-start gap-4 sm:gap-6 flex-1">
-            <span className="font-serif text-5xl sm:text-6xl text-terracotta leading-none shrink-0 select-none">
-              “
-            </span>
-            <p className="text-sm sm:text-base md:text-lg text-foreground font-medium leading-relaxed">
-              We were seeing students hit with forged appointment letters and fake fee requests every campus season. Deploying Jaanch across our placement cell stopped 100% of upfront security deposit traps on day one. It is the essential safety layer for Indian higher education.
-            </p>
-          </div>
-
-          <div className="w-full md:w-auto shrink-0 md:pl-8 md:border-l-2 md:border-neo-border flex items-center gap-4">
-            <div className="w-12 h-12 bg-neo-yellow border-2 border-neo-border shadow-neo-sm flex items-center justify-center font-bold text-foreground font-mono text-base">
-              IIT
-            </div>
-            <div>
-              <div className="font-bold text-sm sm:text-base text-foreground font-sans">
-                Prof. R. Ramanathan
-              </div>
-              <div className="text-xs text-muted-foreground font-medium">
-                Head of Training & Placements, National Campus Forum
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </section>
   );

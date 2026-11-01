@@ -44,15 +44,9 @@ export function FeatureMatrix() {
 
       <div className="max-w-editorial mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center max-w-2xl mx-auto mb-10">
-          <span className="text-xs font-mono font-bold uppercase tracking-wider bg-neo-yellow border-2 border-neo-border px-3 py-1 shadow-neo-sm inline-block text-foreground mb-3">
-            Comparison Guide
-          </span>
           <h2 className="font-serif text-3xl sm:text-4xl font-bold tracking-tight text-foreground">
             How to Spot a Fake Student Offer
           </h2>
-          <p className="mt-2 text-xs sm:text-sm text-muted-foreground font-medium">
-            Key differences between legitimate corporate hiring and fraudulent student traps in India.
-          </p>
         </div>
 
         <div className="overflow-x-auto border-2 border-neo-border bg-surface shadow-neo-xl">
