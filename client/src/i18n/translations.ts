@@ -74,6 +74,39 @@ export interface TranslationDictionary {
     signUpBtn: string;
     guestNotice: string;
     signOut: string;
+    googleBtn: string;
+    noAccount: string;
+    haveAccount: string;
+  };
+  history: {
+    eyebrow: string;
+    title: string;
+    subtitle: string;
+    unauthTitle: string;
+    unauthDesc: string;
+    filterAll: string;
+    emptyTitle: string;
+    emptyDesc: string;
+    checkOfferBtn: string;
+    viewAudit: string;
+    deleteAudit: string;
+    deleteConfirm: string;
+    prevPage: string;
+    nextPage: string;
+    pageOf: string;
+  };
+  settings: {
+    eyebrow: string;
+    title: string;
+    subtitle: string;
+    profileTitle: string;
+    preferencesTitle: string;
+    langSelectLabel: string;
+    dangerTitle: string;
+    dangerDesc: string;
+    eraseBtn: string;
+    eraseConfirm: string;
+    eraseSuccess: string;
   };
   errors: {
     networkError: string;
@@ -317,6 +350,39 @@ export const translations: Record<'en' | 'hi' | 'kn', TranslationDictionary> = {
       signUpBtn: 'Create Account',
       guestNotice: 'You can audit offers without creating an account. Accounts provide private history persistence.',
       signOut: 'Sign Out',
+      googleBtn: 'Continue with Google',
+      noAccount: "Don't have an account? Sign up",
+      haveAccount: 'Already have an account? Sign in',
+    },
+    history: {
+      eyebrow: 'AUDIT LOG',
+      title: 'Saved Offer Analyses',
+      subtitle: 'Your private history of analyzed offers, detection results, and student safety checklists.',
+      unauthTitle: 'Sign in to access your saved audit history',
+      unauthDesc: 'Saved history allows you to revisit past analyses, view checklists, and track patterns.',
+      filterAll: 'All Categories',
+      emptyTitle: 'No saved analyses yet',
+      emptyDesc: 'Check an offer using the analyzer and opt-in to save it to your private history.',
+      checkOfferBtn: 'Check an Offer Now',
+      viewAudit: 'View Audit',
+      deleteAudit: 'Delete',
+      deleteConfirm: 'Are you sure you want to delete this saved audit?',
+      prevPage: 'Previous',
+      nextPage: 'Next',
+      pageOf: 'Page {current} of {total}',
+    },
+    settings: {
+      eyebrow: 'ACCOUNT PREFERENCES',
+      title: 'Settings & Privacy',
+      subtitle: 'Manage your profile, preferred language, privacy defaults, and account data.',
+      profileTitle: 'User Profile',
+      preferencesTitle: 'Language & Privacy Defaults',
+      langSelectLabel: 'Display Language',
+      dangerTitle: 'Danger Zone: Account Data Erasure',
+      dangerDesc: "Permanently delete all your submission records, saved audits, and personal history. Under India's Digital Personal Data Protection Act, this permanently removes all data.",
+      eraseBtn: 'Delete All My Data',
+      eraseConfirm: 'Type "DELETE" to confirm permanent account data erasure:',
+      eraseSuccess: 'All your account submissions and history have been permanently erased.',
     },
     errors: {
       networkError: 'Unable to reach the analysis server. Please check your connection and try again.',
@@ -558,6 +624,39 @@ export const translations: Record<'en' | 'hi' | 'kn', TranslationDictionary> = {
       signUpBtn: 'खाता बनाएं',
       guestNotice: 'आप बिना खाता बनाए भी ऑफर की जांच कर सकते हैं। खाता आपके निजी इतिहास को सुरक्षित रखता है।',
       signOut: 'साइन आउट',
+      googleBtn: 'गूगल से जारी रखें',
+      noAccount: 'खाता नहीं है? साइन अप करें',
+      haveAccount: 'पहले से खाता है? साइन इन करें',
+    },
+    history: {
+      eyebrow: 'ऑडिट लॉग',
+      title: 'सहेजे गए ऑफ़र विश्लेषण',
+      subtitle: 'आपके विश्लेषित ऑफ़र, सुरक्षा परिणाम और छात्र चेकलिस्ट का निजी इतिहास।',
+      unauthTitle: 'अपने सहेजे गए ऑडिट देखने के लिए साइन इन करें',
+      unauthDesc: 'सहेजा गया इतिहास आपको पिछले विश्लेषणों को फिर से देखने और ट्रैक करने की अनुमति देता है।',
+      filterAll: 'सभी श्रेणियाँ',
+      emptyTitle: 'अभी तक कोई सहेजा गया विश्लेषण नहीं है',
+      emptyDesc: 'एनालाइज़र से ऑफ़र की जाँच करें और इसे अपने निजी इतिहास में सुरक्षित करें।',
+      checkOfferBtn: 'अभी ऑफ़र जाँचें',
+      viewAudit: 'ऑडिट देखें',
+      deleteAudit: 'हटाएं',
+      deleteConfirm: 'क्या आप वाकई इस सहेजे गए ऑडिट को हटाना चाहते हैं?',
+      prevPage: 'पिछला',
+      nextPage: 'अगला',
+      pageOf: 'पृष्ठ {current} का {total}',
+    },
+    settings: {
+      eyebrow: 'खाता प्राथमिकताएं',
+      title: 'सेटिंग्स और गोपनीयता',
+      subtitle: 'अपनी प्रोफ़ाइल, पसंदीदा भाषा, गोपनीयता विकल्प और खाता डेटा प्रबंधित करें।',
+      profileTitle: 'उपयोगकर्ता प्रोफ़ाइल',
+      preferencesTitle: 'भाषा और गोपनीयता प्राथमिकताएं',
+      langSelectLabel: 'प्रदर्शन भाषा',
+      dangerTitle: 'खतरे का क्षेत्र: खाता डेटा हटाना',
+      dangerDesc: 'अपने सभी सबमिशन रिकॉर्ड, सहेजे गए ऑडिट और व्यक्तिगत इतिहास को हमेशा के लिए हटाएं। यह क्रिया पूर्ववत नहीं की जा सकती।',
+      eraseBtn: 'मेरा सभी डेटा हटाएं',
+      eraseConfirm: 'स्थायी रूप से डेटा हटाने की पुष्टि के लिए "DELETE" लिखें:',
+      eraseSuccess: 'आपके सभी सबमिशन और इतिहास को हमेशा के लिए हटा दिया गया है।',
     },
     errors: {
       networkError: 'विश्लेषण सर्वर से संपर्क नहीं हो सका। कृपया अपना इंटरनेट कनेक्शन जांचें और पुनः प्रयास करें।',
@@ -799,6 +898,39 @@ export const translations: Record<'en' | 'hi' | 'kn', TranslationDictionary> = {
       signUpBtn: 'ಖಾತೆ ತೆರೆಯಿರಿ',
       guestNotice: 'ಖಾತೆ ಇಲ್ಲದೆಯೂ ನೀವು ಆಫರ್‌ಗಳನ್ನು ಪರಿಶೀಲಿಸಬಹುದು. ಖಾತೆಯು ನಿಮ್ಮ ಖಾಸಗಿ ಇತಿಹಾಸವನ್ನು ಉಳಿಸಿಕೊಳ್ಳಲು ನೆರವಾಗುತ್ತದೆ.',
       signOut: 'ಸೈನ್ ಔಟ್',
+      googleBtn: 'ಗೂಗಲ್ ಮೂಲಕ ಮುಂದುವರಿಯಿರಿ',
+      noAccount: 'ಖಾತೆ ಇಲ್ಲವೇ? ಸೈನ್ ಅಪ್ ಮಾಡಿ',
+      haveAccount: 'ಈಗಾಗಲೇ ಖಾತೆ ಇದೆಯೇ? ಸೈನ್ ಇನ್ ಮಾಡಿ',
+    },
+    history: {
+      eyebrow: 'ಆಡಿಟ್ ಲಾಗ್',
+      title: 'ಉಳಿಸಲಾದ ಆಫರ್ ವಿಶ್ಲೇಷಣೆಗಳು',
+      subtitle: 'ನಿಮ್ಮ ವಿಶ್ಲೇಷಿತ ಆಫರ್‌ಗಳು, ಫಲಿತಾಂಶಗಳು ಮತ್ತು ವಿದ್ಯಾರ್ಥಿ ಸುರಕ್ಷತಾ ಚೆಕ್‌ಲಿಸ್ಟ್‌ಗಳ ಖಾಸಗಿ ಇತಿಹಾಸ.',
+      unauthTitle: 'ಉಳಿಸಲಾದ ಆಡಿಟ್ ಇತಿಹಾಸವನ್ನು ನೋಡಲು ಸೈನ್ ಇನ್ ಮಾಡಿ',
+      unauthDesc: 'ಉಳಿಸಲಾದ ಇತಿಹಾಸವು ಹಿಂದಿನ ಪರಿಶೀಲನೆಗಳನ್ನು ಮರುಪರಿಶೀಲಿಸಲು ಮತ್ತು ಟ್ರ್ಯಾಕ್ ಮಾಡಲು ಅನುಮತಿಸುತ್ತದೆ.',
+      filterAll: 'ಎಲ್ಲಾ ವಿಭಾಗಗಳು',
+      emptyTitle: 'ಇನ್ನೂ ಯಾವುದೇ ಉಳಿಸಿದ ವಿಶ್ಲೇಷಣೆಗಳಿಲ್ಲ',
+      emptyDesc: 'ವಿಶ್ಲೇಷಕ ಬಳಸಿ ಆಫರ್ ಪರಿಶೀಲಿಸಿ ಮತ್ತು ಅದನ್ನು ನಿಮ್ಮ ಖಾಸಗಿ ಇತಿಹಾಸದಲ್ಲಿ ಉಳಿಸಿ.',
+      checkOfferBtn: 'ಈಗ ಆಫರ್ ಪರಿಶೀಲಿಸಿ',
+      viewAudit: 'ಆಡಿಟ್ ವೀಕ್ಷಿಸಿ',
+      deleteAudit: 'ಅಳಿಸಿ',
+      deleteConfirm: 'ಈ ಉಳಿಸಲಾದ ಆಡಿಟ್ ಅನ್ನು ಅಳಿಸಲು ನೀವು ಖಚಿತವಾಗಿ ಬಯಸುವಿರಾ?',
+      prevPage: 'ಹಿಂದಿನ',
+      nextPage: 'ಮುಂದಿನ',
+      pageOf: 'ಪುಟ {current} ರ {total}',
+    },
+    settings: {
+      eyebrow: 'ಖಾತೆ ಆದ್ಯತೆಗಳು',
+      title: 'ಸೆಟ್ಟಿಂಗ್‌ಗಳು ಮತ್ತು ಗೌಪ್ಯತೆ',
+      subtitle: 'ನಿಮ್ಮ ಪ್ರೊಫೈಲ್, ಆದ್ಯತೆಯ ಭಾಷೆ, ಗೌಪ್ಯತೆ ಆಯ್ಕೆಗಳು ಮತ್ತು ಖಾತೆ ಡೇಟಾವನ್ನು ನಿರ್ವಹಿಸಿ.',
+      profileTitle: 'ಬಳಕೆದಾರ ಪ್ರೊಫೈಲ್',
+      preferencesTitle: 'ಭಾಷೆ ಮತ್ತು ಗೌಪ್ಯತೆ ಆದ್ಯತೆಗಳು',
+      langSelectLabel: 'ಪ್ರದರ್ಶನ ಭಾಷೆ',
+      dangerTitle: 'ಅಪಾಯಕಾರಿ ವಲಯ: ಖಾತೆ ಡೇಟಾ ಅಳಿಸುವಿಕೆ',
+      dangerDesc: 'ನಿಮ್ಮ ಎಲ್ಲಾ ಸಲ್ಲಿಕೆ ದಾಖಲೆಗಳು, ಉಳಿಸಲಾದ ಆಡಿಟ್‌ಗಳು ಮತ್ತು ವೈಯಕ್ತಿಕ ಇತಿಹಾಸವನ್ನು ಶಾಶ್ವತವಾಗಿ ಅಳಿಸಿ.',
+      eraseBtn: 'ನನ್ನ ಎಲ್ಲಾ ಡೇಟಾವನ್ನು ಅಳಿಸಿ',
+      eraseConfirm: 'ಶಾಶ್ವತವಾಗಿ ಡೇಟಾ ಅಳಿಸಲು "DELETE" ಎಂದು ಟೈಪ್ ಮಾಡಿ:',
+      eraseSuccess: 'ನಿಮ್ಮ ಎಲ್ಲಾ ಸಲ್ಲಿಕೆಗಳು ಮತ್ತು ಇತಿಹಾಸವನ್ನು ಶಾಶ್ವತವಾಗಿ ಅಳಿಸಲಾಗಿದೆ.',
     },
     errors: {
       networkError: 'ಸರ್ವರ್ ಸಂಪರ್ಕ ಸಾಧ್ಯವಾಗುತ್ತಿಲ್ಲ. ದಯವಿಟ್ಟು ನಿಮ್ಮ ಇಂಟರ್ನೆಟ್ ಪರಿಶೀಲಿಸಿ ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.',

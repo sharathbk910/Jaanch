@@ -119,5 +119,35 @@
     "ocrLanguageLabel": "OCR Document Language",
     "ocrCancelBtn": "Cancel OCR",
     "ocrScannedPdfNotice": "Scanned image-only PDF detected. Extracted text using local OCR fallback."
+  },
+  "history": {
+    "eyebrow": "AUDIT LOG",
+    "title": "Saved Offer Analyses",
+    "subtitle": "Your private history of analyzed offers, detection results, and student safety checklists.",
+    "unauthTitle": "Sign in to access your saved audit history",
+    "unauthDesc": "Saved history allows you to revisit past analyses, view checklists, and track patterns.",
+    "filterAll": "All Categories",
+    "emptyTitle": "No saved analyses yet",
+    "emptyDesc": "Check an offer using the analyzer and opt-in to save it to your private history.",
+    "checkOfferBtn": "Check an Offer Now",
+    "viewAudit": "View Audit",
+    "deleteAudit": "Delete",
+    "deleteConfirm": "Are you sure you want to delete this saved audit?",
+    "prevPage": "Previous",
+    "nextPage": "Next",
+    "pageOf": "Page {current} of {total}"
+  },
+  "settings": {
+    "eyebrow": "ACCOUNT PREFERENCES",
+    "title": "Settings & Privacy",
+    "subtitle": "Manage your profile, preferred language, privacy defaults, and account data.",
+    "profileTitle": "User Profile",
+    "preferencesTitle": "Language & Privacy Defaults",
+    "langSelectLabel": "Display Language",
+    "dangerTitle": "Danger Zone: Account Data Erasure",
+    "dangerDesc": "Permanently delete all your submission records, saved audits, and personal history.",
+    "eraseBtn": "Delete All My Data",
+    "eraseConfirm": "Type DELETE to confirm permanent account data erasure:",
+    "eraseSuccess": "All your account submissions and history have been permanently erased."
   }
 }

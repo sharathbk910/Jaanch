@@ -7,6 +7,9 @@ interface AuthContextType {
   session: Session | null;
   isLoading: boolean;
   isModerator: boolean;
+  signInWithPassword: (credentials: { email: string; password: string }) => Promise<{ error: any; data?: any }>;
+  signUp: (credentials: { email: string; password: string; options?: any }) => Promise<{ error: any; data?: any }>;
+  signInWithGoogle: () => Promise<{ error: any }>;
   signOut: () => Promise<void>;
 }
 
@@ -45,6 +48,22 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUser(null);
   };
 
+  const signInWithPassword = async (credentials: { email: string; password: string }) => {
+    return supabase.auth.signInWithPassword(credentials);
+  };
+
+  const signUp = async (credentials: { email: string; password: string; options?: any }) => {
+    return supabase.auth.signUp(credentials);
+  };
+
+  const signInWithGoogle = async () => {
+    const redirectTo = typeof window !== 'undefined' ? `${window.location.origin}/history` : undefined;
+    return supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: { redirectTo },
+    });
+  };
+
   const role =
     user?.app_metadata?.role ||
     user?.user_metadata?.role ||
@@ -52,7 +71,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const isModerator = role === 'moderator';
 
   return (
-    <AuthContext.Provider value={{ user, session, isLoading, isModerator, signOut }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        session,
+        isLoading,
+        isModerator,
+        signInWithPassword,
+        signUp,
+        signInWithGoogle,
+        signOut,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
@@ -66,6 +96,9 @@ export function useAuth() {
       session: null,
       isLoading: false,
       isModerator: false,
+      signInWithPassword: async () => ({ error: new Error('AuthProvider not found') }),
+      signUp: async () => ({ error: new Error('AuthProvider not found') }),
+      signInWithGoogle: async () => ({ error: new Error('AuthProvider not found') }),
       signOut: async () => {},
     };
   }

@@ -10,10 +10,10 @@
 ## 2. Project Overview
 - **Project Name:** Jaanch (Student Offer Verification & Trust Safety Platform)
 - **Problem Statement:** "Fake or Real" (Digital Trust & Safety for Indian Students)
-- **Current Phase:** Phase 6C – Results Page & Client-Side PDF Export Complete
-- **Current Tag:** `phase-6c-done`
+- **Current Phase:** Phase 6D – Auth UI & History Complete
+- **Current Tag:** `phase-6d-done`
 - **Node Version:** v24.19.0 (LTS >= 20 required)
-- **Repository State:** Green monorepo; `@jaanch/shared`, `@jaanch/server`, and `@jaanch/client` fully compiled, typechecked, linted, and tested (236 tests passing across 25 test suites, 25/25 eval fixtures matching 100%, 10/10 acceptance criteria PASS)
+- **Repository State:** Green monorepo; `@jaanch/shared`, `@jaanch/server`, and `@jaanch/client` fully compiled, typechecked, linted, and tested (251 tests passing across 27 test suites, 25/25 eval fixtures matching 100%, 10/10 acceptance criteria PASS)
 
 ---
 
@@ -37,8 +37,8 @@
      - 6A: Layout + Landing page (**DONE**)
      - 6B: Analyzer page (**DONE**)
      - 6C: Results page & client-side PDF export (**DONE**)
-     - 6D: Auth UI & History (Next)
-  7. Shared intelligence and moderation
+     - 6D: Auth UI & History (**DONE**)
+  7. Shared intelligence and moderation (Next)
   8. AI/ML
   9. WhatsApp
   10. Verification
@@ -103,14 +103,32 @@
     - CRIT-01 through CRIT-10 all green with runtime verification
   - [x] Visual Proof Screenshots (`scripts/generate-results-screenshots.mjs`):
     - 18 results screenshots generated in `docs/ui-shots/results/` across 360px, 768px, and 1280px viewports in Light/Dark themes and EN/HI/KN languages
-  - [x] Unit & Integration Tests: 236 passed across 25 test suites; 25/25 eval fixtures matching 100%
+  - [x] Unit & Integration Tests: 251 passed across 27 test suites; 25/25 eval fixtures matching 100%
+- **Phase 6D Verification Checklist:**
+  - [x] `LoginPage.tsx`: Accessible email/password form, client validation, "Sign In with Email", Google OAuth sign-in integration, guest education notice, error alert banner
+  - [x] `SignupPage.tsx`: Account creation form with password length & match validation, Google OAuth button, redirect on success
+  - [x] `HistoryPage.tsx`:
+    - Unauthenticated state: Educational welcome card with "Sign In", "Create Account", and "Verify Offer as Guest" actions
+    - Authenticated state: Paginated submission history fetched from `GET /api/history`, domain filter toolbar, 4-verdict status badges, confidence meters, channel information
+    - Single item deletion (`DELETE /api/history/:id`) with browser confirmation and optimistic list update
+    - Direct link to full audit result (`/results/:id`)
+  - [x] `SettingsPage.tsx`:
+    - Unauthenticated prompt to sign in
+    - User Profile display: Email, masked ID, account role (`user`/`moderator`), join date
+    - Language switcher wired to `LanguageContext` (`en`, `hi`, `kn`)
+    - GDPR / Digital Personal Data Protection Act permanent account data erasure flow (`DELETE /api/account/data`) requiring exact "DELETE" typed confirmation
+  - [x] `AuthContext.tsx`: Full auth provider wiring `signInWithPassword`, `signUp`, `signInWithGoogle`, `signOut`, role detection
+  - [x] Component test suite (`client/src/__tests__/AuthPages.test.tsx`): 8/8 tests covering sign-in, sign-up validation, history filters, deletion, and settings data erasure
+  - [x] Acceptance criteria harness: 10/10 PASS
+  - [x] End-to-end local server scenarios (`scripts/verify-scenarios-e2e.ts`): 100% PASS
 
 ---
 
 ## 5. Next Steps
-- Commit Phase 6C files and tag `phase-6c-done`.
-- Proceed to **Phase 6D – UI Implementation: Auth UI & History (`/login`, `/signup`, `/history`, `/settings`)**:
-  - `LoginPage.tsx` and `SignupPage.tsx` using Supabase Auth (email/password + Google auth)
-  - `HistoryPage.tsx` with paginated submission history, domain filters, status badges, and single/all item deletion (`DELETE /api/history/:id`, `DELETE /api/account/data`)
-  - `SettingsPage.tsx` for user preferences, language defaults, and privacy account data erasure
-  - Wire route guards for protected routes and connect with `server/` auth endpoints.
+- Commit Phase 6D files and tag `phase-6d-done`.
+- Proceed to **Phase 7 – Shared Intelligence and Moderation**:
+  - Moderator role authorization and threat intelligence schema
+  - Entity reporting dialog (`ReportEntityDialog`) for authenticated users
+  - Peppered cryptographic hashes for threat indicators (email, domain, phone, UPI)
+  - Intelligence record lifecycle (`reported` ──▶ `unverified` ──▶ `ai_flagged` ──▶ `suspicious` ──▶ `confirmed`)
+  - Moderator CLI / SQL confirmation workflow (no weak AI or single-user auto-confirmation).

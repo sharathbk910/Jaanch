@@ -80,6 +80,10 @@ export const supabase = new Proxy({} as SupabaseClient, {
           const client = await getSupabase();
           return client.auth.signUp(credentials);
         },
+        async signInWithOAuth(credentials: any) {
+          const client = await getSupabase();
+          return client.auth.signInWithOAuth(credentials);
+        },
         async signOut() {
           const client = await getSupabase();
           return client.auth.signOut();
