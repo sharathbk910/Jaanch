@@ -155,12 +155,14 @@ describe('Security & Tooling Scripts Validation', () => {
   });
 
   describe('test-acceptance.mjs', () => {
-    it('honestly reports NOT_YET_IMPLEMENTED in Phase 1', async () => {
+    it('accurately reports verified status for implemented criteria and pending for Phase 6C', async () => {
       const results = await runAcceptanceHarness();
       expect(results.length).toBe(10);
-      for (const res of results) {
-        expect(res.status).toBe('NOT_YET_IMPLEMENTED');
-      }
+      const passed = results.filter((r) => r.status === 'PASS');
+      const pending = results.filter((r) => r.status === 'NOT_YET_IMPLEMENTED');
+      expect(passed.length).toBe(8);
+      expect(pending.length).toBe(2);
+      expect(pending.map((p) => p.id)).toEqual(['CRIT-06', 'CRIT-07']);
     });
   });
 });

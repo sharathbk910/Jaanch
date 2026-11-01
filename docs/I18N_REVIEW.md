@@ -150,3 +150,4 @@ This document lists all localized UI strings across Hindi (`hi`) and Kannada (`k
 | `statusLabels.highConcernDesc` | Hard disqualifiers found (upfront fee, OTP request, lookalike domain). | गंभीर जोखिम संकेत मिले (अग्रिम शुल्क, OTP मांग, या नकली डोमेन)। | ಗಂಭೀರ ಅಪಾಯದ ಸಂಕೇತಗಳು ಪತ್ತೆಯಾಗಿವೆ (ಮುಂಗಡ ಶುಲ್ಕ, OTP ಬೇಡಿಕೆ ಅಥವಾ ನಕಲಿ ಡೊಮೇನ್). | Pending Native Review |
 | `statusLabels.confirmedScam` | Confirmed Fraud | पुष्टि किया गया धोखा | ಖಚಿತ ವಂಚನೆ | Pending Native Review |
 | `statusLabels.confirmedScamDesc` | Matched a verified fraudulent entity in the student safety database. | छात्र सुरक्षा डेटाबेस में पुष्टि किए गए फर्जी रिकॉर्ड से मेल खाता है। | ವಿದ್ಯಾರ್ಥಿ ಸುರಕ್ಷತಾ ಡೇಟಾಬೇಸ್‌ನಲ್ಲಿ ಖಚಿತಪಡಿಸಲಾದ ವಂಚನೆಯ ದಾಖಲೆಗೆ ಹೊಂದಿಕೆಯಾಗುತ್ತದೆ. | Pending Native Review |
+

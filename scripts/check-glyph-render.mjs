@@ -255,3 +255,4 @@ runCheck().catch((err) => {
   console.error('\n❌ Glyph rendering check failed:', err.message);
   process.exit(1);
 });
+

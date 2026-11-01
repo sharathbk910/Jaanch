@@ -96,3 +96,4 @@ export function OutcomeChip({ outcome, label, className, icon }: OutcomeChipProp
     </span>
   );
 }
+

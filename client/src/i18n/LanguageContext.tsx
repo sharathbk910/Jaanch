@@ -6,7 +6,7 @@ export type Language = 'en' | 'hi' | 'kn';
 export interface LanguageContextType {
   currentLang: Language;
   setLang: (lang: Language) => void;
-  t: (path: string) => string;
+  t: (path: string, fallback?: string) => string;
   dictionary: TranslationDictionary;
 }
 
@@ -54,8 +54,9 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({
   }, [currentLang]);
 
   const t = useCallback(
-    (path: string): string => {
-      return getTranslation(currentLang, path);
+    (path: string, fallbackText?: string): string => {
+      const res = getTranslation(currentLang, path);
+      return res === path && fallbackText ? fallbackText : res;
     },
     [currentLang]
   );
@@ -86,3 +87,4 @@ export const useT = () => {
 
 export const I18nProvider = LanguageProvider;
 export const useI18n = useLanguage;
+

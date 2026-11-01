@@ -19,3 +19,4 @@ router.get('/config', (_req: Request, res: Response) => {
 });
 
 export const configRouter = router;
+
