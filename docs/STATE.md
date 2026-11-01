@@ -13,7 +13,7 @@
 - **Current Phase:** Phase 6D – Auth UI & History Complete
 - **Current Tag:** `phase-6d-done`
 - **Node Version:** v24.19.0 (LTS >= 20 required)
-- **Repository State:** Green monorepo; `@jaanch/shared`, `@jaanch/server`, and `@jaanch/client` fully compiled, typechecked, linted, and tested (251 tests passing across 27 test suites, 25/25 eval fixtures matching 100%, 10/10 acceptance criteria PASS)
+- **Repository State:** Green monorepo; `@jaanch/shared`, `@jaanch/server`, and `@jaanch/client` fully compiled, typechecked, linted, and tested (260 tests passing across 28 test suites, 25/25 eval fixtures matching 100%, 10/10 acceptance criteria PASS)
 
 ---
 
@@ -86,24 +86,16 @@
   - [x] Test suite (`AnalyzePage.test.tsx`, `pdf_and_ocr_extraction.test.ts`): verifies consent defaults, PII redaction before send, error paths, and logs real network payloads
   - [x] `scripts/verify-scenarios-e2e.ts`: 100% end-to-end verification of all 3 sample scenarios against the local server
 - **Phase 6C Verification Checklist:**
-  - [x] `StatusBanner.tsx`: 4-verdict banner (`LIKELY_GENUINE`, `NEEDS_REVIEW`, `HIGH_CONCERN`, `CONFIRMED_SCAM`) with 4px colored accent border, mono eyebrow, serif status headline, meaning description, confidence pill, and 2px coverage meter track (`8 of 8 checks evaluated`)
-  - [x] `PaymentAlert.tsx`: Non-dismissible emergency banner when upfront fee, UPI handle, or bank OTP is detected. Features one-click `tel:1930` call link and `cybercrime.gov.in` portal link
-  - [x] `WhyThisStatus.tsx`: Evidence-backed bullet list detailing why the verdict was reached based on triggered signals, corroboration, or missing items
-  - [x] `SignalCard.tsx`: Severity badge (`critical`, `high`, `medium`, `low`, `info`), title, mono quoted evidence, and educational "Why it matters"
-  - [x] `UnverifiedPanel.tsx`: Structured panel listing uncorroborated identifiers and missing official confirmation
-  - [x] `ExtractedEntitiesCard.tsx`: Grid displaying detected UPI IDs, phone numbers, websites/links, fee amounts, and claimed organizations
-  - [x] `NextSteps.tsx`: 3-part actionable guidance: 1) What Jaanch checked; 2) Interactive student action checklist with checkable items; 3) Emergency "I already paid" toggle revealing golden-hour 1930 procedures
-  - [x] `PdfReportDocument.tsx`: Compact, high-density `@react-pdf/renderer` document adhering to $\le 4$ pages, $\ge 75\%$ page fill, proper currency formatting, and helpline notices
-  - [x] `PdfExport.ts`: Lazy PDF generator creating Blob and triggering immediate download as `jaanch-audit-${auditId}.pdf`
-  - [x] `ResultsActions.tsx`: Action toolbar for "Download PDF Report", "Print Report", "Export JSON", and "Audit Another Offer"
-  - [x] `ResultsPage.tsx`: Full Results Page (`/results/:id`, `/results/local`) with mobile sticky section chips, guest session fallback, plus the interactive `SamplePage` (`/sample`) allowing one-click walkthrough between Genuine, Needs Review, and Fee Scam scenarios
-  - [x] `client/src/__tests__/ResultsPage.test.tsx`: 10/10 component tests covering empty state, banner, payment alert, why bullets, signal cards, unverified details, entities, next steps, PDF/print actions, and sample walkthrough switcher
-  - [x] Acceptance Criteria Harness (`scripts/test-acceptance.mjs`):
-    - **10 / 10 PASS (100% complete!)**
-    - CRIT-01 through CRIT-10 all green with runtime verification
-  - [x] Visual Proof Screenshots (`scripts/generate-results-screenshots.mjs`):
-    - 18 results screenshots generated in `docs/ui-shots/results/` across 360px, 768px, and 1280px viewports in Light/Dark themes and EN/HI/KN languages
-  - [x] Unit & Integration Tests: 251 passed across 27 test suites; 25/25 eval fixtures matching 100%
+  - [x] `Results.tsx` & `ResultsPage.tsx`: Two-column layout on desktop (`lg:grid lg:grid-cols-12`) with main audit stream (8 cols) and sticky sidebar jump navigation (4 cols) with anchor targets (`#verdict`, `#stop-protect`, `#why-status`, `#signals`, `#unverified`, `#portal-checklist`, `#response-generators`, `#link-inspector`, `#next-steps`)
+  - [x] Educational Verdict Disclaimer: Explicit statement that "Jaanch evaluates automated heuristic signals and threat indicators. Analysis does not prove an opportunity is genuine or fraudulent. Always corroborate independently before paying money or sharing identity documents."
+  - [x] `StopProtectCallout.tsx`: Prominent emergency banner for high concern offers with 1-click `tel:1930` call button, `cybercrime.gov.in` portal link, and 2-hour golden-window guidance to freeze bank/UPI transactions
+  - [x] `PortalChecklist.tsx`: Interactive regulatory verification checklist for NSP (National Scholarship Portal: scholarships.gov.in), AICTE (Internship Portal: internship.aicte-india.org), MCA (Ministry of Corporate Affairs: mca.gov.in), and NCS (National Career Service: ncs.gov.in) with checkable state
+  - [x] `ResponseGenerators.tsx`: Deterministic, localized (EN, HI, KN) templates with copy buttons; includes Challenge Email generator requesting CIN/AICTE credentials and Safe Reply generator; Safe Reply is strictly hidden for high concern / confirmed scam offers (Decision D8)
+  - [x] `LinkInspector.tsx`: 3-level hyperlink integrity check (`Clean / No Major Warning Signs`, `Needs Caution / Unverified`, `High Risk / Typosquatting`) wired to `POST /api/link-check`, supporting detected URLs and manual input
+  - [x] `ReportDocument.tsx` (`@react-pdf/renderer`): Compact high-density A4 PDF report strictly $\le 4$ pages, $\ge 75\%$ fill, no orphan headings, bundled Noto fonts and safe currency handling (`Rs.`), with original message excluded by default (opt-in appendix, redacted, $\le 1500$ chars)
+  - [x] Plain-text security: All evidence quotes, titles, and extracted entities rendered strictly as text nodes (XSS inert in both UI and PDF export)
+  - [x] Axe accessibility testing (`ResultsPage.test.tsx`): 0 critical or serious violations across all 3 statuses (`LIKELY_GENUINE`, `NEEDS_REVIEW`, `HIGH_CONCERN`)
+  - [x] Full test suite: 260 tests passing across 28 test suites; 10/10 acceptance criteria passing; 100% scenario verification passing
 - **Phase 6D Verification Checklist:**
   - [x] `LoginPage.tsx`: Accessible email/password form, client validation, "Sign In with Email", Google OAuth sign-in integration, guest education notice, error alert banner
   - [x] `SignupPage.tsx`: Account creation form with password length & match validation, Google OAuth button, redirect on success

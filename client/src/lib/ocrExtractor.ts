@@ -108,3 +108,4 @@ function formatOcrStatus(rawStatus: string): string {
       return rawStatus.charAt(0).toUpperCase() + rawStatus.slice(1);
   }
 }
+

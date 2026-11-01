@@ -92,7 +92,17 @@ export async function extractTextFromFile(
 
   // 2. Plaintext extraction
   if (file.type === 'text/plain' || extension === 'txt') {
-    const text = await file.text();
+    let text = '';
+    if (typeof FileReader !== 'undefined') {
+      text = await new Promise<string>((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(String(reader.result || ''));
+        reader.onerror = () => reject(reader.error);
+        reader.readAsText(file);
+      });
+    } else if (typeof file.text === 'function') {
+      text = await file.text();
+    }
     return {
       text: text.trim(),
       fileName,

@@ -1,7 +1,14 @@
 import React from 'react';
 import { pdf } from '@react-pdf/renderer';
 import { type AnalyzeResult } from '@jaanch/shared';
-import { PdfReportDocument } from './PdfReportDocument.js';
+import { ReportDocument } from '../pdf/ReportDocument.js';
+
+export interface PdfExportOptions {
+  timestamp?: string;
+  domain?: string;
+  includeOriginalText?: boolean;
+  originalText?: string;
+}
 
 /**
  * Generates a client-side PDF Blob from analysis results.
@@ -9,13 +16,22 @@ import { PdfReportDocument } from './PdfReportDocument.js';
  */
 export async function generatePdfBlob(
   result: AnalyzeResult,
-  timestamp?: string,
+  optionsOrTimestamp?: string | PdfExportOptions,
   domain?: string
 ): Promise<Blob> {
-  const doc = React.createElement(PdfReportDocument, {
+  let opts: PdfExportOptions = {};
+  if (typeof optionsOrTimestamp === 'string') {
+    opts = { timestamp: optionsOrTimestamp, domain };
+  } else if (optionsOrTimestamp) {
+    opts = optionsOrTimestamp;
+  }
+
+  const doc = React.createElement(ReportDocument, {
     result,
-    timestamp: timestamp || new Date().toISOString().split('T')[0],
-    domain,
+    timestamp: opts.timestamp || new Date().toISOString().split('T')[0],
+    domain: opts.domain,
+    includeOriginalText: opts.includeOriginalText || false,
+    originalText: opts.originalText,
   });
 
   const pdfInstance = pdf(doc as any);
@@ -27,10 +43,10 @@ export async function generatePdfBlob(
  */
 export async function downloadPdfReport(
   result: AnalyzeResult,
-  timestamp?: string,
+  optionsOrTimestamp?: string | PdfExportOptions,
   domain?: string
 ): Promise<void> {
-  const blob = await generatePdfBlob(result, timestamp, domain);
+  const blob = await generatePdfBlob(result, optionsOrTimestamp, domain);
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
@@ -40,4 +56,3 @@ export async function downloadPdfReport(
   document.body.removeChild(a);
   URL.revokeObjectURL(url);
 }
-

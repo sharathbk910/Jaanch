@@ -88,3 +88,4 @@ describe('Phase 6B – PDF & OCR Extraction Pipeline', () => {
     expect(redaction.redactionCount).toBe(4);
   });
 });
+

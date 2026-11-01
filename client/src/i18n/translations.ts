@@ -241,6 +241,40 @@ export interface TranslationDictionary {
     emptyTitle: string;
     emptyDesc: string;
     emptyCta: string;
+    disclaimer: string;
+    stopProtectTitle: string;
+    stopProtectDesc: string;
+    call1930Btn: string;
+    cybercrimePortalBtn: string;
+    goldenHourNotice: string;
+    portalChecklistTitle: string;
+    portalChecklistSubtitle: string;
+    portalNspTitle: string;
+    portalNspDesc: string;
+    portalAicteTitle: string;
+    portalAicteDesc: string;
+    portalMcaTitle: string;
+    portalMcaDesc: string;
+    portalNcsTitle: string;
+    portalNcsDesc: string;
+    responseGeneratorsTitle: string;
+    responseGeneratorsSubtitle: string;
+    safeReplyTitle: string;
+    safeReplyDisabled: string;
+    challengeEmailTitle: string;
+    challengeEmailDesc: string;
+    copyTemplateBtn: string;
+    copiedNotice: string;
+    linkInspectorTitle: string;
+    linkInspectorPlaceholder: string;
+    inspectLinkBtn: string;
+    inspectingLinkBtn: string;
+    linkCleanLabel: string;
+    linkCautionLabel: string;
+    linkHighRiskLabel: string;
+    observedLinkSignals: string;
+    unverifiedLinkNotes: string;
+    jumpNavTitle: string;
   };
 
   // Compatibility and short-key aliases
@@ -517,6 +551,40 @@ export const translations: Record<'en' | 'hi' | 'kn', TranslationDictionary> = {
       emptyTitle: 'No Audit Result Loaded',
       emptyDesc: 'Please enter offer text on the Analyze page to view deterministic verification results.',
       emptyCta: 'Audit an Offer',
+      disclaimer: 'Notice: Jaanch evaluates automated heuristic signals and threat indicators. Analysis does not prove an opportunity is genuine or fraudulent. Always corroborate independently before paying money or sharing identity documents.',
+      stopProtectTitle: 'Stop and Protect Yourself',
+      stopProtectDesc: 'This opportunity contains critical fraud markers: upfront payment demands, banking credential requests, or impersonation patterns.',
+      call1930Btn: 'Call 1930 (Helpline)',
+      cybercrimePortalBtn: 'cybercrime.gov.in',
+      goldenHourNotice: 'The first 2 hours are the golden window to freeze defrauded bank or UPI funds. Act immediately.',
+      portalChecklistTitle: 'Official Portal Verification Checklist',
+      portalChecklistSubtitle: 'Directly corroborate opportunities on official government and verified regulatory portals:',
+      portalNspTitle: 'National Scholarship Portal (NSP)',
+      portalNspDesc: 'All central and state government scholarships are 100% free of charge. Verify scheme guidelines at scholarships.gov.in.',
+      portalAicteTitle: 'AICTE Internship Portal',
+      portalAicteDesc: 'Check authorized corporate internships with authentic corporate registration IDs at internship.aicte-india.org.',
+      portalMcaTitle: 'Ministry of Corporate Affairs (MCA)',
+      portalMcaDesc: 'Search company Master Data, Corporate Identification Number (CIN), and incorporation status at mca.gov.in.',
+      portalNcsTitle: 'National Career Service (NCS)',
+      portalNcsDesc: 'Ministry of Labour & Employment portal. Verify employer credentials and job post IDs at ncs.gov.in.',
+      responseGeneratorsTitle: 'Safe Reply & Verification Inquiries',
+      responseGeneratorsSubtitle: 'Deterministic, polite communication templates to independently corroborate corporate credentials.',
+      safeReplyTitle: 'Safe Reply Template',
+      safeReplyDisabled: 'Safe reply is disabled for high-concern offers. Do not engage, reply, or negotiate with suspected fraudulent actors.',
+      challengeEmailTitle: 'Challenge Email Template',
+      challengeEmailDesc: 'Formal verification inquiry requesting official company email, registration CIN, and career portal listings.',
+      copyTemplateBtn: 'Copy Template',
+      copiedNotice: 'Copied to clipboard!',
+      linkInspectorTitle: 'Link Inspector',
+      linkInspectorPlaceholder: 'Paste any suspicious link (e.g., https://...)...',
+      inspectLinkBtn: 'Inspect Link',
+      inspectingLinkBtn: 'Analyzing Link...',
+      linkCleanLabel: 'Clean (No Major Warning Signs)',
+      linkCautionLabel: 'Needs Caution (Unverified / Warning)',
+      linkHighRiskLabel: 'High Risk (Typosquat / Suspicious)',
+      observedLinkSignals: 'Observed Link Indicators',
+      unverifiedLinkNotes: 'Unverified Aspects',
+      jumpNavTitle: 'Jump to Section',
     },
 
     // Compatibility aliases
@@ -791,6 +859,40 @@ export const translations: Record<'en' | 'hi' | 'kn', TranslationDictionary> = {
       emptyTitle: 'कोई ऑडिट परिणाम लोड नहीं हुआ',
       emptyDesc: 'सत्यापन परिणाम देखने के लिए कृपया जांच पृष्ठ पर ऑफ़र विवरण दर्ज करें।',
       emptyCta: 'ऑफ़र की जांच करें',
+      disclaimer: 'सूचना: जांच स्वचालित अनुमानी संकेतों और सुरक्षा संकेतकों का मूल्यांकन करती है। यह विश्लेषण किसी अवसर के पूर्णतः वास्तविक या फर्जी होने का अंतिम प्रमाण नहीं है। पैसे देने या पहचान पत्र साझा करने से पहले हमेशा स्वयं पुष्टि करें।',
+      stopProtectTitle: 'रुकें और अपनी सुरक्षा करें',
+      stopProtectDesc: 'इस अवसर में गंभीर धोखाधड़ी के लक्षण हैं: अग्रिम भुगतान की मांग, बैंकिंग क्रेडेंशियल अनुरोध या प्रतिरूपण।',
+      call1930Btn: '1930 हेल्पलाइन पर कॉल करें',
+      cybercrimePortalBtn: 'cybercrime.gov.in',
+      goldenHourNotice: 'धोखाधड़ी की गई बैंक या UPI राशि को फ्रीज कराने के लिए पहले 2 घंटे स्वर्णिम समय होते हैं। तुरंत कार्रवाई करें।',
+      portalChecklistTitle: 'आधिकारिक पोर्टल सत्यापन चेकलिस्ट',
+      portalChecklistSubtitle: 'आधिकारिक सरकारी और नियामक पोर्टलों पर अवसरों की सीधे पुष्टि करें:',
+      portalNspTitle: 'राष्ट्रीय छात्रवृत्ति पोर्टल (NSP)',
+      portalNspDesc: 'सभी केंद्र और राज्य सरकारी छात्रवृत्तियां 100% निःशुल्क हैं। scholarships.gov.in पर योजना विवरण सत्यापित करें।',
+      portalAicteTitle: 'AICTE इंटर्नशिप पोर्टल',
+      portalAicteDesc: 'internship.aicte-india.org पर कॉर्पोरेट पंजीकरण आईडी के साथ अधिकृत इंटर्नशिप की पुष्टि करें।',
+      portalMcaTitle: 'कॉर्पोरेट कार्य मंत्रालय (MCA)',
+      portalMcaDesc: 'mca.gov.in पर कंपनी मास्टर डेटा, कॉर्पोरेट पहचान संख्या (CIN) और सक्रिय स्थिति की जांच करें।',
+      portalNcsTitle: 'राष्ट्रीय करियर सेवा (NCS)',
+      portalNcsDesc: 'श्रम और रोजगार मंत्रालय का पोर्टल। ncs.gov.in पर नियोक्ता क्रेडेंशियल और नौकरी पोस्ट आईडी की पुष्टि करें।',
+      responseGeneratorsTitle: 'सुरक्षित उत्तर और सत्यापन पूछताछ',
+      responseGeneratorsSubtitle: 'कॉर्पोरेट क्रेडेंशियल की सुरक्षित रूप से पुष्टि करने के लिए मानकीकृत और विनम्र संदेश टेम्पलेट।',
+      safeReplyTitle: 'सुरक्षित उत्तर टेम्पलेट',
+      safeReplyDisabled: 'उच्च चिंता वाले ऑफ़र के लिए सुरक्षित उत्तर अक्षम है। संदिग्ध धोखाधड़ी करने वालों से संपर्क या बातचीत न करें।',
+      challengeEmailTitle: 'चुनौती ईमेल टेम्पलेट',
+      challengeEmailDesc: 'कंपनी के आधिकारिक ईमेल, पंजीकरण CIN और करियर पोर्टल लिस्टिंग का अनुरोध करने वाली औपचारिक पूछताछ।',
+      copyTemplateBtn: 'टेम्पलेट कॉपी करें',
+      copiedNotice: 'क्लिपबोर्ड पर कॉपी किया गया!',
+      linkInspectorTitle: 'लिंक विश्लेषक',
+      linkInspectorPlaceholder: 'कोई भी संदिग्ध लिंक पेस्ट करें (उदा. https://...)...',
+      inspectLinkBtn: 'लिंक की जांच करें',
+      inspectingLinkBtn: 'लिंक का विश्लेषण हो रहा है...',
+      linkCleanLabel: 'सुरक्षित (कोई बड़ा चेतावनी संकेत नहीं)',
+      linkCautionLabel: 'सावधानी आवश्यक (असत्यापित / चेतावनी)',
+      linkHighRiskLabel: 'उच्च जोखिम (टाइपोस्कॉट / संदिग्ध)',
+      observedLinkSignals: 'पहचाने गए लिंक संकेतक',
+      unverifiedLinkNotes: 'असत्यापित पहलू',
+      jumpNavTitle: 'सेक्शन पर जाएं',
     },
 
     // Compatibility aliases
@@ -1065,6 +1167,40 @@ export const translations: Record<'en' | 'hi' | 'kn', TranslationDictionary> = {
       emptyTitle: 'ಯಾವುದೇ ಫಲಿತಾಂಶ ಲಭ್ಯವಿಲ್ಲ',
       emptyDesc: 'ಪರಿಶೀಲನಾ ಫಲಿತಾಂಶಗಳನ್ನು ನೋಡಲು ದಯವಿಟ್ಟು ವಿಶ್ಲೇಷಣಾ ಪುಟದಲ್ಲಿ ಆಫರ್ ವಿವರಗಳನ್ನು ನಮೂದಿಸಿ.',
       emptyCta: 'ಆಫರ್ ಪರಿಶೀಲಿಸಿ',
+      disclaimer: 'ಸೂಚನೆ: ಜಾಂಚ್ ಸ್ವಯಂಚಾಲಿತ ನಿಯಮಗಳು ಮತ್ತು ಭದ್ರತಾ ಸಂಕೇತಗಳನ್ನು ಮೌಲ್ಯಮಾಪನ ಮಾಡುತ್ತದೆ. ಈ ವಿಶ್ಲೇಷಣೆಯು ಆಫರ್ ನೈಜ ಅಥವಾ ನಕಲಿ ಎಂದು ಅಂತಿಮವಾಗಿ ಸಾಬೀತುಪಡಿಸುವುದಿಲ್ಲ. ಹಣ ಪಾವತಿಸುವ ಅಥವಾ ಗುರುತಿನ ದಾಖಲೆಗಳನ್ನು ಹಂಚಿಕೊಳ್ಳುವ ಮೊದಲು ಯಾವಾಗಲೂ ಸ್ವತಂತ್ರವಾಗಿ ಪರಿಶೀಲಿಸಿ.',
+      stopProtectTitle: 'ನಿಲ್ಲಿಸಿ ಮತ್ತು ನಿಮ್ಮನ್ನು ರಕ್ಷಿಸಿಕೊಳ್ಳಿ',
+      stopProtectDesc: 'ಈ ಆಫರ್‌ನಲ್ಲಿ ಗಂಭೀರ ವಂಚನೆ ಲಕ್ಷಣಗಳಿವೆ: ಮುಂಗಡ ಹಣದ ಬೇಡಿಕೆ, ಬ್ಯಾಂಕಿಂಗ್ ವಿವರಗಳ ಬೇಡಿಕೆ ಅಥವಾ ನಕಲಿ ಗುರುತಿನ ಮಾದರಿಗಳು.',
+      call1930Btn: '1930 ಹೆಲ್ಪ್‌ಲೈನ್‌ಗೆ ಕರೆ ಮಾಡಿ',
+      cybercrimePortalBtn: 'cybercrime.gov.in',
+      goldenHourNotice: 'ವಂಚನೆಗೊಳಗಾದ ಬ್ಯಾಂಕ್ ಅಥವಾ UPI ಹಣವನ್ನು ಸ್ಥಗಿತಗೊಳಿಸಲು ಮೊದಲ 2 ಗಂಟೆಗಳು ಅತ್ಯಂತ ಮಹತ್ವದ ಸಮಯ. ತಕ್ಷಣ ಕ್ರಮ ಕೈಗೊಳ್ಳಿ.',
+      portalChecklistTitle: 'ಅಧಿಕೃತ ಪೋರ್ಟಲ್ ಪರಿಶೀಲನಾ ಚೆಕ್‌ಲಿಸ್ಟ್',
+      portalChecklistSubtitle: 'ಅಧಿಕೃತ ಸರ್ಕಾರಿ ಮತ್ತು ನಿಯಂತ್ರಕ ಪೋರ್ಟಲ್‌ಗಳಲ್ಲಿ ಆಫರ್‌ಗಳನ್ನು ನೇರವಾಗಿ ಪರಿಶೀಲಿಸಿ:',
+      portalNspTitle: 'ರಾಷ್ಟ್ರೀಯ ವಿದ್ಯಾರ್ಥಿವೇತನ ಪೋರ್ಟಲ್ (NSP)',
+      portalNspDesc: 'ಎಲ್ಲಾ ಕೇಂದ್ರ ಮತ್ತು ರಾಜ್ಯ ಸರ್ಕಾರಿ ವಿದ್ಯಾರ್ಥಿವೇತನಗಳು 100% ಉಚಿತವಾಗಿವೆ. scholarships.gov.in ನಲ್ಲಿ ಯೋಜನೆಯ ನಿಯಮಗಳನ್ನು ಪರಿಶೀಲಿಸಿ.',
+      portalAicteTitle: 'AICTE ಇಂಟರ್ನ್‌ಶಿಪ್ ಪೋರ್ಟಲ್',
+      portalAicteDesc: 'internship.aicte-india.org ನಲ್ಲಿ ಕಾರ್ಪೊರೇಟ್ ನೋಂದಣಿ ಐಡಿಯೊಂದಿಗೆ ಮಾನ್ಯತೆ ಪಡೆದ ಇಂಟರ್ನ್‌ಶಿಪ್‌ಗಳನ್ನು ಪರಿಶೀಲಿಸಿ.',
+      portalMcaTitle: 'ಕಾರ್ಪೊರೇಟ್ ವ್ಯವಹಾರಗಳ ಸಚಿವಾಲಯ (MCA)',
+      portalMcaDesc: 'mca.gov.in ನಲ್ಲಿ ಕಂಪನಿ ಮಾಸ್ಟರ್ ಡೇಟಾ, ಕಾರ್ಪೊರೇಟ್ ಗುರುತಿನ ಸಂಖ್ಯೆ (CIN) ಮತ್ತು ಸಕ್ರಿಯ ಸ್ಥಿತಿಯನ್ನು ಪರಿಶೀಲಿಸಿ.',
+      portalNcsTitle: 'ರಾಷ್ಟ್ರೀಯ ವೃತ್ತಿ ಸೇವೆ (NCS)',
+      portalNcsDesc: 'ಕಾರ್ಮಿಕ ಮತ್ತು ಉದ್ಯೋಗ ಸಚಿವಾಲಯದ ಪೋರ್ಟಲ್. ncs.gov.in ನಲ್ಲಿ ಉದ್ಯೋಗದಾತರ ವಿವರಗಳು ಮತ್ತು ಉದ್ಯೋಗ ಐಡಿಗಳನ್ನು ದೃಢೀಕರಿಸಿ.',
+      responseGeneratorsTitle: 'ಸುರಕ್ಷಿತ ಪ್ರತಿಕ್ರಿಯೆ ಮತ್ತು ಪರಿಶೀಲನಾ ವಿಚಾರಣೆಗಳು',
+      responseGeneratorsSubtitle: 'ಸಂಸ್ಥೆಯ ವಿವರಗಳನ್ನು ಸುರಕ್ಷಿತವಾಗಿ ದೃಢೀಕರಿಸಲು ಪ್ರಮಾಣಿತ ಮತ್ತು ಸಭ್ಯ ಸಂದೇಶ ಮಾದರಿಗಳು.',
+      safeReplyTitle: 'ಸುರಕ್ಷಿತ ಪ್ರತಿಕ್ರಿಯೆ ಮಾದರಿ',
+      safeReplyDisabled: 'ಹೆಚ್ಚಿನ ಅಪಾಯದ ಆಫರ್‌ಗಳಿಗೆ ಸುರಕ್ಷಿತ ಪ್ರತಿಕ್ರಿಯೆಯನ್ನು ನಿಷ್ಕ್ರಿಯಗೊಳಿಸಲಾಗಿದೆ. ಶಂಕಿತ ವಂಚಕರೊಂದಿಗೆ ಸಂವಹನ ನಡೆಸಬೇಡಿ.',
+      challengeEmailTitle: 'ಪರಿಶೀಲನಾ ಇಮೇಲ್ ಮಾದರಿ',
+      challengeEmailDesc: 'ಕಂಪನಿಯ ಅಧಿಕೃತ ಇಮೇಲ್, ನೋಂದಣಿ CIN ಮತ್ತು ಕೆರಿಯರ್ ಪೋರ್ಟಲ್ ಲಿಂಕ್‌ಗಳನ್ನು ವಿನಂತಿಸುವ ಔಪಚಾರಿಕ ವಿಚಾರಣೆ.',
+      copyTemplateBtn: 'ಮಾದರಿಯನ್ನು ನಕಲಿಸಿ',
+      copiedNotice: 'ಕ್ಲಿಪ್‌ಬೋರ್ಡ್‌ಗೆ ನಕಲಿಸಲಾಗಿದೆ!',
+      linkInspectorTitle: 'ಲಿಂಕ್ ತಪಾಸಕ',
+      linkInspectorPlaceholder: 'ಯಾವುದೇ ಶಂಕಾಸ್ಪದ ಲಿಂಕ್ ಅಂಟಿಸಿ (ಉದಾ: https://...)...',
+      inspectLinkBtn: 'ಲಿಂಕ್ ಪರಿಶೀಲಿಸಿ',
+      inspectingLinkBtn: 'ಲಿಂಕ್ ವಿಶ್ಲೇಷಿಸಲಾಗುತ್ತಿದೆ...',
+      linkCleanLabel: 'ಸುರಕ್ಷಿತ (ಯಾವುದೇ ಎಚ್ಚರಿಕೆ ಇಲ್ಲ)',
+      linkCautionLabel: 'ಎಚ್ಚರಿಕೆ ಅಗತ್ಯ (ಪರಿಶೀಲಿಸದ / ಎಚ್ಚರಿಕೆ)',
+      linkHighRiskLabel: 'ಹೆಚ್ಚಿನ ಅಪಾಯ (ನಕಲಿ / ಶಂಕಾಸ್ಪದ)',
+      observedLinkSignals: 'ಪತ್ತೆಯಾದ ಲಿಂಕ್ ಸಂಕೇತಗಳು',
+      unverifiedLinkNotes: 'ಪರಿಶೀಲಿಸದ ಅಂಶಗಳು',
+      jumpNavTitle: 'ವಿಭಾಗಕ್ಕೆ ಜಂಪ್ ಮಾಡಿ',
     },
 
     // Compatibility aliases
