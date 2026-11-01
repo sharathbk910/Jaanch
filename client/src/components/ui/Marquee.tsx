@@ -19,10 +19,14 @@ export function Marquee({
   gap = '1.5rem',
   repeat = 4,
 }: MarqueeProps) {
+  const animationName = direction === 'left' ? 'marquee-scroll-left' : 'marquee-scroll-right';
+
   return (
     <div
-      className={`group flex overflow-hidden select-none relative gap-[var(--gap)] [mask-image:linear-gradient(to_right,transparent,black_4%,black_96%,transparent)] [-webkit-mask-image:linear-gradient(to_right,transparent,black_4%,black_96%,transparent)] ${className}`}
+      className={`group flex overflow-hidden select-none relative gap-[var(--marquee-gap)] [mask-image:linear-gradient(to_right,transparent,black_4%,black_96%,transparent)] [-webkit-mask-image:linear-gradient(to_right,transparent,black_4%,black_96%,transparent)] ${className}`}
       style={{
+        ['--marquee-gap' as string]: gap,
+        ['--marquee-duration' as string]: `${speed}s`,
         ['--gap' as string]: gap,
         ['--duration' as string]: `${speed}s`,
       }}
@@ -31,10 +35,13 @@ export function Marquee({
         <div
           key={idx}
           aria-hidden={idx > 0 ? 'true' : undefined}
-          className={`flex shrink-0 items-center gap-[var(--gap)] will-change-transform ${
-            direction === 'left' ? 'animate-marquee' : 'animate-marquee-reverse'
+          className={`flex shrink-0 items-center gap-[var(--marquee-gap)] will-change-transform ${
+            direction === 'left' ? 'animate-marquee-left' : 'animate-marquee-right'
           } ${pauseOnHover ? 'group-hover:[animation-play-state:paused]' : ''}`}
-          style={{ animationDuration: `${speed}s` }}
+          style={{
+            animation: `${animationName} ${speed}s linear infinite`,
+            willChange: 'transform',
+          }}
         >
           {children}
         </div>

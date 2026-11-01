@@ -37,3 +37,33 @@
   }
 }
 
+/* Continuous Infinite Marquee Parallax (Left-to-Right & Right-to-Left) */
+@keyframes marquee-scroll-right {
+  0% {
+    transform: translate3d(calc(-100% - var(--marquee-gap, 1.5rem)), 0, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes marquee-scroll-left {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(calc(-100% - var(--marquee-gap, 1.5rem)), 0, 0);
+  }
+}
+
+.animate-marquee-right {
+  animation: marquee-scroll-right var(--marquee-duration, 35s) linear infinite !important;
+  will-change: transform;
+}
+
+.animate-marquee-left {
+  animation: marquee-scroll-left var(--marquee-duration, 35s) linear infinite !important;
+  will-change: transform;
+}
+
+
