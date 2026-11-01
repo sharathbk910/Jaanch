@@ -10,10 +10,10 @@
 ## 2. Project Overview
 - **Project Name:** Jaanch (Student Offer Verification & Trust Safety Platform)
 - **Problem Statement:** "Fake or Real" (Digital Trust & Safety for Indian Students)
-- **Current Phase:** Phase 10 – Verification & QA Complete
-- **Current Tag:** `phase-10-done`
+- **Current Phase:** Phase 11 – Deployment & Runbook Complete (Human Gate H2 Reached)
+- **Current Tag:** `phase-11-done`
 - **Node Version:** v24.19.0 (LTS >= 20 required)
-- **Repository State:** Green monorepo; `@jaanch/shared`, `@jaanch/server`, and `@jaanch/client` fully compiled, typechecked, linted, and tested (385 tests passing across 41 test suites, 25/25 eval fixtures matching 100%, eval:ml harness passing, 10/10 acceptance criteria PASS)
+- **Repository State:** Green monorepo; `@jaanch/shared`, `@jaanch/server`, and `@jaanch/client` fully compiled, typechecked, linted, and tested (387 tests passing across 41 test suites, 25/25 eval fixtures matching 100%, eval:ml harness passing, 10/10 acceptance criteria PASS, doctor PASS, smoke PASS)
 
 ---
 
@@ -42,7 +42,7 @@
   8. AI/ML (Gemini wrapper, PII redaction, grounding with findSpan, fail-soft aiStatus, invariant enforcement, challenge email, safe reply, link explanation) (**DONE**)
   9. WhatsApp (**DONE**)
   10. Verification (**DONE**)
-  11. Deployment
+  11. Deployment (**DONE – Human Gate H2 reached**)
 
 ---
 
@@ -286,11 +286,42 @@
     - `verify:scenarios`: PASSED (100% scenario verification against local server).
     - `npm run build`: PASSED (Clean production build across all workspaces).
 
+- **Phase 11 Verification Checklist (Deployment, Runbook, Doctor & Deploy Config – Human Gate H2):**
+  - [x] Operational Runbook (`docs/RUNBOOK.md`):
+    - System prerequisites (Node.js $\ge 20.0.0$, npm $\ge 10.0.0$, Git, Supabase PostgreSQL with `pg_trgm` and `vector`).
+    - Setup from scratch: clone, install, `.env` file configuration, schema migrations (`0001`–`0005`), organization seeding (`0003`), moderator bootstrap (`scripts/bootstrap-moderator.ts`).
+    - Operational verification commands: `doctor`, `smoke`, `test`, `eval`, `eval:ml`, `check:no-secrets`, `check:colors`, `check:banned-phrases`, `check:glyphs`.
+    - Production cloud deployment guides: Client on Vercel SPA, Server on Render Web Service, and containerized deployment with Docker.
+    - Strict security reminders: "Never commit `.env`" and "Never use Supabase service-role keys in application runtime".
+    - CORS and OAuth redirect URL checklist (`CLIENT_ORIGINS`, Supabase Auth Site URL and redirect URLs).
+    - Incident management & rollback procedures: code rollback (`git reset --hard phase-N-done`), migration rollback (`000X_*.down.sql`), and secret rotation protocol.
+  - [x] Environment Doctor Tool (`scripts/doctor.mjs` & `npm run doctor`):
+    - Node.js runtime version verification ($\ge 20.0.0$).
+    - Checks presence of required server environment variable names (`PORT`, `NODE_ENV`, `CLIENT_ORIGINS`, `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `REPORT_HASH_PEPPER`).
+    - Checks presence of required client environment variable names (`VITE_API_BASE_URL`, `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`).
+    - **Security Rule:** Prints variable names only; values are NEVER printed or logged.
+    - Verifies absence of forbidden service-role keys (`SUPABASE_SERVICE_ROLE_KEY`).
+    - Verifies `REPORT_HASH_PEPPER` meets minimum length requirement ($\ge 24$ chars).
+    - Network probes: Supabase host reachability and `/api/health` live reachability.
+  - [x] Production Smoke Test (`scripts/smoke.mjs` & `npm run smoke`):
+    - Probes `/api/health` returning 200 OK with uptime.
+    - Probes `/api/config` returning public configuration safely.
+    - Probes `/api/analyze` verifying Genuine TCS offer classified as `LIKELY_GENUINE`.
+    - Probes `/api/analyze` verifying Upfront Fee scam classified as `HIGH_CONCERN` with `RULE_UPFRONT_FEE`.
+    - Probes `/api/analyze` verifying OTP Phishing scam classified as `HIGH_CONCERN` with `RULE_BANK_OTP_DEBIT`.
+    - Probes `/api/link-check` verifying lookalike typosquatting domain classified as `HIGH_RISK`.
+    - Supports optional authenticated flow via `SMOKE_EMAIL` and `SMOKE_PASSWORD`.
+  - [x] Deployment Configurations:
+    - `client/vercel.json` & root `vercel.json`: Single Page Application (SPA) rewrites to `/index.html`, clean URLs, and HTTP security headers (`nosniff`, `DENY`, `strict-origin-when-cross-origin`).
+    - `render.yaml`: Render Blueprint configuration for Node.js Express server, health check `/api/health`, and secret environment variables mapping.
+    - Multi-stage `Dockerfile`: Node 20 Alpine builder and minimal runner, unprivileged `node` user, built-in healthcheck.
+  - [x] Final Documentation:
+    - Root `README.md`: High-density overview, badges, architectural diagram, 4-verdict decision model, quickstart, verification command table, and disclaimers.
+    - Final Report (`docs/FINAL_REPORT.md`): Full phase completion matrix, feature parity matrix (F01–F24), authoritative decisions (D1–D16), known limitations, and Human Gate H2 declaration.
+
 ---
 
-## 5. Next Steps
-- Phase 10 complete, committed and tagged `phase-10-done`.
-- Proceed to **Phase 11 – Deployment & Runbook**:
-  - `docs/RUNBOOK.md` setup and deployment instructions.
-  - Standalone `scripts/doctor.mjs` environment and health probe.
-  - Production build and deployment configuration verification.
+## 5. Human Gate H2 Status
+- **All 11 project phases are complete.**
+- **Repository is green, fully tested, linted, and verified (387 passing tests).**
+- **Human Gate H2 Reached:** The final report (`docs/FINAL_REPORT.md`) has been generated. The agent has STOPPED in accordance with Section 0.7.H2 and is waiting for the user's review. No push or deployment has been executed.

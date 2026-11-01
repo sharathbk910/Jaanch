@@ -24,6 +24,8 @@
     "check:glyphs": "node scripts/check-glyph-render.mjs",
     "test:acceptance": "node scripts/test-acceptance.mjs",
     "verify:scenarios": "tsx scripts/verify-scenarios-e2e.ts",
+    "doctor": "node scripts/doctor.mjs",
+    "smoke": "node scripts/smoke.mjs",
     "hooks:install": "node -e \"console.log('Git hooks verified')\""
   },
   "devDependencies": {

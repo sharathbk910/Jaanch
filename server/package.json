@@ -4,7 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "node -e \"console.log('Server dev placeholder')\"",
+    "start": "node dist/server.js",
+    "dev": "tsx watch src/server.ts",
     "build": "tsc",
     "typecheck": "tsc --noEmit",
     "test": "vitest run"

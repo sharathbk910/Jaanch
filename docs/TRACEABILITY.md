@@ -28,7 +28,7 @@
 | **0.4.8** | Stop at human gates (H0, H1, H2) | Phase 0, 4, 13 | Phase 1, 4, 11 | Active |
 | **0.7.H0** | Human Gate H0: Confirm machine, Node >= 20, Git | Phase 0 | Phase 1 | **DONE** |
 | **0.7.H1** | Human Gate H1: Database setup & user auth verification | Phase 4 | Phase 4 | **REACHED** (SQL files generated, standing by for user setup) |
-| **0.7.H2** | Human Gate H2: Review final report, smoke tests, deploy readiness | Phase 13 | Phase 11 | Pending |
+| **0.7.H2** | Human Gate H2: Review final report, smoke tests, deploy readiness | Phase 13 | Phase 11 | **REACHED** (Final report generated, standing by for user review) |
 
 ---
 
@@ -82,7 +82,7 @@
 | **F21** | Security: helmet, CORS allowlist, rate limits, body limits, SSRF safeFetch, RLS | P4, P5 | Phase 3, Phase 4 | **DONE** |
 | **F22** | Fixtures/corpus regression suite + `npm run eval` | P3 | Phase 2 | **DONE** (25/25 100%) |
 | **F23** | Accessibility (WCAG 2.2 AA), responsive 360–1920px, performance budgets | P8–P12 | Phase 10 | **DONE** (axe AA verified, 360px glyphs PASS) |
-| **F24** | Runbook, doctor/smoke scripts, deployment configuration | P13 | Phase 11 | Pending |
+| **F24** | Runbook, doctor/smoke scripts, deployment configuration | P13 | Phase 11 | **DONE** (`docs/RUNBOOK.md`, `scripts/doctor.mjs`, `scripts/smoke.mjs`, `vercel.json`, `render.yaml`) |
 
 ---
 
@@ -103,7 +103,7 @@
 | **Phase 10** | Results page, PDF export, sample, remaining pages | Phase 6C, 6D | UI – Results/PDF, UI – Auth & History |
 | **Phase 11** | Translations (HI/KN) & polish | Phase 6 | UI implementation |
 | **Phase 12** | End-to-end QA, parity audit | Phase 10 | Verification & QA | **DONE** (`docs/FEATURE_PARITY.md`, `docs/privacy-copy-check.md`) |
-| **Phase 13** | Runbook, doctor script, deploy config (H2) | Phase 11 | Deployment |
+| **Phase 13** | Runbook, doctor script, deploy config (H2) | Phase 11 | Deployment | **DONE** (Runbook, doctor, smoke test, Vercel/Render/Docker configs, final report, H2 reached) |
 | *(None)* | Dedicated WhatsApp scam-alert sharing | Phase 9 | WhatsApp Scam-Alert Sharing (confirmed only) | **DONE** (Deterministic localized alert builder en/hi/kn, control/bidi character stripping, URL length budgeting & trim notices, ShareAlert preview modal with live editable textarea and real-time wa.me link, copy message fallback, zero server-side auto-send, confirmed-only guard, and zero-text audit logging) |
 | *(None)* | Threat intelligence moderation workflows | Phase 7 | Shared intelligence and moderation | **DONE** (Role guard, transition audit logs, moderator CLI) |
 

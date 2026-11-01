@@ -1,0 +1,54 @@
+services:
+  - type: web
+    name: jaanch-server
+    runtime: node
+    plan: starter
+    region: oregon
+    buildCommand: npm ci && npm run build -w shared && npm run build -w server
+    startCommand: npm run start -w server
+    healthCheckPath: /api/health
+    autoDeploy: false
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: CLIENT_ORIGINS
+        sync: false
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_ANON_KEY
+        sync: false
+      - key: REPORT_HASH_PEPPER
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: GEMINI_MODEL
+        value: gemini-2.5-flash
+      - key: LOG_LEVEL
+        value: info
+      - key: RDAP_BASE_URL
+        value: https://rdap.org
+      - key: RDAP_TIMEOUT_MS
+        value: 5000
+      - key: DNS_TIMEOUT_MS
+        value: 2000
+      - key: LISTING_FETCH_TIMEOUT_MS
+        value: 5000
+      - key: LISTING_MAX_BYTES
+        value: 1000000
+      - key: RATE_LIMIT_ANALYZE_GUEST_PER_HOUR
+        value: 30
+      - key: RATE_LIMIT_ANALYZE_USER_PER_HOUR
+        value: 60
+      - key: RATE_LIMIT_AI_GUEST_PER_HOUR
+        value: 10
+      - key: RATE_LIMIT_AI_USER_PER_HOUR
+        value: 30
+      - key: RATE_LIMIT_LISTING_PER_HOUR
+        value: 10
+      - key: RATE_LIMIT_REPORTS_PER_DAY
+        value: 20
+      - key: RATE_LIMIT_LOOKUP_PER_HOUR
+        value: 60
+

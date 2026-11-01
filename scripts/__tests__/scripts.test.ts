@@ -154,6 +154,24 @@ describe('Security & Tooling Scripts Validation', () => {
     });
   });
 
+  describe('doctor.mjs', () => {
+    it('executes doctor and validates Node version and security invariants', async () => {
+      const { runDoctor } = await import('../doctor.mjs');
+      const { results } = await runDoctor({ silent: true });
+      expect(results.nodeVersion.ok).toBe(true);
+      expect(results.security.ok).toBe(true);
+      expect(results.allPassed).toBe(true);
+    });
+  });
+
+  describe('smoke.mjs', () => {
+    it('executes smoke tests against core routes and passes 100%', async () => {
+      const { runSmokeTest } = await import('../smoke.mjs');
+      const passed = await runSmokeTest();
+      expect(passed).toBe(true);
+    });
+  });
+
   describe('test-acceptance.mjs', () => {
     it('accurately reports 10/10 verified status for all core acceptance criteria', async () => {
       const results = await runAcceptanceHarness();
