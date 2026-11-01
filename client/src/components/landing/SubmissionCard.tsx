@@ -59,56 +59,57 @@ export function SubmissionCard() {
   };
 
   return (
-    <div id="submission-card" className="w-full max-w-2xl mx-auto my-8">
-      <div className="bg-surface border border-border rounded-card shadow-md overflow-hidden">
-        {/* Card Tabs: Paste Text vs Upload File */}
-        <div className="flex border-b border-border bg-background/50">
+    <div id="submission-card" className="w-full max-w-3xl mx-auto my-8">
+      <div className="bg-surface border-2 border-neo-border shadow-neo-xl">
+        {/* Card Tabs: Paste Text vs Upload File (MotherDuck Retro Tab Bar) */}
+        <div className="flex border-b-2 border-neo-border bg-background/60">
           <button
             type="button"
             onClick={() => setActiveTab('paste')}
-            className={`flex items-center gap-2 px-5 py-3 text-xs font-semibold border-b-2 transition-all ${
+            className={`flex items-center gap-2 px-6 py-3.5 text-xs font-bold transition-all ${
               activeTab === 'paste'
-                ? 'border-primary text-foreground bg-surface'
-                : 'border-transparent text-muted-foreground hover:text-foreground'
+                ? 'bg-neo-yellow text-foreground border-r-2 border-neo-border'
+                : 'text-muted-foreground hover:text-foreground hover:bg-surface/50 border-r border-neo-border/40'
             }`}
           >
-            <FileText size={14} />
-            <span>Paste Message Text</span>
+            <FileText size={15} />
+            <span className="uppercase tracking-wider">Paste Message Text</span>
           </button>
 
           <button
             type="button"
             onClick={() => setActiveTab('upload')}
-            className={`flex items-center gap-2 px-5 py-3 text-xs font-semibold border-b-2 transition-all ${
+            className={`flex items-center gap-2 px-6 py-3.5 text-xs font-bold transition-all ${
               activeTab === 'upload'
-                ? 'border-primary text-foreground bg-surface'
-                : 'border-transparent text-muted-foreground hover:text-foreground'
+                ? 'bg-neo-yellow text-foreground border-r-2 border-neo-border'
+                : 'text-muted-foreground hover:text-foreground hover:bg-surface/50 border-r border-neo-border/40'
             }`}
           >
-            <Upload size={14} />
-            <span>Upload Document</span>
+            <Upload size={15} />
+            <span className="uppercase tracking-wider">Upload Document</span>
           </button>
         </div>
 
-        <div className="p-5 sm:p-6">
+        <div className="p-6 sm:p-7">
           {activeTab === 'paste' ? (
             <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
               {/* Header inside form with Clipboard Paste Action */}
               <div className="flex items-center justify-between">
-                <label htmlFor="offer-text" className="text-xs font-semibold text-foreground">
+                <label htmlFor="offer-text" className="text-xs font-bold uppercase tracking-wider text-foreground">
                   {t('submissionCard.title')}
                 </label>
+
                 <button
                   type="button"
                   onClick={handlePasteClipboard}
-                  className="inline-flex items-center gap-1.5 text-xs text-terracotta hover:underline font-medium min-h-[32px]"
+                  className="inline-flex items-center gap-1.5 text-xs border border-neo-border shadow-neo-sm bg-background px-2.5 py-1 text-foreground font-bold hover:bg-neo-peach/40 hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all min-h-[32px]"
                 >
                   <Clipboard size={13} />
                   <span>Paste from clipboard</span>
                 </button>
               </div>
 
-              {/* Textarea */}
+              {/* Textarea with 2px border */}
               <div className="relative">
                 <textarea
                   id="offer-text"
@@ -122,14 +123,14 @@ export function SubmissionCard() {
                     }
                   }}
                   placeholder={t('submissionCard.placeholder')}
-                  className={`w-full p-3.5 bg-background border rounded-input text-xs sm:text-sm text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:ring-1 transition-all ${
-                    error ? 'border-status-high-concern-border focus:ring-status-high-concern-border' : 'border-border focus:ring-ring'
+                  className={`w-full p-4 bg-background border-2 text-xs sm:text-sm text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 focus:ring-ring transition-all ${
+                    error ? 'border-status-high-concern-border focus:ring-status-high-concern-border' : 'border-neo-border'
                   }`}
                 />
 
                 {copiedNotification && (
-                  <div className="absolute top-2 right-2 bg-foreground text-background text-[11px] px-2 py-1 rounded-chip flex items-center gap-1 shadow">
-                    <Check size={11} className="text-terracotta" />
+                  <div className="absolute top-2 right-2 bg-neo-yellow text-foreground border border-neo-border text-[11px] font-bold px-2.5 py-1 shadow-neo-sm flex items-center gap-1">
+                    <Check size={12} className="text-status-likely-genuine-fg" />
                     <span>Pasted!</span>
                   </div>
                 )}
@@ -140,7 +141,7 @@ export function SubmissionCard() {
                 <div className="flex items-center gap-1.5">
                   <span
                     data-testid="char-counter"
-                    className={`font-mono font-bold ${
+                    className={`font-mono font-bold border border-neo-border px-2 py-0.5 shadow-neo-sm bg-background ${
                       isMinMet ? 'text-status-likely-genuine-fg' : 'text-terracotta'
                     }`}
                   >
@@ -150,8 +151,8 @@ export function SubmissionCard() {
                 </div>
 
                 {isMinMet && (
-                  <span className="text-[11px] text-status-likely-genuine-fg font-medium flex items-center gap-1">
-                    <Check size={12} /> Ready for audit
+                  <span className="text-xs text-status-likely-genuine-fg font-bold flex items-center gap-1 bg-status-likely-genuine-bg border border-status-likely-genuine-border px-2 py-0.5">
+                    <Check size={13} /> Ready for audit
                   </span>
                 )}
               </div>
@@ -160,25 +161,25 @@ export function SubmissionCard() {
                 <div
                   role="alert"
                   data-testid="min-char-error"
-                  className="flex items-center gap-2 p-2.5 bg-status-high-concern-bg text-status-high-concern-fg border border-status-high-concern-border rounded text-xs"
+                  className="flex items-center gap-2 p-3 bg-status-high-concern-bg text-status-high-concern-fg border-2 border-status-high-concern-border text-xs font-medium"
                 >
-                  <AlertCircle size={14} className="shrink-0" />
+                  <AlertCircle size={15} className="shrink-0" />
                   <span>{error}</span>
                 </div>
               )}
 
-              {/* 3 Test Scenarios / Sample Chips */}
+              {/* 3 Test Scenarios / Sample Chips (MotherDuck Pastel Neo Chips) */}
               <div className="pt-2">
-                <div className="flex items-center gap-1.5 text-xs font-semibold text-muted-foreground mb-2">
+                <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-muted-foreground mb-2.5">
                   <Sparkles size={13} className="text-terracotta" />
                   <span>Try a real test scenario:</span>
                 </div>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-2.5">
                   <button
                     type="button"
                     data-testid="scenario-genuine"
                     onClick={() => handleSelectScenario(SCENARIO_GENUINE)}
-                    className="px-2.5 py-1 text-xs rounded-chip border border-border bg-background hover:border-terracotta hover:bg-muted-subtle/5 transition-all text-foreground"
+                    className="px-3 py-1.5 text-xs border-2 border-neo-border shadow-neo-sm bg-neo-mint text-foreground font-bold hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all"
                   >
                     1. Genuine Internship
                   </button>
@@ -186,7 +187,7 @@ export function SubmissionCard() {
                     type="button"
                     data-testid="scenario-fee"
                     onClick={() => handleSelectScenario(SCENARIO_FEE_SCAM)}
-                    className="px-2.5 py-1 text-xs rounded-chip border border-border bg-background hover:border-terracotta hover:bg-muted-subtle/5 transition-all text-foreground"
+                    className="px-3 py-1.5 text-xs border-2 border-neo-border shadow-neo-sm bg-neo-peach text-foreground font-bold hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all"
                   >
                     2. Upfront Fee Scam
                   </button>
@@ -194,7 +195,7 @@ export function SubmissionCard() {
                     type="button"
                     data-testid="scenario-otp"
                     onClick={() => handleSelectScenario(SCENARIO_OTP_SCAM)}
-                    className="px-2.5 py-1 text-xs rounded-chip border border-border bg-background hover:border-terracotta hover:bg-muted-subtle/5 transition-all text-foreground"
+                    className="px-3 py-1.5 text-xs border-2 border-neo-border shadow-neo-sm bg-neo-pink text-foreground font-bold hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all"
                   >
                     3. OTP Phishing Scam
                   </button>
@@ -202,25 +203,25 @@ export function SubmissionCard() {
               </div>
 
               {/* Submit CTA */}
-              <div className="pt-3 border-t border-border flex items-center justify-end">
+              <div className="pt-4 border-t-2 border-neo-border flex items-center justify-end">
                 <Button
                   type="submit"
                   variant="primary"
                   size="md"
                   disabled={!isMinMet}
                   data-testid="check-offer-btn"
-                  className="w-full sm:w-auto"
+                  className="w-full sm:w-auto border-2 border-neo-border shadow-neo bg-neo-blue text-foreground font-bold uppercase tracking-wider hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-neo-sm active:translate-x-[3px] active:translate-y-[3px] active:shadow-none transition-all px-6 py-2.5 rounded-none disabled:opacity-50 disabled:pointer-events-none"
                 >
                   <span>{t('submissionCard.analyzeBtn')}</span>
-                  <ArrowRight size={14} className="ml-1.5" />
+                  <ArrowRight size={15} className="ml-2" />
                 </Button>
               </div>
             </form>
           ) : (
             /* Upload Tab */
-            <div className="flex flex-col items-center justify-center p-8 border-2 border-dashed border-border rounded-card text-center bg-background/50">
-              <Upload size={32} className="text-terracotta mb-3" />
-              <h3 className="text-sm font-semibold text-foreground">
+            <div className="flex flex-col items-center justify-center p-8 border-2 border-dashed border-neo-border text-center bg-background/50">
+              <Upload size={36} className="text-terracotta mb-3" />
+              <h3 className="text-sm font-bold uppercase tracking-wider text-foreground">
                 {t('submissionCard.dropPdf')}
               </h3>
               <p className="text-xs text-muted-foreground mt-1 max-w-sm">
@@ -230,7 +231,7 @@ export function SubmissionCard() {
                 variant="outline"
                 size="sm"
                 onClick={() => navigate('/analyze')}
-                className="mt-4"
+                className="mt-4 border-2 border-neo-border shadow-neo bg-surface text-foreground font-bold hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-neo-sm transition-all rounded-none"
               >
                 Open Analyzer with PDF Support
               </Button>
@@ -243,4 +244,3 @@ export function SubmissionCard() {
 }
 
 export default SubmissionCard;
-

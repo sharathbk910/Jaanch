@@ -10,12 +10,12 @@ export function Footer() {
 
   return (
     <>
-      <footer className="w-full bg-background border-t border-border mt-auto select-none">
+      <footer className="w-full bg-background border-t-2 border-neo-border mt-auto select-none">
         <div className="max-w-editorial mx-auto px-4 sm:px-6 lg:px-8 py-10">
-          {/* 1930 Helpline Advisory Card */}
-          <div className="bg-surface border border-border rounded-card p-5 sm:p-6 mb-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-            <div className="flex items-start gap-3">
-              <div className="p-2.5 bg-status-high-concern-bg border border-status-high-concern-border rounded-btn text-status-high-concern-fg shrink-0">
+          {/* 1930 Helpline Advisory Card (MotherDuck Style) */}
+          <div className="bg-surface border-2 border-neo-border shadow-neo p-5 sm:p-6 mb-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div className="flex items-start gap-3.5">
+              <div className="p-2.5 bg-status-high-concern-bg border border-status-high-concern-border shadow-neo-sm text-status-high-concern-fg shrink-0">
                 <Phone size={20} aria-hidden="true" />
               </div>
               <div>
@@ -23,7 +23,7 @@ export function Footer() {
                   <span className="font-serif text-sm font-bold text-foreground">
                     {t('footer.helplineTitle')}
                   </span>
-                  <span className="font-mono text-xs font-bold text-terracotta bg-muted-subtle/10 px-2 py-0.5 rounded">
+                  <span className="font-mono text-xs font-bold text-terracotta bg-background border border-neo-border shadow-neo-sm px-2 py-0.5">
                     1930
                   </span>
                 </div>
@@ -36,7 +36,7 @@ export function Footer() {
               href="https://cybercrime.gov.in"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-xs font-semibold text-terracotta hover:underline shrink-0 min-h-[44px] sm:min-h-0 flex items-center"
+              className="inline-flex items-center gap-1.5 text-xs font-bold border border-neo-border shadow-neo-sm bg-background px-3 py-1.5 text-foreground hover:bg-neo-peach/40 hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all shrink-0 min-h-[44px] sm:min-h-0 flex items-center"
             >
               <span>cybercrime.gov.in</span>
               <ExternalLink size={13} aria-hidden="true" />
@@ -44,9 +44,9 @@ export function Footer() {
           </div>
 
           {/* Educational Disclaimer */}
-          <div className="p-4 bg-muted-subtle/5 border border-border rounded-card mb-8 text-xs text-muted-foreground leading-relaxed">
-            <div className="flex items-center gap-2 font-medium text-foreground mb-1">
-              <ShieldCheck size={14} className="text-terracotta" aria-hidden="true" />
+          <div className="p-4 bg-surface border-2 border-neo-border shadow-neo-sm mb-8 text-xs text-muted-foreground leading-relaxed">
+            <div className="flex items-center gap-2 font-bold text-foreground mb-1">
+              <ShieldCheck size={15} className="text-terracotta" aria-hidden="true" />
               <span>Public Service Safety Advisory</span>
             </div>
             <p>
@@ -55,7 +55,7 @@ export function Footer() {
           </div>
 
           {/* Footer Navigation & Language Switcher */}
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6 pt-6 border-t border-border">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6 pt-6 border-t-2 border-neo-border">
             <div className="flex flex-col sm:flex-row items-center gap-3 text-center sm:text-left">
               <span className="font-serif text-base font-bold tracking-tight text-terracotta">
                 JAANCH.
@@ -66,16 +66,16 @@ export function Footer() {
             </div>
 
             <div className="flex flex-wrap items-center justify-center gap-6 text-xs text-muted-foreground">
-              <Link to="/resources" className="hover:text-foreground transition-colors min-h-[44px] flex items-center">
+              <Link to="/resources" className="hover:text-foreground font-medium transition-colors min-h-[44px] flex items-center">
                 {t('navigation.resources')}
               </Link>
-              <Link to="/about" className="hover:text-foreground transition-colors min-h-[44px] flex items-center">
+              <Link to="/about" className="hover:text-foreground font-medium transition-colors min-h-[44px] flex items-center">
                 {t('navigation.about')}
               </Link>
-              <Link to="/privacy" className="hover:text-foreground transition-colors min-h-[44px] flex items-center">
+              <Link to="/privacy" className="hover:text-foreground font-medium transition-colors min-h-[44px] flex items-center">
                 {t('footer.privacy')}
               </Link>
-              <div className="pl-2 border-l border-border">
+              <div className="pl-2 border-l-2 border-neo-border">
                 <LangSwitch size="sm" />
               </div>
             </div>

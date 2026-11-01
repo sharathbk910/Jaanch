@@ -23,6 +23,21 @@ export default {
         },
         ring: 'var(--color-ring)',
 
+        // Neo-Brutalist Theme Tokens
+        neo: {
+          border: 'var(--color-neo-border)',
+          shadow: 'var(--color-neo-shadow)',
+          sky: {
+            DEFAULT: 'var(--color-neo-sky)',
+            light: 'var(--color-neo-sky-light)',
+          },
+          peach: 'var(--color-neo-peach)',
+          blue: 'var(--color-neo-blue)',
+          mint: 'var(--color-neo-mint)',
+          pink: 'var(--color-neo-pink)',
+          yellow: 'var(--color-neo-yellow)',
+        },
+
         // Semantic status tokens
         status: {
           'high-concern': {
@@ -137,6 +152,12 @@ export default {
       },
       height: {
         header: 'var(--header-height)',
+      },
+      boxShadow: {
+        neo: '4px 4px 0px 0px var(--color-neo-shadow)',
+        'neo-sm': '2px 2px 0px 0px var(--color-neo-shadow)',
+        'neo-lg': '6px 6px 0px 0px var(--color-neo-shadow)',
+        'neo-xl': '8px 8px 0px 0px var(--color-neo-shadow)',
       },
     },
   },

@@ -15,9 +15,15 @@ export function Navbar() {
 
   return (
     <>
+      {/* MotherDuck Style Top Helpline Alert Bar */}
+      <div className="w-full bg-terracotta text-white py-1.5 px-4 text-[11px] sm:text-xs font-bold tracking-wider text-center uppercase border-b-2 border-neo-border select-none flex items-center justify-center gap-2 z-50">
+        <span>1930 National Cyber Crime Helpline — Report fraud immediately at cybercrime.gov.in</span>
+        <span aria-hidden="true">→</span>
+      </div>
+
       <header
         data-testid="app-header"
-        className="sticky top-0 z-40 w-full h-[53px] bg-background border-b border-border flex items-center select-none"
+        className="sticky top-0 z-40 w-full h-[53px] bg-background border-b-2 border-neo-border flex items-center select-none shadow-neo-sm"
       >
         <div className="w-full max-w-editorial mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
           {/* Brand Wordmark (Serif Terracotta) */}

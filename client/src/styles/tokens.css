@@ -28,6 +28,17 @@
   --color-border: #E6E5E1;
   --color-ring: #E55A12;
 
+  /* Neo-Brutalist Retro Illustrative Tokens (MotherDuck Style) */
+  --color-neo-border: #141413;
+  --color-neo-shadow: #141413;
+  --color-neo-sky: #98D2FB;
+  --color-neo-sky-light: #E0F2FE;
+  --color-neo-peach: #FFE2CC;
+  --color-neo-blue: #D1EEFE;
+  --color-neo-mint: #C7F7EC;
+  --color-neo-pink: #FFE5EC;
+  --color-neo-yellow: #FEF08A;
+
   /* Semantic Tokens for Status Colors (Light Mode) */
   --color-status-high-concern-bg: #FDEEEE;
   --color-status-high-concern-fg: #9B1C1C;
@@ -127,6 +138,17 @@
   --color-border-pill: #4B5563;
   --color-border: #2E2E2E;
   --color-ring: #FB923C;
+
+  /* Neo-Brutalist Retro Illustrative Tokens (Dark Mode) */
+  --color-neo-border: #4A4A48;
+  --color-neo-shadow: #0A0A0A;
+  --color-neo-sky: #1E3A8A;
+  --color-neo-sky-light: #0C4A6E;
+  --color-neo-peach: #7C2D12;
+  --color-neo-blue: #1E3A8A;
+  --color-neo-mint: #064E3B;
+  --color-neo-pink: #831843;
+  --color-neo-yellow: #713F12;
 
   /* Dark Semantic Status Colors (contrast tested >= 7:1) */
   --color-status-high-concern-bg: #3B1212;
