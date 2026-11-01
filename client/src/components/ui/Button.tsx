@@ -13,7 +13,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       'inline-flex items-center justify-center font-bold tracking-wider uppercase rounded-btn transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent disabled:opacity-50 disabled:pointer-events-none select-none';
 
     const variantClasses = {
-      primary: 'bg-btn text-surface hover:bg-btn-hover active:bg-btn',
+      primary: 'bg-btn text-foreground border border-neo-border shadow-neo-sm hover:bg-btn-hover hover:text-foreground active:bg-btn',
       outline: 'bg-surface text-primary border border-hairline hover:bg-page active:bg-hairline',
       ghost: 'bg-transparent text-body hover:text-primary hover:bg-page active:bg-hairline',
       neo: 'bg-neo-sky text-foreground border-2 border-neo-border shadow-neo hover:bg-neo-sky-light hover:text-foreground hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-neo-sm active:translate-x-[3px] active:translate-y-[3px] active:shadow-none transition-all rounded-none',

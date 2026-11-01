@@ -121,9 +121,9 @@ export function Hero() {
                 <button
                   type="button"
                   onClick={scrollToCard}
-                  className="bg-surface border-2 border-neo-border shadow-neo-sm px-3.5 py-2 font-sans font-bold uppercase tracking-wider text-xs text-foreground flex items-center gap-2 hover:bg-neo-sky hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all group"
+                  className="bg-neo-sky text-foreground border-2 border-neo-border shadow-neo-sm px-3.5 py-2 font-sans font-bold uppercase tracking-wider text-xs flex items-center gap-2 hover:bg-neo-sky-light hover:text-foreground hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all group"
                 >
-                  <Volume2 size={14} className="text-muted-foreground group-hover:text-foreground" />
+                  <Volume2 size={14} className="text-foreground group-hover:text-foreground" />
                   <span>Preview Live Audit</span>
                 </button>
                 <span className="text-xs font-mono text-muted-foreground uppercase font-bold">

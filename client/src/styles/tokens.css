@@ -85,8 +85,8 @@
   --text-body: var(--color-muted-foreground);
   --text-muted: var(--color-muted-subtle);
   --placeholder: #767570;
-  --btn: var(--color-primary);
-  --btn-hover: #2B2B2A;
+  --btn: var(--color-neo-sky);
+  --btn-hover: var(--color-neo-sky-light);
   --pill: var(--color-border-pill);
   --accent: #E55A12;
   --accent-text: var(--color-terracotta);
@@ -178,8 +178,8 @@
   --text-body: var(--color-muted-foreground);
   --text-muted: var(--color-muted-subtle);
   --placeholder: #A8A29E;
-  --btn: var(--color-foreground);
-  --btn-hover: #E5E5E0;
+  --btn: var(--color-neo-sky);
+  --btn-hover: var(--color-neo-sky-light);
   --pill: var(--color-border-pill);
   --accent: #FB923C;
   --accent-text: var(--color-terracotta);

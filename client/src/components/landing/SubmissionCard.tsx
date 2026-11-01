@@ -99,7 +99,7 @@ export function SubmissionCard() {
             <button
               type="button"
               onClick={handlePasteClipboard}
-              className="inline-flex items-center gap-1.5 text-xs border border-neo-border shadow-neo-sm bg-surface px-3 py-1.5 text-foreground font-bold hover:bg-neo-sky hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all my-2 group"
+              className="inline-flex items-center gap-1.5 text-xs border border-neo-border shadow-neo-sm bg-neo-sky text-foreground font-bold hover:bg-neo-sky-light hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all my-2 group"
             >
               <Clipboard size={13} aria-hidden="true" />
               <span>Paste from clipboard</span>
@@ -239,7 +239,7 @@ export function SubmissionCard() {
                 variant="outline"
                 size="sm"
                 onClick={() => navigate('/analyze')}
-                className="mt-4 border-2 border-neo-border shadow-neo bg-surface text-foreground font-bold hover:bg-neo-sky hover:text-foreground hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-neo-sm transition-all rounded-none"
+                className="mt-4 border-2 border-neo-border shadow-neo bg-neo-sky text-foreground font-bold hover:bg-neo-sky-light hover:text-foreground hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-neo-sm transition-all rounded-none"
               >
                 Open Analyzer with PDF Support
               </Button>

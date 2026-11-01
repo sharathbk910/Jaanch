@@ -125,12 +125,12 @@ export function Navbar() {
               </Link>
             )}
 
-            {/* Clean Secondary Outline Button (Resolves Primary Button Competition) */}
+            {/* Blue Action Button (like MotherDuck START FREE in screenshot) */}
             <Link to="/analyze" className="shrink-0">
               <Button
-                variant="outline"
+                variant="primary"
                 size="sm"
-                className="bg-surface text-foreground border-2 border-neo-border shadow-neo-sm font-bold uppercase tracking-wider text-xs px-3.5 py-1.5 hover:bg-neo-sky hover:text-foreground hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all rounded-none whitespace-nowrap"
+                className="bg-neo-sky text-foreground border-2 border-neo-border shadow-neo-sm font-bold uppercase tracking-wider text-xs px-3.5 py-1.5 hover:bg-neo-sky-light hover:text-foreground hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all rounded-none whitespace-nowrap"
               >
                 {t('navigation.verifyOffer')}
               </Button>
