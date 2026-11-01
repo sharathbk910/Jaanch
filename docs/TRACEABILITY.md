@@ -1,74 +1,63 @@
 # JAANCH – Requirements Traceability Matrix
 
-This matrix maps every requirement, architecture decision, and feature from `docs/SPEC_ORIGINAL.md` and `docs/SPEC_ADDENDUM.md` to its designated implementation phase and current status.
+> [!NOTE]
+> `docs/SPEC_ORIGINAL.md` is currently marked as **UNVERIFIED** pending verbatim specification input from the user.
+> This traceability matrix maps the current numbered sections and protocol items present in `docs/SPEC_ORIGINAL.md` to project phases and statuses.
 
 ---
 
-## 1. Feature Inventory (F01 – F24)
+## 1. Operating Contract & Safety Protocol
 
-| ID | Requirement / Feature | Spec Source | Implementation Phase | Current Status |
-|---|---|---|---|---|
-| **F01** | Landing page (hero + official portals card, facts band, how-it-works, guidelines card, helpline card, footer) | SPEC_ORIGINAL 0.6 | Phase 9 | Pending |
-| **F02** | Header/nav/mobile sheet/skip link/footer/floating feedback pill, hash navigation | SPEC_ORIGINAL 0.6 | Phase 9 | Pending |
-| **F03** | Language switch EN / HI / KN (header + footer, persisted, `<html lang>`) | SPEC_ORIGINAL 0.6 | Phase 8 | Pending |
-| **F04** | Analyze page: paste text, upload screenshot/PDF with in-browser OCR, sample chips, offer type, More options | SPEC_ORIGINAL 0.6 | Phase 10 | Pending |
-| **F05** | Input routing (misplaced email/URL/phone/UPI) with visible notices | SPEC_ORIGINAL 0.6 | Phase 4 | Pending |
-| **F06** | Extraction: entities, organization, role, 10-detail completeness with clean whole-word quotes | SPEC_ORIGINAL 0.6 | Phase 4 | Pending |
-| **F07** | Deterministic rule engine (full catalog, negation guards, hard disqualifiers) | SPEC_ORIGINAL 0.6 | Phase 3 | Pending |
-| **F08** | Sender email analysis, header parsing (SPF/DKIM/DMARC), DNS policy lookup | SPEC_ORIGINAL 0.6 | Phase 7 | Pending |
-| **F09** | Lookalike/impersonation detection, link inspector, reserved-domain note | SPEC_ORIGINAL 0.6 | Phase 3, Phase 7 | Pending |
-| **F10** | Organization registry search/match; reported-entities lookup & reporting (hashed) | SPEC_ORIGINAL 0.6 | Phase 6, Phase 7 | Pending |
-| **F11** | Status engine (5 statuses, reasons), paymentAlert, coverage k-of-8, pattern insights | SPEC_ORIGINAL 0.6 | Phase 5 | Pending |
-| **F12** | RDAP domain age; (flagged) CT-log, Safe Browsing, official-listing fetch/compare | SPEC_ORIGINAL 0.6 | Phase 7 | Pending |
-| **F13** | Optional Gemini context, challenge email, safe reply, link explanation (with fallbacks) | SPEC_ORIGINAL 0.6 | Phase 7 | Pending |
-| **F14** | Results page (status banner, payment alert, why, 3-part next steps, signals, evidence report, link inspector) | SPEC_ORIGINAL 0.6 | Phase 10 | Pending |
-| **F15** | Attestations + checklist persistence (saved) / session state (guest) | SPEC_ORIGINAL 0.6 | Phase 6, Phase 10 | Pending |
-| **F16** | Export: PDF (react-pdf, ≤ 4 pages, ₹ renders, ≥ 75% fill), Print, JSON | SPEC_ORIGINAL 0.6 | Phase 10 | Pending |
-| **F17** | `/sample` fictional report walkthrough | SPEC_ORIGINAL 0.6 | Phase 10 | Pending |
-| **F18** | Dedicated link checker page (`/link-check`) | SPEC_ORIGINAL 0.6 | Phase 10 | Pending |
-| **F19** | Verification Guide (`/resources`), About, Privacy pages | SPEC_ORIGINAL 0.6 | Phase 9, Phase 10 | Pending |
-| **F20** | Auth (email/password + Google), history (filters, delete one/all), settings, account-data delete | SPEC_ORIGINAL 0.6 | Phase 6, Phase 10 | Pending |
-| **F21** | Security: helmet, CORS allowlist, rate limits, body limits, SSRF safeFetch, RLS | SPEC_ORIGINAL 0.6 | Phase 6, Phase 7 | Pending |
-| **F22** | Fixtures/corpus regression suite + `npm run eval` | SPEC_ORIGINAL 0.6 | Phase 3 | Pending |
-| **F23** | Accessibility (WCAG 2.2 AA), responsive 360–1920px, performance budgets | SPEC_ORIGINAL 0.6 | Phase 8–11 | Pending |
-| **F24** | Runbook, doctor/smoke scripts, deployment configuration | SPEC_ORIGINAL 0.6 | Phase 11 | Pending |
-
----
-
-## 2. Final-State Architectural Decisions (D1 – D16)
-
-| Decision | Summary | Phase | Status |
+| Section Number | Requirement Summary | Target Phase | Status |
 |---|---|---|---|
-| **D1** | Single clean-room repo; typed workspaces (`client`, `server`, `shared`) | Phase 1 | **DONE** |
-| **D2** | 5-level status model (`VERIFIED_OFFICIAL` to `CONFIRMED_SCAM`); link checks keep 3-level | Phase 2, Phase 5 | Pending |
-| **D3** | Full rule catalog with negation guards; k-of-8 coverage metric; `none_found` outcome | Phase 3, Phase 5 | Pending |
-| **D4** | 3-part next steps; clean PDF evidence report without orphan headings | Phase 5, Phase 10 | Pending |
-| **D5** | Light theme editorial design tokens; no dark mode gradients; designated routes | Phase 8, Phase 9 | Pending |
-| **D6** | Single-column results layout; mobile section chips; collapsed evidence on mobile | Phase 10 | Pending |
-| **D7** | Guest analysis held in `sessionStorage`; zero server persistence for unauthenticated | Phase 7, Phase 10 | Pending |
-| **D8** | Safe reply hidden for High Risk / Confirmed Scam; "I already paid" defaults OFF | Phase 5, Phase 10 | Pending |
-| **D9** | AI strictly optional server-side; schema-grounded with `findSpan`; fail soft | Phase 7 | Pending |
-| **D10** | Third-party checks disabled by default (`ENABLE_THIRD_PARTY_CHECKS=false`); RDAP on | Phase 7 | Pending |
-| **D11** | No ML layer; no Supabase service-role key in request handling | Phase 1, Phase 6 | **DONE** |
-| **D12** | Min text length enforced (`INPUT_LIMITS.textMin`); UI shows real constants | Phase 2, Phase 10 | Pending |
-| **D13** | Multilingual UI chrome in EN / HI / KN | Phase 8 | Pending |
-| **D14** | Consolidated database migrations directly creating final schema with RLS | Phase 6 | Pending |
-| **D15** | Self-hosted local fonts (Noto Sans Devanagari/Kannada); zero CDNs | Phase 8 | Pending |
-| **D16** | Privacy copy audit against code reality (`docs/privacy-copy-check.md`) | Phase 11 | Pending |
+| **0.1** | Mission: Complete Jaanch web application, working one phase at a time | All Phases | In Progress |
+| **0.2** | Spec references: Later instructions take precedence, conservative decisions recorded | All Phases | Active |
+| **0.3.1** | Git safety: Clean initial commit, work on branch | Phase 1 | **DONE** |
+| **0.3.2** | Local commit only: No unauthorized push, merge, or remote modification | All Phases | Active |
+| **0.3.3** | Zero secret commits: Ignore `.env`, commit only `.env.example`, no message logging | Phase 1 | **DONE** |
+| **0.3.4** | Branch guard / hook check | Phase 1 | **DONE** |
+| **0.3.5** | Cross-platform compatibility: Node scripts, LF attributes | Phase 1 | **DONE** |
+| **0.3.6** | Dependency management: Pin stable dependencies, verify peer dependencies | Phase 1 | **DONE** |
+| **0.4.1** | Phase gate: Note phase-start commit | All Phases | Active |
+| **0.4.2** | Test-first implementation: Tests written alongside implementation | All Phases | Active |
+| **0.4.3** | Cumulative verification: All linters, typechecks, and tests green at phase end | All Phases | Active |
+| **0.4.4** | Phase reports: Record what was built, commands, PASS/FAIL criteria | All Phases | Active |
+| **0.4.5** | State tracking: Update `docs/STATE.md` and commit with conventional commit message | All Phases | Active |
+| **0.4.6** | Rollback on failure: Reset to phase-start commit if critical errors occur | All Phases | Active |
+| **0.4.7** | Zero stubs: No placeholder mocks or visual-only implementations | All Phases | Active |
+| **0.7.H0** | Human Gate H0: Confirm machine, Node >= 20, Git setup | Phase 1 | **DONE** |
+| **0.7.H1** | Human Gate H1: Database setup & user auth verification | Phase 4 | Pending |
+| **0.7.H2** | Human Gate H2: Review final runbook, smoke tests, and deploy readiness | Phase 11 | Pending |
 
 ---
 
-## 3. Core Acceptance Criteria (CRIT-01 – CRIT-10)
+## 2. Implementation Phases & Milestones
 
-| ID | Criterion | Verification Harness | Status |
+| Phase | Milestone Name | Key Deliverables | Status |
 |---|---|---|---|
-| **CRIT-01** | Hero Section & Official Portal Notice | `test-acceptance.mjs` | NOT_YET_IMPLEMENTED |
-| **CRIT-02** | Sticky Navigation with Zero Overlap | `test-acceptance.mjs` | NOT_YET_IMPLEMENTED |
-| **CRIT-03** | Language Switch (EN / HI / KN) | `test-acceptance.mjs` | NOT_YET_IMPLEMENTED |
-| **CRIT-04** | Three Test Scenarios (Sample Chips) | `test-acceptance.mjs` | NOT_YET_IMPLEMENTED |
-| **CRIT-05** | 25-Character Minimum Input Validation | `test-acceptance.mjs` | NOT_YET_IMPLEMENTED |
-| **CRIT-06** | Results Layout & Information Architecture | `test-acceptance.mjs` | NOT_YET_IMPLEMENTED |
-| **CRIT-07** | PDF Export ≤ 4 Pages with ≥ 75% Page Fill | `test-acceptance.mjs` | NOT_YET_IMPLEMENTED |
-| **CRIT-08** | Design Token Compliance (No Hardcoded Colors) | `check-no-hardcoded-colors.mjs` | **PASS** |
-| **CRIT-09** | Responsive Design (from 360px) | `test-acceptance.mjs` | NOT_YET_IMPLEMENTED |
-| **CRIT-10** | Bundle Security (No Secrets in Bundle) | `check-no-secrets.cjs` | **PASS** |
+| **Phase 1** | Workspace & Tooling | Monorepo structure, root scripts, linters, security scanners, acceptance test harness, spec records | **DONE** |
+| **Phase 2** | Shared Core | Zod schemas, 8 core detection rules, PII redaction, entity extraction, lookalike link heuristics, status determination, 25 test fixtures | Pending |
+| **Phase 3** | Server API | Express server architecture, request validation, rate limits, health checks, error handling | Pending |
+| **Phase 4** | Database & Auth | Supabase PostgreSQL schema, RLS policies, Express JWT verification, peppered entity hashing | Pending |
+| **Phase 5** | Client Foundation | Vite React structure, editorial CSS design tokens, client API service, routing, local state | Pending |
+| **Phase 6A** | UI – Landing Page | Hero section, official portal notices, how-it-works cards, student guidelines | Pending |
+| **Phase 6B** | UI – Analyzer | Offer text input, file upload with in-browser extraction, sample chips, consent toggles | Pending |
+| **Phase 6C** | UI – Results & PDF | Verdict banner, why bullets, next steps panel, compact PDF generation (≤ 4 pages) | Pending |
+| **Phase 6D** | UI – Auth & History | User login/signup, saved checks, history filters, account data deletion | Pending |
+| **Phase 7** | Shared Intelligence & Moderation | Scam reports submission, moderator confirmation workflows, indicator matching | Pending |
+| **Phase 8** | AI / ML Layer | Optional Gemini integration, schema grounding, graceful fallbacks | Pending |
+| **Phase 9** | WhatsApp Integration | Pre-formatted sharing intents with confirmed threat indicators only (no auto-send) | Pending |
+| **Phase 10** | Verification & QA | End-to-end evaluation, accessibility auditing (WCAG AA), responsive testing (360px+) | Pending |
+| **Phase 11** | Deployment & Runbook | Production build verification, deploy configuration, doctor script, final runbook | Pending |
+
+---
+
+## 3. Environment & Configuration Specifications
+
+| Requirement Reference | Description | Status |
+|---|---|---|
+| **Appendix A.1** | Server environment variables template (`server/.env.example`) | **DONE** |
+| **Appendix A.2** | Client environment variables template (`client/.env.example`) | **DONE** |
+| **Appendix B.1** | Platform & cross-OS safety | **DONE** |
+| **Appendix B.2** | Specification ambiguity resolution (conservative precedence) | **DONE** |
+| **Appendix B.3** | Zero secret leakage guarantee | **DONE** |

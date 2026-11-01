@@ -1,56 +1,59 @@
 # JAANCH – Project State
 
-## 1. Project Overview
+## 1. Specification Status Notice
+> [!WARNING]
+> **`docs/SPEC_ORIGINAL.md` status:** **UNVERIFIED**.
+> The verbatim content for `docs/SPEC_ORIGINAL.md` will be provided directly by the user. It is preserved without modifications and treated as unverified until confirmed.
+
+---
+
+## 2. Project Overview
 - **Project Name:** Jaanch (Student Offer Verification & Trust Safety Platform)
 - **Problem Statement:** "Fake or Real" (Digital Trust & Safety for Indian Students)
-- **Current Phase:** Phase 1 – Workspace, Spec Files, Root Tooling
-- **Current Tag:** `phase-1-done` (pending commit)
+- **Current Phase:** Phase 1 – Workspace, Spec Files, Root Tooling (Correction Completed)
 - **Node Version:** v24.19.0 (LTS >= 20 required)
-- **Repository State:** Initialized clean-room monorepo
+- **Repository State:** Clean monorepo foundation
 
 ---
 
-## 2. Workspaces & Tooling Status
-- **Root:**
-  - npm workspaces configured: `shared`, `server`, `client`.
-  - Scripts: `dev`, `build`, `test`, `typecheck`, `lint`, `eval`, `check:no-secrets`, `check:colors`, `check:banned-phrases`, `test:acceptance`.
+## 3. Approved Decision & Architecture Summary
+- **Verdicts:**
+  - `LIKELY_GENUINE`: Passed corroborating checks; no scam indicators found.
+  - `NEEDS_REVIEW`: Incomplete details, missing verification, or unverified contact.
+  - `HIGH_CONCERN`: Hard disqualifiers present (fees, credential demands, urgency).
+  - `CONFIRMED_SCAM`: Matched an intelligence record confirmed fraudulent by a human moderator.
+  *(CONFIRMED_SCAM is only reachable via moderator-confirmed intelligence records, never from text alone).*
+- **Intelligence-Record Lifecycle:**
+  `reported` ──▶ `unverified` ──▶ `ai_flagged` ──▶ `suspicious` ──▶ `confirmed`, plus `dismissed`, `disputed`.
+  *(One report or weak AI match never confirms; only a human moderator confirms).*
+- **Approved Roadmap (11 Phases):**
+  1. Workspace
+  2. Shared core (schemas, 8 rules, redaction, extraction, lookalike, status, 25 fixtures)
+  3. Server API
+  4. Database and auth
+  5. Client foundation
+  6. UI implementation (6A Landing, 6B Analyzer, 6C Results/PDF, 6D Auth UI)
+  7. Shared intelligence and moderation
+  8. AI/ML
+  9. WhatsApp
+  10. Verification
+  11. Deployment
+
+---
+
+## 4. Current Tooling & Verification Status
+- **Root Scripts:** `dev`, `build`, `test`, `typecheck`, `lint`, `eval`, `check:no-secrets`, `check:colors`, `check:banned-phrases`, `test:acceptance`.
 - **Workspaces:**
-  - `@jaanch/shared`: Minimal typed skeleton with `JAANCH_VERSION`.
-  - `@jaanch/server`: Minimal typed skeleton referencing `@jaanch/shared`.
-  - `@jaanch/client`: Minimal typed skeleton referencing `@jaanch/shared`.
-- **Security & Linters:**
-  - `check-no-secrets.cjs`: Operational, checks client files for server keys and JWT patterns.
-  - `check-no-hardcoded-colors.mjs`: Operational, scans client TSX files for `#hex`, `rgb/rgba/hsl`, and arbitrary Tailwind values (exempts `tokens.css`).
-  - `check-banned-phrases.cjs`: Operational, checks client/server/shared against `banned-phrases.json` with empty allowlist.
-  - `test-acceptance.mjs`: Operational, reports on 10 core criteria honestly (`NOT_YET_IMPLEMENTED` in Phase 1).
-
----
-
-## 3. Specification & Documentation Authority
-- `docs/SPEC_ORIGINAL.md`: Primary specification, verbatim prompt authority, read-only.
-- `docs/SPEC_ADDENDUM.md`: Approved architecture additions and locked decisions.
-- `docs/ACCEPTANCE_CRITERIA.md`: 10 core UX and structural criteria defined.
-- `docs/TRACEABILITY.md`: Traceability matrix mapping requirements to phases.
-- `docs/spec/SPEC_PACK.md`: Full specification pack (Parts A–G).
-- `docs/reference/`: Reference UI mockups and design assets.
-
----
-
-## 4. Phase 1 Verification Checklist
-- [x] Node >= 20 verified (`v24.19.0`)
-- [x] `git init` completed
-- [x] `.gitignore` ignores `node_modules`, `dist`, `coverage`, `.env*` (preserves `.env.example`)
-- [x] `.editorconfig` configured (UTF-8, LF, 2 spaces)
-- [x] Root `package.json` with 3 workspaces and standard dev/build/test/typecheck/lint scripts
-- [x] Workspace skeletons compile cleanly (`npm run build`, `npm run typecheck`)
-- [x] Root security and linter scripts created and tested
-- [x] Unit tests in `scripts/__tests__` verify failure on violations and pass on clean files
-- [x] Acceptance test harness reports 10 criteria honestly
-- [x] `.env.example` templates created for server and client without real values
+  - `@jaanch/shared`: Minimal typed skeleton.
+  - `@jaanch/server`: Minimal typed skeleton.
+  - `@jaanch/client`: Minimal typed skeleton.
+- **Verification Suites:**
+  - `check-no-secrets.cjs`: Operational, verified via unit tests.
+  - `check-no-hardcoded-colors.mjs`: Operational, verified via unit tests.
+  - `check-banned-phrases.cjs`: Operational, verified via unit tests.
+  - `test-acceptance.mjs`: Operational, reporting 10 core criteria as `NOT_YET_IMPLEMENTED`.
 
 ---
 
 ## 5. Next Steps
-- Commit Phase 1 files.
-- Tag repository: `phase-1-done`.
-- Proceed to **Phase 2 – Shared Foundation (Pure TypeScript)**: Zod schemas, status enums, policy configurations, text segmentation, and entity models.
+- Next Phase: **Phase 2 – Shared core** (schemas, 8 rules, redaction, extraction, lookalike, status, 25 fixtures).
