@@ -24,3 +24,4 @@ for (const down of downMigrations) {
 }
 
 console.log('\nAll 6 migrations verified in proper forward and rollback order.');
+

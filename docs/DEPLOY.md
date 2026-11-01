@@ -174,3 +174,4 @@ If a database migration must be rolled back, execute the corresponding `.down.sq
 psql $DATABASE_URL -f supabase/migrations/0006_rate_limiting.down.sql
 psql $DATABASE_URL -f supabase/migrations/0005_ai_ml_vector_similarity.down.sql
 ```
+

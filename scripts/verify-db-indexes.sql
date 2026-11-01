@@ -65,3 +65,4 @@ WHERE reset_at <= NOW();
 -- Delete on public.rate_limits
 --   -> Index Scan using idx_rate_limits_reset_at on public.rate_limits
 --        Index Cond: (reset_at <= now())
+

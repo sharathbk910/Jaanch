@@ -57,3 +57,4 @@ jobs:
         run: npm ci
       - name: Build Shared, Server, Client
         run: npm run build
+

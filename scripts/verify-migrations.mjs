@@ -47,3 +47,4 @@ if (hasErrors) {
 } else {
   console.log('\nAll migrations verified successfully!');
 }
+

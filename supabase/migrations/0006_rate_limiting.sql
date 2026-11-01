@@ -102,3 +102,4 @@ BEGIN
   DELETE FROM public.rate_limits WHERE key = p_key;
 END;
 $$;
+
