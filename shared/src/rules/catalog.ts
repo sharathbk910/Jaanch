@@ -38,7 +38,7 @@ export const RULE_UPFRONT_FEE: RuleDefinition = {
   evaluate: (normalizedText, rawText) => {
     // English, Hindi, Hinglish, Kannada upfront fee terms
     const feeRegex =
-      /\b(?:registration\s+(?:fee|charge|deposit)|training\s+(?:fee|charge|cost)|processing\s+(?:fee|charge)|security\s+deposit|kit\s+(?:fee|charge|cost)|laptop\s+(?:fee|charges?|courier)|refundable\s+deposit|pay\s+(?:upfront|first|amount|fee)|deposit\s+₹|deposit\s+rs|pay\s+₹|pay\s+rs|panjikaran\s+shulk|training\s+shulk|deposit\s+bhare|paise\s+bhejo|shulk\s+jama|nondani\s+shulka|taraketi\s+shulka|deposit\s+kodi|ana\s+kodabeku)\b/gi;
+      /\b(?:registration\s+(?:fees?|charges?|deposits?)|training\s+(?:fees?|charges?|costs?)|processing\s+(?:fees?|charges?)|security\s+deposits?|kit\s+(?:fees?|charges?|costs?)|laptop\s+(?:fees?|charges?|courier)|refundable\s+deposits?|pay\s+(?:upfront|first|amount|fees?)|deposit\s+₹|deposit\s+rs|pay\s+₹|pay\s+rs|panjikaran\s+shulk|training\s+shulk|deposit\s+bhare|paise\s+bhejo|fees?\s+jama|shulk\s+jama|no[n]?dani\s+shulka|shulka\s+pavathisi|taraketi\s+shulka|deposit\s+kodi|ana\s+kodabeku)\b/gi;
 
     let match: RegExpExecArray | null;
     while ((match = feeRegex.exec(normalizedText)) !== null) {
@@ -274,7 +274,7 @@ export const RULE_GENUINE_DISCLAIMER: RuleDefinition = {
   isHardDisqualifier: false,
   evaluate: (normalizedText, rawText) => {
     const disclaimerRegex =
-      /\b(?:(?:we\s+do\s+not|does\s+not|never)\s+(?:charge|ask\s+for|solicit)\s+(?:any\s+)?(?:fee|money|deposit)|recruitment\s+is\s+free\s+of\s+charge|kisi\s+bhi\s+shulk\s+ki\s+mang\s+nahi|shulk\s+nahi\s+liya\s+jata|yavude\s+shulkavilla)\b/gi;
+      /\b(?:(?:we\s+(?:do\s+not|never)|does\s+not|never)\s+(?:charge|ask\s+for|solicit)\s+(?:any\s+)?(?:fees?|money|deposits?|payments?)|recruitment\s+is\s+free\s+of\s+charge|kisi\s+bhi\s+shulk\s+ki\s+mang\s+nahi|shulk\s+nahi\s+liya\s+jata|yavude\s+shulkavilla)\b/gi;
 
     let match: RegExpExecArray | null;
     while ((match = disclaimerRegex.exec(normalizedText)) !== null) {
