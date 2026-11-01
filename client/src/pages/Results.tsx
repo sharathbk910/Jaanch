@@ -529,7 +529,7 @@ export function Results() {
               />
 
               <Button
-                variant="outline"
+                variant="ghost"
                 size="sm"
                 onClick={() => navigate('/analyze')}
                 className="w-full justify-center text-xs text-muted-foreground hover:text-foreground"
@@ -590,7 +590,6 @@ export function Results() {
  */
 export function SamplePage() {
   const { t } = useLanguage();
-  const navigate = useNavigate();
   const [activeScenario, setActiveScenario] = useState<'genuine' | 'review' | 'concern'>('genuine');
   const [reportDialogOpen, setReportDialogOpen] = useState(false);
   const [reportMessageOpen, setReportMessageOpen] = useState(false);
@@ -780,15 +779,12 @@ export function SamplePage() {
             <span className="font-mono text-[11px] uppercase text-muted-foreground block font-bold">
               REFERENCE ACTIONS
             </span>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => navigate('/analyze')}
-              className="w-full justify-center text-xs"
-            >
-              <RotateCcw size={13} className="mr-1.5" />
-              <span>{t('results.checkAnother')}</span>
-            </Button>
+            <WhatsAppShareButton
+              status={result.status}
+              publicId={result.intelMatch?.publicId}
+              matchedIndicators={result.intelMatch?.matchedIndicators}
+              claimedOrg={result.extractedEntities.organization || undefined}
+            />
           </div>
         </aside>
       </div>

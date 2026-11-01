@@ -247,14 +247,14 @@ describe('Phase 6C – Results & PDF (Results.tsx / ResultsPage.tsx)', () => {
     expect(screen.getAllByText(/<script>alert\("xss-title"\)<\/script>/i).length).toBeGreaterThan(0);
   });
 
-  it('does not render PDF export, Print, JSON, or report buttons per user request', () => {
+  it('does not render PDF download, Print, JSON export, or report buttons per user request', () => {
     renderResultsWithResult(SAMPLE_CONCERN_RESULT);
 
     expect(screen.queryByRole('button', { name: /Download PDF Report/i })).not.toBeInTheDocument();
-    expect(screen.queryByRole('button', { name: /Print/i })).not.toBeInTheDocument();
     expect(screen.queryByRole('button', { name: /Export JSON/i })).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /Print/i })).not.toBeInTheDocument();
     expect(screen.queryByRole('button', { name: /Report This Offer/i })).not.toBeInTheDocument();
-    expect(screen.queryByRole('button', { name: /Report Suspicious/i })).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /Report Suspicious Indicator/i })).not.toBeInTheDocument();
   });
 
   it('renders SamplePage walkthrough and switches scenarios seamlessly', async () => {

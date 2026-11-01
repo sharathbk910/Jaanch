@@ -11,7 +11,7 @@ export interface ResultsActionsProps {
   domain?: string;
 }
 
-export function ResultsActions({}: ResultsActionsProps) {
+export function ResultsActions({ result: _result, timestamp: _timestamp, domain: _domain }: ResultsActionsProps) {
   const { t } = useLanguage();
   const navigate = useNavigate();
 
