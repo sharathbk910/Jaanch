@@ -14,6 +14,8 @@ import { feedbackRouter } from './routes/feedback.js';
 import { stubsRouter } from './routes/stubs.js';
 import { historyRouter } from './routes/history.js';
 import { configRouter } from './routes/config.js';
+import { reportsRouter } from './routes/reports.js';
+import { moderationRouter } from './routes/moderation.js';
 
 export interface AppOptions {
   enableRateLimiting?: boolean;
@@ -76,6 +78,8 @@ export function createApp(options: AppOptions = {}): Application {
   app.use('/api', resourcesRouter);
   app.use('/api', feedbackRouter);
   app.use('/api', stubsRouter);
+  app.use('/api', reportsRouter);
+  app.use('/api/moderation', moderationRouter);
   app.use('/api', historyRouter);
   app.use('/api', configRouter);
 

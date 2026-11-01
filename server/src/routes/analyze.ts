@@ -15,6 +15,8 @@ import { optionalAuth } from '../middleware/auth.js';
 import { logger } from '../lib/logger.js';
 import { generateOptionalAISignal } from '../lib/gemini.js';
 import { HistoryRepository } from '../lib/historyRepository.js';
+import { ThreatIntelRepository } from '../lib/threatIntelRepository.js';
+import { type EntityType } from '../lib/hashing.js';
 
 const router = Router();
 
@@ -43,7 +45,66 @@ router.post(
     // 1. Run deterministic shared rules
     const result: AnalyzeResult = analyzeOffer(input);
 
-    // Invariant: Record original status; AI can NEVER change it
+    // 1b. Check threat intelligence repository for confirmed or suspicious indicators
+    const indicatorsToCheck: Array<{ type: EntityType; value: string }> = [];
+    if (result.extractedEntities.emails) {
+      for (const email of result.extractedEntities.emails) {
+        indicatorsToCheck.push({ type: 'email', value: email });
+      }
+    }
+    if (result.extractedEntities.domains) {
+      for (const domain of result.extractedEntities.domains) {
+        indicatorsToCheck.push({ type: 'domain', value: domain });
+      }
+    }
+    if (result.extractedEntities.phones) {
+      for (const phone of result.extractedEntities.phones) {
+        indicatorsToCheck.push({ type: 'phone', value: phone });
+      }
+    }
+    if (result.extractedEntities.upiHandles) {
+      for (const upi of result.extractedEntities.upiHandles) {
+        indicatorsToCheck.push({ type: 'upi', value: upi });
+      }
+    }
+
+    const intelMatches = await ThreatIntelRepository.checkReportedEntities(
+      req.supabase || null,
+      indicatorsToCheck
+    );
+
+    const confirmedMatch = intelMatches.find((m) => m.status === 'confirmed');
+    const suspiciousMatch = intelMatches.find((m) => m.status === 'suspicious' || m.status === 'ai_flagged');
+
+    if (confirmedMatch) {
+      // Invariant: CONFIRMED_SCAM is only reachable via moderator-confirmed intelligence record
+      result.status = 'CONFIRMED_SCAM';
+      result.confidenceScore = 99;
+      result.signals.unshift({
+        id: `sig_intel_${confirmedMatch.id}`,
+        ruleId: 'RULE_CONFIRMED_FRAUD_RECORD',
+        title: 'Confirmed Fraud Record Match',
+        whyItMatters:
+          'This opportunity contains a contact indicator that has been independently investigated and confirmed fraudulent by a human moderator.',
+        evidence: `Matches confirmed safety registry record #${confirmedMatch.id.slice(0, 8)} (${confirmedMatch.entityType})`,
+        severity: 'critical',
+      });
+    } else if (suspiciousMatch) {
+      if (result.status === 'LIKELY_GENUINE' || result.status === 'NEEDS_REVIEW') {
+        result.status = 'HIGH_CONCERN';
+      }
+      result.signals.unshift({
+        id: `sig_intel_${suspiciousMatch.id}`,
+        ruleId: 'RULE_SUSPICIOUS_REPORTED_RECORD',
+        title: 'Community Reported Suspicious Identifier',
+        whyItMatters:
+          'This contact identifier has been reported by students and is under active investigation in the trust & safety database.',
+        evidence: `Matches reported community indicator #${suspiciousMatch.id.slice(0, 8)} (${suspiciousMatch.reportCount} reports)`,
+        severity: 'high',
+      });
+    }
+
+    // Invariant: Record post-intel status; AI can NEVER change it
     const originalStatus = result.status;
 
     // 2. Optional Gemini signal only if consent + key

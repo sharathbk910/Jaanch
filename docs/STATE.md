@@ -10,10 +10,10 @@
 ## 2. Project Overview
 - **Project Name:** Jaanch (Student Offer Verification & Trust Safety Platform)
 - **Problem Statement:** "Fake or Real" (Digital Trust & Safety for Indian Students)
-- **Current Phase:** Phase 6D – Auth UI & History Complete
-- **Current Tag:** `phase-6d-done`
+- **Current Phase:** Phase 7 – Shared Intelligence and Moderation Complete
+- **Current Tag:** `phase-7-done`
 - **Node Version:** v24.19.0 (LTS >= 20 required)
-- **Repository State:** Green monorepo; `@jaanch/shared`, `@jaanch/server`, and `@jaanch/client` fully compiled, typechecked, linted, and tested (260 tests passing across 28 test suites, 25/25 eval fixtures matching 100%, 10/10 acceptance criteria PASS)
+- **Repository State:** Green monorepo; `@jaanch/shared`, `@jaanch/server`, and `@jaanch/client` fully compiled, typechecked, linted, and tested (288 tests passing across 31 test suites, 25/25 eval fixtures matching 100%, 10/10 acceptance criteria PASS)
 
 ---
 
@@ -38,8 +38,8 @@
      - 6B: Analyzer page (**DONE**)
      - 6C: Results page & client-side PDF export (**DONE**)
      - 6D: Auth UI & History (**DONE**)
-  7. Shared intelligence and moderation (Next)
-  8. AI/ML
+  7. Shared intelligence and moderation (**DONE**)
+  8. AI/ML (Next)
   9. WhatsApp
   10. Verification
   11. Deployment
@@ -113,14 +113,24 @@
   - [x] Component test suite (`client/src/__tests__/AuthPages.test.tsx`): 8/8 tests covering sign-in, sign-up validation, history filters, deletion, and settings data erasure
   - [x] Acceptance criteria harness: 10/10 PASS
   - [x] End-to-end local server scenarios (`scripts/verify-scenarios-e2e.ts`): 100% PASS
+- **Phase 7 Verification Checklist:**
+  - [x] Peppered Cryptographic Indicator Hashing: Deterministic SHA-256 peppered hashing (`REPORT_HASH_PEPPER`, >= 24 chars) for emails, domains, phones, UPI handles, and bank accounts. Zero raw indicator PII stored in DB.
+  - [x] Community Threat Reporting: `POST /api/reports/entity` (authenticated with `requireAuth`, rate-limited to 10 reports/day), starting in `unverified` status. Repeated reports increment `report_count`.
+  - [x] Threat Intelligence Lookup: `POST /api/threat-intel/lookup` (rate-limited to 60/hr). Unverified reports strictly masked to prevent defamation/abuse; only confirmed or suspicious matches returned.
+  - [x] Decision D2 & Addendum Extension P2 Invariant:
+    - `CONFIRMED_SCAM` can ONLY be produced when an indicator matches a moderator-confirmed record. Never from raw text alone.
+    - Integrated in `/api/analyze`: matching confirmed records elevates the verdict to `CONFIRMED_SCAM` (confidence >= 98, critical rule `RULE_CONFIRMED_FRAUD_RECORD`).
+  - [x] Moderator Role Guard: `requireRole('moderator')` guarding `GET /api/moderation/entities` and `POST /api/moderation/entities/:id/transition`. Rejects unauthorized users with 403 Forbidden.
+  - [x] Audit Logging: Every state transition writes an audit entry with `actor_id`, `action: 'TRANSITION_ENTITY_STATUS'`, and metadata.
+  - [x] Moderator CLI (`scripts/moderator-cli.ts`): `hash`, `list`, `confirm`, `dismiss`, and `dispute` commands for administrative workflow.
+  - [x] Client UI Component (`ReportEntityDialog.tsx`): Accessible modal dialog (`role="dialog"`, `aria-modal="true"`), authentication check with sign-in prompt for guests, pre-filled indicator type and value, channel selector, notes, loading/error/success states. Integrated in `Results.tsx` and `ExtractedEntitiesCard.tsx`.
+  - [x] Full test suite: 288 tests passing across 31 test suites; 10/10 acceptance criteria passing; 100% scenario verification passing.
 
 ---
 
 ## 5. Next Steps
-- Commit Phase 6D files and tag `phase-6d-done`.
-- Proceed to **Phase 7 – Shared Intelligence and Moderation**:
-  - Moderator role authorization and threat intelligence schema
-  - Entity reporting dialog (`ReportEntityDialog`) for authenticated users
-  - Peppered cryptographic hashes for threat indicators (email, domain, phone, UPI)
-  - Intelligence record lifecycle (`reported` ──▶ `unverified` ──▶ `ai_flagged` ──▶ `suspicious` ──▶ `confirmed`)
-  - Moderator CLI / SQL confirmation workflow (no weak AI or single-user auto-confirmation).
+- Commit Phase 7 files and tag `phase-7-done`.
+- Proceed to **Phase 8 – AI/ML**:
+  - Gemini API integration with schema-grounded response (`findSpan`)
+  - Structured output signals, confidence calibration, and fail-soft behavior (`aiStatus`)
+  - Multimodal understanding for screenshots and document verification.

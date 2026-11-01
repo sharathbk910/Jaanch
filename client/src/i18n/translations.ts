@@ -276,6 +276,30 @@ export interface TranslationDictionary {
     unverifiedLinkNotes: string;
     jumpNavTitle: string;
   };
+  reportDialog: {
+    triggerBtn: string;
+    title: string;
+    subtitle: string;
+    authNotice: string;
+    signInBtn: string;
+    typeLabel: string;
+    valueLabel: string;
+    channelLabel: string;
+    descLabel: string;
+    descPlaceholder: string;
+    submitBtn: string;
+    submittingBtn: string;
+    successTitle: string;
+    successDesc: string;
+    closeBtn: string;
+    types: {
+      upi: string;
+      phone: string;
+      email: string;
+      domain: string;
+      bank_account: string;
+    };
+  };
 
   // Compatibility and short-key aliases
   nav: {
@@ -586,6 +610,30 @@ export const translations: Record<'en' | 'hi' | 'kn', TranslationDictionary> = {
       unverifiedLinkNotes: 'Unverified Aspects',
       jumpNavTitle: 'Jump to Section',
     },
+    reportDialog: {
+      triggerBtn: 'Report Suspicious Indicator',
+      title: 'Report Scam Indicator',
+      subtitle: 'Contribute verified threat intelligence to protect Indian students from fraudulent recruitment.',
+      authNotice: 'Sign in to report fraudulent indicators. An authenticated student account is required to prevent spam or malicious reporting.',
+      signInBtn: 'Sign In to Report',
+      typeLabel: 'Indicator Type',
+      valueLabel: 'Suspicious Contact / Handle / URL',
+      channelLabel: 'Communication Channel',
+      descLabel: 'Details & Evidence (Never submit uncorroborated accusations)',
+      descPlaceholder: 'Describe the scam request, demanded fee amounts, impersonated company names, etc...',
+      submitBtn: 'Submit Report',
+      submittingBtn: 'Submitting Indicator...',
+      successTitle: 'Threat Report Submitted',
+      successDesc: 'Thank you for protecting fellow students. This indicator has been cryptographically hashed and added to the moderator review queue.',
+      closeBtn: 'Close',
+      types: {
+        upi: 'UPI ID / VPA Handle',
+        phone: 'Phone / WhatsApp Number',
+        email: 'Email Address',
+        domain: 'Website / Phishing Domain',
+        bank_account: 'Bank Account Number',
+      },
+    },
 
     // Compatibility aliases
     nav: {
@@ -894,6 +942,30 @@ export const translations: Record<'en' | 'hi' | 'kn', TranslationDictionary> = {
       unverifiedLinkNotes: 'असत्यापित पहलू',
       jumpNavTitle: 'सेक्शन पर जाएं',
     },
+    reportDialog: {
+      triggerBtn: 'संदिग्ध संकेतक की रिपोर्ट करें',
+      title: 'धोखाधड़ी संकेतक की रिपोर्ट करें',
+      subtitle: 'भारतीय छात्रों को फर्जी भर्ती से बचाने के लिए सत्यापित खतरे की जानकारी साझा करें।',
+      authNotice: 'धोखाधड़ी संकेतकों की रिपोर्ट करने के लिए कृपया साइन इन करें। स्पैम या गलत रिपोर्ट रोकने के लिए सत्यापित छात्र खाता आवश्यक है।',
+      signInBtn: 'रिपोर्ट करने के लिए साइन इन करें',
+      typeLabel: 'संकेतक प्रकार',
+      valueLabel: 'संदिग्ध संपर्क / हैंडल / URL',
+      channelLabel: 'संचार माध्यम',
+      descLabel: 'विवरण और साक्ष्य (कभी भी असत्यापित आरोप न लगाएं)',
+      descPlaceholder: 'धोखाधड़ी के अनुरोध, मांगी गई शुल्क राशि, कंपनी के नाम आदि का विवरण दें...',
+      submitBtn: 'रिपोर्ट सबमिट करें',
+      submittingBtn: 'सबमिट किया जा रहा है...',
+      successTitle: 'खतरे की रिपोर्ट सबमिट हो गई',
+      successDesc: 'छात्रों की सुरक्षा में योगदान के लिए धन्यवाद। इस संकेतक को सुरक्षित रूप से हैश करके मॉडरेटर समीक्षा कतार में जोड़ दिया गया है।',
+      closeBtn: 'बंद करें',
+      types: {
+        upi: 'UPI ID / हैंडल',
+        phone: 'फ़ोन / व्हाट्सएप नंबर',
+        email: 'ईमेल पता',
+        domain: 'वेबसाइट / फ़िशिंग डोमेन',
+        bank_account: 'बैंक खाता संख्या',
+      },
+    },
 
     // Compatibility aliases
     nav: {
@@ -1201,6 +1273,30 @@ export const translations: Record<'en' | 'hi' | 'kn', TranslationDictionary> = {
       observedLinkSignals: 'ಪತ್ತೆಯಾದ ಲಿಂಕ್ ಸಂಕೇತಗಳು',
       unverifiedLinkNotes: 'ಪರಿಶೀಲಿಸದ ಅಂಶಗಳು',
       jumpNavTitle: 'ವಿಭಾಗಕ್ಕೆ ಜಂಪ್ ಮಾಡಿ',
+    },
+    reportDialog: {
+      triggerBtn: 'ಶಂಕಾಸ್ಪದ ವಿವರವನ್ನು ವರದಿ ಮಾಡಿ',
+      title: 'ವಂಚನೆ ವಿವರವನ್ನು ವರದಿ ಮಾಡಿ',
+      subtitle: 'ಭಾರತೀಯ ವಿದ್ಯಾರ್ಥಿಗಳನ್ನು ನಕಲಿ ನೇಮಕಾತಿಯಿಂದ ರಕ್ಷಿಸಲು ಪರಿಶೀಲಿಸಿದ ಬೆದರಿಕೆ ಮಾಹಿತಿಯನ್ನು ಕೊಡುಗೆ ನೀಡಿ.',
+      authNotice: 'ವಂಚನೆ ಸೂಚಕಗಳನ್ನು ವರದಿ ಮಾಡಲು ದಯವಿಟ್ಟು ಸೈನ್ ಇನ್ ಮಾಡಿ. ದುರುದ್ದೇಶಪೂರಿತ ವರದಿಗಳನ್ನು ತಡೆಯಲು ದೃಢೀಕರಿಸಿದ ಖಾತೆ ಅಗತ್ಯವಿದೆ.',
+      signInBtn: 'ವರದಿ ಮಾಡಲು ಸೈನ್ ಇನ್ ಮಾಡಿ',
+      typeLabel: 'ವಿವರದ ಪ್ರಕಾರ',
+      valueLabel: 'ಶಂಕಾಸ್ಪದ ಸಂಪರ್ಕ / ಹ್ಯಾಂಡಲ್ / URL',
+      channelLabel: 'ಸಂವಹನ ಮಾಧ್ಯಮ',
+      descLabel: 'ವಿವರಗಳು ಮತ್ತು ಪುರಾವೆ (ದೃಢೀಕರಿಸದ ಆರೋಪಗಳನ್ನು ಎಂದಿಗೂ ಸಲ್ಲಿಸಬೇಡಿ)',
+      descPlaceholder: 'ವಂಚನೆಯ ಬೇಡಿಕೆ, ಕೇಳಲಾದ ಶುಲ್ಕದ ಮೊತ್ತ, ನಕಲಿ ಕಂಪನಿಯ ಹೆಸರು ಇತ್ಯಾದಿಗಳನ್ನು ವಿವರಿಸಿ...',
+      submitBtn: 'ವರದಿ ಸಲ್ಲಿಸಿ',
+      submittingBtn: 'ಸಲ್ಲಿಸಲಾಗುತ್ತಿದೆ...',
+      successTitle: 'ಬೆದರಿಕೆ ವರದಿ ಸಲ್ಲಿಸಲಾಗಿದೆ',
+      successDesc: 'ವಿದ್ಯಾರ್ಥಿಗಳನ್ನು ರಕ್ಷಿಸಲು ಸಹಕರಿಸಿದ್ದಕ್ಕಾಗಿ ಧನ್ಯವಾದಗಳು. ಈ ವಿವರವನ್ನು ಹ್ಯಾಶ್ ಮಾಡಿ ಮಾಡರೇಟರ್ ಪರಿಶೀಲನಾ ಸರದಿಗೆ ಸೇರಿಸಲಾಗಿದೆ.',
+      closeBtn: 'ಮುಚ್ಚಿ',
+      types: {
+        upi: 'UPI ID / ಹ್ಯಾಂಡಲ್',
+        phone: 'ಫೋನ್ / ವಾಟ್ಸಾಪ್ ಸಂಖ್ಯೆ',
+        email: 'ಇಮೇಲ್ ವಿಳಾಸ',
+        domain: 'ವೆಬ್‌ಸೈಟ್ / ನಕಲಿ ಡೊಮೇನ್',
+        bank_account: 'ಬ್ಯಾಂಕ್ ಖಾತೆ ಸಂಖ್ಯೆ',
+      },
     },
 
     // Compatibility aliases

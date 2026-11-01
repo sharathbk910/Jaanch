@@ -18,6 +18,7 @@ import {
   Layers,
   HelpCircle,
   Shield,
+  ShieldAlert,
   FileText,
   Building,
 } from 'lucide-react';
@@ -36,6 +37,7 @@ import { PortalChecklist } from '../components/results/PortalChecklist.js';
 import { ResponseGenerators } from '../components/results/ResponseGenerators.js';
 import { LinkInspector } from '../components/results/LinkInspector.js';
 import { ExtractedEntitiesCard } from '../components/results/ExtractedEntitiesCard.js';
+import { ReportEntityDialog } from '../components/results/ReportEntityDialog.js';
 import { NextSteps } from '../components/results/NextSteps.js';
 import { downloadPdfReport } from '../components/results/PdfExport.js';
 
@@ -153,6 +155,15 @@ export function Results() {
   const navigate = useNavigate();
   const { t } = useLanguage();
   const [downloadingPdf, setDownloadingPdf] = useState(false);
+  const [reportDialogOpen, setReportDialogOpen] = useState(false);
+  const [reportEntityType, setReportEntityType] = useState<'email' | 'domain' | 'phone' | 'upi' | 'bank_account'>('upi');
+  const [reportEntityValue, setReportEntityValue] = useState('');
+
+  const handleOpenReport = (type: 'email' | 'domain' | 'phone' | 'upi' | 'bank_account' = 'upi', val = '') => {
+    setReportEntityType(type);
+    setReportEntityValue(val);
+    setReportDialogOpen(true);
+  };
 
   const [result, setResult] = useState<AnalyzeResult | null>(() => {
     // 1. Check navigation location.state
@@ -395,7 +406,10 @@ export function Results() {
 
           {/* 9. Extracted Opportunity Indicators */}
           <div id="extracted-entities">
-            <ExtractedEntitiesCard entities={result.extractedEntities} />
+            <ExtractedEntitiesCard
+              entities={result.extractedEntities}
+              onReportEntity={handleOpenReport}
+            />
           </div>
 
           {/* 10. Actionable Next Steps */}
@@ -532,6 +546,16 @@ export function Results() {
               </div>
 
               <Button
+                variant="outline"
+                size="sm"
+                onClick={() => handleOpenReport('upi', '')}
+                className="w-full justify-center text-xs text-terracotta border-border hover:bg-background"
+              >
+                <ShieldAlert size={13} className="mr-1.5 text-terracotta" />
+                <span>{t('reportDialog.triggerBtn')}</span>
+              </Button>
+
+              <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => navigate('/analyze')}
@@ -564,6 +588,13 @@ export function Results() {
           </div>
         </aside>
       </div>
+
+      <ReportEntityDialog
+        isOpen={reportDialogOpen}
+        onClose={() => setReportDialogOpen(false)}
+        initialEntityType={reportEntityType}
+        initialValue={reportEntityValue}
+      />
     </main>
   );
 }
@@ -574,6 +605,15 @@ export function Results() {
 export function SamplePage() {
   const { t } = useLanguage();
   const [activeScenario, setActiveScenario] = useState<'genuine' | 'review' | 'concern'>('genuine');
+  const [reportDialogOpen, setReportDialogOpen] = useState(false);
+  const [reportEntityType, setReportEntityType] = useState<'email' | 'domain' | 'phone' | 'upi' | 'bank_account'>('upi');
+  const [reportEntityValue, setReportEntityValue] = useState('');
+
+  const handleOpenReport = (type: 'email' | 'domain' | 'phone' | 'upi' | 'bank_account' = 'upi', val = '') => {
+    setReportEntityType(type);
+    setReportEntityValue(val);
+    setReportDialogOpen(true);
+  };
 
   const scenarioMap = {
     genuine: {
@@ -737,7 +777,10 @@ export function SamplePage() {
 
           <LinkInspector detectedUrls={result.extractedEntities.urls} />
 
-          <ExtractedEntitiesCard entities={result.extractedEntities} />
+          <ExtractedEntitiesCard
+            entities={result.extractedEntities}
+            onReportEntity={handleOpenReport}
+          />
 
           <NextSteps
             status={result.status}
@@ -763,6 +806,15 @@ export function SamplePage() {
             <Button
               variant="outline"
               size="sm"
+              onClick={() => handleOpenReport('upi', '')}
+              className="w-full justify-center text-xs text-terracotta border-border hover:bg-background"
+            >
+              <ShieldAlert size={13} className="mr-1.5 text-terracotta" />
+              <span>{t('reportDialog.triggerBtn')}</span>
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
               onClick={() => window.print()}
               className="w-full justify-center text-xs"
             >
@@ -772,6 +824,13 @@ export function SamplePage() {
           </div>
         </aside>
       </div>
+
+      <ReportEntityDialog
+        isOpen={reportDialogOpen}
+        onClose={() => setReportDialogOpen(false)}
+        initialEntityType={reportEntityType}
+        initialValue={reportEntityValue}
+      />
     </main>
   );
 }

@@ -121,5 +121,58 @@ export const apiClient = {
       method: 'DELETE',
     });
   },
+
+  /**
+   * Community threat reporting: reports a fraudulent entity (email, domain, phone, upi)
+   */
+  async reportEntity(data: {
+    entityType: 'email' | 'domain' | 'phone' | 'upi' | 'bank_account';
+    value: string;
+    channel?: string;
+    description?: string;
+  }): Promise<{ reportId: string; status: string; reportCount: number; message: string }> {
+    return request<{ reportId: string; status: string; reportCount: number; message: string }>(
+      '/api/reports/entity',
+      {
+        method: 'POST',
+        body: JSON.stringify(data),
+      }
+    );
+  },
+
+  /**
+   * Threat intelligence lookup
+   */
+  async lookupThreatIntel(
+    entities: Array<{ entityType: 'email' | 'domain' | 'phone' | 'upi' | 'bank_account'; value: string }>
+  ): Promise<{ matches: any[] }> {
+    return request<{ matches: any[] }>('/api/threat-intel/lookup', {
+      method: 'POST',
+      body: JSON.stringify({ entities }),
+    });
+  },
+
+  /**
+   * Moderator: retrieves reported entities queue
+   */
+  async getModerationEntities(params: { status?: string; page?: number; limit?: number } = {}): Promise<any> {
+    const query = new URLSearchParams();
+    if (params.status) query.set('status', params.status);
+    if (params.page) query.set('page', String(params.page));
+    if (params.limit) query.set('limit', String(params.limit));
+
+    const qs = query.toString();
+    return request<any>(`/api/moderation/entities${qs ? `?${qs}` : ''}`);
+  },
+
+  /**
+   * Moderator: transitions threat indicator lifecycle state
+   */
+  async transitionEntityStatus(id: string, data: { toStatus: string; notes?: string }): Promise<any> {
+    return request<any>(`/api/moderation/entities/${id}/transition`, {
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
+  },
 };
 

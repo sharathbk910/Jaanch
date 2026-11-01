@@ -68,7 +68,7 @@
 | **F07** | Rule engine (catalog, negation guards, hard disqualifiers) | P3 | Phase 2 | **DONE** |
 | **F08** | Sender email analysis, header parsing (SPF/DKIM/DMARC), DNS policy lookup | P3, P5 | Phase 2, Phase 3 | Pending (Email in P2, DNS in P3) |
 | **F09** | Lookalike/impersonation detection, link inspector, reserved-domain note | P3, P5, P10 | Phase 2, Phase 3 | **DONE** |
-| **F10** | Organization registry match; reported-entities lookup & reporting (peppered hash) | P4, P5, P10 | Phase 4, Phase 7 | Pending |
+| **F10** | Organization registry match; reported-entities lookup & reporting (peppered hash) | P4, P5, P10 | Phase 4, Phase 7 | **DONE** (Cryptographic peppered hash, rate-limited reporting & lookup, moderator state machine) |
 | **F11** | Status engine (verdicts, reasons), paymentAlert, coverage k-of-8, pattern insights | P3 | Phase 2 | **DONE** |
 | **F12** | RDAP domain age; (flagged) CT-log, Safe Browsing, official listing fetch/compare | P5, P7 | Phase 3 | Pending |
 | **F13** | Optional Gemini context, challenge email, safe reply, link explanation (with fallbacks) | P5, P6 | Phase 8 | Pending |
@@ -105,7 +105,7 @@
 | **Phase 12** | End-to-end QA, parity audit | Phase 10 | Verification & QA |
 | **Phase 13** | Runbook, doctor script, deploy config (H2) | Phase 11 | Deployment |
 | *(None)* | Dedicated WhatsApp sharing feature | Phase 9 | WhatsApp Integration (confirmed indicators only) |
-| *(None)* | Threat intelligence moderation workflows | Phase 7 | Shared intelligence and moderation |
+| *(None)* | Threat intelligence moderation workflows | Phase 7 | Shared intelligence and moderation | **DONE** (Role guard, transition audit logs, moderator CLI) |
 
 ---
 

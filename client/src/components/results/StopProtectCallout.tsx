@@ -84,3 +84,4 @@ export function StopProtectCallout({ amount, upiHandle }: StopProtectCalloutProp
     </section>
   );
 }
+
