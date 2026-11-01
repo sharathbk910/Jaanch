@@ -5,6 +5,7 @@ import { useLanguage } from '../../i18n/LanguageContext.js';
 import { Button } from '../ui/Button.js';
 import { fireCelebrationConfetti } from '../ui/Confetti.js';
 import { sound } from '../../lib/sound.js';
+import { validateOfferInput } from '@jaanch/shared';
 
 export const SCENARIO_GENUINE =
   'Subject: Infosys Springboard Internship Selection. Dear Candidate, you have been selected for the 8-week software engineering internship program. There are no registration or training fees. Stipend is ₹25,000/month. Access details at https://springboard.infosys.com.';
@@ -63,6 +64,16 @@ export function SubmissionCard() {
       setError(t('errors.validationError') || 'Please provide at least 25 characters of offer text.');
       return;
     }
+
+    // Complete deterministic rule-based input test
+    const validation = validateOfferInput(text);
+    if (!validation.isValid) {
+      setError(validation.message || 'Invalid input: The text provided is not a valid offer or recruitment message.');
+      sound.playWarningBlip();
+      return;
+    }
+
+    setError(null);
     // Navigate to analyze page with the input text
     navigate('/analyze', { state: { offerText: text, autoRun: true } });
   };

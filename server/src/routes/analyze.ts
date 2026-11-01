@@ -6,6 +6,7 @@ import {
   analyzeOffer,
   extractEntities,
   redactText,
+  validateOfferInput,
   type AnalyzeRequestInput,
   type AnalyzeResult,
   INPUT_LIMITS,
@@ -42,6 +43,17 @@ router.post(
   async (req: Request, res: Response) => {
     const input = req.body as ServerAnalyzeInput;
     const startTime = Date.now();
+
+    // 0. Validate offer input rule-based requirements
+    const validation = validateOfferInput(input.text);
+    if (!validation.isValid) {
+      return res.status(400).json({
+        error: {
+          code: validation.code || 'INVALID_INPUT',
+          message: validation.message || 'Invalid input provided for offer analysis',
+        },
+      });
+    }
 
     // 1. Run deterministic shared rules
     const result: AnalyzeResult = analyzeOffer(input);

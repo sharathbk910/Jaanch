@@ -19,6 +19,7 @@ export * from './links/index.js';
 export * from './rules/catalog.js';
 export * from './rules/negation.js';
 export * from './rules/emailHeaders.js';
+export * from './rules/inputValidation.js';
 export * from './status/computeStatus.js';
 export * from './config/constants.js';
 export * from './whatsapp.js';

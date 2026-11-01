@@ -20,6 +20,7 @@ import {
 import {
   type OpportunityDomain,
   redactText,
+  validateOfferInput,
 } from '@jaanch/shared';
 import { useLanguage } from '../i18n/LanguageContext.js';
 import { useAuth } from '../lib/AuthContext.js';
@@ -274,6 +275,13 @@ export function Analyze() {
   ) => {
     if (!textToAnalyze || textToAnalyze.trim().length < 25) {
       setError(t.analyzer.charMinAlert);
+      return;
+    }
+
+    // Complete deterministic rule-based input test
+    const validation = validateOfferInput(textToAnalyze);
+    if (!validation.isValid) {
+      setError(validation.message || 'Invalid input: The text provided is not a valid offer or recruitment message.');
       return;
     }
 
