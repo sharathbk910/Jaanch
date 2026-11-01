@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
-import { Menu } from 'lucide-react';
+import { Menu, ShieldCheck } from 'lucide-react';
 import { useLanguage } from '../../i18n/LanguageContext.js';
 import { LangSwitch } from './LangSwitch.js';
 import { ThemeToggle } from './ThemeToggle.js';
@@ -15,36 +15,46 @@ export function Navbar() {
 
   return (
     <>
-      {/* MotherDuck Style Top Helpline Alert Bar */}
-      <div className="w-full bg-terracotta text-white py-1.5 px-4 text-[11px] sm:text-xs font-bold tracking-wider text-center uppercase border-b-2 border-neo-border select-none flex items-center justify-center gap-2 z-50">
-        <span>1930 National Cyber Crime Helpline — Report fraud immediately at cybercrime.gov.in</span>
-        <span aria-hidden="true">→</span>
+      {/* Top Helpline Alert Bar in Exactly 1 Line */}
+      <div className="w-full bg-terracotta text-white py-1.5 px-4 text-[11px] sm:text-xs font-bold tracking-wider text-center uppercase border-b-2 border-neo-border select-none whitespace-nowrap overflow-hidden text-ellipsis flex items-center justify-center z-50">
+        <a
+          href="https://cybercrime.gov.in"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1.5 hover:underline truncate"
+        >
+          <span className="truncate">1930 National Cyber Crime Helpline — Report fraud immediately at cybercrime.gov.in</span>
+          <span aria-hidden="true" className="shrink-0">→</span>
+        </a>
       </div>
 
       <header
         data-testid="app-header"
         className="sticky top-0 z-40 w-full h-[53px] bg-background border-b-2 border-neo-border flex items-center select-none shadow-neo-sm"
       >
-        <div className="w-full max-w-editorial mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-          {/* Brand Wordmark (Serif Terracotta) */}
+        <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4 h-full whitespace-nowrap">
+          {/* Left: Brand Logo in 1 Line */}
           <Link
             to="/"
-            className="flex items-center gap-2 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+            className="flex items-center gap-2 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring shrink-0 group"
           >
-            <span className="font-serif text-xl font-bold tracking-tight text-terracotta">
+            <div className="p-1 bg-terracotta border-2 border-neo-border shadow-neo-sm text-white shrink-0 group-hover:translate-x-[1px] group-hover:translate-y-[1px] group-hover:shadow-none transition-all">
+              <ShieldCheck size={16} aria-hidden="true" />
+            </div>
+            <span className="font-serif text-xl font-bold tracking-tight text-terracotta shrink-0">
               JAANCH.
             </span>
           </Link>
 
-          {/* Desktop Navigation Links (MotherDuck Uppercase Bold Sans Typography) */}
-          <nav className="hidden md:flex items-center space-x-6" aria-label="Main Navigation">
+          {/* Center: Desktop Navigation Links (Properly Spaced in 1 Line) */}
+          <nav className="hidden md:flex items-center gap-5 lg:gap-7 shrink-0 whitespace-nowrap" aria-label="Main Navigation">
             <NavLink
               to="/analyze"
               className={({ isActive }) =>
-                `text-xs font-bold uppercase tracking-wider transition-colors py-1 ${
+                `text-xs font-bold uppercase tracking-wider transition-colors py-1 whitespace-nowrap ${
                   isActive
-                    ? 'text-foreground border-b-2 border-primary'
-                    : 'text-muted-foreground hover:text-foreground'
+                    ? 'text-terracotta border-b-2 border-neo-border'
+                    : 'text-foreground/80 hover:text-foreground'
                 }`
               }
             >
@@ -53,10 +63,10 @@ export function Navbar() {
             <NavLink
               to="/link-check"
               className={({ isActive }) =>
-                `text-xs font-bold uppercase tracking-wider transition-colors py-1 ${
+                `text-xs font-bold uppercase tracking-wider transition-colors py-1 whitespace-nowrap ${
                   isActive
-                    ? 'text-foreground border-b-2 border-primary'
-                    : 'text-muted-foreground hover:text-foreground'
+                    ? 'text-terracotta border-b-2 border-neo-border'
+                    : 'text-foreground/80 hover:text-foreground'
                 }`
               }
             >
@@ -65,10 +75,10 @@ export function Navbar() {
             <NavLink
               to="/resources"
               className={({ isActive }) =>
-                `text-xs font-bold uppercase tracking-wider transition-colors py-1 ${
+                `text-xs font-bold uppercase tracking-wider transition-colors py-1 whitespace-nowrap ${
                   isActive
-                    ? 'text-foreground border-b-2 border-primary'
-                    : 'text-muted-foreground hover:text-foreground'
+                    ? 'text-terracotta border-b-2 border-neo-border'
+                    : 'text-foreground/80 hover:text-foreground'
                 }`
               }
             >
@@ -77,10 +87,10 @@ export function Navbar() {
             <NavLink
               to="/about"
               className={({ isActive }) =>
-                `text-xs font-bold uppercase tracking-wider transition-colors py-1 ${
+                `text-xs font-bold uppercase tracking-wider transition-colors py-1 whitespace-nowrap ${
                   isActive
-                    ? 'text-foreground border-b-2 border-primary'
-                    : 'text-muted-foreground hover:text-foreground'
+                    ? 'text-terracotta border-b-2 border-neo-border'
+                    : 'text-foreground/80 hover:text-foreground'
                 }`
               }
             >
@@ -88,60 +98,53 @@ export function Navbar() {
             </NavLink>
           </nav>
 
-          {/* Right Action Cluster: LangSwitch, ThemeToggle, Sky-Blue CTA (MotherDuck START FREE button) */}
-          <div className="hidden md:flex items-center space-x-3">
-            <LangSwitch size="sm" />
-            <ThemeToggle />
+          {/* Right: Actions Cluster in 1 Line (LOG IN + Blue Button + Controls) */}
+          <div className="hidden md:flex items-center gap-3 lg:gap-4 shrink-0 whitespace-nowrap">
+            {user ? (
+              <div className="flex items-center gap-2 shrink-0 whitespace-nowrap">
+                <Link
+                  to="/history"
+                  className="text-xs font-bold uppercase tracking-wider text-foreground hover:text-terracotta transition-colors px-1.5 py-1 whitespace-nowrap"
+                >
+                  {t('navigation.history')}
+                </Link>
+                <button
+                  type="button"
+                  onClick={() => signOut()}
+                  className="text-xs font-bold uppercase tracking-wider text-muted-foreground hover:text-foreground transition-colors px-1.5 py-1 whitespace-nowrap"
+                >
+                  {t('navigation.logout')}
+                </button>
+              </div>
+            ) : (
+              <Link
+                to="/login"
+                className="text-xs font-bold uppercase tracking-wider text-foreground hover:text-terracotta transition-colors px-2 py-1 shrink-0 whitespace-nowrap"
+              >
+                {t('navigation.login')}
+              </Link>
+            )}
 
-            {/* MotherDuck Style Sky Blue Button with Deep Blue Hover & White Text */}
-            <Link to="/analyze">
+            {/* MotherDuck Style Primary Sky Blue Button */}
+            <Link to="/analyze" className="shrink-0">
               <Button
                 variant="primary"
                 size="sm"
-                className="bg-neo-sky text-foreground border-2 border-neo-border shadow-neo-sm font-bold uppercase tracking-wider text-xs px-4 py-2 hover:bg-neo-sky-hover hover:text-white hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all rounded-none"
+                className="bg-neo-sky text-foreground border-2 border-neo-border shadow-neo-sm font-bold uppercase tracking-wider text-xs px-3.5 py-1.5 hover:bg-neo-sky-hover hover:text-white hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all rounded-none whitespace-nowrap"
               >
                 {t('navigation.verifyOffer')}
               </Button>
             </Link>
 
-            {user ? (
-              <div className="flex items-center space-x-2 pl-2 border-l-2 border-neo-border">
-                <Link to="/history">
-                  <Button variant="ghost" size="sm" className="font-bold uppercase tracking-wider text-xs hover:bg-neo-sky hover:text-foreground rounded-none">
-                    {t('navigation.history')}
-                  </Button>
-                </Link>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => signOut()}
-                  className="border-2 border-neo-border shadow-neo-sm font-bold uppercase tracking-wider text-xs rounded-none hover:bg-neo-sky hover:text-foreground hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none"
-                >
-                  {t('navigation.logout')}
-                </Button>
-              </div>
-            ) : (
-              <div className="flex items-center space-x-1.5 pl-2 border-l-2 border-neo-border">
-                <Link to="/login">
-                  <Button variant="ghost" size="sm" className="font-bold uppercase tracking-wider text-xs hover:bg-neo-sky hover:text-foreground rounded-none">
-                    {t('navigation.login')}
-                  </Button>
-                </Link>
-                <Link to="/signup">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="border-2 border-neo-border shadow-neo-sm font-bold uppercase tracking-wider text-xs rounded-none hover:bg-neo-sky hover:text-foreground hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none"
-                  >
-                    {t('navigation.signup')}
-                  </Button>
-                </Link>
-              </div>
-            )}
+            {/* Language Switcher & Theme Toggle Cluster */}
+            <div className="flex items-center gap-1.5 pl-2 border-l-2 border-neo-border/20 shrink-0 whitespace-nowrap">
+              <LangSwitch size="sm" />
+              <ThemeToggle />
+            </div>
           </div>
 
-          {/* Mobile Menu Button (min-h-[44px], min-w-[44px]) */}
-          <div className="flex md:hidden items-center space-x-1">
+          {/* Mobile Menu Button */}
+          <div className="flex md:hidden items-center gap-1 shrink-0">
             <ThemeToggle className="min-h-[44px] min-w-[44px] flex items-center justify-center" />
             <button
               type="button"
