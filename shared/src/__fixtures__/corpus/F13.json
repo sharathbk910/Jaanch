@@ -1,0 +1,12 @@
+{
+  "id": "F13",
+  "name": "Debit Card PIN Phish",
+  "category": "illustrative_synthetic",
+  "language": "en",
+  "expectedStatus": "HIGH_CONCERN",
+  "description": "Asking for debit card details and PIN for salary bank account.",
+  "request": {
+    "text": "To activate your corporate salary account, provide your debit card number and debit card pin for verification.",
+    "domain": "job"
+  }
+}

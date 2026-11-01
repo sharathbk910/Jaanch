@@ -1,0 +1,12 @@
+{
+  "id": "F01",
+  "name": "TechCorp Deposit Trap",
+  "category": "illustrative_synthetic",
+  "language": "en",
+  "expectedStatus": "HIGH_CONCERN",
+  "description": "Demands upfront refundable security deposit for laptop and onboarding kit.",
+  "request": {
+    "text": "Congratulations! You are selected as Software Engineering Intern at TechCorp. A refundable security deposit of ₹4,999 is required for your laptop courier kit. Pay upfront to secure your seat.",
+    "domain": "internship"
+  }
+}

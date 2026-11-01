@@ -1,0 +1,12 @@
+{
+  "id": "F02",
+  "name": "Scholarship KYC Trap",
+  "category": "illustrative_synthetic",
+  "language": "en",
+  "expectedStatus": "HIGH_CONCERN",
+  "description": "Demands bank password and OTP verification to release scholarship funds.",
+  "request": {
+    "text": "Your National Merit Scholarship of ₹50,000 is approved. Share OTP sent to your phone and provide your bank password for immediate direct debit transfer.",
+    "domain": "scholarship"
+  }
+}

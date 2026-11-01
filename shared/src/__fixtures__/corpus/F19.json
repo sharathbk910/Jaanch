@@ -1,0 +1,12 @@
+{
+  "id": "F19",
+  "name": "Vague Scholarship Notice",
+  "category": "illustrative_synthetic",
+  "language": "en",
+  "expectedStatus": "NEEDS_REVIEW",
+  "description": "Generic scholarship circular with missing sponsor identification.",
+  "request": {
+    "text": "State talent scholarship notice for undergraduate engineering students. Merit based grants up to ₹30,000. Submit marksheets to college placement office.",
+    "domain": "scholarship"
+  }
+}

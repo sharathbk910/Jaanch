@@ -1,0 +1,12 @@
+{
+  "id": "F18",
+  "name": "Single Free Email No Org Claim",
+  "category": "illustrative_synthetic",
+  "language": "en",
+  "expectedStatus": "NEEDS_REVIEW",
+  "description": "Individual researcher reaching out from personal webmail with no corporate brand claim.",
+  "request": {
+    "text": "Hi, I saw your research paper on solar cells. I have an open research assistant position. Email me at professor.rao@gmail.com with your resume.",
+    "domain": "job"
+  }
+}

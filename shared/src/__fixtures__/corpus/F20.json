@@ -1,0 +1,12 @@
+{
+  "id": "F20",
+  "name": "Hackathon Invitation Clean",
+  "category": "illustrative_synthetic",
+  "language": "en",
+  "expectedStatus": "NEEDS_REVIEW",
+  "description": "Clean college hackathon invite without official domain validation.",
+  "request": {
+    "text": "Join the annual Inter-College Innovation Challenge. Win cash prizes of ₹50,000. Free participation for all enrolled engineering students.",
+    "domain": "competition"
+  }
+}

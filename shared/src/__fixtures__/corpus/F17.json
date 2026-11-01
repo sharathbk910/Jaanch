@@ -1,0 +1,12 @@
+{
+  "id": "F17",
+  "name": "Single Coercive Deadline",
+  "category": "illustrative_synthetic",
+  "language": "en",
+  "expectedStatus": "NEEDS_REVIEW",
+  "description": "Single urgency pressure notice without fees or corporate free-mail impersonation.",
+  "request": {
+    "text": "Design Hackathon shortlisting in progress. Immediate response required within 2 hours to confirm your team attendance link.",
+    "domain": "competition"
+  }
+}

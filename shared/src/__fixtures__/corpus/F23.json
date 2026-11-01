@@ -1,0 +1,16 @@
+{
+  "id": "F23",
+  "name": "Kannada Negation Shulkavilla",
+  "category": "illustrative_synthetic",
+  "language": "kn",
+  "expectedStatus": "LIKELY_GENUINE",
+  "description": "Kannada recruitment announcement with negation disclaimer.",
+  "request": {
+    "text": "ವಿಪ್ರೋ ಕ್ಯಾಂಪಸ್ ಸಂದರ್ಶನಕ್ಕೆ ಸ್ವಾಗತ. ಅಭ್ಯರ್ಥಿಗಳಿಂದ yavude shulkavilla ಮತ್ತು ನೇಮಕಾತಿ ಸಂಪೂರ್ಣ ಉಚಿತವಾಗಿರುತ್ತದೆ. We do not charge any fee.",
+    "domain": "job",
+    "sender": {
+      "organization": "Wipro",
+      "isOfficialCorporateDomain": true
+    }
+  }
+}

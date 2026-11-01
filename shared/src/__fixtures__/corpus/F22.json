@@ -1,0 +1,16 @@
+{
+  "id": "F22",
+  "name": "Hindi Negation Shulk Nahi",
+  "category": "illustrative_synthetic",
+  "language": "hi",
+  "expectedStatus": "LIKELY_GENUINE",
+  "description": "Hindi recruitment message with negation disclaimer.",
+  "request": {
+    "text": "टाटा कंसल्टेंसी सर्विसेज में आपका स्वागत है। हमारे चयन में kisi bhi shulk ki mang nahi ki jati hai. Recruitment is free of charge.",
+    "domain": "job",
+    "sender": {
+      "organization": "Tata Consultancy Services",
+      "isOfficialCorporateDomain": true
+    }
+  }
+}

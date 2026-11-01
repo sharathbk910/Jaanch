@@ -1,0 +1,16 @@
+{
+  "id": "F03",
+  "name": "Genuine TCS Clean Invite",
+  "category": "illustrative_synthetic",
+  "language": "en",
+  "expectedStatus": "LIKELY_GENUINE",
+  "description": "Official TCS interview invitation with non-fee recruitment policy disclaimer.",
+  "request": {
+    "text": "Dear Candidate, We are pleased to invite you for an interview at Tata Consultancy Services for the graduate trainee role. Please note that TCS does not charge any fee at any stage of the recruitment process.",
+    "domain": "job",
+    "sender": {
+      "organization": "Tata Consultancy Services",
+      "isOfficialCorporateDomain": true
+    }
+  }
+}

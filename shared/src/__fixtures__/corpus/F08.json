@@ -1,0 +1,12 @@
+{
+  "id": "F08",
+  "name": "Lookalike TCS Careers Net",
+  "category": "illustrative_synthetic",
+  "language": "en",
+  "expectedStatus": "HIGH_CONCERN",
+  "description": "Impersonation domain tcs-jobs-india.net with brand keyword.",
+  "request": {
+    "text": "Apply for entry level engineering roles at http://tcs-jobs-india.net/apply and receive fast-track onboarding.",
+    "domain": "job"
+  }
+}

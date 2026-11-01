@@ -1,0 +1,16 @@
+{
+  "id": "F05",
+  "name": "Wipro Genuine with Disclaimer",
+  "category": "illustrative_synthetic",
+  "language": "en",
+  "expectedStatus": "LIKELY_GENUINE",
+  "description": "Official Wipro communication with verified career domain and clear disclaimer.",
+  "request": {
+    "text": "Wipro Limited welcomes you to the Elite National Talent Hunt. Our recruitment is free of charge and we never ask for fee or security deposit.",
+    "domain": "job",
+    "sender": {
+      "organization": "Wipro",
+      "isOfficialCorporateDomain": true
+    }
+  }
+}

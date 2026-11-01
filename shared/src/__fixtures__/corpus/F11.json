@@ -1,0 +1,12 @@
+{
+  "id": "F11",
+  "name": "Hinglish Coercive Deadline Double",
+  "category": "illustrative_synthetic",
+  "language": "hinglish",
+  "expectedStatus": "HIGH_CONCERN",
+  "description": "Combined coercive deadline pressure plus free email claiming corporate brand.",
+  "request": {
+    "text": "Aapka selection Google Technologies me confirm ho gaya hai. Kewal 2 ghante bache hai confirmation ke liye. Contact recruiter on hr.google.careers@gmail.com immediately.",
+    "domain": "job"
+  }
+}

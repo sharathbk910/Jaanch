@@ -1,0 +1,12 @@
+{
+  "id": "F09",
+  "name": "Hindi Panjikaran Shulk Scam",
+  "category": "illustrative_synthetic",
+  "language": "hi",
+  "expectedStatus": "HIGH_CONCERN",
+  "description": "Hindi upfront registration fee scam.",
+  "request": {
+    "text": "बधाई हो! आपका चयन डाटा एंट्री इंटर्नशिप के लिए हुआ है। अपना पद पक्का करने के लिए ₹1500 का panjikaran shulk तुरंत जमा करें।",
+    "domain": "internship"
+  }
+}

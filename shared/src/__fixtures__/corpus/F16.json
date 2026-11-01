@@ -1,0 +1,12 @@
+{
+  "id": "F16",
+  "name": "Freelance Content Writer",
+  "category": "illustrative_synthetic",
+  "language": "en",
+  "expectedStatus": "NEEDS_REVIEW",
+  "description": "Benign freelance writing gig with no upfront fees, unverified client.",
+  "request": {
+    "text": "Looking for a student content writer to draft 5 technical articles on Web3. Budget is ₹15,000. Payment upon milestone completion. No fees required.",
+    "domain": "freelance"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "id": "F21",
+  "name": "Negation Fee Disclaimer Clean",
+  "category": "illustrative_synthetic",
+  "language": "en",
+  "expectedStatus": "LIKELY_GENUINE",
+  "description": "Explicit clause-level negation explaining no fees are charged.",
+  "request": {
+    "text": "Cognizant GenC recruitment drive. Please be aware: We do not charge any fee at any stage of our interview process. Selection is purely on merit.",
+    "domain": "job",
+    "sender": {
+      "organization": "Cognizant",
+      "isOfficialCorporateDomain": true
+    }
+  }
+}

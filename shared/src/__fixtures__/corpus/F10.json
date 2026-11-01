@@ -1,0 +1,12 @@
+{
+  "id": "F10",
+  "name": "Kannada Deposit Scam",
+  "category": "illustrative_synthetic",
+  "language": "kn",
+  "expectedStatus": "HIGH_CONCERN",
+  "description": "Kannada training fee demand.",
+  "request": {
+    "text": "ನಿಮ್ಮನ್ನು ಸಾಫ್ಟ್‌ವೇರ್ ಇಂಟರ್ನ್‌ಶಿಪ್‌ಗೆ ಆಯ್ಕೆ ಮಾಡಲಾಗಿದೆ. ಆರಂಭಿಕ nondani shulka ₹2000 pavatisi ana kodabeku.",
+    "domain": "internship"
+  }
+}

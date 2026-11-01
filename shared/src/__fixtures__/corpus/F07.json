@@ -1,0 +1,12 @@
+{
+  "id": "F07",
+  "name": "Lookalike Micros0ft Typosquat",
+  "category": "illustrative_synthetic",
+  "language": "en",
+  "expectedStatus": "HIGH_CONCERN",
+  "description": "Phishing email using micros0ft-careers.com typo domain.",
+  "request": {
+    "text": "Microsoft hiring committee has reviewed your resume. View your offer letter at http://micros0ft-careers.com/offer. Submit your details today.",
+    "domain": "job"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "id": "F06",
+  "name": "Govt PMKVY Registration Fee Trap",
+  "category": "illustrative_synthetic",
+  "language": "en",
+  "expectedStatus": "HIGH_CONCERN",
+  "description": "Fraudulent scheme impersonating PMKVY requesting registration fee.",
+  "request": {
+    "text": "Under PMKVY Government Scheme, 100% placement guaranteed after 1 month course. Mandatory registration fee of ₹1,200 must be deposited to register.",
+    "domain": "internship"
+  }
+}

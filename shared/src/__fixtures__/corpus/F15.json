@@ -1,0 +1,12 @@
+{
+  "id": "F15",
+  "name": "Informal Startup Unverified",
+  "category": "illustrative_synthetic",
+  "language": "en",
+  "expectedStatus": "NEEDS_REVIEW",
+  "description": "Early stage startup offering internship without fees or official listing.",
+  "request": {
+    "text": "Hey! We loved your GitHub portfolio and want to offer you an internship at NexaAI. Stipend is ₹20,000 per month for 3 months. Let us know when you can join a call.",
+    "domain": "internship"
+  }
+}

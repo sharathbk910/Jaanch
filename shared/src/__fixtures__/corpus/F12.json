@@ -1,0 +1,12 @@
+{
+  "id": "F12",
+  "name": "Cheque Overpayment Scam",
+  "category": "illustrative_synthetic",
+  "language": "en",
+  "expectedStatus": "HIGH_CONCERN",
+  "description": "Classic cheque overpayment scam for virtual student assistant.",
+  "request": {
+    "text": "We are sending you a corporate cashier cheque of ₹85,000 for office supplies. Deposit cheque and return part of money back to our vendor via wire transfer.",
+    "domain": "freelance"
+  }
+}

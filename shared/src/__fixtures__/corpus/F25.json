@@ -1,0 +1,12 @@
+{
+  "id": "F25",
+  "name": "Research Assistantship Benign",
+  "category": "illustrative_synthetic",
+  "language": "en",
+  "expectedStatus": "NEEDS_REVIEW",
+  "description": "Benign academic lab assistantship proposal with no official portal match yet.",
+  "request": {
+    "text": "We are inviting applications for a graduate research assistantship in robotics lab. Monthly stipend is ₹25,000. Send statement of purpose by Friday.",
+    "domain": "internship"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "id": "F04",
+  "name": "Infosys Official Portal Listing",
+  "category": "illustrative_synthetic",
+  "language": "en",
+  "expectedStatus": "LIKELY_GENUINE",
+  "description": "Genuine Infosys offer containing corporate career portal and no-fee notice.",
+  "request": {
+    "text": "Infosys campus hiring team invites you to complete your technical round on our official portal. We do not solicit any money or processing fee for student hiring.",
+    "domain": "job",
+    "sender": {
+      "organization": "Infosys",
+      "isOfficialCorporateDomain": true
+    }
+  }
+}

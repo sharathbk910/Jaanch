@@ -1,0 +1,12 @@
+{
+  "id": "F24",
+  "name": "Campus Placement Notice",
+  "category": "illustrative_synthetic",
+  "language": "en",
+  "expectedStatus": "NEEDS_REVIEW",
+  "description": "Internal college campus drive announcement awaiting official portal verification.",
+  "request": {
+    "text": "Department Notice: Campus placement drive for final year B.Tech students will commence on Monday. Keep your resumes and college ID cards ready.",
+    "domain": "job"
+  }
+}

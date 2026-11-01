@@ -1,0 +1,12 @@
+{
+  "id": "F14",
+  "name": "AICTE Unofficial Fee Trap",
+  "category": "illustrative_synthetic",
+  "language": "en",
+  "expectedStatus": "HIGH_CONCERN",
+  "description": "AICTE scheme soliciting mandatory kit fee on private link.",
+  "request": {
+    "text": "AICTE student internship portal shortlist announced. Mandatory kit fee of ₹1,999 required for study materials. Visit http://aicte-portal-india.org/pay.",
+    "domain": "internship"
+  }
+}
