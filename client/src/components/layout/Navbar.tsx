@@ -93,12 +93,12 @@ export function Navbar() {
             <LangSwitch size="sm" />
             <ThemeToggle />
 
-            {/* MotherDuck Style Primary Action Button */}
+            {/* MotherDuck Style Primary Action Button with Hover Invert */}
             <Link to="/analyze">
               <Button
                 variant="primary"
                 size="sm"
-                className="bg-neo-sky text-foreground border-2 border-neo-border shadow-neo-sm font-bold uppercase tracking-wider text-xs px-4 py-2 hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all rounded-none"
+                className="bg-neo-sky text-foreground border-2 border-neo-border shadow-neo-sm font-bold uppercase tracking-wider text-xs px-4 py-2 hover:bg-foreground hover:text-background hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all rounded-none"
               >
                 {t('navigation.verifyOffer')}
               </Button>
@@ -107,7 +107,7 @@ export function Navbar() {
             {user ? (
               <div className="flex items-center space-x-2 pl-2 border-l-2 border-neo-border">
                 <Link to="/history">
-                  <Button variant="ghost" size="sm" className="font-bold uppercase tracking-wider text-xs">
+                  <Button variant="ghost" size="sm" className="font-bold uppercase tracking-wider text-xs hover:bg-foreground hover:text-background rounded-none">
                     {t('navigation.history')}
                   </Button>
                 </Link>
@@ -115,7 +115,7 @@ export function Navbar() {
                   variant="outline"
                   size="sm"
                   onClick={() => signOut()}
-                  className="border-2 border-neo-border shadow-neo-sm font-bold uppercase tracking-wider text-xs rounded-none"
+                  className="border-2 border-neo-border shadow-neo-sm font-bold uppercase tracking-wider text-xs rounded-none hover:bg-foreground hover:text-background hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none"
                 >
                   {t('navigation.logout')}
                 </Button>
@@ -123,7 +123,7 @@ export function Navbar() {
             ) : (
               <div className="flex items-center space-x-1.5 pl-2 border-l-2 border-neo-border">
                 <Link to="/login">
-                  <Button variant="ghost" size="sm" className="font-bold uppercase tracking-wider text-xs">
+                  <Button variant="ghost" size="sm" className="font-bold uppercase tracking-wider text-xs hover:bg-foreground hover:text-background rounded-none">
                     {t('navigation.login')}
                   </Button>
                 </Link>
@@ -131,7 +131,7 @@ export function Navbar() {
                   <Button
                     variant="outline"
                     size="sm"
-                    className="border-2 border-neo-border shadow-neo-sm font-bold uppercase tracking-wider text-xs rounded-none"
+                    className="border-2 border-neo-border shadow-neo-sm font-bold uppercase tracking-wider text-xs rounded-none hover:bg-foreground hover:text-background hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none"
                   >
                     {t('navigation.signup')}
                   </Button>

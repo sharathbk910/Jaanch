@@ -69,7 +69,7 @@ export function SubmissionCard() {
             className={`flex items-center gap-2 px-6 py-3.5 text-xs font-bold transition-all ${
               activeTab === 'paste'
                 ? 'bg-neo-yellow text-foreground border-r-2 border-neo-border'
-                : 'text-muted-foreground hover:text-foreground hover:bg-surface/50 border-r border-neo-border/40'
+                : 'text-muted-foreground hover:bg-foreground hover:text-background border-r border-neo-border/40'
             }`}
           >
             <FileText size={15} />
@@ -82,7 +82,7 @@ export function SubmissionCard() {
             className={`flex items-center gap-2 px-6 py-3.5 text-xs font-bold transition-all ${
               activeTab === 'upload'
                 ? 'bg-neo-yellow text-foreground border-r-2 border-neo-border'
-                : 'text-muted-foreground hover:text-foreground hover:bg-surface/50 border-r border-neo-border/40'
+                : 'text-muted-foreground hover:bg-foreground hover:text-background border-r border-neo-border/40'
             }`}
           >
             <Upload size={15} />
@@ -102,9 +102,9 @@ export function SubmissionCard() {
                 <button
                   type="button"
                   onClick={handlePasteClipboard}
-                  className="inline-flex items-center gap-1.5 text-xs border border-neo-border shadow-neo-sm bg-background px-2.5 py-1 text-foreground font-bold hover:bg-neo-peach/40 hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all min-h-[32px]"
+                  className="inline-flex items-center gap-1.5 text-xs border border-neo-border shadow-neo-sm bg-background px-2.5 py-1 text-foreground font-bold hover:bg-foreground hover:text-background hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all min-h-[32px] group"
                 >
-                  <Clipboard size={13} />
+                  <Clipboard size={13} className="group-hover:text-background" />
                   <span>Paste from clipboard</span>
                 </button>
               </div>
@@ -168,7 +168,7 @@ export function SubmissionCard() {
                 </div>
               )}
 
-              {/* 3 Test Scenarios / Sample Chips (MotherDuck Pastel Neo Chips) */}
+              {/* 3 Test Scenarios / Sample Chips (Hover Invert) */}
               <div className="pt-2">
                 <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-muted-foreground mb-2.5">
                   <Sparkles size={13} className="text-terracotta" />
@@ -179,7 +179,7 @@ export function SubmissionCard() {
                     type="button"
                     data-testid="scenario-genuine"
                     onClick={() => handleSelectScenario(SCENARIO_GENUINE)}
-                    className="px-3 py-1.5 text-xs border-2 border-neo-border shadow-neo-sm bg-neo-mint text-foreground font-bold hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all"
+                    className="px-3 py-1.5 text-xs border-2 border-neo-border shadow-neo-sm bg-neo-mint text-foreground font-bold hover:bg-foreground hover:text-background hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all"
                   >
                     1. Genuine Internship
                   </button>
@@ -187,7 +187,7 @@ export function SubmissionCard() {
                     type="button"
                     data-testid="scenario-fee"
                     onClick={() => handleSelectScenario(SCENARIO_FEE_SCAM)}
-                    className="px-3 py-1.5 text-xs border-2 border-neo-border shadow-neo-sm bg-neo-peach text-foreground font-bold hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all"
+                    className="px-3 py-1.5 text-xs border-2 border-neo-border shadow-neo-sm bg-neo-peach text-foreground font-bold hover:bg-foreground hover:text-background hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all"
                   >
                     2. Upfront Fee Scam
                   </button>
@@ -195,14 +195,14 @@ export function SubmissionCard() {
                     type="button"
                     data-testid="scenario-otp"
                     onClick={() => handleSelectScenario(SCENARIO_OTP_SCAM)}
-                    className="px-3 py-1.5 text-xs border-2 border-neo-border shadow-neo-sm bg-neo-pink text-foreground font-bold hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all"
+                    className="px-3 py-1.5 text-xs border-2 border-neo-border shadow-neo-sm bg-neo-pink text-foreground font-bold hover:bg-foreground hover:text-background hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all"
                   >
                     3. OTP Phishing Scam
                   </button>
                 </div>
               </div>
 
-              {/* Submit CTA */}
+              {/* Submit CTA with Hover Invert */}
               <div className="pt-4 border-t-2 border-neo-border flex items-center justify-end">
                 <Button
                   type="submit"
@@ -210,10 +210,10 @@ export function SubmissionCard() {
                   size="md"
                   disabled={!isMinMet}
                   data-testid="check-offer-btn"
-                  className="w-full sm:w-auto border-2 border-neo-border shadow-neo bg-neo-blue text-foreground font-bold uppercase tracking-wider hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-neo-sm active:translate-x-[3px] active:translate-y-[3px] active:shadow-none transition-all px-6 py-2.5 rounded-none disabled:opacity-50 disabled:pointer-events-none"
+                  className="w-full sm:w-auto border-2 border-neo-border shadow-neo bg-neo-blue text-foreground font-bold uppercase tracking-wider hover:bg-foreground hover:text-background hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-neo-sm active:translate-x-[3px] active:translate-y-[3px] active:shadow-none transition-all px-6 py-2.5 rounded-none disabled:opacity-50 disabled:pointer-events-none group"
                 >
                   <span>{t('submissionCard.analyzeBtn')}</span>
-                  <ArrowRight size={15} className="ml-2" />
+                  <ArrowRight size={15} className="ml-2 group-hover:translate-x-1 group-hover:text-background transition-transform" />
                 </Button>
               </div>
             </form>
@@ -231,7 +231,7 @@ export function SubmissionCard() {
                 variant="outline"
                 size="sm"
                 onClick={() => navigate('/analyze')}
-                className="mt-4 border-2 border-neo-border shadow-neo bg-surface text-foreground font-bold hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-neo-sm transition-all rounded-none"
+                className="mt-4 border-2 border-neo-border shadow-neo bg-surface text-foreground font-bold hover:bg-foreground hover:text-background hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-neo-sm transition-all rounded-none"
               >
                 Open Analyzer with PDF Support
               </Button>
