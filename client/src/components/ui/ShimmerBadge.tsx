@@ -18,3 +18,4 @@ export function ShimmerBadge({ children, className = '', ...props }: ShimmerBadg
 }
 
 export default ShimmerBadge;
+

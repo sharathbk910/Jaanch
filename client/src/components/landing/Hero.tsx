@@ -45,16 +45,16 @@ export function Hero() {
               {t('hero.subtitle')}
             </p>
 
-            {/* The Two Neo-Brutalist CTAs: Blue Button that transitions from Sky Blue to Deep Blue with White Text */}
+            {/* The Two Neo-Brutalist CTAs: Blue Button that transitions to Light Blue on Hover */}
             <div className="mt-8 flex flex-wrap items-center gap-4">
               <Button
                 variant="primary"
                 size="lg"
                 onClick={scrollToCard}
-                className="group border-2 border-neo-border shadow-neo bg-neo-sky text-foreground font-bold uppercase tracking-wider hover:bg-neo-sky-hover hover:text-white hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-neo-sm active:translate-x-[3px] active:translate-y-[3px] active:shadow-none transition-all rounded-none px-6 py-3.5 h-auto"
+                className="group border-2 border-neo-border shadow-neo bg-neo-sky text-foreground font-bold uppercase tracking-wider hover:bg-neo-sky-light hover:text-foreground hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-neo-sm active:translate-x-[3px] active:translate-y-[3px] active:shadow-none transition-all rounded-none px-6 py-3.5 h-auto"
               >
                 <span>{t('hero.cta')}</span>
-                <ArrowRight size={16} className="ml-2.5 group-hover:translate-x-1 group-hover:text-white transition-transform" />
+                <ArrowRight size={16} className="ml-2.5 group-hover:translate-x-1 group-hover:text-foreground transition-transform" />
               </Button>
 
               <Link to="/link-check">
