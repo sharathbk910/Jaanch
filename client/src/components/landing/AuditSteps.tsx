@@ -1,6 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { Send, BookOpen, BarChart3, ArrowRight, CheckCircle2, AlertTriangle, ShieldCheck } from 'lucide-react';
+import { Send, BookOpen, BarChart3 } from 'lucide-react';
 import { useLanguage } from '../../i18n/LanguageContext.js';
 import { DoodleCloud } from '../ui/DoodleCloud.js';
 
@@ -39,17 +38,9 @@ export function AuditSteps() {
                   <Send size={18} aria-hidden="true" />
                 </div>
               </div>
-              <p className="text-xs sm:text-sm text-foreground/85 leading-relaxed font-normal mb-5">
+              <p className="text-xs sm:text-sm text-foreground/85 leading-relaxed font-normal">
                 {t('auditSteps.step1Desc')}
               </p>
-            </div>
-
-            <div className="mt-5 pt-3 border-t-2 border-neo-border/20 flex items-center justify-between">
-              <Link to="/link-check" className="font-mono text-xs font-bold uppercase tracking-wider text-foreground hover:text-primary flex items-center gap-1.5 group">
-                <span>LEARN MORE</span>
-                <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
-              </Link>
-              <span className="font-mono text-xs font-bold uppercase bg-surface border border-neo-border px-2 py-0.5">01 / LOCAL</span>
             </div>
           </div>
 
@@ -69,17 +60,9 @@ export function AuditSteps() {
                   <BookOpen size={18} aria-hidden="true" />
                 </div>
               </div>
-              <p className="text-xs sm:text-sm text-foreground/85 leading-relaxed font-normal mb-5">
+              <p className="text-xs sm:text-sm text-foreground/85 leading-relaxed font-normal">
                 {t('auditSteps.step2Desc')}
               </p>
-            </div>
-
-            <div className="mt-5 pt-3 border-t-2 border-neo-border/20 flex items-center justify-between">
-              <a href="https://www.mca.gov.in" target="_blank" rel="noopener noreferrer" className="font-mono text-xs font-bold uppercase tracking-wider text-foreground hover:text-primary flex items-center gap-1.5 group">
-                <span>LEARN MORE</span>
-                <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
-              </a>
-              <span className="font-mono text-xs font-bold uppercase bg-surface border border-neo-border px-2 py-0.5">02 / REGISTRY</span>
             </div>
           </div>
 
@@ -99,17 +82,9 @@ export function AuditSteps() {
                   <BarChart3 size={18} aria-hidden="true" />
                 </div>
               </div>
-              <p className="text-xs sm:text-sm text-foreground/85 leading-relaxed font-normal mb-5">
+              <p className="text-xs sm:text-sm text-foreground/85 leading-relaxed font-normal">
                 {t('auditSteps.step3Desc')}
               </p>
-            </div>
-
-            <div className="mt-5 pt-3 border-t-2 border-neo-border/20 flex items-center justify-between">
-              <Link to="/about" className="font-mono text-xs font-bold uppercase tracking-wider text-foreground hover:text-primary flex items-center gap-1.5 group">
-                <span>LEARN MORE</span>
-                <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
-              </Link>
-              <span className="font-mono text-xs font-bold uppercase bg-surface border border-neo-border px-2 py-0.5">03 / VERDICT</span>
             </div>
           </div>
         </div>
