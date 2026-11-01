@@ -53,11 +53,6 @@ interface RdapResult {
 export async function queryRdapDomainAge(domain: string): Promise<RdapResult> {
   const env = loadEnv();
 
-  // Third-party network lookups stay disabled unless ENABLE_THIRD_PARTY_CHECKS=true (Decision D10)
-  if (!env.ENABLE_THIRD_PARTY_CHECKS) {
-    return { ageDays: null, status: 'unknown', errorReason: 'Third party RDAP check is disabled' };
-  }
-
   // Raw IPs cannot be checked via domain RDAP
   if (net.isIP(domain) || isPunycode(domain)) {
     return { ageDays: null, status: 'unknown', errorReason: 'Non-standard domain format' };

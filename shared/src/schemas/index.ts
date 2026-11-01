@@ -127,6 +127,7 @@ export const SenderDetailsSchema = z.object({
   phone: z.string().optional(),
   organization: z.string().optional(),
   isOfficialCorporateDomain: z.boolean().optional(),
+  headers: z.string().optional(),
 });
 export type SenderDetails = z.infer<typeof SenderDetailsSchema>;
 

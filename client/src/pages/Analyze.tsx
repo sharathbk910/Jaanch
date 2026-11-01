@@ -298,12 +298,13 @@ export function Analyze() {
       };
 
       const senderPayload =
-        showSenderFields && (senderEmail || senderPhone || senderDomain || effectiveOrganization)
+        showSenderFields && (senderEmail || senderPhone || senderDomain || effectiveOrganization || emailHeaders)
           ? {
               email: senderEmail.trim() || undefined,
               phone: senderPhone.trim() || undefined,
               domain: senderDomain.trim() || undefined,
               organization: effectiveOrganization.trim() || undefined,
+              headers: emailHeaders.trim() || undefined,
             }
           : undefined;
 

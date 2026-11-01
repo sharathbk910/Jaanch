@@ -10,10 +10,10 @@
 ## 2. Project Overview
 - **Project Name:** Jaanch (Student Offer Verification & Trust Safety Platform)
 - **Problem Statement:** "Fake or Real" (Digital Trust & Safety for Indian Students)
-- **Current Phase:** Phase 8 – AI/ML: Similarity, Semantic, New Rules, URL Intelligence, Evaluation Complete
-- **Current Tag:** `phase-8-done`
+- **Current Phase:** Phase 10 – Verification & QA Complete
+- **Current Tag:** `phase-10-done`
 - **Node Version:** v24.19.0 (LTS >= 20 required)
-- **Repository State:** Green monorepo; `@jaanch/shared`, `@jaanch/server`, and `@jaanch/client` fully compiled, typechecked, linted, and tested (361 tests passing across 38 test suites, 25/25 eval fixtures matching 100%, eval:ml harness passing, 10/10 acceptance criteria PASS)
+- **Repository State:** Green monorepo; `@jaanch/shared`, `@jaanch/server`, and `@jaanch/client` fully compiled, typechecked, linted, and tested (365 tests passing across 39 test suites, 25/25 eval fixtures matching 100%, eval:ml harness passing, 10/10 acceptance criteria PASS)
 
 ---
 
@@ -41,7 +41,7 @@
   7. Shared intelligence and moderation (**DONE**)
   8. AI/ML (Gemini wrapper, PII redaction, grounding with findSpan, fail-soft aiStatus, invariant enforcement, challenge email, safe reply, link explanation) (**DONE**)
   9. WhatsApp (**DONE**)
-  10. Verification
+  10. Verification (**DONE**)
   11. Deployment
 
 ---
@@ -246,11 +246,40 @@
     - 336 tests passing across 36 test suites (8 dedicated backend channel tests in `server/src/__tests__/whatsapp_channel.test.ts` + 6 client component/invariant tests in `client/src/__tests__/WhatsAppShare.test.tsx`).
     - 10 / 10 acceptance criteria passing; 100% scenario verification passing; 25/25 eval fixtures matching 100%.
 
+- **Phase 10 Verification Checklist (Verification & QA):**
+  - [x] RFC 822 Email Header Analysis (`F08`):
+    - `shared/src/rules/emailHeaders.ts`: Evaluates `Authentication-Results`, `Received-SPF`, `DKIM-Signature`, and `From`/`Reply-To` domain mismatch.
+    - Flags `spf=fail` (`RULE_EMAIL_SPF_FAILED`), `dkim=fail` (`RULE_EMAIL_DKIM_FAILED`), and `dmarc=fail` (`RULE_EMAIL_DMARC_FAILED`) with hard disqualifier status.
+    - Wired to `client/src/pages/Analyze.tsx` via `payload.sender.headers`.
+    - Tested via `shared/src/__tests__/emailHeaders.test.ts` (4/4 tests PASS).
+  - [x] RDAP Domain Age Availability (`D10`, `F12`):
+    - `server/src/routes/links.ts: queryRdapDomainAge` executes RDAP lookup via `safeFetch` by default (per Decision D10: "RDAP stays on"), failing soft to `{ ageDays: null, status: 'unknown' }` on timeout/network failure.
+  - [x] Dedicated Link Checker Route (`F18`):
+    - `client/src/pages/Results.tsx: LinkCheckPage` mounted at `/link-check`, supported by `LinkInspector.tsx` and `POST /api/link-check`.
+  - [x] Privacy Copy & Code Audit (`D16`):
+    - Generated `docs/privacy-copy-check.md`: 100% conformant audit of all public-facing privacy claims against concrete code implementation with zero violations.
+  - [x] Feature Parity Matrix (`docs/FEATURE_PARITY.md`):
+    - 24 / 24 Feature Inventory items (F01–F24) verified PASS with proving test files and commands.
+    - 16 / 16 Authoritative Decisions (D1–D16) verified PASS.
+    - 10 / 10 Core Acceptance Criteria (CRIT-01 to CRIT-10) verified PASS.
+  - [x] Regression & Quality Suite Execution:
+    - `check:no-secrets`: PASSED (0 secrets found).
+    - `check:colors`: PASSED (0 hardcoded hex/rgb tokens).
+    - `check:banned-phrases`: PASSED (0 certainty claim violations).
+    - `check:glyphs`: PASSED (0 tofu boxes at 360px in Hindi and Kannada).
+    - `typecheck`: PASSED (0 errors across `shared`, `server`, and `client`).
+    - `npm run eval`: PASSED (25/25 corpus fixtures, 100% Accuracy, Precision, Recall, F1).
+    - `npm run eval:ml`: PASSED (Generated `docs/EVAL_REPORT.md` with threshold calibration).
+    - `npm test`: PASSED (39 test suites, 365 tests passing, 0 failed).
+    - `test:acceptance`: PASSED (10/10 criteria PASS).
+    - `verify:scenarios`: PASSED (100% scenario verification against local server).
+    - `npm run build`: PASSED (Clean production build across all workspaces).
+
 ---
 
 ## 5. Next Steps
-- Commit Phase 9 files and tag `phase-9-done`.
-- Proceed to **Phase 10 – Verification & QA**:
-  - Full end-to-end regression evaluation across all 25 fixtures
-  - Accessibility audit (WCAG 2.2 AA) across all viewports (360px–1920px)
-  - Security audit and parity verification against Feature Inventory F01–F24
+- Phase 10 complete, committed and tagged `phase-10-done`.
+- Proceed to **Phase 11 – Deployment & Runbook**:
+  - `docs/RUNBOOK.md` setup and deployment instructions.
+  - Standalone `scripts/doctor.mjs` environment and health probe.
+  - Production build and deployment configuration verification.

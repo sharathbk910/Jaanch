@@ -51,7 +51,7 @@
 | **D13** | Multilingual: EN / HI / KN chrome translations, Indic font fallbacks | P8, P11 | Phase 5, Phase 6 | **DONE** (Complete translations in EN/HI/KN) |
 | **D14** | Database: Consolidated final schema migration with RLS on all tables | P4 | Phase 4 | **DONE** |
 | **D15** | Fonts & assets: Self-hosted fonts, zero external CDNs, locally bundled workers | P8, P9 | Phase 5, Phase 6 | **DONE** (Self-hosted fallbacks & bundled pdf.worker) |
-| **D16** | Privacy accuracy: Audit all privacy claims against code | P9, P12 | Phase 10 | Pending |
+| **D16** | Privacy accuracy: Audit all privacy claims against code | P9, P12 | Phase 10 | **DONE** (`docs/privacy-copy-check.md`) |
 
 ---
 
@@ -66,22 +66,22 @@
 | **F05** | Input routing (misplaced email/URL/phone/UPI) with visible notices | P2, P9 | Phase 2, Phase 6B | **DONE** |
 | **F06** | Extraction: entities, organization, role, 10-detail completeness with clean whole-word quotes | P2 | Phase 2 | **DONE** |
 | **F07** | Rule engine (catalog, negation guards, hard disqualifiers) | P3 | Phase 2 | **DONE** |
-| **F08** | Sender email analysis, header parsing (SPF/DKIM/DMARC), DNS policy lookup | P3, P5 | Phase 2, Phase 3 | Pending (Email in P2, DNS in P3) |
+| **F08** | Sender email analysis, header parsing (SPF/DKIM/DMARC), DNS policy lookup | P3, P5 | Phase 10 | **DONE** (`evaluateEmailHeaders`) |
 | **F09** | Lookalike/impersonation detection, link inspector, reserved-domain note | P3, P5, P10 | Phase 2, Phase 3 | **DONE** |
 | **F10** | Organization registry match; reported-entities lookup & reporting (peppered hash) | P4, P5, P10 | Phase 4, Phase 7 | **DONE** (Cryptographic peppered hash, rate-limited reporting & lookup, moderator state machine) |
 | **F11** | Status engine (verdicts, reasons), paymentAlert, coverage k-of-8, pattern insights | P3 | Phase 2 | **DONE** |
-| **F12** | RDAP domain age; (flagged) CT-log, Safe Browsing, official listing fetch/compare | P5, P7 | Phase 3 | Pending |
+| **F12** | RDAP domain age; (flagged) CT-log, Safe Browsing, official listing fetch/compare | P5, P7 | Phase 3, Phase 10 | **DONE** (RDAP on by default, safeFetch fail-soft) |
 | **F13** | Optional Gemini context, challenge email, safe reply, link explanation (with fallbacks) | P5, P6 | Phase 8 | **DONE** |
 | **F14** | Results page (verdict banner, payment alert, why, next steps, signals, evidence report) | P10 | Phase 6C | **DONE** |
 | **F15** | Attestations + checklist persistence (saved) / session state (guest) | P5, P10 | Phase 4, Phase 6C | **DONE** |
 | **F16** | Export: PDF (react-pdf, ≤ 4 pages, ₹ renders, ≥ 75% fill), Print, JSON | P10 | Phase 6C | **DONE** |
 | **F17** | `/sample` fictional report walkthrough | P10 | Phase 6C | **DONE** |
-| **F18** | Dedicated link checker page (`/link-check`) | P10 | Phase 6C | Pending |
+| **F18** | Dedicated link checker page (`/link-check`) | P10 | Phase 6C | **DONE** (`LinkCheckPage`) |
 | **F19** | Verification Guide (`/resources`), About, Privacy pages | P10 | Phase 6A, 6C | **DONE** |
 | **F20** | Auth (email/password + Google), history (filters, delete one/all), settings, account deletion | P5, P10 | Phase 4, Phase 6D | **DONE** |
 | **F21** | Security: helmet, CORS allowlist, rate limits, body limits, SSRF safeFetch, RLS | P4, P5 | Phase 3, Phase 4 | **DONE** |
 | **F22** | Fixtures/corpus regression suite + `npm run eval` | P3 | Phase 2 | **DONE** (25/25 100%) |
-| **F23** | Accessibility (WCAG 2.2 AA), responsive 360–1920px, performance budgets | P8–P12 | Phase 10 | In Progress (WCAG AA & 360px verified) |
+| **F23** | Accessibility (WCAG 2.2 AA), responsive 360–1920px, performance budgets | P8–P12 | Phase 10 | **DONE** (axe AA verified, 360px glyphs PASS) |
 | **F24** | Runbook, doctor/smoke scripts, deployment configuration | P13 | Phase 11 | Pending |
 
 ---
@@ -102,7 +102,7 @@
 | **Phase 9** | Landing + Analyze pages, OCR/PDF extraction | Phase 6A, 6B | UI – Landing, UI – Analyzer |
 | **Phase 10** | Results page, PDF export, sample, remaining pages | Phase 6C, 6D | UI – Results/PDF, UI – Auth & History |
 | **Phase 11** | Translations (HI/KN) & polish | Phase 6 | UI implementation |
-| **Phase 12** | End-to-end QA, parity audit | Phase 10 | Verification & QA |
+| **Phase 12** | End-to-end QA, parity audit | Phase 10 | Verification & QA | **DONE** (`docs/FEATURE_PARITY.md`, `docs/privacy-copy-check.md`) |
 | **Phase 13** | Runbook, doctor script, deploy config (H2) | Phase 11 | Deployment |
 | *(None)* | Dedicated WhatsApp sharing feature | Phase 9 | WhatsApp Integration (confirmed indicators only) | **DONE** (Webhook handshake, HMAC signature validation, zero-auto-send invariant, confirmed-only share link generator, WhatsAppShareButton) |
 | *(None)* | Threat intelligence moderation workflows | Phase 7 | Shared intelligence and moderation | **DONE** (Role guard, transition audit logs, moderator CLI) |

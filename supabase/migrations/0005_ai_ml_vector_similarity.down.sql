@@ -5,3 +5,4 @@ DROP FUNCTION IF EXISTS match_intel_similarity(TEXT, FLOAT, INT);
 DROP INDEX IF EXISTS idx_intel_records_embedding_hnsw;
 ALTER TABLE intel_records DROP COLUMN IF EXISTS embedding;
 DROP INDEX IF EXISTS idx_intel_records_scrubbed_trgm;
+

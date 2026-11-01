@@ -8,6 +8,7 @@ import {
 import { normalizeForMatching } from './normalize/index.js';
 import { extractEntities } from './entities/index.js';
 import { RULE_CATALOG } from './rules/catalog.js';
+import { evaluateEmailHeaders } from './rules/emailHeaders.js';
 import { computeStatus } from './status/computeStatus.js';
 
 export * from './schemas/index.js';
@@ -17,6 +18,7 @@ export * from './entities/index.js';
 export * from './links/index.js';
 export * from './rules/catalog.js';
 export * from './rules/negation.js';
+export * from './rules/emailHeaders.js';
 export * from './status/computeStatus.js';
 export * from './config/constants.js';
 export * from './whatsapp.js';
@@ -40,13 +42,19 @@ export function analyzeOffer(rawRequest: AnalyzeRequestInput): AnalyzeResult {
   // 1. Extract raw entities
   const rawEntities = extractEntities(text);
 
-  // 2. Evaluate all 8 deterministic rules
+  // 2. Evaluate all deterministic catalog rules
   const signals: Signal[] = [];
   for (const rule of RULE_CATALOG) {
     const signal = rule.evaluate(normalizedForMatching, text, rawEntities, request.sender);
     if (signal) {
       signals.push(signal);
     }
+  }
+
+  // 2b. Evaluate RFC 822 email headers if provided
+  if (request.sender?.headers) {
+    const headerEval = evaluateEmailHeaders(request.sender.headers);
+    signals.push(...headerEval.signals);
   }
 
   // 3. Compute 4-verdict status & recommendations
