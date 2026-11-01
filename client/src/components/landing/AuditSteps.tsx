@@ -15,16 +15,10 @@ export function AuditSteps() {
       <DoodleCloud size={80} className="absolute right-1/3 bottom-4 opacity-50 hidden md:block pointer-events-none select-none text-foreground" />
 
       <div className="max-w-editorial mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
-          <span className="text-xs font-mono font-bold uppercase tracking-wider bg-neo-yellow border-2 border-neo-border px-3 py-1 shadow-neo-sm inline-block text-foreground">
-            Transparent Heuristic Architecture
-          </span>
-          <h2 className="font-sans font-extrabold tracking-tight text-3xl sm:text-4xl lg:text-5xl text-foreground mt-4">
+        <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
+          <h2 className="font-sans font-extrabold tracking-tight text-3xl sm:text-4xl lg:text-5xl text-foreground">
             How Jaanch Audits an Offer in 3 Steps
           </h2>
-          <p className="mt-3 text-xs sm:text-sm text-muted-foreground font-medium max-w-xl mx-auto">
-            No black-box hallucinations. Fast, deterministic, and privacy-preserving verification across three isolated layers.
-          </p>
         </div>
 
         {/* 3-Card MotherDuck Grid (Peach, Blue, Mint) */}

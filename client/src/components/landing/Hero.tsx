@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Link2, ShieldCheck, Building, GraduationCap, Briefcase, FileCheck, CheckCircle2, Sparkles, Volume2 } from 'lucide-react';
+import { ArrowRight, Link2, ShieldCheck, Building, GraduationCap, Briefcase, FileCheck, CheckCircle2, Volume2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useLanguage } from '../../i18n/LanguageContext.js';
 import { Button } from '../ui/Button.js';
@@ -68,15 +68,6 @@ export function Hero() {
                 </Button>
               </Link>
             </div>
-
-            {/* Quick Prompt below CTAs (MotherDuck sub-button prompt style) */}
-            <div className="mt-4 flex items-center gap-2 text-xs text-muted-foreground font-mono">
-              <Sparkles size={13} className="text-terracotta" />
-              <span>Or inspect suspicious domains directly:</span>
-              <Link to="/link-check" className="font-bold text-foreground hover:underline">
-                URL Inspector →
-              </Link>
-            </div>
           </div>
 
           {/* Right Column: Interactive Video/Preview Card (MotherDuck Right Card & Tap Button) */}
@@ -87,18 +78,10 @@ export function Hero() {
               className="bg-surface border-2 border-neo-border shadow-neo-xl relative overflow-hidden flex flex-col justify-between p-5 sm:p-6 min-h-[280px]"
             >
               <div>
-                <div className="flex items-center justify-between pb-3 border-b-2 border-neo-border mb-4">
-                  <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 bg-terracotta border border-neo-border" />
-                    <div className="w-3 h-3 bg-neo-yellow border border-neo-border" />
-                    <div className="w-3 h-3 bg-neo-sky border border-neo-border" />
-                    <span className="font-mono text-xs font-bold uppercase tracking-wider ml-1 text-foreground">
-                      Offer Audit Engine
-                    </span>
-                  </div>
-                  <span className="text-xs font-mono font-bold bg-neo-peach border border-neo-border px-2 py-0.5 shadow-neo-sm">
-                    DETERMINISTIC
-                  </span>
+                <div className="flex items-center gap-2 pb-3 border-b-2 border-neo-border mb-4">
+                  <div className="w-3 h-3 bg-terracotta border border-neo-border" />
+                  <div className="w-3 h-3 bg-neo-yellow border border-neo-border" />
+                  <div className="w-3 h-3 bg-neo-sky border border-neo-border" />
                 </div>
 
                 <div className="space-y-3 font-mono text-xs">

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Marquee } from './Marquee.js';
-import { ShieldCheck, Building2, PhoneCall, ExternalLink, Award, CheckCircle } from 'lucide-react';
+import { ExternalLink } from 'lucide-react';
 
 interface PortalItem {
   name: string;
@@ -21,14 +21,7 @@ const PORTALS: PortalItem[] = [
 
 export function TrustMarquee() {
   return (
-    <div className="w-full py-6 border-y-2 border-neo-border bg-surface/50 overflow-hidden relative">
-      <div className="max-w-editorial mx-auto px-4 mb-3 text-center">
-        <span className="font-mono text-xs font-bold uppercase tracking-widest text-muted-foreground flex items-center justify-center gap-2">
-          <ShieldCheck size={14} className="text-terracotta" aria-hidden="true" />
-          <span>Real-Time Cross-Referencing Across National Directives</span>
-        </span>
-      </div>
-
+    <div className="w-full py-4 border-y-2 border-neo-border bg-surface/50 overflow-hidden relative">
       <Marquee speed={35} pauseOnHover={true} className="py-2">
         {PORTALS.map((portal) => (
           <a
