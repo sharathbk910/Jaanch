@@ -22,7 +22,7 @@ const PORTALS: PortalItem[] = [
 export function TrustMarquee() {
   return (
     <div className="w-full py-4 border-y-2 border-neo-border bg-surface/50 overflow-hidden relative">
-      <Marquee speed={35} pauseOnHover={true} className="py-2">
+      <Marquee speed={35} direction="right" pauseOnHover={false} className="py-2">
         {PORTALS.map((portal) => (
           <a
             key={portal.name}

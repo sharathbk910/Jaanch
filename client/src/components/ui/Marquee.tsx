@@ -6,36 +6,39 @@ interface MarqueeProps {
   pauseOnHover?: boolean;
   className?: string;
   speed?: number; // duration in seconds
+  gap?: string;
+  repeat?: number;
 }
 
 export function Marquee({
   children,
-  direction = 'left',
-  pauseOnHover = true,
+  direction = 'right',
+  pauseOnHover = false,
   className = '',
-  speed = 30,
+  speed = 35,
+  gap = '1.5rem',
+  repeat = 4,
 }: MarqueeProps) {
   return (
     <div
-      className={`group flex overflow-hidden select-none [mask-image:linear-gradient(to_right,transparent,var(--color-foreground)_10%,var(--color-foreground)_90%,transparent)] ${className}`}
+      className={`group flex overflow-hidden select-none relative gap-[var(--gap)] [mask-image:linear-gradient(to_right,transparent,black_4%,black_96%,transparent)] [-webkit-mask-image:linear-gradient(to_right,transparent,black_4%,black_96%,transparent)] ${className}`}
+      style={{
+        ['--gap' as string]: gap,
+        ['--duration' as string]: `${speed}s`,
+      }}
     >
-      <div
-        className={`flex shrink-0 items-center justify-around gap-8 min-w-full ${
-          direction === 'left' ? 'animate-marquee' : 'animate-marquee-reverse'
-        } ${pauseOnHover ? 'group-hover:[animation-play-state:paused]' : ''}`}
-        style={{ animationDuration: `${speed}s` }}
-      >
-        {children}
-      </div>
-      <div
-        aria-hidden="true"
-        className={`flex shrink-0 items-center justify-around gap-8 min-w-full ${
-          direction === 'left' ? 'animate-marquee' : 'animate-marquee-reverse'
-        } ${pauseOnHover ? 'group-hover:[animation-play-state:paused]' : ''}`}
-        style={{ animationDuration: `${speed}s` }}
-      >
-        {children}
-      </div>
+      {Array.from({ length: repeat }).map((_, idx) => (
+        <div
+          key={idx}
+          aria-hidden={idx > 0 ? 'true' : undefined}
+          className={`flex shrink-0 items-center gap-[var(--gap)] will-change-transform ${
+            direction === 'left' ? 'animate-marquee' : 'animate-marquee-reverse'
+          } ${pauseOnHover ? 'group-hover:[animation-play-state:paused]' : ''}`}
+          style={{ animationDuration: `${speed}s` }}
+        >
+          {children}
+        </div>
+      ))}
     </div>
   );
 }

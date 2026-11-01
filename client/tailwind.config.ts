@@ -170,12 +170,12 @@ export default {
       },
       keyframes: {
         marquee: {
-          from: { transform: 'translateX(0)' },
-          to: { transform: 'translateX(calc(-100% - 2rem))' },
+          from: { transform: 'translate3d(0, 0, 0)' },
+          to: { transform: 'translate3d(calc(-100% - var(--gap, 1.5rem)), 0, 0)' },
         },
         'marquee-reverse': {
-          from: { transform: 'translateX(calc(-100% - 2rem))' },
-          to: { transform: 'translateX(0)' },
+          from: { transform: 'translate3d(calc(-100% - var(--gap, 1.5rem)), 0, 0)' },
+          to: { transform: 'translate3d(0, 0, 0)' },
         },
         shimmer: {
           '0%': { backgroundPosition: '-200% 0' },
