@@ -29,21 +29,21 @@ export function Navbar() {
           {/* Brand Wordmark (Serif Terracotta) */}
           <Link
             to="/"
-            className="flex items-center gap-2 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded-btn"
+            className="flex items-center gap-2 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
           >
             <span className="font-serif text-xl font-bold tracking-tight text-terracotta">
               JAANCH.
             </span>
           </Link>
 
-          {/* Desktop Navigation Links */}
+          {/* Desktop Navigation Links (MotherDuck Uppercase Bold Sans Typography) */}
           <nav className="hidden md:flex items-center space-x-6" aria-label="Main Navigation">
             <NavLink
               to="/analyze"
               className={({ isActive }) =>
-                `text-xs transition-colors py-1 ${
+                `text-xs font-bold uppercase tracking-wider transition-colors py-1 ${
                   isActive
-                    ? 'text-foreground font-semibold border-b-2 border-primary'
+                    ? 'text-foreground border-b-2 border-primary'
                     : 'text-muted-foreground hover:text-foreground'
                 }`
               }
@@ -53,9 +53,9 @@ export function Navbar() {
             <NavLink
               to="/link-check"
               className={({ isActive }) =>
-                `text-xs transition-colors py-1 ${
+                `text-xs font-bold uppercase tracking-wider transition-colors py-1 ${
                   isActive
-                    ? 'text-foreground font-semibold border-b-2 border-primary'
+                    ? 'text-foreground border-b-2 border-primary'
                     : 'text-muted-foreground hover:text-foreground'
                 }`
               }
@@ -65,9 +65,9 @@ export function Navbar() {
             <NavLink
               to="/resources"
               className={({ isActive }) =>
-                `text-xs transition-colors py-1 ${
+                `text-xs font-bold uppercase tracking-wider transition-colors py-1 ${
                   isActive
-                    ? 'text-foreground font-semibold border-b-2 border-primary'
+                    ? 'text-foreground border-b-2 border-primary'
                     : 'text-muted-foreground hover:text-foreground'
                 }`
               }
@@ -77,9 +77,9 @@ export function Navbar() {
             <NavLink
               to="/about"
               className={({ isActive }) =>
-                `text-xs transition-colors py-1 ${
+                `text-xs font-bold uppercase tracking-wider transition-colors py-1 ${
                   isActive
-                    ? 'text-foreground font-semibold border-b-2 border-primary'
+                    ? 'text-foreground border-b-2 border-primary'
                     : 'text-muted-foreground hover:text-foreground'
                 }`
               }
@@ -88,38 +88,51 @@ export function Navbar() {
             </NavLink>
           </nav>
 
-          {/* Right Action Cluster: LangSwitch, ThemeToggle, Solid Black CTA, Auth */}
+          {/* Right Action Cluster: LangSwitch, ThemeToggle, Sky-Blue CTA (MotherDuck START FREE button) */}
           <div className="hidden md:flex items-center space-x-3">
             <LangSwitch size="sm" />
             <ThemeToggle />
 
-            {/* Solid Black CTA */}
+            {/* MotherDuck Style Primary Action Button */}
             <Link to="/analyze">
-              <Button variant="primary" size="sm">
+              <Button
+                variant="primary"
+                size="sm"
+                className="bg-neo-sky text-foreground border-2 border-neo-border shadow-neo-sm font-bold uppercase tracking-wider text-xs px-4 py-2 hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all rounded-none"
+              >
                 {t('navigation.verifyOffer')}
               </Button>
             </Link>
 
             {user ? (
-              <div className="flex items-center space-x-2 pl-2 border-l border-border">
+              <div className="flex items-center space-x-2 pl-2 border-l-2 border-neo-border">
                 <Link to="/history">
-                  <Button variant="ghost" size="sm">
+                  <Button variant="ghost" size="sm" className="font-bold uppercase tracking-wider text-xs">
                     {t('navigation.history')}
                   </Button>
                 </Link>
-                <Button variant="outline" size="sm" onClick={() => signOut()}>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => signOut()}
+                  className="border-2 border-neo-border shadow-neo-sm font-bold uppercase tracking-wider text-xs rounded-none"
+                >
                   {t('navigation.logout')}
                 </Button>
               </div>
             ) : (
-              <div className="flex items-center space-x-1.5 pl-2 border-l border-border">
+              <div className="flex items-center space-x-1.5 pl-2 border-l-2 border-neo-border">
                 <Link to="/login">
-                  <Button variant="ghost" size="sm">
+                  <Button variant="ghost" size="sm" className="font-bold uppercase tracking-wider text-xs">
                     {t('navigation.login')}
                   </Button>
                 </Link>
                 <Link to="/signup">
-                  <Button variant="outline" size="sm">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="border-2 border-neo-border shadow-neo-sm font-bold uppercase tracking-wider text-xs rounded-none"
+                  >
                     {t('navigation.signup')}
                   </Button>
                 </Link>

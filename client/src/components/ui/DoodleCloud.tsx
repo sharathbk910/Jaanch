@@ -30,3 +30,4 @@ export function DoodleCloud({ className = '', size = 120 }: DoodleCloudProps) {
     </svg>
   );
 }
+
