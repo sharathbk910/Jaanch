@@ -23,12 +23,6 @@ export function Hero() {
   return (
     <section className="relative w-full pt-20 sm:pt-24 lg:pt-24 pb-12 sm:pb-16 overflow-hidden">
       <div className="max-w-editorial mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Trust Pill / Top Badge */}
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-pill bg-muted-subtle/10 border border-border text-xs font-medium text-foreground mb-6">
-          <ShieldCheck size={14} className="text-terracotta" aria-hidden="true" />
-          <span>{t('hero.notice')}</span>
-        </div>
-
         {/* Hero Headline (Exact copy register per spec) */}
         <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-foreground leading-[1.15] max-w-3xl">
           {getHeadline()}

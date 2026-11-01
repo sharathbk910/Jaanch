@@ -39,7 +39,6 @@ This document lists all localized UI strings across Hindi (`hi`) and Kannada (`k
 | `hero.subtitle` | Instant, free, and privacy-preserving offer verification for Indian students. Run deterministic checks before you transfer money or share private documents. | भारतीय छात्रों के लिए तत्काल, निःशुल्क और गोपनीयता-सुरक्षित ऑफर सत्यापन। पैसे ट्रांसफर करने या निजी दस्तावेज साझा करने से पहले स्वचालित जांच चलाएं। | ಭಾರತೀಯ ವಿದ್ಯಾರ್ಥಿಗಳಿಗೆ ತ್ವರಿತ, ಉಚಿತ ಮತ್ತು ಗೌಪ್ಯತೆ-ರಕ್ಷಿತ ಆಫರ್ ಪರಿಶೀಲನೆ. ಹಣ ವರ್ಗಾಯಿಸುವ ಅಥವಾ ದಾಖಲೆ ಹಂಚಿಕೊಳ್ಳುವ ಮುನ್ನ ಸ್ವಯಂಚಾಲಿತ ಪರಿಶೀಲನೆ ನಡೆಸಿ. | Pending Native Review |
 | `hero.cta` | Audit an Offer | ऑफर की जांच करें | ಆಫರ್ ಪರಿಶೀಲಿಸಿ | Pending Native Review |
 | `hero.secondaryCta` | Check a Link | संदिग्ध लिंक जांचें | ಲಿಂಕ್ ಪರಿಶೀಲಿಸಿ | Pending Native Review |
-| `hero.notice` | Official Indian government recruitments (UPSC, SSC, Railways, State PSCs) are conducted exclusively on their official .gov.in or .nic.in portals. | भारत सरकार की सभी आधिकारिक भर्तियां (UPSC, SSC, रेलवे, राज्य PSC) केवल उनके आधिकारिक .gov.in या .nic.in पोर्टल पर ही आयोजित की जाती हैं। | ಭಾರತ ಸರ್ಕಾರದ ಅಧಿಕೃತ ನೇಮಕಾತಿಗಳು (UPSC, SSC, ರೈಲ್ವೆ, KPSC) ಕೇವಲ ಅಧಿಕೃತ .gov.in ಅಥವಾ .nic.in ಪೋರ್ಟಲ್‌ಗಳ ಮೂಲಕವೇ ನಡೆಯುತ್ತವೆ. | Pending Native Review |
 
 ---
 

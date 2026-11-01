@@ -19,7 +19,6 @@ export interface TranslationDictionary {
     subtitle: string;
     cta: string;
     secondaryCta: string;
-    notice: string;
   };
   features: {
     zeroFeesTitle: string;
@@ -393,7 +392,6 @@ export const translations: Record<'en' | 'hi' | 'kn', TranslationDictionary> = {
       subtitle: 'Instant, free, and privacy-preserving offer verification for Indian students. Run deterministic checks before you transfer money or share private documents.',
       cta: 'Audit an Offer',
       secondaryCta: 'Check a Link',
-      notice: 'Official Indian government recruitments (UPSC, SSC, Railways, State PSCs) are conducted exclusively on their official .gov.in or .nic.in portals.',
     },
     features: {
       zeroFeesTitle: 'Zero Upfront Fees',
@@ -765,7 +763,6 @@ export const translations: Record<'en' | 'hi' | 'kn', TranslationDictionary> = {
       subtitle: 'भारतीय छात्रों के लिए तत्काल, निःशुल्क और गोपनीयता-सुरक्षित ऑफर सत्यापन। पैसे ट्रांसफर करने या निजी दस्तावेज साझा करने से पहले स्वचालित जांच चलाएं।',
       cta: 'ऑफर की जांच करें',
       secondaryCta: 'संदिग्ध लिंक जांचें',
-      notice: 'भारत सरकार की सभी आधिकारिक भर्तियां (UPSC, SSC, रेलवे, राज्य PSC) केवल उनके आधिकारिक .gov.in या .nic.in पोर्टल पर ही आयोजित की जाती हैं।',
     },
     features: {
       zeroFeesTitle: 'शून्य अग्रिम शुल्क',
@@ -1137,7 +1134,6 @@ export const translations: Record<'en' | 'hi' | 'kn', TranslationDictionary> = {
       subtitle: 'ಭಾರತೀಯ ವಿದ್ಯಾರ್ಥಿಗಳಿಗೆ ತ್ವರಿತ, ಉಚಿತ ಮತ್ತು ಗೌಪ್ಯತೆ-ರಕ್ಷಿತ ಆಫರ್ ಪರಿಶೀಲನೆ. ಹಣ ವರ್ಗಾಯಿಸುವ ಅಥವಾ ದಾಖಲೆ ಹಂಚಿಕೊಳ್ಳುವ ಮುನ್ನ ಸ್ವಯಂಚಾಲಿತ ಪರಿಶೀಲನೆ ನಡೆಸಿ.',
       cta: 'ಆಫರ್ ಪರಿಶೀಲಿಸಿ',
       secondaryCta: 'ಲಿಂಕ್ ಪರಿಶೀಲಿಸಿ',
-      notice: 'ಭಾರತ ಸರ್ಕಾರದ ಅಧಿಕೃತ ನೇಮಕಾತಿಗಳು (UPSC, SSC, ರೈಲ್ವೆ, KPSC) ಕೇವಲ ಅಧಿಕೃತ .gov.in ಅಥವಾ .nic.in ಪೋರ್ಟಲ್‌ಗಳ ಮೂಲಕವೇ ನಡೆಯುತ್ತವೆ.',
     },
     features: {
       zeroFeesTitle: 'ಶೂನ್ಯ ಮುಂಗಡ ಶುಲ್ಕ',

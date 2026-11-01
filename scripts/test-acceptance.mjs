@@ -31,13 +31,12 @@ export async function runAcceptanceHarness() {
     if (fs.existsSync(heroPath)) {
       const heroCode = fs.readFileSync(heroPath, 'utf-8');
       const hasCta = heroCode.includes("t('hero.cta')");
-      const hasNotice = heroCode.includes("t('hero.notice')");
       const hasAicte = heroCode.includes('internship.aicte-india.org');
       const hasMca = heroCode.includes('mca.gov.in');
       const hasNcs = heroCode.includes('ncs.gov.in');
       const hasNsp = heroCode.includes('scholarships.gov.in');
 
-      if (hasCta && hasNotice && hasAicte && hasMca && hasNcs && hasNsp) {
+      if (hasCta && hasAicte && hasMca && hasNcs && hasNsp) {
         results.push({
           id: 'CRIT-01',
           name: 'Hero section with CTA and official portal notice',
