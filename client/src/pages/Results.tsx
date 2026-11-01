@@ -308,9 +308,6 @@ export function Results() {
         <a href="#signals" className="px-2.5 py-1 bg-surface border border-border rounded-chip text-[11px] font-medium shrink-0">
           Signals ({result.signals.length})
         </a>
-        <a href="#portal-checklist" className="px-2.5 py-1 bg-surface border border-border rounded-chip text-[11px] font-medium shrink-0">
-          Portals
-        </a>
         <a href="#response-generators" className="px-2.5 py-1 bg-surface border border-border rounded-chip text-[11px] font-medium shrink-0">
           Inquiries
         </a>
@@ -409,12 +406,7 @@ export function Results() {
             <UnverifiedPanel unverified={result.unverified} />
           </div>
 
-          {/* 6. Official Portal Verification Checklist */}
-          <div id="portal-checklist">
-            <PortalChecklist />
-          </div>
-
-          {/* 7. Safe Reply & Challenge Email Generators */}
+          {/* 6. Safe Reply & Challenge Email Generators */}
           <div id="response-generators">
             <ResponseGenerators
               status={result.status}
@@ -498,13 +490,6 @@ export function Results() {
                 className="px-2.5 py-1.5 rounded-chip hover:bg-background text-muted-foreground hover:text-foreground transition-colors"
               >
                 {t('results.unverifiedTitle')}
-              </a>
-
-              <a
-                href="#portal-checklist"
-                className="px-2.5 py-1.5 rounded-chip hover:bg-background text-muted-foreground hover:text-foreground transition-colors"
-              >
-                {t('results.portalChecklistTitle')}
               </a>
 
               <a
@@ -822,8 +807,6 @@ export function SamplePage() {
           </div>
 
           <UnverifiedPanel unverified={result.unverified} />
-
-          <PortalChecklist />
 
           <ResponseGenerators
             status={result.status}

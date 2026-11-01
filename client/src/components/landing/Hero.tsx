@@ -1,11 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Link2, ShieldCheck, Building, GraduationCap, Briefcase, FileCheck, CheckCircle2, Volume2 } from 'lucide-react';
+import { ArrowRight, Link2, ShieldCheck, Building, GraduationCap, Briefcase, FileCheck, CheckCircle2, Volume2, Sparkles, ExternalLink } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useLanguage } from '../../i18n/LanguageContext.js';
 import { Button } from '../ui/Button.js';
 import { DoodleCloud } from '../ui/DoodleCloud.js';
 import { ShimmerBadge } from '../ui/ShimmerBadge.js';
+import { sound } from '../../lib/sound.js';
 
 export function Hero() {
   const { t, currentLang } = useLanguage();
@@ -14,6 +15,14 @@ export function Hero() {
     if (currentLang === 'hi') return 'जवाब देने से पहले जान लें कि यह वास्तविक है।';
     if (currentLang === 'kn') return 'ಪ್ರತಿಕ್ರಿಯಿಸುವ ಮುನ್ನ ಇದು ನೈಜವೇ ಎಂದು ಖಚಿತಪಡಿಸಿಕೊಳ್ಳಿ.';
     return "Know it's real before you reply.";
+  };
+
+  const handlePreviewAudit = () => {
+    sound.playPreviewChime();
+    const el = document.getElementById('submission-card');
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   const scrollToCard = () => {
@@ -25,15 +34,15 @@ export function Hero() {
 
   return (
     <section className="relative w-full pt-20 sm:pt-24 lg:pt-24 pb-12 sm:pb-16 overflow-hidden">
-      {/* Decorative MotherDuck Floating Clouds */}
-      <DoodleCloud size={150} className="absolute right-8 top-12 opacity-80 hidden sm:block pointer-events-none select-none text-foreground" />
-      <DoodleCloud size={95} className="absolute left-6 top-32 opacity-60 hidden md:block pointer-events-none select-none text-foreground" />
-      <DoodleCloud size={70} className="absolute right-1/3 top-6 opacity-50 hidden lg:block pointer-events-none select-none text-foreground" />
+      {/* Decorative MotherDuck Floating Clouds with Gentle Motion */}
+      <DoodleCloud size={150} className="absolute right-8 top-12 opacity-80 hidden sm:block pointer-events-none select-none text-foreground animate-float" />
+      <DoodleCloud size={95} className="absolute left-6 top-32 opacity-60 hidden md:block pointer-events-none select-none text-foreground animate-float-delayed" />
+      <DoodleCloud size={70} className="absolute right-1/3 top-6 opacity-50 hidden lg:block pointer-events-none select-none text-foreground animate-float" />
 
       <div className="max-w-editorial mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Two-Column MotherDuck Hero Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
-          {/* Left Column: Headline, Subtitle, Neo-Brutalist Buttons */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+          {/* Left Column: Headline, Subtitle, Neo-Brutalist Buttons, Trusted By Strip */}
           <div className="lg:col-span-7">
             {/* Bold Sans-Serif Headline */}
             <h1 className="font-sans font-extrabold tracking-tight text-3xl sm:text-5xl lg:text-6xl text-foreground leading-[1.08]">
@@ -45,13 +54,13 @@ export function Hero() {
               {t('hero.subtitle')}
             </p>
 
-            {/* The Two Neo-Brutalist CTAs: Blue Button that transitions to Light Blue on Hover */}
+            {/* The Two Neo-Brutalist CTAs: Blue Primary + Outline Secondary */}
             <div className="mt-8 flex flex-wrap items-center gap-4">
               <Button
                 variant="neo"
                 size="lg"
                 onClick={scrollToCard}
-                className="group border-2 border-neo-border shadow-neo bg-neo-sky text-foreground font-bold uppercase tracking-wider hover:bg-neo-sky-light hover:text-foreground hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-neo-sm active:translate-x-[3px] active:translate-y-[3px] active:shadow-none transition-all rounded-none px-6 py-3.5 h-auto"
+                className="group border-2 border-neo-border shadow-neo bg-neo-sky text-foreground font-bold uppercase tracking-wider hover:bg-neo-sky-light hover:text-foreground hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-neo-sm active:translate-x-[3px] active:translate-y-[3px] active:shadow-none transition-all rounded-none px-6 py-3.5 h-auto cursor-pointer"
               >
                 <span>{t('hero.cta')}</span>
                 <ArrowRight size={16} className="ml-2.5 group-hover:translate-x-1 group-hover:text-foreground transition-transform" />
@@ -61,55 +70,97 @@ export function Hero() {
                 <Button
                   variant="outline"
                   size="lg"
-                  className="group border-2 border-neo-border shadow-neo bg-surface text-foreground font-bold uppercase tracking-wider hover:bg-neo-sky hover:text-foreground hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-neo-sm active:translate-x-[3px] active:translate-y-[3px] active:shadow-none transition-all rounded-none px-6 py-3.5 h-auto"
+                  className="group border-2 border-neo-border shadow-neo bg-surface text-foreground font-bold uppercase tracking-wider hover:bg-neo-sky hover:text-foreground hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-neo-sm active:translate-x-[3px] active:translate-y-[3px] active:shadow-none transition-all rounded-none px-6 py-3.5 h-auto cursor-pointer"
                 >
                   <Link2 size={16} className="mr-2 text-foreground" />
                   <span>{t('hero.secondaryCta')}</span>
                 </Button>
               </Link>
             </div>
+
+            {/* MotherDuck Style: TRUSTED BY BUILDERS / STUDENTS Strip */}
+            <div className="mt-10 pt-6 border-t-2 border-neo-border/20">
+              <span className="font-mono text-[11px] font-bold uppercase tracking-wider text-muted-foreground block mb-3">
+                TRUSTED BY STUDENTS • CROSS-REFERENCED WITH OFFICIAL PORTALS
+              </span>
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-surface border border-neo-border shadow-neo-sm text-xs font-mono font-bold text-foreground">
+                  <span className="w-1.5 h-1.5 rounded-full bg-status-likely-genuine-fg shrink-0" />
+                  MCA21 CIN
+                </span>
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-surface border border-neo-border shadow-neo-sm text-xs font-mono font-bold text-foreground">
+                  <span className="w-1.5 h-1.5 rounded-full bg-status-likely-genuine-fg shrink-0" />
+                  1930 HELPLINE
+                </span>
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-surface border border-neo-border shadow-neo-sm text-xs font-mono font-bold text-foreground">
+                  <span className="w-1.5 h-1.5 rounded-full bg-status-likely-genuine-fg shrink-0" />
+                  AICTE ACCREDITED
+                </span>
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-surface border border-neo-border shadow-neo-sm text-xs font-mono font-bold text-foreground">
+                  <span className="w-1.5 h-1.5 rounded-full bg-status-likely-genuine-fg shrink-0" />
+                  EPFO RECON
+                </span>
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-surface border border-neo-border shadow-neo-sm text-xs font-mono font-bold text-foreground">
+                  <span className="w-1.5 h-1.5 rounded-full bg-status-likely-genuine-fg shrink-0" />
+                  DIGILOCKER
+                </span>
+              </div>
+            </div>
           </div>
 
-          {/* Right Column: Interactive Video/Preview Card (MotherDuck Right Card & Tap Button) */}
+          {/* Right Column: Interactive Video/Preview Terminal (MotherDuck Right Card & Tap Button) */}
           <div className="lg:col-span-5">
             <motion.div
               whileHover={{ y: -3 }}
               transition={{ duration: 0.2 }}
-              className="bg-surface border-2 border-neo-border shadow-neo-xl relative overflow-hidden flex flex-col justify-between p-5 sm:p-6 min-h-[280px]"
+              className="bg-surface border-2 border-neo-border shadow-neo-xl relative overflow-hidden flex flex-col justify-between p-5 sm:p-6 min-h-[300px]"
             >
               <div>
-                <div className="flex items-center gap-2 pb-3 border-b-2 border-neo-border mb-4">
-                  <div className="w-3 h-3 bg-terracotta border border-neo-border" />
-                  <div className="w-3 h-3 bg-neo-yellow border border-neo-border" />
-                  <div className="w-3 h-3 bg-neo-sky border border-neo-border" />
+                {/* Traffic Light Terminal Window Header */}
+                <div className="flex items-center justify-between pb-3 border-b-2 border-neo-border mb-4">
+                  <div className="flex items-center gap-2">
+                    <div className="w-3 h-3 bg-terracotta border border-neo-border" />
+                    <div className="w-3 h-3 bg-neo-yellow border border-neo-border" />
+                    <div className="w-3 h-3 bg-neo-sky border border-neo-border" />
+                  </div>
+                  <span className="font-mono text-[11px] font-bold text-muted-foreground uppercase tracking-wider">
+                    jaanch-audit // live-scan
+                  </span>
                 </div>
 
+                {/* Simulated Scan Log */}
                 <div className="space-y-3 font-mono text-xs">
                   <div className="p-3 bg-background border border-neo-border shadow-inner">
-                    <div className="text-xs text-muted-foreground uppercase font-bold">Input Sample Analysis:</div>
-                    <p className="mt-1 text-foreground font-sans text-xs line-clamp-2">
+                    <div className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider mb-1 flex items-center gap-1.5">
+                      <Sparkles size={11} className="text-terracotta" />
+                      <span>Input Sample Analysis:</span>
+                    </div>
+                    <p className="text-foreground font-sans text-xs leading-relaxed line-clamp-2">
                       "URGENT: Selected as Associate. Deposit ₹3,500 security deposit within 2 hours or job offer cancelled."
                     </p>
                   </div>
 
-                  <div className="p-2.5 bg-status-high-concern-bg border-2 border-status-high-concern-border text-status-high-concern-fg font-bold text-xs flex items-center gap-2">
-                    <span className="text-base">⚠️</span>
-                    <span>FLAGGED: Upfront Fee Demand Detected</span>
+                  <div className="p-2.5 bg-status-high-concern-bg border-2 border-status-high-concern-border text-status-high-concern-fg font-bold text-xs flex items-center gap-2 shadow-sm">
+                    <span className="text-base shrink-0">⚠️</span>
+                    <div className="truncate">
+                      <span className="block truncate">FLAGGED: Upfront Fee Demand Detected</span>
+                      <span className="text-[10px] font-normal opacity-85 block">Direct violation of Indian Model Apprenticeship rules</span>
+                    </div>
                   </div>
                 </div>
               </div>
 
-              {/* Tap Button with Outline Demotion (Fixing Usability Issue 2 & 19) */}
-              <div className="mt-5 pt-3 border-t-2 border-neo-border flex items-center justify-between">
+              {/* MotherDuck Style "TAP FOR SOUND" Pill Button */}
+              <div className="mt-5 pt-3 border-t-2 border-neo-border flex items-center justify-between gap-3">
                 <button
                   type="button"
-                  onClick={scrollToCard}
-                  className="bg-neo-sky text-foreground border-2 border-neo-border shadow-neo-sm px-3.5 py-2 font-sans font-bold uppercase tracking-wider text-xs flex items-center gap-2 hover:bg-neo-sky-light hover:text-foreground hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all group"
+                  onClick={handlePreviewAudit}
+                  className="bg-neo-yellow text-foreground border-2 border-neo-border shadow-neo-sm px-3.5 py-2 font-mono font-bold uppercase tracking-wider text-xs flex items-center gap-2 hover:bg-neo-sky hover:text-foreground hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all group cursor-pointer"
                 >
-                  <Volume2 size={14} className="text-foreground group-hover:text-foreground" />
-                  <span>Preview Live Audit</span>
+                  <Volume2 size={14} className="text-foreground shrink-0 group-hover:scale-110 transition-transform" />
+                  <span>TAP FOR SOUND</span>
                 </button>
-                <span className="text-xs font-mono text-muted-foreground uppercase font-bold">
+                <span className="text-[11px] font-mono text-muted-foreground uppercase font-bold tracking-wide">
                   Zero Hallucinations
                 </span>
               </div>
@@ -133,11 +184,14 @@ export function Hero() {
               href="https://www.mca.gov.in"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2.5 p-2.5 border-2 border-neo-border shadow-neo-sm bg-background hover:bg-neo-sky hover:text-foreground hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all text-xs font-medium text-foreground group"
+              className="flex items-center gap-2.5 p-3 border-2 border-neo-border shadow-neo-sm bg-background hover:bg-neo-sky hover:text-foreground hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all text-xs font-medium text-foreground group"
             >
-              <Building size={16} className="text-terracotta shrink-0" aria-hidden="true" />
+              <Building size={16} className="text-terracotta shrink-0 group-hover:scale-110 transition-transform" aria-hidden="true" />
               <div className="truncate">
-                <div className="font-bold truncate">MCA Portal</div>
+                <div className="font-bold truncate flex items-center gap-1">
+                  <span>MCA Portal</span>
+                  <ExternalLink size={10} className="text-muted-foreground group-hover:text-foreground shrink-0" />
+                </div>
                 <div className="text-[10px] text-muted-foreground truncate font-mono">mca.gov.in</div>
               </div>
             </a>
@@ -146,11 +200,14 @@ export function Hero() {
               href="https://www.ncs.gov.in"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2.5 p-2.5 border-2 border-neo-border shadow-neo-sm bg-background hover:bg-neo-sky hover:text-foreground hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all text-xs font-medium text-foreground group"
+              className="flex items-center gap-2.5 p-3 border-2 border-neo-border shadow-neo-sm bg-background hover:bg-neo-sky hover:text-foreground hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all text-xs font-medium text-foreground group"
             >
-              <Briefcase size={16} className="text-terracotta shrink-0" aria-hidden="true" />
+              <Briefcase size={16} className="text-terracotta shrink-0 group-hover:scale-110 transition-transform" aria-hidden="true" />
               <div className="truncate">
-                <div className="font-bold truncate">NCS India</div>
+                <div className="font-bold truncate flex items-center gap-1">
+                  <span>NCS India</span>
+                  <ExternalLink size={10} className="text-muted-foreground group-hover:text-foreground shrink-0" />
+                </div>
                 <div className="text-[10px] text-muted-foreground truncate font-mono">ncs.gov.in</div>
               </div>
             </a>
@@ -159,11 +216,14 @@ export function Hero() {
               href="https://scholarships.gov.in"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2.5 p-2.5 border-2 border-neo-border shadow-neo-sm bg-background hover:bg-neo-sky hover:text-foreground hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all text-xs font-medium text-foreground group"
+              className="flex items-center gap-2.5 p-3 border-2 border-neo-border shadow-neo-sm bg-background hover:bg-neo-sky hover:text-foreground hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all text-xs font-medium text-foreground group"
             >
-              <GraduationCap size={16} className="text-terracotta shrink-0" aria-hidden="true" />
+              <GraduationCap size={16} className="text-terracotta shrink-0 group-hover:scale-110 transition-transform" aria-hidden="true" />
               <div className="truncate">
-                <div className="font-bold truncate">NSP Portal</div>
+                <div className="font-bold truncate flex items-center gap-1">
+                  <span>NSP Portal</span>
+                  <ExternalLink size={10} className="text-muted-foreground group-hover:text-foreground shrink-0" />
+                </div>
                 <div className="text-[10px] text-muted-foreground truncate font-mono">scholarships.gov.in</div>
               </div>
             </a>
@@ -172,11 +232,14 @@ export function Hero() {
               href="https://internship.aicte-india.org"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2.5 p-2.5 border-2 border-neo-border shadow-neo-sm bg-background hover:bg-neo-sky hover:text-foreground hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all text-xs font-medium text-foreground group"
+              className="flex items-center gap-2.5 p-3 border-2 border-neo-border shadow-neo-sm bg-background hover:bg-neo-sky hover:text-foreground hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all text-xs font-medium text-foreground group"
             >
-              <ShieldCheck size={16} className="text-terracotta shrink-0" aria-hidden="true" />
+              <ShieldCheck size={16} className="text-terracotta shrink-0 group-hover:scale-110 transition-transform" aria-hidden="true" />
               <div className="truncate">
-                <div className="font-bold truncate">AICTE Portal</div>
+                <div className="font-bold truncate flex items-center gap-1">
+                  <span>AICTE Portal</span>
+                  <ExternalLink size={10} className="text-muted-foreground group-hover:text-foreground shrink-0" />
+                </div>
                 <div className="text-[10px] text-muted-foreground truncate font-mono">aicte-india.org</div>
               </div>
             </a>
@@ -186,7 +249,7 @@ export function Hero() {
         {/* 3-Card Pastel Feature Strip (MotherDuck 3-Card Layout: Peach, Sky, Mint) */}
         <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6 pt-8 border-t-2 border-neo-border">
           {/* Card 1: Peach */}
-          <div className="bg-neo-peach border-2 border-neo-border shadow-neo p-5 flex flex-col justify-between hover:shadow-neo-lg transition-all">
+          <div className="bg-neo-peach border-2 border-neo-border shadow-neo p-5 flex flex-col justify-between hover:shadow-neo-lg hover:-translate-y-1 transition-all">
             <div>
               <div className="flex items-center justify-between mb-3">
                 <span className="font-mono text-xs font-bold bg-background border border-neo-border px-2 py-0.5 shadow-neo-sm text-foreground">
@@ -217,7 +280,7 @@ export function Hero() {
           </div>
 
           {/* Card 2: Sky Blue */}
-          <div className="bg-neo-blue border-2 border-neo-border shadow-neo p-5 flex flex-col justify-between hover:shadow-neo-lg transition-all">
+          <div className="bg-neo-blue border-2 border-neo-border shadow-neo p-5 flex flex-col justify-between hover:shadow-neo-lg hover:-translate-y-1 transition-all">
             <div>
               <div className="flex items-center justify-between mb-3">
                 <span className="font-mono text-xs font-bold bg-background border border-neo-border px-2 py-0.5 shadow-neo-sm text-foreground">
@@ -248,7 +311,7 @@ export function Hero() {
           </div>
 
           {/* Card 3: Mint Green */}
-          <div className="bg-neo-mint border-2 border-neo-border shadow-neo p-5 flex flex-col justify-between hover:shadow-neo-lg transition-all">
+          <div className="bg-neo-mint border-2 border-neo-border shadow-neo p-5 flex flex-col justify-between hover:shadow-neo-lg hover:-translate-y-1 transition-all">
             <div>
               <div className="flex items-center justify-between mb-3">
                 <span className="font-mono text-xs font-bold bg-background border border-neo-border px-2 py-0.5 shadow-neo-sm text-foreground">

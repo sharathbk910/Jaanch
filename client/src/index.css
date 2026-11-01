@@ -66,4 +66,41 @@
   will-change: transform;
 }
 
+/* Floating Doodle Clouds & Micro-Interactions */
+@keyframes float-slow {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(1deg);
+  }
+}
+
+@keyframes float-delayed {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(6px) rotate(-1deg);
+  }
+}
+
+.animate-float {
+  animation: float-slow 7s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: float-delayed 9s ease-in-out infinite 2s;
+}
+
+/* Tactile Neo-Brutalist Micro-Interactions */
+.neo-press {
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+.neo-press:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0px 0px var(--color-neo-shadow) !important;
+}
+
+
 

@@ -96,7 +96,6 @@ describe('Phase 6C – Results & PDF (Results.tsx / ResultsPage.tsx)', () => {
     expect(container.querySelector('#why-status')).toBeInTheDocument();
     expect(container.querySelector('#signals')).toBeInTheDocument();
     expect(container.querySelector('#unverified')).toBeInTheDocument();
-    expect(container.querySelector('#portal-checklist')).toBeInTheDocument();
     expect(container.querySelector('#response-generators')).toBeInTheDocument();
     expect(container.querySelector('#link-inspector')).toBeInTheDocument();
     expect(container.querySelector('#next-steps')).toBeInTheDocument();
@@ -139,24 +138,9 @@ describe('Phase 6C – Results & PDF (Results.tsx / ResultsPage.tsx)', () => {
     expect(cybercrimeLink).toHaveAttribute('rel', 'noopener noreferrer');
   });
 
-  it('renders official portal verification checklist for NSP, AICTE, MCA, NCS', async () => {
-    const user = userEvent.setup();
+  it('does not render official portal verification checklist per user request', () => {
     renderResultsWithResult(SAMPLE_GENUINE_RESULT);
-
-    const checklistSection = document.querySelector('#portal-checklist');
-    expect(checklistSection).toBeInTheDocument();
-
-    expect(within(checklistSection as HTMLElement).getByText(/National Scholarship Portal \(NSP\)/i)).toBeInTheDocument();
-    expect(within(checklistSection as HTMLElement).getByText(/AICTE Internship Portal/i)).toBeInTheDocument();
-    expect(within(checklistSection as HTMLElement).getByText(/Ministry of Corporate Affairs \(MCA\)/i)).toBeInTheDocument();
-    expect(within(checklistSection as HTMLElement).getByText(/National Career Service \(NCS\)/i)).toBeInTheDocument();
-
-    // Check interaction: toggle checkmark
-    const mcaCheckbox = screen.getByRole('button', {
-      name: /Mark Ministry of Corporate Affairs \(MCA\) as checked/i,
-    });
-    await user.click(mcaCheckbox);
-    expect(screen.getByText(/1 \/ 4 Checked/i)).toBeInTheDocument();
+    expect(document.querySelector('#portal-checklist')).not.toBeInTheDocument();
   });
 
   it('renders Challenge Email generator and Safe Reply generator with copy buttons', async () => {
