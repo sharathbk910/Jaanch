@@ -19,7 +19,7 @@ export function AuditSteps() {
           <span className="text-xs font-mono font-bold uppercase tracking-wider bg-neo-yellow border-2 border-neo-border px-3 py-1 shadow-neo-sm inline-block text-foreground">
             Transparent Heuristic Architecture
           </span>
-          <h2 className="font-sans font-extrabold uppercase tracking-tight text-3xl sm:text-4xl lg:text-5xl text-foreground mt-4">
+          <h2 className="font-sans font-extrabold tracking-tight text-3xl sm:text-4xl lg:text-5xl text-foreground mt-4">
             How Jaanch Audits an Offer in 3 Steps
           </h2>
           <p className="mt-3 text-xs sm:text-sm text-muted-foreground font-medium max-w-xl mx-auto">
@@ -33,9 +33,14 @@ export function AuditSteps() {
           <div className="relative p-6 sm:p-7 border-2 border-neo-border bg-neo-peach shadow-neo hover:shadow-neo-lg hover:-translate-y-1 transition-all flex flex-col justify-between">
             <div>
               <div className="flex items-start justify-between gap-4 mb-3">
-                <h3 className="font-sans font-extrabold uppercase tracking-tight text-xl sm:text-2xl text-foreground">
-                  FLIGHTS: {t('auditSteps.step1Title')}
-                </h3>
+                <div>
+                  <span className="font-mono text-xs font-bold uppercase tracking-wider text-foreground/70 block mb-1">
+                    FLIGHTS
+                  </span>
+                  <h3 className="font-sans font-bold tracking-tight text-xl sm:text-2xl text-foreground">
+                    {t('auditSteps.step1Title')}
+                  </h3>
+                </div>
                 <div className="w-9 h-9 bg-surface border-2 border-neo-border shadow-neo-sm flex items-center justify-center shrink-0 text-foreground">
                   <Send size={18} aria-hidden="true" />
                 </div>
@@ -45,24 +50,24 @@ export function AuditSteps() {
               </p>
 
               {/* Inner Mini Mock Panel */}
-              <div className="bg-surface border-2 border-neo-border shadow-neo-sm p-3.5 my-3 font-mono text-[11px] space-y-2">
-                <div className="flex items-center justify-between text-muted-foreground pb-1.5 border-b border-neo-border/20 text-[10px] uppercase font-bold">
+              <div className="bg-surface border-2 border-neo-border shadow-neo-sm p-3.5 my-3 font-mono text-xs space-y-2">
+                <div className="flex items-center justify-between text-muted-foreground pb-1.5 border-b border-neo-border/20 text-xs uppercase font-bold">
                   <span>Audit Task</span>
                   <span>Latest Status</span>
                 </div>
                 <div className="flex items-center justify-between text-foreground">
-                  <span className="truncate">pii_sanitization</span>
-                  <span className="bg-neo-blue/40 border border-neo-border px-1.5 py-0.5 text-[9px] font-bold">12ms RUNNING</span>
+                  <span>pii_sanitization</span>
+                  <span className="bg-neo-blue/40 border border-neo-border px-1.5 py-0.5 text-xs font-bold">12ms RUNNING</span>
                 </div>
                 <div className="flex items-center justify-between text-foreground">
-                  <span className="truncate">fee_pattern_scan</span>
-                  <span className="bg-neo-mint border border-neo-border px-1.5 py-0.5 text-[9px] font-bold text-foreground">2m 18s CLEAN</span>
+                  <span>fee_pattern_scan</span>
+                  <span className="bg-neo-mint border border-neo-border px-1.5 py-0.5 text-xs font-bold text-foreground">2m 18s CLEAN</span>
                 </div>
                 <div className="flex items-center justify-between text-foreground">
-                  <span className="truncate">qr_seal_authenticity</span>
-                  <span className="bg-neo-pink border border-neo-border px-1.5 py-0.5 text-[9px] font-bold text-foreground">48.3s VERIFIED</span>
+                  <span>qr_seal_audit</span>
+                  <span className="bg-neo-pink border border-neo-border px-1.5 py-0.5 text-xs font-bold text-foreground">48.3s VERIFIED</span>
                 </div>
-                <div className="pt-2 border-t border-neo-border/20 flex items-center justify-between text-[10px] text-muted-foreground">
+                <div className="pt-2 border-t border-neo-border/20 flex items-center justify-between text-xs text-muted-foreground">
                   <span>Deterministic checks active</span>
                   <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
                 </div>
@@ -74,7 +79,7 @@ export function AuditSteps() {
                 <span>LEARN MORE</span>
                 <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
               </Link>
-              <span className="font-mono text-[10px] font-bold uppercase bg-surface border border-neo-border px-2 py-0.5">01 / LOCAL</span>
+              <span className="font-mono text-xs font-bold uppercase bg-surface border border-neo-border px-2 py-0.5">01 / LOCAL</span>
             </div>
           </div>
 
@@ -82,9 +87,14 @@ export function AuditSteps() {
           <div className="relative p-6 sm:p-7 border-2 border-neo-border bg-neo-blue shadow-neo hover:shadow-neo-lg hover:-translate-y-1 transition-all flex flex-col justify-between">
             <div>
               <div className="flex items-start justify-between gap-4 mb-3">
-                <h3 className="font-sans font-extrabold uppercase tracking-tight text-xl sm:text-2xl text-foreground">
-                  GUIDES: {t('auditSteps.step2Title')}
-                </h3>
+                <div>
+                  <span className="font-mono text-xs font-bold uppercase tracking-wider text-foreground/70 block mb-1">
+                    GUIDES
+                  </span>
+                  <h3 className="font-sans font-bold tracking-tight text-xl sm:text-2xl text-foreground">
+                    {t('auditSteps.step2Title')}
+                  </h3>
+                </div>
                 <div className="w-9 h-9 bg-surface border-2 border-neo-border shadow-neo-sm flex items-center justify-center shrink-0 text-foreground">
                   <BookOpen size={18} aria-hidden="true" />
                 </div>
@@ -94,20 +104,20 @@ export function AuditSteps() {
               </p>
 
               {/* Inner Mini Mock Panel */}
-              <div className="bg-surface border-2 border-neo-border shadow-neo-sm p-3.5 my-3 font-mono text-[11px] space-y-2">
-                <div className="text-[10px] text-muted-foreground font-semibold">
+              <div className="bg-surface border-2 border-neo-border shadow-neo-sm p-3.5 my-3 font-mono text-xs space-y-2">
+                <div className="text-xs text-muted-foreground font-semibold">
                   Guides &gt; Regulatory Definitions
                 </div>
                 <div className="font-sans font-bold text-xs text-foreground">
                   Official Verification Directives
                 </div>
-                <div className="text-[10px] text-muted-foreground">
+                <div className="text-xs text-muted-foreground">
                   How we classify legitimate hiring in India:
                 </div>
-                <div className="p-2 bg-neo-yellow/30 border border-neo-border text-[10px] font-mono">
+                <div className="p-2 bg-neo-yellow/30 border border-neo-border text-xs font-mono">
                   <code>UPFRONT_FEE == ZERO_TOLERANCE</code>
                 </div>
-                <div className="text-[10px] text-foreground/80 flex items-center gap-1.5">
+                <div className="text-xs text-foreground/80 flex items-center gap-1.5">
                   <span className="text-terracotta font-bold">•</span>
                   <span>Always cross-reference CIN against MCA21 master registry</span>
                 </div>
@@ -119,7 +129,7 @@ export function AuditSteps() {
                 <span>LEARN MORE</span>
                 <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
               </a>
-              <span className="font-mono text-[10px] font-bold uppercase bg-surface border border-neo-border px-2 py-0.5">02 / REGISTRY</span>
+              <span className="font-mono text-xs font-bold uppercase bg-surface border border-neo-border px-2 py-0.5">02 / REGISTRY</span>
             </div>
           </div>
 
@@ -127,9 +137,14 @@ export function AuditSteps() {
           <div className="relative p-6 sm:p-7 border-2 border-neo-border bg-neo-mint shadow-neo hover:shadow-neo-lg hover:-translate-y-1 transition-all flex flex-col justify-between">
             <div>
               <div className="flex items-start justify-between gap-4 mb-3">
-                <h3 className="font-sans font-extrabold uppercase tracking-tight text-xl sm:text-2xl text-foreground">
-                  DIVES: {t('auditSteps.step3Title')}
-                </h3>
+                <div>
+                  <span className="font-mono text-xs font-bold uppercase tracking-wider text-foreground/70 block mb-1">
+                    DIVES
+                  </span>
+                  <h3 className="font-sans font-bold tracking-tight text-xl sm:text-2xl text-foreground">
+                    {t('auditSteps.step3Title')}
+                  </h3>
+                </div>
                 <div className="w-9 h-9 bg-surface border-2 border-neo-border shadow-neo-sm flex items-center justify-center shrink-0 text-foreground">
                   <BarChart3 size={18} aria-hidden="true" />
                 </div>
@@ -139,8 +154,8 @@ export function AuditSteps() {
               </p>
 
               {/* Inner Mini Mock Panel */}
-              <div className="bg-surface border-2 border-neo-border shadow-neo-sm p-3.5 my-3 font-mono text-[11px] space-y-2">
-                <div className="flex items-center justify-between text-muted-foreground pb-1 border-b border-neo-border/20 text-[10px]">
+              <div className="bg-surface border-2 border-neo-border shadow-neo-sm p-3.5 my-3 font-mono text-xs space-y-2">
+                <div className="flex items-center justify-between text-muted-foreground pb-1 border-b border-neo-border/20 text-xs">
                   <span>Telemetry alerts flagged / day</span>
                   <span className="text-emerald-700 font-bold">▲ 18% WoW</span>
                 </div>
@@ -150,7 +165,7 @@ export function AuditSteps() {
                     <path d="M0,35 Q20,30 35,22 T70,18 T100,6 L100,40 L0,40 Z" strokeWidth="2" />
                   </svg>
                 </div>
-                <div className="text-[10px] text-muted-foreground truncate">
+                <div className="text-xs text-muted-foreground truncate">
                   Break this down by recruiter domain...
                 </div>
               </div>
@@ -161,7 +176,7 @@ export function AuditSteps() {
                 <span>LEARN MORE</span>
                 <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
               </Link>
-              <span className="font-mono text-[10px] font-bold uppercase bg-surface border border-neo-border px-2 py-0.5">03 / VERDICT</span>
+              <span className="font-mono text-xs font-bold uppercase bg-surface border border-neo-border px-2 py-0.5">03 / VERDICT</span>
             </div>
           </div>
         </div>

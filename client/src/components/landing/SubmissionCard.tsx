@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Clipboard, ArrowRight, Upload, AlertCircle, Sparkles, Check, FileText } from 'lucide-react';
 import { useLanguage } from '../../i18n/LanguageContext.js';
 import { Button } from '../ui/Button.js';
+import { fireCelebrationConfetti } from '../ui/Confetti.js';
 
 export const SCENARIO_GENUINE =
   'Subject: Infosys Springboard Internship Selection. Dear Candidate, you have been selected for the 8-week software engineering internship program. There are no registration or training fees. Stipend is ₹25,000/month. Access details at https://springboard.infosys.com.';
@@ -46,6 +47,9 @@ export function SubmissionCard() {
   const handleSelectScenario = (scenarioText: string) => {
     setText(scenarioText);
     setError(null);
+    if (scenarioText === SCENARIO_GENUINE) {
+      fireCelebrationConfetti();
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -61,52 +65,56 @@ export function SubmissionCard() {
   return (
     <div id="submission-card" className="w-full max-w-3xl mx-auto my-8">
       <div className="bg-surface border-2 border-neo-border shadow-neo-xl">
-        {/* Card Tabs: Paste Text vs Upload File (MotherDuck Retro Tab Bar) */}
-        <div className="flex border-b-2 border-neo-border bg-background/60">
-          <button
-            type="button"
-            onClick={() => setActiveTab('paste')}
-            className={`flex items-center gap-2 px-6 py-3.5 text-xs font-bold transition-all ${
-              activeTab === 'paste'
-                ? 'bg-neo-yellow text-foreground border-r-2 border-neo-border'
-                : 'text-muted-foreground hover:bg-neo-sky hover:text-foreground border-r border-neo-border/40'
-            }`}
-          >
-            <FileText size={15} />
-            <span className="uppercase tracking-wider">Paste Message Text</span>
-          </button>
+        {/* Card Tabs: Paste Text vs Upload File & Clipboard Action aligned in 1 header */}
+        <div className="flex flex-wrap items-center justify-between border-b-2 border-neo-border bg-background/60 px-2 sm:px-4">
+          <div className="flex">
+            <button
+              type="button"
+              onClick={() => setActiveTab('paste')}
+              className={`flex items-center gap-2 px-4 sm:px-6 py-3.5 text-xs font-bold transition-all ${
+                activeTab === 'paste'
+                  ? 'bg-neo-yellow text-foreground border-r-2 border-neo-border'
+                  : 'text-muted-foreground hover:bg-neo-sky hover:text-foreground border-r border-neo-border/40'
+              }`}
+            >
+              <FileText size={15} aria-hidden="true" />
+              <span className="uppercase tracking-wider">Paste Message Text</span>
+            </button>
 
-          <button
-            type="button"
-            onClick={() => setActiveTab('upload')}
-            className={`flex items-center gap-2 px-6 py-3.5 text-xs font-bold transition-all ${
-              activeTab === 'upload'
-                ? 'bg-neo-yellow text-foreground border-r-2 border-neo-border'
-                : 'text-muted-foreground hover:bg-neo-sky hover:text-foreground border-r border-neo-border/40'
-            }`}
-          >
-            <Upload size={15} />
-            <span className="uppercase tracking-wider">Upload Document</span>
-          </button>
+            <button
+              type="button"
+              onClick={() => setActiveTab('upload')}
+              className={`flex items-center gap-2 px-4 sm:px-6 py-3.5 text-xs font-bold transition-all ${
+                activeTab === 'upload'
+                  ? 'bg-neo-yellow text-foreground border-r-2 border-neo-border'
+                  : 'text-muted-foreground hover:bg-neo-sky hover:text-foreground border-r border-neo-border/40'
+              }`}
+            >
+              <Upload size={15} aria-hidden="true" />
+              <span className="uppercase tracking-wider">Upload Document</span>
+            </button>
+          </div>
+
+          {activeTab === 'paste' && (
+            <button
+              type="button"
+              onClick={handlePasteClipboard}
+              className="inline-flex items-center gap-1.5 text-xs border border-neo-border shadow-neo-sm bg-surface px-3 py-1.5 text-foreground font-bold hover:bg-neo-sky hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all my-2 group"
+            >
+              <Clipboard size={13} aria-hidden="true" />
+              <span>Paste from clipboard</span>
+            </button>
+          )}
         </div>
 
         <div className="p-6 sm:p-7">
           {activeTab === 'paste' ? (
             <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
-              {/* Header inside form with Clipboard Paste Action */}
+              {/* Header inside form */}
               <div className="flex items-center justify-between">
                 <label htmlFor="offer-text" className="text-xs font-bold uppercase tracking-wider text-foreground">
                   {t('submissionCard.title')}
                 </label>
-
-                <button
-                  type="button"
-                  onClick={handlePasteClipboard}
-                  className="inline-flex items-center gap-1.5 text-xs border border-neo-border shadow-neo-sm bg-background px-2.5 py-1 text-foreground font-bold hover:bg-neo-sky hover:text-foreground hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all min-h-[32px] group"
-                >
-                  <Clipboard size={13} />
-                  <span>Paste from clipboard</span>
-                </button>
               </div>
 
               {/* Textarea with 2px border */}

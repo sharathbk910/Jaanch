@@ -44,11 +44,11 @@ export function SegmentedControl<T extends string>({
             onClick={() => onChange(opt.value)}
             className={twMerge(
               clsx(
-                'rounded-chip font-medium transition-all focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring',
-                size === 'sm' ? 'px-2 py-0.5 text-[11px]' : 'px-2.5 py-1 text-xs',
+                'rounded-chip font-bold transition-all focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring border border-transparent',
+                size === 'sm' ? 'px-2.5 py-1 text-xs' : 'px-3 py-1.5 text-xs',
                 isSelected
-                  ? 'bg-primary text-background'
-                  : 'bg-transparent text-muted-foreground hover:text-foreground'
+                  ? 'bg-neo-sky text-foreground border-neo-border shadow-neo-sm'
+                  : 'bg-transparent text-muted-foreground hover:bg-surface hover:text-foreground hover:border-neo-border/40'
               )
             )}
           >

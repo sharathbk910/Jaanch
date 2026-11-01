@@ -1,6 +1,7 @@
 import React from 'react';
 import { ArrowRight, Shield, Award, Users, CheckCircle, Clock } from 'lucide-react';
 import { DoodleCloud } from '../ui/DoodleCloud.js';
+import { SpotlightCard } from '../ui/SpotlightCard.js';
 
 export function CommunityProofSection() {
   return (
@@ -20,10 +21,10 @@ export function CommunityProofSection() {
           </p>
         </div>
 
-        {/* MotherDuck Card Grid */}
+        {/* Aceternity UI Spotlight Card Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 items-stretch">
           {/* Featured Pale Pink Card (together.ai Style with Big Neo Shadow) */}
-          <div className="md:col-span-2 lg:col-span-2 bg-neo-pink border-2 border-neo-border shadow-neo-xl p-6 sm:p-8 flex flex-col justify-between">
+          <div className="md:col-span-2 lg:col-span-2 bg-neo-pink border-2 border-neo-border shadow-neo-xl p-6 sm:p-8 flex flex-col justify-between h-full min-h-[250px]">
             <div>
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-8 h-8 rounded-full bg-surface border-2 border-neo-border flex items-center justify-center font-bold text-foreground text-xs shadow-neo-sm">
@@ -41,14 +42,14 @@ export function CommunityProofSection() {
               <span className="font-mono text-xs font-bold uppercase tracking-wider text-foreground hover:underline cursor-pointer flex items-center gap-1.5 group">
                 READ CASE STUDY <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
               </span>
-              <span className="font-mono text-[10px] font-bold uppercase bg-surface border border-neo-border px-2 py-0.5">
+              <span className="font-mono text-xs font-bold uppercase bg-surface border border-neo-border px-2 py-0.5">
                 VERIFIED STUDY
               </span>
             </div>
           </div>
 
-          {/* Metric Card (FinQore Style: 8H -> 8M) */}
-          <div className="bg-surface border-2 border-neo-border shadow-neo hover:shadow-neo-lg hover:-translate-y-1 transition-all p-6 sm:p-7 flex flex-col justify-between">
+          {/* Metric Card (FinQore Style: 8H -> 8M) with Spotlight */}
+          <SpotlightCard className="p-6 sm:p-7 flex flex-col justify-between h-full min-h-[250px]">
             <div>
               <div className="flex items-center gap-2 mb-4">
                 <Clock size={18} className="text-terracotta" />
@@ -66,10 +67,10 @@ export function CommunityProofSection() {
                 READ CASE STUDY <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
               </span>
             </div>
-          </div>
+          </SpotlightCard>
 
-          {/* White Card 1 (GOODSHIP Style) */}
-          <div className="bg-surface border-2 border-neo-border shadow-neo hover:shadow-neo-lg hover:-translate-y-1 transition-all p-6 sm:p-7 flex flex-col justify-between">
+          {/* White Card 1 (GOODSHIP Style) with Spotlight */}
+          <SpotlightCard className="p-6 sm:p-7 flex flex-col justify-between h-full min-h-[250px]">
             <div>
               <div className="flex items-center gap-2 mb-4">
                 <Shield size={18} className="text-neo-sky-hover" />
@@ -84,10 +85,10 @@ export function CommunityProofSection() {
                 READ CASE STUDY <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
               </span>
             </div>
-          </div>
+          </SpotlightCard>
 
-          {/* White Card 2 (DO Style) */}
-          <div className="bg-surface border-2 border-neo-border shadow-neo hover:shadow-neo-lg hover:-translate-y-1 transition-all p-6 sm:p-7 flex flex-col justify-between">
+          {/* White Card 2 (DO Style) with Spotlight */}
+          <SpotlightCard className="p-6 sm:p-7 flex flex-col justify-between h-full min-h-[250px]">
             <div>
               <div className="flex items-center gap-2 mb-4">
                 <Award size={18} className="text-emerald-600" />
@@ -102,10 +103,10 @@ export function CommunityProofSection() {
                 READ CASE STUDY <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
               </span>
             </div>
-          </div>
+          </SpotlightCard>
 
-          {/* White Card 3 (AheadComputing Style) */}
-          <div className="bg-surface border-2 border-neo-border shadow-neo hover:shadow-neo-lg hover:-translate-y-1 transition-all p-6 sm:p-7 flex flex-col justify-between">
+          {/* White Card 3 (AheadComputing Style) with Spotlight */}
+          <SpotlightCard className="p-6 sm:p-7 flex flex-col justify-between h-full min-h-[250px]">
             <div>
               <div className="flex items-center gap-2 mb-4">
                 <Users size={18} className="text-terracotta" />
@@ -120,7 +121,7 @@ export function CommunityProofSection() {
                 READ CASE STUDY <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
               </span>
             </div>
-          </div>
+          </SpotlightCard>
         </div>
       </div>
     </section>

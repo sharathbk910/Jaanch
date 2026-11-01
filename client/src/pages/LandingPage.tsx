@@ -1,5 +1,6 @@
 import React from 'react';
 import { Hero } from '../components/landing/Hero.js';
+import { TrustMarquee } from '../components/ui/TrustMarquee.js';
 import { SubmissionCard } from '../components/landing/SubmissionCard.js';
 import { AuditSteps } from '../components/landing/AuditSteps.js';
 import { ArchitectureSection } from '../components/landing/ArchitectureSection.js';
@@ -14,8 +15,11 @@ export function LandingPage() {
       {/* 1. MotherDuck Hero Section */}
       <Hero />
 
-      {/* 2. Interactive Submission Card */}
-      <div className="max-w-editorial mx-auto px-4 sm:px-6 lg:px-8 mb-16">
+      {/* 2. Magic UI Infinite Trust Marquee */}
+      <TrustMarquee />
+
+      {/* 3. Interactive Submission Card */}
+      <div className="max-w-editorial mx-auto px-4 sm:px-6 lg:px-8 my-16">
         <SubmissionCard />
       </div>
 

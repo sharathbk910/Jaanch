@@ -161,6 +161,32 @@ export default {
         'neo-lg': '6px 6px 0px 0px var(--color-neo-shadow)',
         'neo-xl': '8px 8px 0px 0px var(--color-neo-shadow)',
       },
+      animation: {
+        marquee: 'marquee var(--duration, 30s) linear infinite',
+        'marquee-reverse': 'marquee-reverse var(--duration, 30s) linear infinite',
+        shimmer: 'shimmer 2.5s linear infinite',
+        'border-beam': 'border-beam 6s linear infinite',
+        'pulse-subtle': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+      },
+      keyframes: {
+        marquee: {
+          from: { transform: 'translateX(0)' },
+          to: { transform: 'translateX(calc(-100% - 2rem))' },
+        },
+        'marquee-reverse': {
+          from: { transform: 'translateX(calc(-100% - 2rem))' },
+          to: { transform: 'translateX(0)' },
+        },
+        shimmer: {
+          '0%': { backgroundPosition: '-200% 0' },
+          '100%': { backgroundPosition: '200% 0' },
+        },
+        'border-beam': {
+          '100%': {
+            'offset-distance': '100%',
+          },
+        },
+      },
     },
   },
   plugins: [],

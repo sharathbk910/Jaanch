@@ -24,7 +24,7 @@ export function GuidelinesAndHelpline() {
                 Core defense principles for Indian students encountering campus recruiters, freelance offers, or scholarship announcements.
               </p>
 
-              <ul className="space-y-4 text-xs sm:text-sm">
+              <ul className="space-y-3.5 text-xs sm:text-sm">
                 <li className="flex items-start gap-3">
                   <span className="font-mono text-xs font-bold bg-neo-peach border border-neo-border shadow-neo-sm px-2 py-0.5 text-foreground shrink-0 mt-0.5">
                     01
@@ -42,6 +42,14 @@ export function GuidelinesAndHelpline() {
                     03
                   </span>
                   <span className="text-foreground leading-relaxed">{t('guidelines.rule3')}</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="font-mono text-xs font-bold bg-neo-yellow border border-neo-border shadow-neo-sm px-2 py-0.5 text-foreground shrink-0 mt-0.5">
+                    04
+                  </span>
+                  <span className="text-foreground leading-relaxed">
+                    Always cross-reference the Corporate Identification Number (CIN) on the official MCA21 portal before sharing Aadhaar or PAN.
+                  </span>
                 </li>
               </ul>
             </div>
@@ -84,7 +92,7 @@ export function GuidelinesAndHelpline() {
                     <Phone size={26} aria-hidden="true" />
                   </div>
                 </div>
-                <p className="text-[11px] text-muted-foreground mt-2 font-medium">
+                <p className="text-xs text-muted-foreground mt-2 font-medium">
                   Toll-free 24x7 helpline operated by Indian Cyber Crime Coordination Centre (I4C), MHA.
                 </p>
               </div>

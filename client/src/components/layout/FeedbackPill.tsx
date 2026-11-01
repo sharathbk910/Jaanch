@@ -32,36 +32,38 @@ export function FeedbackPill() {
       aria-label="Page feedback"
       className="fixed bottom-5 right-5 z-40 select-none print:hidden"
     >
-      <div className="flex items-center gap-2.5 px-3.5 py-2 bg-pill text-surface rounded-pill shadow-lg text-xs">
+      <div className="flex items-center gap-3 px-3.5 py-2 bg-surface text-foreground border-2 border-neo-border shadow-neo text-xs font-medium">
         {submitted ? (
-          <div className="flex items-center gap-1.5 text-xs text-surface font-medium animate-fadeIn">
-            <Check size={14} className="text-accent" aria-hidden="true" />
+          <div className="flex items-center gap-1.5 text-xs text-foreground font-bold animate-fadeIn">
+            <Check size={14} className="text-emerald-600" aria-hidden="true" />
             <span>{t('feedback.thanks', 'Thank you for your feedback!')}</span>
           </div>
         ) : (
           <>
-            <MessageSquare size={13} className="text-muted shrink-0" aria-hidden="true" />
-            <span className="font-medium text-[11px] text-surface">
+            <MessageSquare size={14} className="text-terracotta shrink-0" aria-hidden="true" />
+            <span className="font-bold text-xs text-foreground">
               {t('feedback.pillQuestion', 'Was this helpful?')}
             </span>
-            <div className="flex items-center gap-1 ml-1 border-l border-muted/40 pl-2">
+            <div className="flex items-center gap-1.5 border-l-2 border-neo-border pl-2.5">
               <button
                 type="button"
                 onClick={() => handleVote(5)}
                 disabled={isSubmitting}
-                className="p-1 hover:text-accent transition-colors rounded focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent"
+                className="px-2 py-0.5 border border-neo-border bg-background hover:bg-neo-mint font-bold text-xs transition-colors rounded-none focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring flex items-center gap-1"
                 aria-label={t('feedback.yes', 'Yes')}
               >
                 <ThumbsUp size={12} />
+                <span>Yes</span>
               </button>
               <button
                 type="button"
                 onClick={() => handleVote(1)}
                 disabled={isSubmitting}
-                className="p-1 hover:text-accent transition-colors rounded focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent"
+                className="px-2 py-0.5 border border-neo-border bg-background hover:bg-neo-pink font-bold text-xs transition-colors rounded-none focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring flex items-center gap-1"
                 aria-label={t('feedback.no', 'No')}
               >
                 <ThumbsDown size={12} />
+                <span>No</span>
               </button>
             </div>
           </>

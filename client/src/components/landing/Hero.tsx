@@ -1,9 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Link2, ShieldCheck, Building, GraduationCap, Briefcase, FileCheck, CheckCircle2, Sparkles, Volume2 } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { useLanguage } from '../../i18n/LanguageContext.js';
 import { Button } from '../ui/Button.js';
 import { DoodleCloud } from '../ui/DoodleCloud.js';
+import { ShimmerBadge } from '../ui/ShimmerBadge.js';
 
 export function Hero() {
   const { t, currentLang } = useLanguage();
@@ -33,8 +35,8 @@ export function Hero() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
           {/* Left Column: Headline, Subtitle, Neo-Brutalist Buttons */}
           <div className="lg:col-span-7">
-            {/* Bold All-Caps Sans-Serif Headline (Exact MotherDuck Display Typography) */}
-            <h1 className="font-sans font-extrabold uppercase tracking-tight text-3xl sm:text-5xl lg:text-6xl text-foreground leading-[1.08]">
+            {/* Bold Sans-Serif Headline */}
+            <h1 className="font-sans font-extrabold tracking-tight text-3xl sm:text-5xl lg:text-6xl text-foreground leading-[1.08]">
               {getHeadline()}
             </h1>
 
@@ -79,25 +81,29 @@ export function Hero() {
 
           {/* Right Column: Interactive Video/Preview Card (MotherDuck Right Card & Tap Button) */}
           <div className="lg:col-span-5">
-            <div className="bg-surface border-2 border-neo-border shadow-neo-xl relative overflow-hidden flex flex-col justify-between p-5 sm:p-6 min-h-[280px]">
+            <motion.div
+              whileHover={{ y: -3 }}
+              transition={{ duration: 0.2 }}
+              className="bg-surface border-2 border-neo-border shadow-neo-xl relative overflow-hidden flex flex-col justify-between p-5 sm:p-6 min-h-[280px]"
+            >
               <div>
                 <div className="flex items-center justify-between pb-3 border-b-2 border-neo-border mb-4">
                   <div className="flex items-center gap-2">
                     <div className="w-3 h-3 bg-terracotta border border-neo-border" />
                     <div className="w-3 h-3 bg-neo-yellow border border-neo-border" />
                     <div className="w-3 h-3 bg-neo-sky border border-neo-border" />
-                    <span className="font-mono text-[11px] font-bold uppercase tracking-wider ml-1 text-foreground">
+                    <span className="font-mono text-xs font-bold uppercase tracking-wider ml-1 text-foreground">
                       Offer Audit Engine
                     </span>
                   </div>
-                  <span className="text-[10px] font-mono font-bold bg-neo-peach border border-neo-border px-2 py-0.5 shadow-neo-sm">
+                  <span className="text-xs font-mono font-bold bg-neo-peach border border-neo-border px-2 py-0.5 shadow-neo-sm">
                     DETERMINISTIC
                   </span>
                 </div>
 
                 <div className="space-y-3 font-mono text-xs">
                   <div className="p-3 bg-background border border-neo-border shadow-inner">
-                    <div className="text-[10px] text-muted-foreground uppercase font-bold">Input Sample Analysis:</div>
+                    <div className="text-xs text-muted-foreground uppercase font-bold">Input Sample Analysis:</div>
                     <p className="mt-1 text-foreground font-sans text-xs line-clamp-2">
                       "URGENT: Selected as Associate. Deposit ₹3,500 security deposit within 2 hours or job offer cancelled."
                     </p>
@@ -110,21 +116,21 @@ export function Hero() {
                 </div>
               </div>
 
-              {/* Tap Button with Blue Hover Transition */}
+              {/* Tap Button with Outline Demotion (Fixing Usability Issue 2 & 19) */}
               <div className="mt-5 pt-3 border-t-2 border-neo-border flex items-center justify-between">
                 <button
                   type="button"
                   onClick={scrollToCard}
-                  className="bg-neo-yellow border-2 border-neo-border shadow-neo-sm px-3.5 py-2 font-sans font-bold uppercase tracking-wider text-xs text-foreground flex items-center gap-2 hover:bg-neo-sky-hover hover:text-white hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none active:translate-x-[2px] active:translate-y-[2px] transition-all group"
+                  className="bg-surface border-2 border-neo-border shadow-neo-sm px-3.5 py-2 font-sans font-bold uppercase tracking-wider text-xs text-foreground flex items-center gap-2 hover:bg-neo-sky hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all group"
                 >
-                  <Volume2 size={14} className="group-hover:text-white" />
-                  <span>Audit Your Offer Now</span>
+                  <Volume2 size={14} className="text-muted-foreground group-hover:text-foreground" />
+                  <span>Preview Live Audit</span>
                 </button>
-                <span className="text-[10px] font-mono text-muted-foreground uppercase font-bold">
+                <span className="text-xs font-mono text-muted-foreground uppercase font-bold">
                   Zero Hallucinations
                 </span>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
 
@@ -134,9 +140,9 @@ export function Hero() {
             <span className="font-mono text-xs font-bold uppercase tracking-widest text-muted-foreground">
               Official Indian Verification Portals
             </span>
-            <span className="text-[10px] font-mono bg-neo-yellow border border-neo-border px-2 py-0.5 shadow-neo-sm font-bold">
+            <ShimmerBadge>
               GOVT VERIFIED
-            </span>
+            </ShimmerBadge>
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
@@ -246,7 +252,7 @@ export function Hero() {
               </p>
             </div>
             {/* Inner Wireframe Preview Box */}
-            <div className="mt-4 p-2.5 bg-background border border-neo-border shadow-sm text-[11px] font-mono space-y-1">
+            <div className="mt-4 p-2.5 bg-background border border-neo-border shadow-sm text-xs font-mono space-y-1">
               <div className="flex justify-between items-center text-muted-foreground">
                 <span>Stipend Disbursement</span>
                 <span className="text-foreground font-semibold">Direct NEFT</span>

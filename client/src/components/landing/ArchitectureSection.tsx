@@ -72,11 +72,11 @@ export function ArchitectureSection() {
                   <button
                     type="button"
                     onClick={() => setActiveId(isOpen ? '' : item.id)}
-                    className="w-full p-4 sm:p-5 flex items-center justify-between text-left font-sans font-extrabold uppercase tracking-tight text-xs sm:text-sm text-foreground group"
+                    className="w-full min-h-[56px] px-4 py-3 sm:px-5 flex items-center justify-between text-left font-sans font-extrabold uppercase tracking-tight text-xs sm:text-sm text-foreground group"
                     aria-expanded={isOpen}
                   >
-                    <span>{item.title}</span>
-                    <span className="w-6 h-6 border-2 border-neo-border bg-background flex items-center justify-center shrink-0 ml-3 text-foreground group-hover:bg-neo-yellow transition-colors">
+                    <span className="leading-snug pr-2">{item.title}</span>
+                    <span className="w-6 h-6 border-2 border-neo-border bg-background flex items-center justify-center shrink-0 ml-2 text-foreground group-hover:bg-neo-yellow transition-colors" aria-hidden="true">
                       {isOpen ? <Minus size={14} /> : <Plus size={14} />}
                     </span>
                   </button>
@@ -188,3 +188,4 @@ export function ArchitectureSection() {
 }
 
 export default ArchitectureSection;
+

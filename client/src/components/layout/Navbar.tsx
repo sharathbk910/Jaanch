@@ -16,7 +16,7 @@ export function Navbar() {
   return (
     <>
       {/* Top Helpline Alert Bar in Exactly 1 Line */}
-      <div className="w-full bg-terracotta text-white py-1.5 px-4 text-[11px] sm:text-xs font-bold tracking-wider text-center uppercase border-b-2 border-neo-border select-none whitespace-nowrap overflow-hidden text-ellipsis flex items-center justify-center z-50">
+      <div className="w-full bg-terracotta text-white py-1.5 px-4 text-xs font-semibold tracking-wide text-center border-b-2 border-neo-border select-none whitespace-nowrap overflow-hidden text-ellipsis flex items-center justify-center z-50">
         <a
           href="https://cybercrime.gov.in"
           target="_blank"
@@ -51,7 +51,7 @@ export function Navbar() {
             <NavLink
               to="/analyze"
               className={({ isActive }) =>
-                `text-xs font-bold uppercase tracking-wider transition-colors py-1 whitespace-nowrap ${
+                `text-xs font-bold transition-colors py-1 whitespace-nowrap ${
                   isActive
                     ? 'text-terracotta border-b-2 border-neo-border'
                     : 'text-foreground/80 hover:text-foreground'
@@ -63,7 +63,7 @@ export function Navbar() {
             <NavLink
               to="/link-check"
               className={({ isActive }) =>
-                `text-xs font-bold uppercase tracking-wider transition-colors py-1 whitespace-nowrap ${
+                `text-xs font-bold transition-colors py-1 whitespace-nowrap ${
                   isActive
                     ? 'text-terracotta border-b-2 border-neo-border'
                     : 'text-foreground/80 hover:text-foreground'
@@ -75,7 +75,7 @@ export function Navbar() {
             <NavLink
               to="/resources"
               className={({ isActive }) =>
-                `text-xs font-bold uppercase tracking-wider transition-colors py-1 whitespace-nowrap ${
+                `text-xs font-bold transition-colors py-1 whitespace-nowrap ${
                   isActive
                     ? 'text-terracotta border-b-2 border-neo-border'
                     : 'text-foreground/80 hover:text-foreground'
@@ -87,7 +87,7 @@ export function Navbar() {
             <NavLink
               to="/about"
               className={({ isActive }) =>
-                `text-xs font-bold uppercase tracking-wider transition-colors py-1 whitespace-nowrap ${
+                `text-xs font-bold transition-colors py-1 whitespace-nowrap ${
                   isActive
                     ? 'text-terracotta border-b-2 border-neo-border'
                     : 'text-foreground/80 hover:text-foreground'
@@ -98,20 +98,20 @@ export function Navbar() {
             </NavLink>
           </nav>
 
-          {/* Right: Actions Cluster in 1 Line (LOG IN + Blue Button + Controls) */}
+          {/* Right: Actions Cluster in 1 Line (LOG IN + Outline Button + Controls) */}
           <div className="hidden md:flex items-center gap-3 lg:gap-4 shrink-0 whitespace-nowrap">
             {user ? (
               <div className="flex items-center gap-2 shrink-0 whitespace-nowrap">
                 <Link
                   to="/history"
-                  className="text-xs font-bold uppercase tracking-wider text-foreground hover:text-terracotta transition-colors px-1.5 py-1 whitespace-nowrap"
+                  className="text-xs font-bold text-foreground hover:text-terracotta transition-colors px-1.5 py-1 whitespace-nowrap"
                 >
                   {t('navigation.history')}
                 </Link>
                 <button
                   type="button"
                   onClick={() => signOut()}
-                  className="text-xs font-bold uppercase tracking-wider text-muted-foreground hover:text-foreground transition-colors px-1.5 py-1 whitespace-nowrap"
+                  className="text-xs font-bold text-muted-foreground hover:text-foreground transition-colors px-1.5 py-1 whitespace-nowrap"
                 >
                   {t('navigation.logout')}
                 </button>
@@ -119,18 +119,18 @@ export function Navbar() {
             ) : (
               <Link
                 to="/login"
-                className="text-xs font-bold uppercase tracking-wider text-foreground hover:text-terracotta transition-colors px-2 py-1 shrink-0 whitespace-nowrap"
+                className="text-xs font-bold text-foreground hover:text-terracotta transition-colors px-2 py-1 shrink-0 whitespace-nowrap"
               >
                 {t('navigation.login')}
               </Link>
             )}
 
-            {/* MotherDuck Style Primary Sky Blue Button */}
+            {/* Clean Secondary Outline Button (Resolves Primary Button Competition) */}
             <Link to="/analyze" className="shrink-0">
               <Button
-                variant="primary"
+                variant="outline"
                 size="sm"
-                className="bg-neo-sky text-foreground border-2 border-neo-border shadow-neo-sm font-bold uppercase tracking-wider text-xs px-3.5 py-1.5 hover:bg-neo-sky-hover hover:text-white hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all rounded-none whitespace-nowrap"
+                className="bg-surface text-foreground border-2 border-neo-border shadow-neo-sm font-bold uppercase tracking-wider text-xs px-3.5 py-1.5 hover:bg-neo-sky hover:text-foreground hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all rounded-none whitespace-nowrap"
               >
                 {t('navigation.verifyOffer')}
               </Button>
