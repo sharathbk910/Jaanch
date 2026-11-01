@@ -42,6 +42,7 @@ import { IntelMatchCard } from '../components/results/IntelMatchCard.js';
 import { ReportMessageDialog } from '../components/results/ReportMessageDialog.js';
 import { NextSteps } from '../components/results/NextSteps.js';
 import { downloadPdfReport } from '../components/results/PdfExport.js';
+import { WhatsAppShareButton } from '../components/results/WhatsAppShareButton.js';
 
 // Realistic reference scenarios for /sample walkthrough
 export const SAMPLE_GENUINE_RESULT: AnalyzeResult = {
@@ -561,6 +562,13 @@ export function Results() {
                   <span>{t('results.exportJson')}</span>
                 </Button>
               </div>
+
+              <WhatsAppShareButton
+                status={result.status}
+                publicId={result.intelMatch?.publicId}
+                matchedIndicators={result.intelMatch?.matchedIndicators}
+                claimedOrg={result.extractedEntities.organization || undefined}
+              />
 
               <Button
                 variant="outline"

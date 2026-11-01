@@ -46,6 +46,11 @@ const RawEnvSchema = z.object({
   RATE_LIMIT_ANALYZE_USER_PER_HOUR: z.coerce.number().int().positive().default(60),
   RATE_LIMIT_LINK_PER_HOUR: z.coerce.number().int().positive().default(60),
 
+  // WhatsApp integration
+  WHATSAPP_VERIFY_TOKEN: z.string().default('jaanch_webhook_verify_token_default'),
+  WHATSAPP_APP_SECRET: z.string().optional(),
+  WHATSAPP_PHONE_NUMBER_ID: z.string().optional(),
+
   // Logging
   LOG_LEVEL: z.enum(['fatal', 'error', 'warn', 'info', 'debug', 'trace', 'silent']).default('info'),
 });
@@ -69,6 +74,9 @@ export interface ServerEnv {
   RATE_LIMIT_ANALYZE_GUEST_PER_HOUR: number;
   RATE_LIMIT_ANALYZE_USER_PER_HOUR: number;
   RATE_LIMIT_LINK_PER_HOUR: number;
+  WHATSAPP_VERIFY_TOKEN: string;
+  WHATSAPP_APP_SECRET?: string;
+  WHATSAPP_PHONE_NUMBER_ID?: string;
   LOG_LEVEL: string;
 }
 
@@ -131,6 +139,9 @@ export function loadEnv(): ServerEnv {
     RATE_LIMIT_ANALYZE_GUEST_PER_HOUR: raw.RATE_LIMIT_ANALYZE_GUEST_PER_HOUR,
     RATE_LIMIT_ANALYZE_USER_PER_HOUR: raw.RATE_LIMIT_ANALYZE_USER_PER_HOUR,
     RATE_LIMIT_LINK_PER_HOUR: raw.RATE_LIMIT_LINK_PER_HOUR,
+    WHATSAPP_VERIFY_TOKEN: raw.WHATSAPP_VERIFY_TOKEN,
+    WHATSAPP_APP_SECRET: raw.WHATSAPP_APP_SECRET,
+    WHATSAPP_PHONE_NUMBER_ID: raw.WHATSAPP_PHONE_NUMBER_ID,
     LOG_LEVEL: raw.LOG_LEVEL,
   };
 

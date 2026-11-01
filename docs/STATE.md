@@ -10,10 +10,10 @@
 ## 2. Project Overview
 - **Project Name:** Jaanch (Student Offer Verification & Trust Safety Platform)
 - **Problem Statement:** "Fake or Real" (Digital Trust & Safety for Indian Students)
-- **Current Phase:** Phase 8 – AI/ML Complete
-- **Current Tag:** `phase-8-done`
+- **Current Phase:** Phase 9 – WhatsApp Channel Complete
+- **Current Tag:** `phase-9-done`
 - **Node Version:** v24.19.0 (LTS >= 20 required)
-- **Repository State:** Green monorepo; `@jaanch/shared`, `@jaanch/server`, and `@jaanch/client` fully compiled, typechecked, linted, and tested (322 tests passing across 34 test suites, 25/25 eval fixtures matching 100%, 10/10 acceptance criteria PASS)
+- **Repository State:** Green monorepo; `@jaanch/shared`, `@jaanch/server`, and `@jaanch/client` fully compiled, typechecked, linted, and tested (336 tests passing across 36 test suites, 25/25 eval fixtures matching 100%, 10/10 acceptance criteria PASS)
 
 ---
 
@@ -40,7 +40,7 @@
      - 6D: Auth UI & History (**DONE**)
   7. Shared intelligence and moderation (**DONE**)
   8. AI/ML (Gemini wrapper, PII redaction, grounding with findSpan, fail-soft aiStatus, invariant enforcement, challenge email, safe reply, link explanation) (**DONE**)
-  9. WhatsApp
+  9. WhatsApp (**DONE**)
   10. Verification
   11. Deployment
 
@@ -179,9 +179,37 @@
 
 ---
 
+- **Phase 9 Verification Checklist (WhatsApp Channel Integration):**
+  - [x] Inbound Webhook Handshake (`GET /api/whatsapp/webhook`):
+    - Validates Meta `hub.mode === 'subscribe'` and verifies token against `WHATSAPP_VERIFY_TOKEN`.
+    - Returns HTTP 200 with challenge string on match; returns HTTP 403 on mismatch.
+  - [x] Webhook Signature Validation (`verifyWhatsAppSignature`):
+    - Timing-safe HMAC-SHA256 signature verification comparing `X-Hub-Signature-256` against `WHATSAPP_APP_SECRET`.
+    - Enforces buffer length equality to prevent timing attacks and buffer mismatch errors.
+  - [x] Deterministic Inbound Message Processing (`POST /api/whatsapp/webhook`):
+    - Parses inbound text messages, runs deterministic rule analysis via `analyzeOffer`.
+    - Corroborates extracted indicators against confirmed threat intelligence records via `ThreatIntelRepository.matchIntel`.
+    - Generates localized safety advisory replies with direct references to 1930 / `cybercrime.gov.in` and `jaanch.ai`.
+  - [x] Strict Invariant Enforcement:
+    - **Zero Auto-Send (`SPEC_ADDENDUM.md §5`):** Responds synchronously with generated replies in the HTTP response; system initiates zero unsolicited outbound network dispatches or SMS blasts.
+    - **Confirmed Only (`SPEC_ADDENDUM.md §5`):** Outgoing share intents share strictly confirmed indicator public IDs (`JNC-INTEL-...`), verified organizational warnings, and official helplines. Zero student message text or unredacted PII is ever transmitted.
+  - [x] Share Intent Endpoint (`POST /api/whatsapp/share-intent`):
+    - Validated with Zod schema (`WhatsAppShareIntentSchema`); generates safe `https://api.whatsapp.com/send?text=...` links.
+  - [x] Client Integration & Frontend Component:
+    - `client/src/lib/whatsappShare.ts`: shared formatter and URL generator.
+    - `client/src/components/results/WhatsAppShareButton.tsx`: accessible button with SVG WhatsApp branding, tooltip, and new-tab navigation.
+    - Integrated directly in `Results.tsx` Quick Actions sidebar for 1-click sharing of verified scam warnings and official verification checklists.
+  - [x] Multilingual Support:
+    - Complete localized copy for WhatsApp sharing across English, Hindi, and Kannada (`translations.ts`).
+  - [x] Full Verification & Test Suite:
+    - 336 tests passing across 36 test suites (8 dedicated backend channel tests in `server/src/__tests__/whatsapp_channel.test.ts` + 6 client component/invariant tests in `client/src/__tests__/WhatsAppShare.test.tsx`).
+    - 10 / 10 acceptance criteria passing; 100% scenario verification passing; 25/25 eval fixtures matching 100%.
+
+---
+
 ## 5. Next Steps
-- Commit Phase 8 files and tag `phase-8-done`.
-- Proceed to **Phase 9 – WhatsApp Channel**:
-  - Webhook verification & signature validation
-  - Inbound message routing, media handling, and conversational state machine
-  - Deterministic response generation & safety advisories
+- Commit Phase 9 files and tag `phase-9-done`.
+- Proceed to **Phase 10 – Verification & QA**:
+  - Full end-to-end regression evaluation across all 25 fixtures
+  - Accessibility audit (WCAG 2.2 AA) across all viewports (360px–1920px)
+  - Security audit and parity verification against Feature Inventory F01–F24

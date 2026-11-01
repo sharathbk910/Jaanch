@@ -286,6 +286,8 @@ export interface TranslationDictionary {
     observedLinkSignals: string;
     unverifiedLinkNotes: string;
     jumpNavTitle: string;
+    shareWhatsApp: string;
+    shareWhatsAppDesc: string;
   };
   reportDialog: {
     triggerBtn: string;
@@ -658,6 +660,8 @@ export const translations: Record<'en' | 'hi' | 'kn', TranslationDictionary> = {
       observedLinkSignals: 'Observed Link Indicators',
       unverifiedLinkNotes: 'Unverified Aspects',
       jumpNavTitle: 'Jump to Section',
+      shareWhatsApp: 'Share Warning on WhatsApp',
+      shareWhatsAppDesc: 'Only verified warnings and helplines are shared. Raw student text is never sent.',
     },
     reportDialog: {
       triggerBtn: 'Report Suspicious Indicator',
@@ -1028,6 +1032,8 @@ export const translations: Record<'en' | 'hi' | 'kn', TranslationDictionary> = {
       observedLinkSignals: 'पहचाने गए लिंक संकेतक',
       unverifiedLinkNotes: 'असत्यापित पहलू',
       jumpNavTitle: 'सेक्शन पर जाएं',
+      shareWhatsApp: 'व्हाट्सएप पर चेतावनी साझा करें',
+      shareWhatsAppDesc: 'केवल पुष्ट चेतावनियां और हेल्पलाइन लिंक साझा किए जाते हैं। छात्र का मूल संदेश कभी नहीं भेजा जाता।',
     },
     reportDialog: {
       triggerBtn: 'संदिग्ध संकेतक की रिपोर्ट करें',
@@ -1398,6 +1404,8 @@ export const translations: Record<'en' | 'hi' | 'kn', TranslationDictionary> = {
       observedLinkSignals: 'ಪತ್ತೆಯಾದ ಲಿಂಕ್ ಸಂಕೇತಗಳು',
       unverifiedLinkNotes: 'ಪರಿಶೀಲಿಸದ ಅಂಶಗಳು',
       jumpNavTitle: 'ವಿಭಾಗಕ್ಕೆ ಜಂಪ್ ಮಾಡಿ',
+      shareWhatsApp: 'ವಾಟ್ಸಾಪ್‌ನಲ್ಲಿ ಎಚ್ಚರಿಕೆ ಹಂಚಿಕೊಳ್ಳಿ',
+      shareWhatsAppDesc: 'ದೃಢೀಕರಿಸಿದ ಎಚ್ಚರಿಕೆಗಳು ಮತ್ತು ಹೆಲ್ಪ್‌ಲೈನ್ ಲಿಂಕ್‌ಗಳನ್ನು ಮಾತ್ರ ಹಂಚಿಕೊಳ್ಳಲಾಗುತ್ತದೆ. ವಿದ್ಯಾರ್ಥಿಯ ಸಂದೇಶವನ್ನು ಎಂದಿಗೂ ಕಳುಹಿಸುವುದಿಲ್ಲ.',
     },
     reportDialog: {
       triggerBtn: 'ಶಂಕಾಸ್ಪದ ವಿವರವನ್ನು ವರದಿ ಮಾಡಿ',

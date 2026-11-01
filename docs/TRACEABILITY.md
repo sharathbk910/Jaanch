@@ -104,7 +104,7 @@
 | **Phase 11** | Translations (HI/KN) & polish | Phase 6 | UI implementation |
 | **Phase 12** | End-to-end QA, parity audit | Phase 10 | Verification & QA |
 | **Phase 13** | Runbook, doctor script, deploy config (H2) | Phase 11 | Deployment |
-| *(None)* | Dedicated WhatsApp sharing feature | Phase 9 | WhatsApp Integration (confirmed indicators only) |
+| *(None)* | Dedicated WhatsApp sharing feature | Phase 9 | WhatsApp Integration (confirmed indicators only) | **DONE** (Webhook handshake, HMAC signature validation, zero-auto-send invariant, confirmed-only share link generator, WhatsAppShareButton) |
 | *(None)* | Threat intelligence moderation workflows | Phase 7 | Shared intelligence and moderation | **DONE** (Role guard, transition audit logs, moderator CLI) |
 
 ---

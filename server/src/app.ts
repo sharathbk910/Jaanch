@@ -17,6 +17,7 @@ import { configRouter } from './routes/config.js';
 import { reportsRouter } from './routes/reports.js';
 import { moderationRouter } from './routes/moderation.js';
 import challengeRouter from './routes/challenge.js';
+import { whatsappRouter } from './routes/whatsapp.js';
 
 export interface AppOptions {
   enableRateLimiting?: boolean;
@@ -86,6 +87,7 @@ export function createApp(options: AppOptions = {}): Application {
   app.use('/api', historyRouter);
   app.use('/api', configRouter);
   app.use('/api', challengeRouter);
+  app.use('/api/whatsapp', whatsappRouter);
 
   // 9. 404 Handler for unmatched routes
   app.use((req: Request, res: Response) => {
