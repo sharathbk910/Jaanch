@@ -1,18 +1,28 @@
-import rateLimit, { type RateLimitRequestHandler, MemoryStore } from 'express-rate-limit';
+import rateLimit, { type RateLimitRequestHandler, type Store, type LegacyStore, MemoryStore } from 'express-rate-limit';
 import type { Request, Response } from 'express';
+import type { SupabaseClient } from '@supabase/supabase-js';
 import { loadEnv } from '../config/env.js';
+import { PostgresRateLimitStore } from './postgresRateLimitStore.js';
 
 /**
  * Storage interface abstraction for rate limiting.
- * Defaults to in-memory store; swappable to Redis in Phase 11.
+ * Defaults to in-memory store; persistent Postgres store available for multi-instance scaling.
  */
 export interface RateLimitStoreProvider {
-  createStore(): InstanceType<typeof MemoryStore>;
+  createStore(): Store | LegacyStore;
 }
 
 export const defaultStoreProvider: RateLimitStoreProvider = {
   createStore: () => new MemoryStore(),
 };
+
+export class PostgresRateLimitStoreProvider implements RateLimitStoreProvider {
+  constructor(private readonly client?: SupabaseClient, private readonly prefix?: string) {}
+
+  createStore(): Store {
+    return new PostgresRateLimitStore({ client: this.client, prefix: this.prefix });
+  }
+}
 
 export function createRateLimiter(options: {
   windowMs: number;
@@ -48,12 +58,13 @@ export function createRateLimiter(options: {
   });
 }
 
-export function globalRateLimiter(): RateLimitRequestHandler {
+export function globalRateLimiter(storeProvider?: RateLimitStoreProvider): RateLimitRequestHandler {
   const env = loadEnv();
   return createRateLimiter({
     windowMs: 15 * 60 * 1000,
     max: env.RATE_LIMIT_GLOBAL_PER_15MIN,
     message: 'Global rate limit exceeded. Please try again later.',
+    storeProvider,
   });
 }
 

@@ -149,11 +149,11 @@ npm run dev
 
 ## Deployment Targets
 
-- **Frontend:** [Vercel](https://vercel.com) (`client/vercel.json` SPA rewrites).
-- **Backend:** [Render](https://render.com) (`render.yaml`) or Docker (`Dockerfile`).
-- **Database:** [Supabase](https://supabase.com) (PostgreSQL 15+ with RLS).
+- **Frontend:** [Vercel](https://vercel.com) (`vercel.json` SPA rewrites, client code-split with 83% bundle reduction).
+- **Backend:** [Render](https://render.com) (`render.yaml`), Docker (`Dockerfile`), or Linux VM.
+- **Database:** [Supabase](https://supabase.com) (PostgreSQL with RLS, pg_trgm, pgvector, persistent rate limiting).
 
-See [`docs/RUNBOOK.md`](docs/RUNBOOK.md) for full operational, deployment, and rollback procedures.
+See [`docs/DEPLOY.md`](docs/DEPLOY.md) for step-by-step production setup and [`docs/RUNBOOK.md`](docs/RUNBOOK.md) for complete operational runbooks and disaster recovery.
 
 ---
 

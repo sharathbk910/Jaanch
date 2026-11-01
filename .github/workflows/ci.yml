@@ -1,0 +1,59 @@
+name: Jaanch CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint-and-check:
+    name: Lint & Policy Verification
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm ci
+      - name: Verify Secrets, Policies & Types
+        run: npm run lint
+      - name: Verify Database Migrations
+        run: node scripts/verify-migrations.mjs
+
+  test-and-eval:
+    name: Test Suite & ML Golden Fixtures
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm ci
+      - name: Run Vitest Suite
+        run: npm test
+      - name: Run Golden Scam Fixtures Evaluation (25/25)
+        run: npm run eval -w shared
+      - name: Run Acceptance Criteria Harness (10/10)
+        run: npm run test:acceptance
+
+  build:
+    name: Build All Workspaces
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm ci
+      - name: Build Shared, Server, Client
+        run: npm run build

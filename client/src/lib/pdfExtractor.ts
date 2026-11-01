@@ -1,17 +1,24 @@
 /**
  * In-browser PDF & document file extractor with Tesseract.js OCR fallback.
  * Privacy invariant: All extraction executes purely in the browser. Zero files uploaded to the server.
+ * Lazy-loads pdfjs-dist on demand to optimize initial client bundle size.
  */
-import * as pdfjsLib from 'pdfjs-dist';
 import { extractTextFromImage, type OcrLanguage, type OcrProgress } from './ocrExtractor.js';
 
-// Configure worker safely for browser environments
-if (typeof window !== 'undefined' && pdfjsLib && pdfjsLib.GlobalWorkerOptions) {
-  try {
-    pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version || '3.11.174'}/pdf.worker.min.js`;
-  } catch {
-    // Fail-soft if worker cannot be initialized
+let cachedPdfJs: any = null;
+async function getPdfJs() {
+  if (!cachedPdfJs) {
+    const pdfjsLib = await import('pdfjs-dist');
+    if (typeof window !== 'undefined' && pdfjsLib && pdfjsLib.GlobalWorkerOptions) {
+      try {
+        pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version || '3.11.174'}/pdf.worker.min.js`;
+      } catch {
+        // Fail-soft if worker cannot be initialized
+      }
+    }
+    cachedPdfJs = pdfjsLib;
   }
+  return cachedPdfJs;
 }
 
 export const MAX_FILE_SIZE_BYTES = 5 * 1024 * 1024; // 5 MB per specification
@@ -139,6 +146,7 @@ export async function extractTextFromFile(
   if (file.type === 'application/pdf' || extension === 'pdf') {
     let pdf: any;
     try {
+      const pdfjsLib = await getPdfJs();
       const arrayBuffer = await file.arrayBuffer();
       const loadingTask = pdfjsLib.getDocument({
         data: new Uint8Array(arrayBuffer),

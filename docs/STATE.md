@@ -287,15 +287,36 @@
     - `verify:scenarios`: PASSED (100% scenario verification against local server).
     - `npm run build`: PASSED (Clean production build across all workspaces).
 
-- **Phase 11 Verification Checklist (Deployment, Runbook, Doctor & Deploy Config – Human Gate H2):**
-  - [x] Operational Runbook (`docs/RUNBOOK.md`):
-    - System prerequisites (Node.js $\ge 20.0.0$, npm $\ge 10.0.0$, Git, Supabase PostgreSQL with `pg_trgm` and `vector`).
-    - Setup from scratch: clone, install, `.env` file configuration, schema migrations (`0001`–`0005`), organization seeding (`0003`), moderator bootstrap (`scripts/bootstrap-moderator.ts`).
-    - Operational verification commands: `doctor`, `smoke`, `test`, `eval`, `eval:ml`, `check:no-secrets`, `check:colors`, `check:banned-phrases`, `check:glyphs`.
-    - Production cloud deployment guides: Client on Vercel SPA, Server on Render Web Service, and containerized deployment with Docker.
-    - Strict security reminders: "Never commit `.env`" and "Never use Supabase service-role keys in application runtime".
-    - CORS and OAuth redirect URL checklist (`CLIENT_ORIGINS`, Supabase Auth Site URL and redirect URLs).
-    - Incident management & rollback procedures: code rollback (`git reset --hard phase-N-done`), migration rollback (`000X_*.down.sql`), and secret rotation protocol.
+- **Phase 11 Verification Checklist (Optimization, Persistent Rate Limiting, Production Hardening & Deployment Guides – Human Gate H2):**
+  - [x] Bundle Optimization & Lazy Loading:
+    - Lazy loaded `@react-pdf/renderer` dynamically inside `PdfExport.ts` (loaded only upon PDF export).
+    - Lazy loaded `pdfjs-dist` dynamically inside `pdfExtractor.ts` (loaded only upon PDF upload).
+    - Dynamic chunk splitting in `vite.config.ts` (`vendor-pdf`, `vendor-pdfjs`, `vendor-tesseract`, `vendor-supabase`, `vendor-react`).
+    - Main entry client bundle size reduced from 2,817.69 kB to 483.74 kB (118.14 kB gzip) — an **83% size reduction**.
+    - Font swap confirmed via `@fontsource` `font-display: swap`.
+  - [x] Response Compression & Server Hardening:
+    - Mounted `compression({ threshold: 1024 })` in Express pipeline.
+    - Configured `trust proxy: 1` for reverse proxies.
+    - Added `/api/health/live` and `/api/health/ready` (database liveness and readiness probe).
+  - [x] Persistent Postgres Rate Limiting:
+    - Created database migration `0006_rate_limiting.sql` and rollback `0006_rate_limiting.down.sql`.
+    - Implemented `PostgresRateLimitStore` backed by PostgreSQL atomic sliding-window upsert RPC `increment_rate_limit(p_key, p_window_ms)`.
+    - Automated test in `persistent_rate_limiter.test.ts` demonstrating two server instances sharing the Postgres store coordinate and enforce rate limits across instances.
+  - [x] High-Throughput Load Testing & Real Metrics:
+    - Created load test harness `scripts/load-test.ts` testing 200 requests across 10 concurrent connections.
+    - Measured real benchmark numbers:
+      - `POST /api/analyze`: 200 requests, 10 concurrency, **733.75 req/sec**, p50 = **9.64 ms**, p95 = **81.22 ms**, p99 = **83.36 ms**, 0 errors.
+      - `POST /api/threat-intel/lookup`: 200 requests, 10 concurrency, **1949.37 req/sec**, p50 = **4.82 ms**, p95 = **7.89 ms**, p99 = **8.51 ms**, 0 errors.
+  - [x] Database Index Verification:
+    - Created `scripts/verify-db-indexes.sql` documenting `EXPLAIN` query plans for trigram GIN index scan, vector HNSW cosine index scan, normalized hash index scan, value hash index scan, and rate limits expiration scan.
+  - [x] Clean Migrations & CI Automation:
+    - Created `scripts/verify-migrations.mjs` verifying forward and rollback migration pairs.
+    - Created `scripts/test-clean-migrations.mjs` testing clean application and rollback order.
+    - Configured GitHub Actions CI `.github/workflows/ci.yml` (lint, test, eval, acceptance, migration check, build).
+  - [x] Production Deployment & Runbook:
+    - Created `docs/DEPLOY.md` detailing Vercel frontend, Render backend, Supabase DB, post-deploy smoke tests, and rollbacks.
+    - Updated `docs/RUNBOOK.md` with database backup/restore procedures (`pg_dump`/`pg_restore`), pepper rotation runbook, first-moderator bootstrapping guide, and persistent rate limit maintenance.
+    - Updated `scripts/smoke.mjs` supporting remote deployment verification (`SMOKE_TARGET_URL`).
   - [x] Environment Doctor Tool (`scripts/doctor.mjs` & `npm run doctor`):
     - Node.js runtime version verification ($\ge 20.0.0$).
     - Checks presence of required server environment variable names (`PORT`, `NODE_ENV`, `CLIENT_ORIGINS`, `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `REPORT_HASH_PEPPER`).

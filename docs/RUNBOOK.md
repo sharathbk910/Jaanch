@@ -262,19 +262,131 @@ npm run build
 
 ### Database Migration Rollback
 Each migration file has an accompanying down-migration script:
-- `0005_ai_ml_vector_similarity.down.sql`
-- `0004_shared_intel.down.sql`
-- `0003_seed_organizations.down.sql`
-- `0002_verification_and_rules.down.sql`
-- `0001_initial_schema.down.sql`
+- `supabase/migrations/0006_rate_limiting.down.sql`
+- `supabase/migrations/0005_ai_ml_vector_similarity.down.sql`
+- `supabase/migrations/0004_shared_intel.down.sql`
+- `supabase/migrations/0003_seed_organizations.down.sql`
+- `supabase/migrations/0002_rls_functions.down.sql`
+- `supabase/migrations/0001_enums_tables.down.sql`
 
 Execute the appropriate `.down.sql` script via the Supabase SQL editor or CLI to revert the migration.
 
-### Compromised Secret Rotation
-If an API key is inadvertently exposed:
-1. **Supabase Anon Key:** Rotate in the Supabase Dashboard $\to$ Settings $\to$ API, update `VITE_SUPABASE_ANON_KEY` and `SUPABASE_ANON_KEY`.
-2. **Gemini API Key:** Revoke in Google AI Studio, generate a new key, and update `GEMINI_API_KEY` on Render.
-3. **Report Hash Pepper:**
-   - *Caution:* Rotating `REPORT_HASH_PEPPER` invalidates prior threat indicator lookup hashes.
-   - If rotated, run a re-hashing migration on `intel_indicators(value_hash)` using the new pepper.
+---
+
+## 7. Database Backup & Restore Runbook
+
+### Automatic Cloud Backups
+Supabase projects maintain automated daily WAL (write-ahead log) backups. Point-in-time recovery (PITR) is enabled on Pro tiers.
+
+### Manual Full Logical Backup
+To create a complete off-site snapshot of schema, extensions, and threat intelligence records:
+
+```bash
+# Set your Supabase database connection string
+export DATABASE_URL="postgresql://postgres:[YOUR-PASSWORD]@db.[PROJECT-REF].supabase.co:5432/postgres"
+
+# Dump all schemas, tables, and functions
+pg_dump "$DATABASE_URL" \
+  --format=custom \
+  --blobs \
+  --verbose \
+  --file="jaanch_backup_$(date +%Y%m%d_%H%M%S).dump"
+```
+
+### Table-Specific Intelligence Dump
+To back up community threat intelligence records without touching user profiles or audit logs:
+
+```bash
+pg_dump "$DATABASE_URL" \
+  --table=public.intel_records \
+  --table=public.intel_indicators \
+  --table=public.domain_allowlist \
+  --format=custom \
+  --file="jaanch_intel_only_$(date +%Y%m%d).dump"
+```
+
+### Logical Restore Procedure
+To restore from a logical backup file on a fresh database:
+
+```bash
+pg_restore \
+  --dbname="$DATABASE_URL" \
+  --clean \
+  --if-exists \
+  --no-owner \
+  --no-privileges \
+  --verbose \
+  "jaanch_backup_20261101_180000.dump"
+```
+
+---
+
+## 8. Cryptographic Pepper Rotation Runbook
+
+The `REPORT_HASH_PEPPER` is used to HMAC-SHA256 normalize submission texts (`intel_records.normalized_hash`) and entity indicators (`intel_indicators.value_hash`).
+
+### When to Rotate
+1. Secret leakage or suspicion of compromise.
+2. Scheduled annual security compliance key rotation.
+
+### Zero-Downtime Rotation Procedure
+1. **Grace Period Configuration:**
+   Add `REPORT_HASH_PEPPER_PREVIOUS` to `server/.env`:
+   ```env
+   REPORT_HASH_PEPPER="new-64-character-cryptographically-secure-pepper"
+   REPORT_HASH_PEPPER_PREVIOUS="old-prior-pepper-string-used-previously"
+   ```
+2. **Lookup Fallback:**
+   The threat lookup service computes HMAC under both `REPORT_HASH_PEPPER` and `REPORT_HASH_PEPPER_PREVIOUS` during the 30-day migration window.
+3. **Database Re-hashing Batch:**
+   Run the offline migration script to re-hash indicator values:
+   ```bash
+   npx tsx scripts/rotate-pepper.ts --old-pepper "$OLD_PEPPER" --new-pepper "$NEW_PEPPER"
+   ```
+4. **Decommission Previous Pepper:**
+   Remove `REPORT_HASH_PEPPER_PREVIOUS` from environment once all active indicator records have been migrated.
+
+---
+
+## 9. First-Moderator Bootstrapping Runbook
+
+When deploying a clean environment, no user has the `moderator` role by default.
+
+### Step 1: User Self-Registration
+The candidate moderator must register an account via the normal registration flow at `/login` (or `/history`) with their institutional or team email address (e.g. `moderator@campus.edu`).
+
+### Step 2: Role Promotion via Server Script
+Run the administrative bootstrapping script with the target email:
+
+```bash
+SUPABASE_URL=https://<project-ref>.supabase.co \
+SUPABASE_SERVICE_ROLE_KEY=<service-role-key> \
+npx tsx scripts/bootstrap-moderator.ts moderator@campus.edu
+```
+
+The script will:
+1. Lookup the user by email in `auth.users`
+2. Update `public.users.role = 'moderator'`
+3. Log the administrative promotion in `public.audit_logs`
+
+### Step 3: Verification
+Have the user log into `/moderation` in the web client. The UI should display the Moderation Triage Queue and allow confirming, dismissing, or disputing reports.
+
+---
+
+## 10. Persistent Rate Limiting Maintenance
+
+Rate limits are maintained persistently in PostgreSQL (`public.rate_limits`) via atomic upsert RPC `increment_rate_limit(p_key, p_window_ms)`.
+
+### Automatic Expiration
+`increment_rate_limit` automatically resets expired entries in-place when a key's `reset_at` has elapsed, preventing unbounded hit counters.
+
+### Periodic Vacuum / Pruning
+To prevent stale rows from accumulating over months, schedule a weekly Postgres cron job or run:
+
+```sql
+DELETE FROM public.rate_limits
+WHERE reset_at < NOW() - INTERVAL '7 days';
+```
+
 

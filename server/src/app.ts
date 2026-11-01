@@ -1,9 +1,10 @@
 import express, { type Application, type Request, type Response, type NextFunction } from 'express';
+import compression from 'compression';
 import { requestIdMiddleware } from './middleware/requestId.js';
 import { securityMiddleware } from './middleware/security.js';
 import { corsMiddleware } from './middleware/cors.js';
 import { httpLogger } from './lib/logger.js';
-import { globalRateLimiter } from './middleware/rateLimiter.js';
+import { globalRateLimiter, type RateLimitStoreProvider } from './middleware/rateLimiter.js';
 import { errorHandler } from './middleware/errorHandler.js';
 
 import { healthRouter } from './routes/health.js';
@@ -21,6 +22,7 @@ import { whatsappRouter } from './routes/whatsapp.js';
 
 export interface AppOptions {
   enableRateLimiting?: boolean;
+  rateLimitStoreProvider?: RateLimitStoreProvider;
 }
 
 /**
@@ -47,32 +49,38 @@ function strictJsonContentTypeMiddleware(req: Request, res: Response, next: Next
 }
 
 export function createApp(options: AppOptions = {}): Application {
-  const { enableRateLimiting = true } = options;
+  const { enableRateLimiting = true, rateLimitStoreProvider } = options;
   const app = express();
+
+  // Express trust proxy (required for reverse proxies on Render/Vercel/fly)
+  app.set('trust proxy', 1);
 
   app.set('enableRateLimiting', enableRateLimiting);
 
-  // 1. Request ID tracking
+  // 1. Response compression (threshold 1KB)
+  app.use(compression({ threshold: 1024 }));
+
+  // 2. Request ID tracking
   app.use(requestIdMiddleware);
 
-  // 2. Strict Security Headers (Helmet with API CSP)
+  // 3. Strict Security Headers (Helmet with API CSP)
   app.use(securityMiddleware());
 
-  // 3. CORS from CLIENT_ORIGINS only
+  // 4. CORS from CLIENT_ORIGINS only
   app.use(corsMiddleware());
 
-  // 4. Pino HTTP logger with body and header redaction
+  // 5. Pino HTTP logger with body and header redaction
   app.use(httpLogger);
 
-  // 5. Strict Content-Type check for JSON payloads
+  // 6. Strict Content-Type check for JSON payloads
   app.use(strictJsonContentTypeMiddleware);
 
-  // 6. Body parser with strict 256 KB size limit
+  // 7. Body parser with strict 256 KB size limit
   app.use(express.json({ limit: '256kb' }));
 
-  // 7. Global rate limiter (optional flag for testing scenarios)
+  // 8. Global rate limiter (optional flag for testing scenarios)
   if (enableRateLimiting) {
-    app.use('/api', globalRateLimiter());
+    app.use('/api', globalRateLimiter(rateLimitStoreProvider));
   }
 
   // 8. API Routes

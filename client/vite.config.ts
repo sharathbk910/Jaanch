@@ -14,6 +14,34 @@ export default defineConfig({
       },
     },
   },
+  build: {
+    chunkSizeWarningLimit: 600,
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('@react-pdf')) {
+            return 'vendor-pdf';
+          }
+          if (id.includes('pdfjs-dist')) {
+            return 'vendor-pdfjs';
+          }
+          if (id.includes('tesseract.js')) {
+            return 'vendor-tesseract';
+          }
+          if (id.includes('@supabase')) {
+            return 'vendor-supabase';
+          }
+          if (
+            id.includes('node_modules/react/') ||
+            id.includes('node_modules/react-dom/') ||
+            id.includes('node_modules/react-router')
+          ) {
+            return 'vendor-react';
+          }
+        },
+      },
+    },
+  },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),

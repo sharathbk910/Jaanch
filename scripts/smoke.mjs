@@ -14,6 +14,7 @@
  */
 
 import http from 'node:http';
+import https from 'node:https';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -107,12 +108,13 @@ function postJson(url, payload, token) {
     };
     if (token) headers['Authorization'] = `Bearer ${token}`;
 
-    const req = http.request(
+    const transport = parsed.protocol === 'https:' ? https : http;
+    const req = transport.request(
       parsed,
       {
         method: 'POST',
         headers,
-        timeout: 5000,
+        timeout: 10000,
       },
       (res) => {
         let data = '';
@@ -142,12 +144,13 @@ function getJson(url, token) {
     const headers = {};
     if (token) headers['Authorization'] = `Bearer ${token}`;
 
-    const req = http.request(
+    const transport = parsed.protocol === 'https:' ? https : http;
+    const req = transport.request(
       parsed,
       {
         method: 'GET',
         headers,
-        timeout: 5000,
+        timeout: 10000,
       },
       (res) => {
         let data = '';
@@ -180,34 +183,40 @@ export async function runSmokeTest() {
   let serverInstance = null;
   let baseUrl = '';
 
-  // Check if server is already running on env.PORT
-  const probePort = env.PORT || 8080;
-  const isRunning = await new Promise((resolve) => {
-    const req = http.get(`http://127.0.0.1:${probePort}/api/health`, (res) => {
-      resolve(res.statusCode === 200);
-    });
-    req.on('error', () => resolve(false));
-    req.setTimeout(800, () => {
-      req.destroy();
-      resolve(false);
-    });
-  });
-
-  if (isRunning) {
-    baseUrl = `http://127.0.0.1:${probePort}`;
-    console.log(`[INFO] Connected to existing server at ${baseUrl}`);
+  const remoteTarget = process.env.SMOKE_TARGET_URL || process.env.REMOTE_URL;
+  if (remoteTarget) {
+    baseUrl = remoteTarget.replace(/\/+$/, '');
+    console.log(`[INFO] Targeting configured remote server at ${baseUrl}`);
   } else {
-    // Start ephemeral server
-    const app = createApp();
-    serverInstance = http.createServer(app);
-    await new Promise((resolve) => {
-      serverInstance.listen(0, '127.0.0.1', () => {
-        const addr = serverInstance.address();
-        baseUrl = `http://127.0.0.1:${addr.port}`;
-        console.log(`[INFO] Started ephemeral test server at ${baseUrl}`);
-        resolve();
+    // Check if server is already running on env.PORT
+    const probePort = env.PORT || 8080;
+    const isRunning = await new Promise((resolve) => {
+      const req = http.get(`http://127.0.0.1:${probePort}/api/health`, (res) => {
+        resolve(res.statusCode === 200);
+      });
+      req.on('error', () => resolve(false));
+      req.setTimeout(800, () => {
+        req.destroy();
+        resolve(false);
       });
     });
+
+    if (isRunning) {
+      baseUrl = `http://127.0.0.1:${probePort}`;
+      console.log(`[INFO] Connected to existing server at ${baseUrl}`);
+    } else {
+      // Start ephemeral server
+      const app = createApp();
+      serverInstance = http.createServer(app);
+      await new Promise((resolve) => {
+        serverInstance.listen(0, '127.0.0.1', () => {
+          const addr = serverInstance.address();
+          baseUrl = `http://127.0.0.1:${addr.port}`;
+          console.log(`[INFO] Started ephemeral test server at ${baseUrl}`);
+          resolve();
+        });
+      });
+    }
   }
 
   const results = [];

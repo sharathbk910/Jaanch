@@ -118,6 +118,12 @@ export function loadEnv(): ServerEnv {
     if (!raw.SUPABASE_ANON_KEY || raw.SUPABASE_ANON_KEY === 'your-anon-key-placeholder') {
       throw new Error('[Env] Production startup refused: Real SUPABASE_ANON_KEY is required in production.');
     }
+    if (!raw.SUPABASE_SERVICE_ROLE_KEY || raw.SUPABASE_SERVICE_ROLE_KEY.includes('placeholder')) {
+      throw new Error('[Env] Production startup refused: Real SUPABASE_SERVICE_ROLE_KEY is required in production.');
+    }
+    if (!raw.SUPABASE_JWT_SECRET || raw.SUPABASE_JWT_SECRET.length < 32) {
+      throw new Error('[Env] Production startup refused: SUPABASE_JWT_SECRET (>=32 chars) is required in production.');
+    }
   }
 
   cachedEnv = {

@@ -1,7 +1,5 @@
 import React from 'react';
-import { pdf } from '@react-pdf/renderer';
 import { type AnalyzeResult } from '@jaanch/shared';
-import { ReportDocument } from '../pdf/ReportDocument.js';
 
 export interface PdfExportOptions {
   timestamp?: string;
@@ -13,12 +11,18 @@ export interface PdfExportOptions {
 /**
  * Generates a client-side PDF Blob from analysis results.
  * Strictly guarantees <= 4 pages and compact, high-density layout.
+ * Lazy-loads @react-pdf/renderer to optimize initial client bundle size.
  */
 export async function generatePdfBlob(
   result: AnalyzeResult,
   optionsOrTimestamp?: string | PdfExportOptions,
   domain?: string
 ): Promise<Blob> {
+  const [{ pdf }, { ReportDocument }] = await Promise.all([
+    import('@react-pdf/renderer'),
+    import('../pdf/ReportDocument.js'),
+  ]);
+
   let opts: PdfExportOptions = {};
   if (typeof optionsOrTimestamp === 'string') {
     opts = { timestamp: optionsOrTimestamp, domain };
