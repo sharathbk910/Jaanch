@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Link2, ShieldCheck, CheckCircle2, Building, GraduationCap, Briefcase, ExternalLink } from 'lucide-react';
+import { ArrowRight, Link2, ShieldCheck, Building, GraduationCap, Briefcase } from 'lucide-react';
 import { useLanguage } from '../../i18n/LanguageContext.js';
 import { Button } from '../ui/Button.js';
 
@@ -100,14 +100,10 @@ export function Hero() {
 
         {/* Verified Channels Card (MCA, NCS, NSP, AICTE) */}
         <div className="mt-10 p-5 bg-surface border border-border rounded-card shadow-sm">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3.5 mb-4 border-b border-border gap-2">
-            <div className="flex items-center gap-2">
-              <CheckCircle2 size={16} className="text-status-likely-genuine-fg" aria-hidden="true" />
-              <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
-                Official Indian Verification Portals
-              </span>
-            </div>
-            <span className="text-[11px] text-muted-foreground">Always cross-reference through certified portals</span>
+          <div className="pb-3.5 mb-4 border-b border-border">
+            <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+              Official Indian Verification Portals
+            </span>
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
@@ -122,7 +118,6 @@ export function Hero() {
                 <div className="font-semibold truncate">MCA Portal</div>
                 <div className="text-[10px] text-muted-foreground truncate">mca.gov.in</div>
               </div>
-              <ExternalLink size={12} className="ml-auto opacity-0 group-hover:opacity-100 transition-opacity text-terracotta shrink-0" />
             </a>
 
             <a
@@ -136,7 +131,6 @@ export function Hero() {
                 <div className="font-semibold truncate">NCS India</div>
                 <div className="text-[10px] text-muted-foreground truncate">ncs.gov.in</div>
               </div>
-              <ExternalLink size={12} className="ml-auto opacity-0 group-hover:opacity-100 transition-opacity text-terracotta shrink-0" />
             </a>
 
             <a
@@ -150,7 +144,6 @@ export function Hero() {
                 <div className="font-semibold truncate">NSP Portal</div>
                 <div className="text-[10px] text-muted-foreground truncate">scholarships.gov.in</div>
               </div>
-              <ExternalLink size={12} className="ml-auto opacity-0 group-hover:opacity-100 transition-opacity text-terracotta shrink-0" />
             </a>
 
             <a
@@ -164,7 +157,6 @@ export function Hero() {
                 <div className="font-semibold truncate">AICTE Portal</div>
                 <div className="text-[10px] text-muted-foreground truncate">aicte-india.org</div>
               </div>
-              <ExternalLink size={12} className="ml-auto opacity-0 group-hover:opacity-100 transition-opacity text-terracotta shrink-0" />
             </a>
           </div>
         </div>

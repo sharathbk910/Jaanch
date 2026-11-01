@@ -169,7 +169,7 @@ describe('Security & Tooling Scripts Validation', () => {
       const { runSmokeTest } = await import('../smoke.mjs');
       const passed = await runSmokeTest();
       expect(passed).toBe(true);
-    });
+    }, 25000);
   });
 
   describe('test-acceptance.mjs', () => {

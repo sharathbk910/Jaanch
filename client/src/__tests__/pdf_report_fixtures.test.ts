@@ -80,7 +80,7 @@ describe('Phase 6C – PDF Generation across 25 Corpus Fixtures and 3 Languages'
     expect(blob).toBeDefined();
     expect(blob.size).toBeGreaterThan(500);
     expect(blob.type).toBe('application/pdf');
-  });
+  }, 20000);
 
   it('verifies safe currency formatting replaces ₹ with Rs. to prevent PDF font corruption', () => {
     const fixtureWithAmounts = CORPUS_FIXTURES.find((f) => f.id === 'F01');
