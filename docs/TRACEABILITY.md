@@ -44,7 +44,7 @@
 | **D6** | Results layout: Single column, mobile section chips, collapsed evidence on mobile | P10 | Phase 6C | **DONE** (Implemented in Phase 6C) |
 | **D7** | Guest flow: `sessionStorage` only, zero server persistence for unauthenticated | P5, P9 | Phase 3, Phase 6B | **DONE** (Session storage guest flow in Phase 6B/6C) |
 | **D8** | Safety rules: Safe Reply hidden on High Concern/Scam, "I already paid" defaults OFF | P3, P10 | Phase 2, Phase 6C | **DONE** (Implemented in Phase 6C) |
-| **D9** | Optional AI: Gemini schema-grounded with `findSpan`, fail-soft with `aiStatus` | P6 | Phase 8 | Pending |
+| **D9** | Optional AI: Gemini schema-grounded with `findSpan`, fail-soft with `aiStatus` | P6 | Phase 8 | **DONE** |
 | **D10** | Third-party checks: Flagged default OFF, RDAP on, registry `needs_team_review = true` | P7 | Phase 3 | Pending |
 | **D11** | Moderation: No ML layer, no service-role key in requests, moderator SQL/CLI confirmation | P4 | Phase 4, Phase 7 | **DONE** |
 | **D12** | Input validation: Minimum text length (`INPUT_LIMITS.textMin = 20`/25) enforced | P2, P9 | Phase 2, Phase 6B | **DONE** (Schemas in P2, UI enforced in P6B) |
@@ -71,7 +71,7 @@
 | **F10** | Organization registry match; reported-entities lookup & reporting (peppered hash) | P4, P5, P10 | Phase 4, Phase 7 | **DONE** (Cryptographic peppered hash, rate-limited reporting & lookup, moderator state machine) |
 | **F11** | Status engine (verdicts, reasons), paymentAlert, coverage k-of-8, pattern insights | P3 | Phase 2 | **DONE** |
 | **F12** | RDAP domain age; (flagged) CT-log, Safe Browsing, official listing fetch/compare | P5, P7 | Phase 3 | Pending |
-| **F13** | Optional Gemini context, challenge email, safe reply, link explanation (with fallbacks) | P5, P6 | Phase 8 | Pending |
+| **F13** | Optional Gemini context, challenge email, safe reply, link explanation (with fallbacks) | P5, P6 | Phase 8 | **DONE** |
 | **F14** | Results page (verdict banner, payment alert, why, next steps, signals, evidence report) | P10 | Phase 6C | **DONE** |
 | **F15** | Attestations + checklist persistence (saved) / session state (guest) | P5, P10 | Phase 4, Phase 6C | **DONE** |
 | **F16** | Export: PDF (react-pdf, ≤ 4 pages, ₹ renders, ≥ 75% fill), Print, JSON | P10 | Phase 6C | **DONE** |
@@ -96,7 +96,7 @@
 | **Phase 3** | Rules, verification logic, eval fixtures | Phase 2 | Shared core | **DONE** (Consolidated in Phase 2) |
 | **Phase 4** | Supabase database, RLS, seeds, hashing (H1) | Phase 4 | Database and auth | **DONE** (H1 reached) |
 | **Phase 5** | Express server API, safeFetch, analyzeService | Phase 3 | Server API | Pending |
-| **Phase 6** | AI layer (Gemini, grounding, fallbacks) | Phase 8 | AI / ML |
+| **Phase 6** | AI layer (Gemini, grounding, fallbacks) | Phase 8 | AI / ML | **DONE** |
 | **Phase 7** | Flagged third-party checks (CT-log, Safe Browsing) | Phase 3 (flagged) | Server API |
 | **Phase 8** | Client foundation (tokens, shell, i18n, feedback) | Phase 5 | Client foundation |
 | **Phase 9** | Landing + Analyze pages, OCR/PDF extraction | Phase 6A, 6B | UI – Landing, UI – Analyzer |

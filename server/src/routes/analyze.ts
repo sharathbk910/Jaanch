@@ -14,7 +14,7 @@ import { validateBody } from '../middleware/validate.js';
 import { analyzeRateLimiter } from '../middleware/rateLimiter.js';
 import { optionalAuth } from '../middleware/auth.js';
 import { logger } from '../lib/logger.js';
-import { generateOptionalAISignal } from '../lib/gemini.js';
+import { generateOptionalAISignal, runAIAnalysis } from '../lib/gemini.js';
 import { HistoryRepository } from '../lib/historyRepository.js';
 import { ThreatIntelRepository } from '../lib/threatIntelRepository.js';
 import { type EntityType } from '../lib/hashing.js';
@@ -109,12 +109,39 @@ router.post(
     // Invariant: Record post-intel status; AI can NEVER change it
     const originalStatus = result.status;
 
-    // 2. Optional Gemini signal only if consent + key
+    // 2. Optional Gemini signal only if consent
     if (input.consentFlags?.aiAnalysis === true) {
-      const aiSignal = await generateOptionalAISignal(input.text);
-      if (aiSignal) {
-        result.signals.push(aiSignal);
+      const aiAnalysis = await runAIAnalysis({
+        rawText: input.text,
+        domain: input.domain,
+        channel: input.channel,
+        claimedOrg: input.sender?.organization || result.extractedEntities.organization || undefined,
+        ruleHits: result.signals.map((s) => ({ ruleId: s.ruleId, title: s.title })),
+      });
+
+      result.aiStatus = aiAnalysis.aiStatus;
+      if (aiAnalysis.overview) {
+        result.aiOverview = aiAnalysis.overview;
       }
+      if (aiAnalysis.signals.length > 0) {
+        result.signals.push(...aiAnalysis.signals);
+      }
+      if (aiAnalysis.unverified.length > 0) {
+        for (const u of aiAnalysis.unverified) {
+          if (!result.unverified.includes(u)) {
+            result.unverified.push(u);
+          }
+        }
+      }
+      if (aiAnalysis.extraSteps.length > 0) {
+        for (const step of aiAnalysis.extraSteps) {
+          if (!result.recommendedActions.includes(step)) {
+            result.recommendedActions.push(step);
+          }
+        }
+      }
+    } else {
+      result.aiStatus = 'not_requested';
     }
 
     // Enforce invariant: status cannot be altered by AI

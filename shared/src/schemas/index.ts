@@ -41,6 +41,7 @@ export const SignalSchema = z.object({
   whyItMatters: z.string(),
   evidence: z.string(),
   severity: SignalSeveritySchema,
+  source: z.string().optional(),
 });
 export type Signal = z.infer<typeof SignalSchema>;
 
@@ -84,6 +85,16 @@ export const AnalyzeRequestSchema = z.object({
 export type AnalyzeRequestInput = z.input<typeof AnalyzeRequestSchema>;
 export type AnalyzeRequest = z.output<typeof AnalyzeRequestSchema>;
 
+export const AiStatusSchema = z.enum([
+  'success',
+  'disabled',
+  'timeout',
+  'api_error',
+  'invalid_output',
+  'not_requested',
+]);
+export type AiStatus = z.infer<typeof AiStatusSchema>;
+
 export const AnalyzeResultSchema = z.object({
   status: VerificationStatusSchema,
   signals: z.array(SignalSchema),
@@ -93,5 +104,7 @@ export const AnalyzeResultSchema = z.object({
   recommendedActions: z.array(z.string()),
   auditId: z.string(),
   intelMatch: IntelMatchSchema.optional(),
+  aiStatus: AiStatusSchema.optional(),
+  aiOverview: z.string().optional(),
 });
 export type AnalyzeResult = z.infer<typeof AnalyzeResultSchema>;

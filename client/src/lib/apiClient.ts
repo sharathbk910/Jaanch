@@ -181,5 +181,25 @@ export const apiClient = {
       body: JSON.stringify(data),
     });
   },
+
+  /**
+   * Generates recruiter challenge email or safe reply draft
+   */
+  async generateChallengeEmail(data: {
+    kind?: 'challenge' | 'safe_reply';
+    domain?: string;
+    claimedOrg?: string;
+    tone?: 'polite' | 'firm';
+    senderName?: string;
+    useAi?: boolean;
+  }): Promise<{ subject: string; body: string; source: 'ai' | 'template'; kind: 'challenge' | 'safe_reply' }> {
+    return request<{ subject: string; body: string; source: 'ai' | 'template'; kind: 'challenge' | 'safe_reply' }>(
+      '/api/challenge-email',
+      {
+        method: 'POST',
+        body: JSON.stringify(data),
+      }
+    );
+  },
 };
 

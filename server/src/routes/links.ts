@@ -13,6 +13,7 @@ import { safeFetch, SafeFetchError } from '../lib/safeFetch.js';
 import { loadEnv } from '../config/env.js';
 import { logger } from '../lib/logger.js';
 import net from 'node:net';
+import { explainLinkObservations } from '../lib/gemini.js';
 
 const router = Router();
 
@@ -28,6 +29,7 @@ const LinkCheckSchema = z.object({
     },
     'Please provide a valid HTTP or HTTPS URL (e.g., https://example.com)'
   ),
+  useAi: z.boolean().optional().default(false),
 });
 
 interface LinkSignal {
@@ -221,6 +223,16 @@ router.post(
       riskLevel = LINK_RISK_LEVELS.NEEDS_VERIFICATION;
     }
 
+    const explanation = await explainLinkObservations(
+      {
+        hostname,
+        observations: observed,
+        rdapAgeDays: rdap.ageDays ?? 'unknown',
+        lookalikeTarget: lookalike.isLookalike ? lookalike.targetBrand : undefined,
+      },
+      Boolean(req.body.useAi)
+    );
+
     res.status(200).json({
       data: {
         url,
@@ -231,6 +243,7 @@ router.post(
         observed,
         unverified,
         signals,
+        explanation,
       },
     });
   }

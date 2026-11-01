@@ -10,10 +10,10 @@
 ## 2. Project Overview
 - **Project Name:** Jaanch (Student Offer Verification & Trust Safety Platform)
 - **Problem Statement:** "Fake or Real" (Digital Trust & Safety for Indian Students)
-- **Current Phase:** Phase 7 – Shared Intelligence and Moderation Complete
-- **Current Tag:** `phase-7-done`
+- **Current Phase:** Phase 8 – AI/ML Complete
+- **Current Tag:** `phase-8-done`
 - **Node Version:** v24.19.0 (LTS >= 20 required)
-- **Repository State:** Green monorepo; `@jaanch/shared`, `@jaanch/server`, and `@jaanch/client` fully compiled, typechecked, linted, and tested (295 tests passing across 32 test suites, 25/25 eval fixtures matching 100%, 10/10 acceptance criteria PASS)
+- **Repository State:** Green monorepo; `@jaanch/shared`, `@jaanch/server`, and `@jaanch/client` fully compiled, typechecked, linted, and tested (309 tests passing across 33 test suites, 25/25 eval fixtures matching 100%, 10/10 acceptance criteria PASS)
 
 ---
 
@@ -39,7 +39,7 @@
      - 6C: Results page & client-side PDF export (**DONE**)
      - 6D: Auth UI & History (**DONE**)
   7. Shared intelligence and moderation (**DONE**)
-  8. AI/ML (Next)
+  8. AI/ML (Gemini wrapper, PII redaction, grounding with findSpan, fail-soft aiStatus, invariant enforcement, challenge email, safe reply, link explanation) (**DONE**)
   9. WhatsApp
   10. Verification
   11. Deployment
@@ -136,12 +136,24 @@
   - [x] Moderator CLI (`scripts/moderator-cli.ts`): `hash`, `list`, `confirm`, `dismiss`, and `dispute` commands for administrative workflow.
   - [x] Client UI Component (`ReportEntityDialog.tsx`): Accessible modal dialog (`role="dialog"`, `aria-modal="true"`), authentication check with sign-in prompt for guests, pre-filled indicator type and value, channel selector, notes, loading/error/success states. Integrated in `Results.tsx` and `ExtractedEntitiesCard.tsx`.
   - [x] Full test suite: 288 tests passing across 31 test suites; 10/10 acceptance criteria passing; 100% scenario verification passing.
+- **Phase 8 Verification Checklist:**
+  - [x] Gemini SDK Wrapper (`@google/genai` ^2.32.0): Server-only client, key exclusively from server env, model configurable (`GEMINI_MODEL`, defaults to `gemini-2.5-flash`), timeout with AbortController (20s), and single stricter retry on JSON/validation failure.
+  - [x] PII Pre-Redaction: Full PII masking via `redactText` before sending any user text to Gemini; prompt injection neutralization instructions embedded in all prompts.
+  - [x] Grounded Prompts verbatim: `JAANCH_SYSTEM_PROMPT` per SPEC_ORIGINAL Part A §14 and Part B §12; structured generation prompts with strict Zod and response JSON schemas (`analysis.ts`, `challenge.ts`, `safeReply.ts`, `linkExplain.ts`, `extraction.ts`).
+  - [x] Zero-Hallucination Evidence Grounding: Every AI signal verified via `findSpan` against redacted input text; word-snapped, clamped $\le 160$ chars; ungrounded candidate signals rejected.
+  - [x] Invariant Enforcement: AI signals NEVER lower or remove rule hits, severity strictly $\le$ `'high'`, AI can NEVER produce `CONFIRMED_SCAM` or upgrade `NEEDS_REVIEW` to `LIKELY_GENUINE`.
+  - [x] Fail-Soft Resilience: System operates 100% deterministically without API key; records `aiStatus` (`'success' | 'disabled' | 'timeout' | 'api_error' | 'invalid_output' | 'not_requested'`); returns HTTP 200 with rule results on AI failure.
+  - [x] Consent Gate: AI runs ONLY when `consentFlags.aiAnalysis === true` (or `useAi === true`). When false/absent, AI is bypassed with `aiStatus = 'not_requested'`.
+  - [x] Template Fallbacks: Deterministic, localized templates for challenge emails, safe replies, and link explanations used when AI is absent, disabled, or fails.
+  - [x] Endpoint `POST /api/challenge-email`: Supports `kind: "challenge" | "safe_reply"`, localized output, AI generation, and deterministic template fallback.
+  - [x] Link Check AI Explanation: `POST /api/link-check` enriched with optional `explanation` and fail-soft template fallback.
+  - [x] Full Test Suite: 309 tests passing across 33 test suites (14 new dedicated AI layer tests in `server/src/__tests__/ai_layer.test.ts`); 10/10 acceptance criteria passing; 100% scenario verification passing.
 
 ---
 
 ## 5. Next Steps
-- Commit Phase 7 files and tag `phase-7-done`.
-- Proceed to **Phase 8 – AI/ML**:
-  - Gemini API integration with schema-grounded response (`findSpan`)
-  - Structured output signals, confidence calibration, and fail-soft behavior (`aiStatus`)
-  - Multimodal understanding for screenshots and document verification.
+- Commit Phase 8 files and tag `phase-8-done`.
+- Proceed to **Phase 9 – WhatsApp Channel**:
+  - Webhook verification & signature validation
+  - Inbound message routing, media handling, and conversational state machine
+  - Deterministic response generation & safety advisories
