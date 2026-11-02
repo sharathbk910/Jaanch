@@ -147,6 +147,60 @@ describe('Phase 6D – Auth UI & History (AuthPages.tsx)', () => {
 
       expect(screen.getByRole('alert')).toHaveTextContent(/Passwords do not match/i);
     });
+
+    it('displays email verification pending notice and does not prematurely redirect when confirmation is required', async () => {
+      const user = userEvent.setup();
+      const signUpMock = vi.fn().mockResolvedValue({
+        data: { user: { id: 'u_123', email: 'student@test.com' }, session: null },
+        error: null,
+      });
+
+      vi.spyOn(authContext, 'useAuth').mockReturnValue(
+        createMockAuth({ signUp: signUpMock })
+      );
+
+      renderWithProviders(<SignupPage />);
+
+      await user.type(screen.getByLabelText(/Email address/i), 'student@test.com');
+      await user.type(screen.getByLabelText(/^Password/i), 'password123');
+      await user.type(screen.getByLabelText(/Confirm Password/i), 'password123');
+      await user.click(screen.getByRole('button', { name: /Create Account/i }));
+
+      expect(signUpMock).toHaveBeenCalled();
+      await waitFor(() => {
+        expect(screen.getByRole('heading', { name: /Verify Your Email/i })).toBeInTheDocument();
+        expect(screen.getByText(/We sent a confirmation link to/i)).toBeInTheDocument();
+        expect(screen.getByText('student@test.com')).toBeInTheDocument();
+        expect(screen.getByRole('link', { name: /^Sign In$/i })).toBeInTheDocument();
+      });
+    });
+
+    it('displays auto-login notice when session is immediately established', async () => {
+      const user = userEvent.setup();
+      const signUpMock = vi.fn().mockResolvedValue({
+        data: {
+          user: { id: 'u_123', email: 'auto@test.com' },
+          session: { access_token: 'fake_tok' },
+        },
+        error: null,
+      });
+
+      vi.spyOn(authContext, 'useAuth').mockReturnValue(
+        createMockAuth({ signUp: signUpMock })
+      );
+
+      renderWithProviders(<SignupPage />);
+
+      await user.type(screen.getByLabelText(/Email address/i), 'auto@test.com');
+      await user.type(screen.getByLabelText(/^Password/i), 'password123');
+      await user.type(screen.getByLabelText(/Confirm Password/i), 'password123');
+      await user.click(screen.getByRole('button', { name: /Create Account/i }));
+
+      expect(signUpMock).toHaveBeenCalled();
+      await waitFor(() => {
+        expect(screen.getByText(/Account created successfully! Signing you in.../i)).toBeInTheDocument();
+      });
+    });
   });
 
   describe('HistoryPage', () => {

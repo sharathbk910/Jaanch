@@ -76,7 +76,7 @@ export function LoginPage() {
   const handleGoogleSignIn = async () => {
     setError(null);
     try {
-      const { error: googleError } = await signInWithGoogle();
+      const { error: googleError } = await signInWithGoogle(from);
       if (googleError) {
         setError(googleError.message || 'Google sign-in failed.');
       }
@@ -244,19 +244,22 @@ export function SignupPage() {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const from = (location.state as any)?.from?.pathname || '/';
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [displayName, setDisplayName] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [successNotice, setSuccessNotice] = useState<string | null>(null);
+  const [confirmationPending, setConfirmationPending] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (user && !authLoading) {
-      navigate('/', { replace: true });
+      navigate(from, { replace: true });
     }
-  }, [user, authLoading, navigate]);
+  }, [user, authLoading, navigate, from]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -279,7 +282,7 @@ export function SignupPage() {
     setIsLoading(true);
 
     try {
-      const { error: signUpError } = await signUp({
+      const { data: signUpData, error: signUpError } = await signUp({
         email,
         password,
         options: {
@@ -291,9 +294,12 @@ export function SignupPage() {
 
       if (signUpError) {
         setError(signUpError.message || 'Failed to create account.');
+      } else if (!signUpData?.session) {
+        // Confirmation email is required before a session exists
+        setConfirmationPending(true);
       } else {
-        setSuccessNotice('Account created successfully! Redirecting...');
-        setTimeout(() => navigate('/', { replace: true }), 1200);
+        // Immediate session established (auto-login)
+        setSuccessNotice('Account created successfully! Signing you in...');
       }
     } catch {
       setError('An unexpected error occurred during signup.');
@@ -305,7 +311,7 @@ export function SignupPage() {
   const handleGoogleSignIn = async () => {
     setError(null);
     try {
-      const { error: googleError } = await signInWithGoogle();
+      const { error: googleError } = await signInWithGoogle(from);
       if (googleError) {
         setError(googleError.message || 'Google sign-in failed.');
       }
@@ -349,7 +355,35 @@ export function SignupPage() {
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        {confirmationPending ? (
+          <div className="space-y-4 text-center py-2" role="status">
+            <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-emerald-50 text-emerald-600 border border-emerald-200 mb-2">
+              <Mail className="w-6 h-6" aria-hidden="true" />
+            </div>
+            <h2 className="font-serif text-xl font-bold text-foreground">
+              {t.auth.verifyEmailTitle}
+            </h2>
+            <p className="text-xs text-muted leading-relaxed">
+              We sent a confirmation link to <strong className="text-foreground">{email}</strong>. Please check your inbox and click the link to confirm your account, then sign in.
+            </p>
+            <div className="pt-3 space-y-2">
+              <Link
+                to="/login"
+                className="inline-block w-full py-2 px-4 rounded-md bg-btn text-surface text-xs font-bold hover:bg-btn-hover transition-colors"
+              >
+                {t.auth.signInBtn}
+              </Link>
+              <Link
+                to="/"
+                className="inline-block text-xs text-muted hover:text-foreground font-medium underline"
+              >
+                {t.auth.continueAsGuest} &rarr;
+              </Link>
+            </div>
+          </div>
+        ) : (
+          <>
+            <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label htmlFor="signup-name" className="block text-xs font-semibold text-primary mb-1">
               Full Name (Optional)
@@ -484,6 +518,8 @@ export function SignupPage() {
             </Link>
           </div>
         </div>
+          </>
+        )}
       </Card>
     </div>
   );
@@ -1065,7 +1101,7 @@ export function ForgotPasswordPage() {
 
   useEffect(() => {
     if (user) {
-      navigate('/history', { replace: true });
+      navigate('/', { replace: true });
     }
   }, [user, navigate]);
 
@@ -1334,8 +1370,19 @@ export function ResetPasswordPage() {
 /* -------------------------------------------------------------------------- */
 
 export function VerifyEmailPage() {
+  const { user, isLoading: authLoading } = useAuth();
   const { dictionary } = useLanguage();
   const t = dictionary;
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const emailParam = new URLSearchParams(location.search).get('email') || (location.state as any)?.email;
+
+  useEffect(() => {
+    if (user && !authLoading) {
+      navigate('/', { replace: true });
+    }
+  }, [user, authLoading, navigate]);
 
   return (
     <div className="w-full max-w-sm mx-auto px-4 py-12 sm:py-20 text-center">
@@ -1347,7 +1394,13 @@ export function VerifyEmailPage() {
           {t.auth.verifyEmailTitle}
         </h1>
         <p className="text-xs text-muted leading-relaxed mb-6">
-          {t.auth.verifyEmailSubtitle}
+          {emailParam ? (
+            <>
+              We sent a verification link to <strong className="text-foreground">{emailParam}</strong>. Please check your inbox and click the link to confirm your account.
+            </>
+          ) : (
+            t.auth.verifyEmailSubtitle
+          )}
         </p>
         <div className="space-y-3">
           <Link

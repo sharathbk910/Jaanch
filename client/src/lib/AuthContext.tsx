@@ -9,7 +9,7 @@ export interface AuthContextType {
   isModerator: boolean;
   signInWithPassword: (credentials: { email: string; password: string }) => Promise<{ error: any; data?: any }>;
   signUp: (credentials: { email: string; password: string; options?: any }) => Promise<{ error: any; data?: any }>;
-  signInWithGoogle: () => Promise<{ error: any }>;
+  signInWithGoogle: (targetPath?: string) => Promise<{ error: any }>;
   signOut: () => Promise<void>;
   resetPasswordForEmail: (email: string) => Promise<{ error: any; data?: any }>;
   updatePassword: (password: string) => Promise<{ error: any; data?: any }>;
@@ -71,8 +71,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return supabase.auth.signUp(credentials);
   };
 
-  const signInWithGoogle = async () => {
-    const redirectTo = typeof window !== 'undefined' ? `${window.location.origin}/` : undefined;
+  const signInWithGoogle = async (targetPath?: string) => {
+    let redirectTo: string | undefined;
+    if (typeof window !== 'undefined') {
+      const cleanPath = targetPath ? targetPath.replace(/^\//, '') : '';
+      redirectTo = cleanPath ? `${window.location.origin}/${cleanPath}` : `${window.location.origin}/`;
+    }
     return supabase.auth.signInWithOAuth({
       provider: 'google',
       options: { redirectTo },
