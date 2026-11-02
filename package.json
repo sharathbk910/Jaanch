@@ -15,6 +15,7 @@
     "build": "npm run build -w shared && npm run build -w server && npm run build -w client",
     "prepare": "npm run build -w shared",
     "test": "vitest run",
+    "test:python": "python -m unittest discover tests",
     "typecheck": "npm run build -w shared && npm run typecheck -w shared && npm run typecheck -w server && npm run typecheck -w client",
     "lint": "npm run check:no-secrets && npm run check:colors && npm run check:banned-phrases && npm run typecheck",
     "eval": "npm run eval -w shared",

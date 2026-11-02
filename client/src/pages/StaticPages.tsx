@@ -172,7 +172,7 @@ export function AboutPage() {
               </h3>
               <ul className="space-y-2.5 text-xs text-muted-foreground list-disc list-inside">
                 <li>
-                  <strong className="text-foreground">Upfront Fees or Laptop Security Deposits:</strong> Legitimate employers never ask students to pay for onboarding, laptop courier charges, document verification, or gate passes. Demanding money is a 100% scam signal.
+                  <strong className="text-foreground">Upfront Fees or Laptop Security Deposits:</strong> Legitimate employers never ask students to pay for onboarding, laptop courier charges, document verification, or gate passes. Demanding money is a critical scam warning indicator.
                 </li>
                 <li>
                   <strong className="text-foreground">Free Webmail or Lookalike Domains:</strong> Unofficial recruiters contact candidates from free webmail addresses (e.g. <code>hr.tcs.careers@gmail.com</code>) or typosquatted domains (e.g. <code>@micros0ft.org</code>, <code>@infosys-careers.net</code>).

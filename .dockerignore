@@ -1,9 +1,20 @@
+# ==============================================================================
+# Docker Ignore Rules for Jaanch Server
+# ==============================================================================
+
 node_modules
 .git
-.env
+.venv
+.env*
 *.log
 dist
-docs/ui-shots
 client
+docs
+demo_video
+models
+app
+tests
+skills
+.agents
+.semgrep
 coverage
-

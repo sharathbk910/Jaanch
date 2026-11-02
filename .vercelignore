@@ -1,20 +1,27 @@
+# ==============================================================================
+# Vercel Deployment Ignore Rules for Jaanch Frontend
+# Excludes backend services, AI models, documentation, and tooling from client bundle
+# ==============================================================================
+
+# Version Control & Virtual Environments
 .git
 .venv
 venv
-node_modules
-demo_video
-models
-docs
-supabase
-*.joblib
-render.yaml
-render.yaml.bak
+
+# Backend & Microservice Code
+server/
+models/
+app/
+supabase/
 Dockerfile
 .dockerignore
-docker-compose*
-skills
-app
-tests
-/WhatsApp Video*.mp4
-*.ogg
-test_model.py
+render.yaml
+
+# Offline Testing, Tooling & Documentation
+tests/
+docs/
+demo_video/
+skills/
+.agents/
+.semgrep/
+*.joblib

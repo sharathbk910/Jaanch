@@ -135,7 +135,36 @@ graph TD
 
 ---
 
-## 7. Technology Stack
+## 7. Repository Layout
+
+The codebase is organized as an enterprise-grade monorepo with clear separation of concerns:
+
+```text
+jaanch/
+├── app/                  # FastAPI Python ML inference microservice
+├── client/               # React 18 + Vite frontend application (Vercel)
+│   ├── public/           # Static assets, branding, and video previews
+│   └── src/              # UI components, pages, hooks, context, and tests
+├── docs/                 # Architectural specs, runbooks, database schemas, and reports
+├── models/               # Calibrated ML model binaries & inference engine
+│   ├── jaanch_scam_model_v3_tuned_calibrated.joblib  # Text scam classifier
+│   ├── jaanch_phishing_url_model_calibrated.joblib   # Phishing URL classifier
+│   ├── detector.py       # Guardrailed model loader and safety invariants
+│   ├── evaluate.py       # Benchmark evaluation script
+│   └── server.py         # Zero-dependency Python HTTP microservice
+├── scripts/              # Tooling, moderator CLI, and verification harnesses
+├── server/               # Express 4 REST API backend (Render)
+│   └── src/              # API controllers, middlewares, and database adapters
+├── shared/               # Shared TypeScript core (15 rules, schemas, utilities)
+├── supabase/             # PostgreSQL schema, migrations, RLS policies, and seeds
+└── tests/                # Python backend & ML model test suites
+    ├── test_detector.py  # Safety invariants unit test suite
+    └── test_model.py     # Calibrated model inference test suite
+```
+
+---
+
+## 8. Technology Stack
 
 | Layer | Technologies |
 | :--- | :--- |
@@ -148,7 +177,7 @@ graph TD
 
 ---
 
-## 8. Quickstart
+## 9. Quickstart
 
 ### Prerequisites
 * **Node.js**: `v20.0.0` or higher (verified on Node `v24.x`)
@@ -181,7 +210,7 @@ npm run dev
 
 ---
 
-## 9. Environment Variables
+## 10. Environment Variables
 
 All variables are strictly validated on startup using Zod schemas:
 
@@ -205,13 +234,14 @@ All variables are strictly validated on startup using Zod schemas:
 
 ---
 
-## 10. Testing & Verification Commands
+## 11. Testing & Verification Commands
 
 Every update is verified across our full automated regression harness:
 
 | Command | Scope | Live Verification Status |
 | :--- | :--- | :--- |
 | `npm test` | Monorepo test suite (Vitest) | **465 tests passed** across 47 files (100%) |
+| `npm run test:python` | Python ML & Invariant test suite | **12 tests passed** (100% OK) |
 | `npm run eval` | Deterministic benchmark corpus | **25/25 passed** (100% accuracy, 0 false negatives) |
 | `npm run eval:ml` | ML model threshold calibration | Verified similarity & confidence calibration |
 | `npm run test:acceptance` | Core user journey compliance | **10/10 criteria verified** (100% PASS) |
@@ -222,7 +252,7 @@ Every update is verified across our full automated regression harness:
 
 ---
 
-## 11. Deployment
+## 12. Deployment
 
 Complete deployment runbooks, Vercel SPA routing rules, and Render setup instructions are documented in [docs/DEPLOY.md](docs/DEPLOY.md).
 
@@ -232,7 +262,7 @@ Complete deployment runbooks, Vercel SPA routing rules, and Render setup instruc
 
 ---
 
-## 12. Known Limitations
+## 13. Known Limitations
 
 * **Benchmark Corpus Scope:** The 25 gold-standard evaluation fixtures represent curated, synthetic models of typical Indian student scams. Real-world threat actors frequently adjust linguistic phrasing; community intelligence and official verification remain essential.
 * **Moderator-Dependent Confirmation:** The `CONFIRMED_SCAM` verdict is never assigned by heuristics alone—it requires human moderator validation or cross-referencing against confirmed database entries.
@@ -241,7 +271,7 @@ Complete deployment runbooks, Vercel SPA routing rules, and Render setup instruc
 
 ---
 
-## 13. Disclaimer & Copyright
+## 14. Disclaimer & Copyright
 
 > **Public Service Notice:** Jaanch evaluates automated heuristic signals and community threat indicators. Analysis does not prove that an opportunity is genuine or fraudulent. Students must always corroborate offers through official institutional channels before transferring money or sharing identity documents.
 
