@@ -106,11 +106,24 @@ export function MobileNavDrawer({ isOpen, onClose }: MobileNavDrawerProps) {
             <Link
               to="/"
               onClick={onClose}
-              className="flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded min-h-[44px] flex items-center"
+              className="flex items-center gap-2.5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded min-h-[44px]"
             >
-              <span className="font-serif text-xl font-bold tracking-tight text-terracotta">
-                JAANCH.
-              </span>
+              <img
+                src="/logo-icon.png"
+                alt="Jaanch"
+                className="w-7 h-7 object-contain rounded-md shrink-0"
+              />
+              <div className="flex flex-col justify-center leading-none">
+                <span className="font-serif text-lg font-bold tracking-tight text-foreground">
+                  Jaanch<span className="text-terracotta">.</span>
+                </span>
+                <div className="flex items-center gap-1 mt-0.5 select-none">
+                  <span className="w-1 h-1 bg-terracotta shrink-0 rounded-[1px]" aria-hidden="true" />
+                  <span className="font-mono text-[7.5px] font-bold uppercase tracking-[0.16em] text-foreground/75">
+                    CHECK BEFORE YOU TRUST
+                  </span>
+                </div>
+              </div>
             </Link>
 
             <div className="flex items-center gap-2">

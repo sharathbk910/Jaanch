@@ -36,14 +36,24 @@ export function Navbar() {
           {/* Left: Brand Logo in 1 Line */}
           <Link
             to="/"
-            className="flex items-center gap-2 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring shrink-0 group"
+            className="flex items-center gap-2.5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring shrink-0 group py-1"
           >
-            <div className="p-1 bg-terracotta border-2 border-neo-border shadow-neo-sm text-white shrink-0 group-hover:translate-x-[1px] group-hover:translate-y-[1px] group-hover:shadow-none transition-all">
-              <ShieldCheck size={16} aria-hidden="true" />
+            <img
+              src="/logo-icon.png"
+              alt="Jaanch"
+              className="w-8 h-8 sm:w-9 sm:h-9 object-contain rounded-lg shrink-0 group-hover:scale-105 transition-transform"
+            />
+            <div className="flex flex-col justify-center leading-none">
+              <span className="font-serif text-lg sm:text-xl font-bold tracking-tight text-foreground">
+                Jaanch<span className="text-terracotta">.</span>
+              </span>
+              <div className="flex items-center gap-1.5 mt-0.5 select-none">
+                <span className="w-1.5 h-1.5 bg-terracotta shrink-0 rounded-[1px]" aria-hidden="true" />
+                <span className="font-mono text-[8px] sm:text-[9px] font-bold uppercase tracking-[0.18em] text-foreground/75 whitespace-nowrap">
+                  CHECK BEFORE YOU TRUST
+                </span>
+              </div>
             </div>
-            <span className="font-serif text-xl font-bold tracking-tight text-terracotta shrink-0">
-              JAANCH.
-            </span>
           </Link>
 
           {/* Center: Desktop Navigation Links (Properly Spaced in 1 Line) */}

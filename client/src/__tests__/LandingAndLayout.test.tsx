@@ -77,10 +77,10 @@ describe('Phase 6A – Layout & Landing Page Components', () => {
         </MemoryRouter>
       );
 
-      // Serif Terracotta Logo
-      const logo = screen.getByText('JAANCH.');
+      // Serif Brand Logo & Tagline
+      const logo = screen.getByText(/Jaanch/i);
       expect(logo.className).toMatch(/font-serif/);
-      expect(logo.className).toMatch(/text-terracotta/);
+      expect(screen.getByText('CHECK BEFORE YOU TRUST')).toBeInTheDocument();
 
       // Language Switcher Options
       expect(screen.getByRole('button', { name: 'EN' })).toBeInTheDocument();
