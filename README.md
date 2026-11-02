@@ -5,7 +5,6 @@
 
 [![TypeScript Strict](https://img.shields.io/badge/TypeScript-Strict-blue.svg)](https://www.typescriptlang.org/)
 [![Node Version](https://img.shields.io/badge/Node->=%2020.0.0-green.svg)](https://nodejs.org/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Tests Passing](https://img.shields.io/badge/Tests-465%20Passing%20(100%25)-brightgreen.svg)]()
 [![Corpus Eval](https://img.shields.io/badge/Eval-25%2F25%20(100%25)-brightgreen.svg)]()
 [![Acceptance](https://img.shields.io/badge/Acceptance-10%2F10%20Verified-brightgreen.svg)]()
@@ -242,8 +241,8 @@ Complete deployment runbooks, Vercel SPA routing rules, and Render setup instruc
 
 ---
 
-## 13. Disclaimer & License
+## 13. Disclaimer & Copyright
 
 > **Public Service Notice:** Jaanch evaluates automated heuristic signals and community threat indicators. Analysis does not prove that an opportunity is genuine or fraudulent. Students must always corroborate offers through official institutional channels before transferring money or sharing identity documents.
 
-This project is licensed under the [MIT License](LICENSE).
+Copyright © 2026 Sharath B K. All rights reserved.

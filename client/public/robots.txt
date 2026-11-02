@@ -31,3 +31,4 @@ Disallow: /api/
 # Sitemap index
 Sitemap: https://jaanch-mu.vercel.app/sitemap.xml
 Host: https://jaanch-mu.vercel.app
+
