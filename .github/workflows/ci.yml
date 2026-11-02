@@ -49,7 +49,15 @@ jobs:
       - name: Build Shared Workspace
         run: npm run build -w shared
       - name: Run Vitest Suite
-        run: npm test -- --reporter=verbose --testTimeout=30000
+        run: |
+          set -o pipefail
+          npx vitest run --reporter=verbose --testTimeout=30000 2>&1 | tee vitest_output.log || {
+            echo "## ❌ Vitest Suite Failed" >> $GITHUB_STEP_SUMMARY
+            echo '```text' >> $GITHUB_STEP_SUMMARY
+            tail -n 120 vitest_output.log >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+            exit 1
+          }
       - name: Run Golden Scam Fixtures Evaluation (25/25)
         run: npm run eval -w shared
       - name: Run Acceptance Criteria Harness (10/10)
