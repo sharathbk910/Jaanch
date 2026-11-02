@@ -16,10 +16,10 @@ export function AuditSteps() {
       <div className="max-w-editorial mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
           <div className="inline-block px-3 py-1 bg-neo-yellow border-2 border-neo-border shadow-neo-sm font-mono text-xs font-bold uppercase tracking-wider mb-3">
-            VERIFICATION PIPELINE
+            {t('auditSteps.badge')}
           </div>
           <h2 className="font-sans font-extrabold tracking-tight text-3xl sm:text-4xl lg:text-5xl text-foreground">
-            How Jaanch Audits an Offer in 3 Steps
+            {t('auditSteps.heading')}
           </h2>
         </div>
 
@@ -35,7 +35,7 @@ export function AuditSteps() {
                       01
                     </span>
                     <span className="font-mono text-xs font-bold uppercase tracking-wider text-foreground/75">
-                      INGEST & REDACT
+                      {t('auditSteps.step1Badge')}
                     </span>
                   </div>
                   <h3 className="font-sans font-bold tracking-tight text-xl sm:text-2xl text-foreground">
@@ -51,7 +51,7 @@ export function AuditSteps() {
               </p>
             </div>
             <div className="mt-6 pt-3 border-t-2 border-neo-border/20 flex items-center justify-between text-xs font-mono font-bold text-foreground/70">
-              <span>Client-Side PII Scrubbing</span>
+              <span>{t('auditSteps.step1Bottom')}</span>
               <ArrowRight size={14} />
             </div>
           </div>
@@ -66,7 +66,7 @@ export function AuditSteps() {
                       02
                     </span>
                     <span className="font-mono text-xs font-bold uppercase tracking-wider text-foreground/75">
-                      CROSS-REFERENCE
+                      {t('auditSteps.step2Badge')}
                     </span>
                   </div>
                   <h3 className="font-sans font-bold tracking-tight text-xl sm:text-2xl text-foreground">
@@ -82,7 +82,7 @@ export function AuditSteps() {
               </p>
             </div>
             <div className="mt-6 pt-3 border-t-2 border-neo-border/20 flex items-center justify-between text-xs font-mono font-bold text-foreground/70">
-              <span>MCA21 & EPFO Registry Check</span>
+              <span>{t('auditSteps.step2Bottom')}</span>
               <ArrowRight size={14} />
             </div>
           </div>
@@ -97,7 +97,7 @@ export function AuditSteps() {
                       03
                     </span>
                     <span className="font-mono text-xs font-bold uppercase tracking-wider text-foreground/75">
-                      VERDICT & ACTION
+                      {t('auditSteps.step3Badge')}
                     </span>
                   </div>
                   <h3 className="font-sans font-bold tracking-tight text-xl sm:text-2xl text-foreground">
@@ -113,7 +113,7 @@ export function AuditSteps() {
               </p>
             </div>
             <div className="mt-6 pt-3 border-t-2 border-neo-border/20 flex items-center justify-between text-xs font-mono font-bold text-foreground/70">
-              <span>Actionable Next Steps & Defense</span>
+              <span>{t('auditSteps.step3Bottom')}</span>
               <ArrowRight size={14} />
             </div>
           </div>

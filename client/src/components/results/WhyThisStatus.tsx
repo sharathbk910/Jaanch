@@ -27,7 +27,7 @@ export function WhyThisStatus({ status, signals, unverified }: WhyThisStatusProp
     if (unverified.length > 0 && status !== 'LIKELY_GENUINE') {
       unverified.forEach((item) => {
         bullets.push({
-          text: `Uncorroborated: ${item}`,
+          text: `${t('results.uncorroborated')}: ${item}`,
           type: 'neutral',
         });
       });
@@ -36,11 +36,11 @@ export function WhyThisStatus({ status, signals, unverified }: WhyThisStatusProp
     // Likely genuine corroboration
     if (status === 'LIKELY_GENUINE') {
       bullets.push({
-        text: 'All 8 deterministic scam heuristics completed without triggering any upfront fee or credential demands.',
+        text: t('results.positiveRule1'),
         type: 'positive',
       });
       bullets.push({
-        text: 'Communication references transparent, verified official recruitment channels.',
+        text: t('results.positiveRule2'),
         type: 'positive',
       });
     }
@@ -48,7 +48,7 @@ export function WhyThisStatus({ status, signals, unverified }: WhyThisStatusProp
     // Default neutral if no signals and needs review
     if (bullets.length === 0) {
       bullets.push({
-        text: 'Offer communication contains minimal verifiable identifiers. Independent corroboration is required before sharing personal documents.',
+        text: t('results.neutralDefault'),
         type: 'neutral',
       });
     }

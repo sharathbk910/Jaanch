@@ -47,10 +47,10 @@ export function Footer() {
           <div className="p-4 bg-surface border-2 border-neo-border shadow-neo-sm mb-8 text-xs text-muted-foreground leading-relaxed">
             <div className="flex items-center gap-2 font-bold text-foreground mb-1">
               <ShieldCheck size={15} className="text-terracotta" aria-hidden="true" />
-              <span>Public Service Safety Advisory</span>
+              <span>{t('footer.advisoryTitle')}</span>
             </div>
             <p>
-              JAANCH is an independent public trust initiative for Indian students. All heuristic evaluations are deterministic and privacy-preserving. Neither government entities nor legitimate private employers charge security deposits, training fees, or demand banking OTPs for job offers.
+              {t('footer.advisoryBody')}
             </p>
           </div>
 

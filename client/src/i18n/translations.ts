@@ -1,4 +1,7 @@
 export interface TranslationDictionary {
+  topBanner: {
+    helplineAlert: string;
+  };
   navigation: {
     brand: string;
     tagline: string;
@@ -19,6 +22,19 @@ export interface TranslationDictionary {
     subtitle: string;
     cta: string;
     secondaryCta: string;
+    learnMore: string;
+    featureCard1Label1: string;
+    featureCard1Val1: string;
+    featureCard1Label2: string;
+    featureCard1Val2: string;
+    featureCard2Label1: string;
+    featureCard2Val1: string;
+    featureCard2Label2: string;
+    featureCard2Val2: string;
+    featureCard3Label1: string;
+    featureCard3Val1: string;
+    featureCard3Label2: string;
+    featureCard3Val2: string;
   };
   features: {
     zeroFeesTitle: string;
@@ -41,6 +57,20 @@ export interface TranslationDictionary {
     dropPdf: string;
     aiConsent: string;
     shareIndicators: string;
+    tabPaste: string;
+    tabUpload: string;
+    pasteClipboard: string;
+    badgeSanitized: string;
+    testScenarioPrompt: string;
+    scenario1: string;
+    scenario2: string;
+    scenario3: string;
+    outputLabel: string;
+    outputGenuine: string;
+    outputScam: string;
+    readyForAudit: string;
+    dropzoneSupported: string;
+    dropzonePrivacy: string;
   };
   auditSteps: {
     step1Title: string;
@@ -49,12 +79,49 @@ export interface TranslationDictionary {
     step2Desc: string;
     step3Title: string;
     step3Desc: string;
+    badge: string;
+    heading: string;
+    step1Badge: string;
+    step1Bottom: string;
+    step2Badge: string;
+    step2Bottom: string;
+    step3Badge: string;
+    step3Bottom: string;
+  };
+  featureMatrix: {
+    heading: string;
+    colFactor: string;
+    colLegit: string;
+    colScam: string;
+    row1Title: string;
+    row1Legit: string;
+    row1Scam: string;
+    row2Title: string;
+    row2Legit: string;
+    row2Scam: string;
+    row3Title: string;
+    row3Legit: string;
+    row3Scam: string;
+    row4Title: string;
+    row4Legit: string;
+    row4Scam: string;
+    row5Title: string;
+    row5Legit: string;
+    row5Scam: string;
   };
   guidelines: {
     title: string;
     rule1: string;
     rule2: string;
     rule3: string;
+    subtitle: string;
+    rule4: string;
+    doubtHelp: string;
+    helplineTitle: string;
+    goldenHour: string;
+    tollFreeLabel: string;
+    tollFreeSub: string;
+    lodgeOnline: string;
   };
   footer: {
     helplineTitle: string;
@@ -63,6 +130,32 @@ export interface TranslationDictionary {
     privacy: string;
     terms: string;
     about: string;
+    advisoryTitle: string;
+    advisoryBody: string;
+  };
+  riskBanner: {
+    highTitle: string;
+    highSub: string;
+    highDesc: string;
+    highUrgency: string;
+    highProtocol: string;
+    cautionTitle: string;
+    cautionSub: string;
+    cautionDesc: string;
+    cautionUrgency: string;
+    cautionProtocol: string;
+    safeTitle: string;
+    safeSub: string;
+    safeDesc: string;
+    safeUrgency: string;
+    safeProtocol: string;
+    mlTelemetry: string;
+    ruleTelemetry: string;
+    mlScamProbability: string;
+    ruleConfidence: string;
+    statusLabelHigh: string;
+    statusLabelCaution: string;
+    statusLabelSafe: string;
   };
   auth: {
     signInTitle: string;
@@ -287,6 +380,17 @@ export interface TranslationDictionary {
     jumpNavTitle: string;
     shareWhatsApp: string;
     shareWhatsAppDesc: string;
+    feeDemanded: string;
+    upiTarget: string;
+    demandsOtp: string;
+    actionsAndExport: string;
+    emergency1930: string;
+    emergencyDesc: string;
+    call1930Now: string;
+    uncorroborated: string;
+    positiveRule1: string;
+    positiveRule2: string;
+    neutralDefault: string;
   };
   reportDialog: {
     triggerBtn: string;
@@ -372,9 +476,12 @@ export interface TranslationDictionary {
 
 export const translations: Record<'en' | 'hi' | 'kn', TranslationDictionary> = {
   en: {
+    topBanner: {
+      helplineAlert: '1930 NATIONAL CYBER CRIME HELPLINE — REPORT FRAUD IMMEDIATELY AT CYBERCRIME.GOV.IN',
+    },
     navigation: {
       brand: 'JAANCH.',
-      tagline: 'Digital Trust & Safety for Indian Students',
+      tagline: 'CHECK BEFORE YOU TRUST',
       verifyOffer: 'Verify Offer',
       linkCheck: 'Link Check',
       resources: 'Verification Guide',
@@ -392,6 +499,19 @@ export const translations: Record<'en' | 'hi' | 'kn', TranslationDictionary> = {
       subtitle: 'Instant, free, and privacy-preserving offer verification for Indian students. Run deterministic checks before you transfer money or share private documents.',
       cta: 'Audit an Offer',
       secondaryCta: 'Check a Link',
+      learnMore: 'LEARN MORE',
+      featureCard1Label1: 'Registration Fee',
+      featureCard1Val1: '₹0 (Free)',
+      featureCard1Label2: 'Laptop Security',
+      featureCard1Val2: '₹0 Required',
+      featureCard2Label1: 'Stipend Disbursement',
+      featureCard2Val1: 'Direct NEFT',
+      featureCard2Label2: 'Banking OTP / PIN',
+      featureCard2Val2: 'Never Shared',
+      featureCard3Label1: 'Sender Domain',
+      featureCard3Val1: '@company.com',
+      featureCard3Label2: 'Free Webmail (@gmail)',
+      featureCard3Val2: 'Flagged',
     },
     features: {
       zeroFeesTitle: 'Zero Upfront Fees',
@@ -414,6 +534,20 @@ export const translations: Record<'en' | 'hi' | 'kn', TranslationDictionary> = {
       dropPdf: 'Drop offer letter PDF or click to browse',
       aiConsent: 'Allow AI-assisted deep reasoning (optional, zero PII transmitted)',
       shareIndicators: 'Contribute anonymized scam signals to student safety database',
+      tabPaste: 'Paste Message Text',
+      tabUpload: 'Upload Document',
+      pasteClipboard: 'Paste from clipboard',
+      badgeSanitized: 'Zero Data Shared • In-Browser Sanitized',
+      testScenarioPrompt: 'Try a real test scenario:',
+      scenario1: '1. Genuine Internship',
+      scenario2: '2. Upfront Fee Scam',
+      scenario3: '3. OTP Phishing Scam',
+      outputLabel: 'OUTPUT:',
+      outputGenuine: 'GENUINE OFFER PATTERN',
+      outputScam: 'SCAM PATTERN DETECTED',
+      readyForAudit: 'Output appears here when offer is ready for audit',
+      dropzoneSupported: 'Supports scanned PDFs, PNG, JPG appointment letters',
+      dropzonePrivacy: 'In-browser OCR (Tesseract WASM) — Zero server upload',
     },
     auditSteps: {
       step1Title: '1. Input & Redaction',
@@ -422,12 +556,49 @@ export const translations: Record<'en' | 'hi' | 'kn', TranslationDictionary> = {
       step2Desc: '8 automated heuristics test for upfront fees, banking OTP demands, lookalike domains, and urgency traps.',
       step3Title: '3. Evidence & Next Steps',
       step3Desc: 'Receive a transparent verdict (Likely Genuine, Needs Review, or High Concern) with concrete action items.',
+      badge: 'VERIFICATION PIPELINE',
+      heading: 'How Jaanch Audits an Offer in 3 Steps',
+      step1Badge: 'INGEST & REDACT',
+      step1Bottom: 'Client-Side PII Scrubbing',
+      step2Badge: 'CROSS-REFERENCE',
+      step2Bottom: 'MCA21 & EPFO Registry Check',
+      step3Badge: 'VERDICT & ACTION',
+      step3Bottom: 'Actionable Next Steps & Defense',
+    },
+    featureMatrix: {
+      heading: 'How to Spot a Fake Student Offer',
+      colFactor: 'Evaluation Factor',
+      colLegit: 'Legitimate Offer',
+      colScam: 'Scam Indicator',
+      row1Title: 'Upfront Money Demands',
+      row1Legit: '₹0 charged. Legitimate employers pay you; they never charge for training, uniforms, or laptop security.',
+      row1Scam: 'Demands ₹500–₹5,000 for "registration", "laptop security deposit", or "HR background check".',
+      row2Title: 'Banking Credentials & OTP',
+      row2Legit: 'Collects bank account number & IFSC only for salary credit. Never asks for OTP or UPI PIN.',
+      row2Scam: 'Demands 6-digit OTP, asks you to scan a UPI QR code to "receive stipend", or requires debit card PIN.',
+      row3Title: 'Recruiter Email Domain',
+      row3Legit: 'Always from verified corporate or official government domain (e.g., @tcs.com, @gov.in).',
+      row3Scam: 'Uses free webmail accounts: @gmail.com, @yahoo.com, or spoofed lookalike domains (e.g., @tcs-careers.in).',
+      row4Title: 'Selection Process',
+      row4Legit: 'Structured multi-round technical assessment, interview, and formal verification.',
+      row4Scam: 'Direct appointment letter issued over WhatsApp or Telegram without any technical assessment or interview.',
+      row5Title: 'Hiring Urgency & Coercion',
+      row5Legit: 'Provides reasonable acceptance deadlines (typically 3–14 business days).',
+      row5Scam: 'Aggressive urgency: "Offer expires in 2 hours. Pay now or legal action will be initiated against you."',
     },
     guidelines: {
       title: 'Student Safety Guidelines',
       rule1: 'Never transfer money via UPI to receive an appointment letter.',
       rule2: 'Always verify company domain whois records and official contact listings.',
       rule3: 'Government recruitment exam fees are paid only through authorized SBI Collect / Bharatkosh gateways.',
+      subtitle: 'Core defense principles for Indian students encountering campus recruiters, freelance offers, or scholarship announcements.',
+      rule4: 'Always cross-reference the Corporate Identification Number (CIN) on the official MCA21 portal before sharing Aadhaar or PAN.',
+      doubtHelp: 'Doubtful about a job posting? Paste the entire text in Jaanch above.',
+      helplineTitle: 'Transferred Money to a Scammer?',
+      goldenHour: 'Financial fraud in India has a critical "Golden Hour" window. Reporting within 2 to 4 hours of a fraudulent transaction gives cyber police the best chance of freezing the fraudster\'s bank account.',
+      tollFreeLabel: 'National Cybercrime Helpline',
+      tollFreeSub: 'Toll-free 24x7 helpline operated by Indian Cyber Crime Coordination Centre (I4C), MHA.',
+      lodgeOnline: 'Lodge formal digital cyber complaints online:',
     },
     footer: {
       helplineTitle: 'National Cybercrime Helpline: 1930',
@@ -436,6 +607,32 @@ export const translations: Record<'en' | 'hi' | 'kn', TranslationDictionary> = {
       privacy: 'Privacy Policy',
       terms: 'Terms of Use',
       about: 'About Us',
+      advisoryTitle: 'Public Service Safety Advisory',
+      advisoryBody: 'JAANCH is an independent public trust initiative for Indian students. All heuristic evaluations are deterministic and privacy-preserving. Neither government entities nor legitimate private employers charge security deposits, training fees, or demand banking OTPs for job offers.',
+    },
+    riskBanner: {
+      highTitle: 'RISK LEVEL: HIGH RISK',
+      highSub: 'HIGH RISK / DANGER',
+      highDesc: 'High probability of fraudulent activity. Demanding upfront fees, unverified tasks, or off-platform recruitment detected.',
+      highUrgency: 'IMMEDIATE ATTENTION REQUIRED',
+      highProtocol: 'CRITICAL THREAT EVALUATION',
+      cautionTitle: 'RISK LEVEL: CAUTION',
+      cautionSub: 'CAUTION / NEEDS REVIEW',
+      cautionDesc: 'Suspicious indicators or unverified contact channels detected. Independent verification recommended before proceeding.',
+      cautionUrgency: 'MANUAL RECONCILIATION NEEDED',
+      cautionProtocol: 'HEURISTIC ALERT',
+      safeTitle: 'RISK LEVEL: LIKELY GENUINE',
+      safeSub: 'LIKELY GENUINE / SAFE',
+      safeDesc: 'High probability of legitimate communication. No predatory fee demands or credential theft patterns identified.',
+      safeUrgency: 'VERIFIED BENCHMARK',
+      safeProtocol: 'SAFETY PROTOCOL',
+      mlTelemetry: 'ML Telemetry',
+      ruleTelemetry: 'Rule Telemetry',
+      mlScamProbability: 'ML Scam Probability:',
+      ruleConfidence: 'Rule Confidence:',
+      statusLabelHigh: 'High Fraud Probability',
+      statusLabelCaution: 'Suspicious Indicators',
+      statusLabelSafe: 'Low Risk Benchmark',
     },
     auth: {
       signInTitle: 'Sign In to Jaanch',
@@ -660,6 +857,17 @@ export const translations: Record<'en' | 'hi' | 'kn', TranslationDictionary> = {
       jumpNavTitle: 'Jump to Section',
       shareWhatsApp: 'Share Warning on WhatsApp',
       shareWhatsAppDesc: 'Only verified warnings and helplines are shared. Raw student text is never sent.',
+      feeDemanded: 'Fee Demanded',
+      upiTarget: 'UPI Target',
+      demandsOtp: 'Demands OTP / PIN',
+      actionsAndExport: 'ACTIONS & EXPORT',
+      emergency1930: 'EMERGENCY: 1930',
+      emergencyDesc: 'National Cyber Crime Helpline (MHA / I4C). Report financial fraud within the golden hour.',
+      call1930Now: 'Call 1930 Now',
+      uncorroborated: 'Uncorroborated Claims',
+      positiveRule1: 'No upfront fee or registration deposit demanded anywhere in communication',
+      positiveRule2: 'Legitimate recruitment workflow with standard interview and assessment steps',
+      neutralDefault: 'Opportunity text did not trigger hard deterministic scam signatures',
     },
     reportDialog: {
       triggerBtn: 'Report Suspicious Indicator',
@@ -743,6 +951,9 @@ export const translations: Record<'en' | 'hi' | 'kn', TranslationDictionary> = {
     },
   },
   hi: {
+    topBanner: {
+      helplineAlert: '1930 राष्ट्रीय साइबर अपराध हेल्पलाइन — धोखाधड़ी की तुरंत सूचना cybercrime.gov.in पर दें',
+    },
     navigation: {
       brand: 'जांच.',
       tagline: 'भारतीय छात्रों के लिए डिजिटल सुरक्षा और विश्वास',
@@ -763,6 +974,19 @@ export const translations: Record<'en' | 'hi' | 'kn', TranslationDictionary> = {
       subtitle: 'भारतीय छात्रों के लिए तत्काल, निःशुल्क और गोपनीयता-सुरक्षित ऑफर सत्यापन। पैसे ट्रांसफर करने या निजी दस्तावेज साझा करने से पहले स्वचालित जांच चलाएं।',
       cta: 'ऑफर की जांच करें',
       secondaryCta: 'संदिग्ध लिंक जांचें',
+      learnMore: 'अधिक जानें',
+      featureCard1Label1: 'पंजीकरण शुल्क',
+      featureCard1Val1: '₹0 (निःशुल्क)',
+      featureCard1Label2: 'लैपटॉप सुरक्षा जमा',
+      featureCard1Val2: '₹0 आवश्यक',
+      featureCard2Label1: 'वेतन वितरण',
+      featureCard2Val1: 'सीधा NEFT',
+      featureCard2Label2: 'बैंकिंग OTP / PIN',
+      featureCard2Val2: 'कभी साझा न करें',
+      featureCard3Label1: 'प्रेषक डोमेन',
+      featureCard3Val1: '@company.com',
+      featureCard3Label2: 'निःशुल्क वेबमेल (@gmail)',
+      featureCard3Val2: 'संदिग्ध चिह्नित',
     },
     features: {
       zeroFeesTitle: 'शून्य अग्रिम शुल्क',
@@ -785,6 +1009,20 @@ export const translations: Record<'en' | 'hi' | 'kn', TranslationDictionary> = {
       dropPdf: 'ऑफर पत्र PDF यहां छोड़ें या ब्राउज़ करने के लिए क्लिक करें',
       aiConsent: 'AI-सहायता प्राप्त गहन विश्लेषण की अनुमति दें (वैकल्पिक, कोई व्यक्तिगत डेटा साझा नहीं)',
       shareIndicators: 'छात्र सुरक्षा डेटाबेस में अज्ञात संकेत योगदान करें',
+      tabPaste: 'संदेश टेक्स्ट पेस्ट करें',
+      tabUpload: 'दस्तावेज़ अपलोड करें',
+      pasteClipboard: 'क्लिपबोर्ड से पेस्ट करें',
+      badgeSanitized: 'शून्य डेटा साझा • ब्राउज़र में ही शोधित',
+      testScenarioPrompt: 'वास्तविक परीक्षण परिदृश्य आज़माएं:',
+      scenario1: '1. वास्तविक इंटर्नशिप',
+      scenario2: '2. अग्रिम शुल्क धोखाधड़ी',
+      scenario3: '3. OTP फ़िशिंग धोखाधड़ी',
+      outputLabel: 'परिणाम:',
+      outputGenuine: 'वास्तविक ऑफ़र पैटर्न',
+      outputScam: 'धोखाधड़ी पैटर्न पहचाना गया',
+      readyForAudit: 'ऑफ़र जांच के लिए तैयार होने पर परिणाम यहां दिखेगा',
+      dropzoneSupported: 'स्कैन किए गए PDF, PNG, JPG नियुक्ति पत्रों का समर्थन करता है',
+      dropzonePrivacy: 'ब्राउज़र में स्थानीय OCR — सर्वर पर कोई अपलोड नहीं',
     },
     auditSteps: {
       step1Title: '1. इनपुट और गोपनीयता शोधन',
@@ -793,12 +1031,49 @@ export const translations: Record<'en' | 'hi' | 'kn', TranslationDictionary> = {
       step2Desc: '8 स्वचालित नियम अग्रिम शुल्क, बैंकिंग OTP मांगों, नकली डोमेन और जल्दबाजी के दबाव की जांच करते हैं।',
       step3Title: '3. साक्ष्य और अगला कदम',
       step3Desc: 'एक स्पष्ट निर्णय (संभावित वास्तविक, समीक्षा आवश्यक, या उच्च चिंता) और सुरक्षा के ठोस कदमों के साथ प्राप्त करें।',
+      badge: 'सत्यापन प्रक्रिया',
+      heading: 'जांच कैसे 3 चरणों में ऑफ़र का परीक्षण करती है',
+      step1Badge: 'ग्रहण और शोधन',
+      step1Bottom: 'क्लाइंट-साइड निजी डेटा शोधन',
+      step2Badge: 'क्रॉस-रेफरेंस',
+      step2Bottom: 'MCA21 और EPFO रजिस्ट्री जांच',
+      step3Badge: 'निर्णय और कार्रवाई',
+      step3Bottom: 'कार्रवाई योग्य अगले कदम और बचाव',
+    },
+    featureMatrix: {
+      heading: 'फर्जी छात्र ऑफ़र की पहचान कैसे करें',
+      colFactor: 'मूल्यांकन कारक',
+      colLegit: 'वास्तविक ऑफ़र',
+      colScam: 'धोखाधड़ी संकेतक',
+      row1Title: 'अग्रिम पैसों की मांग',
+      row1Legit: '₹0 शुल्क। वैध नियोक्ता आपको भुगतान करते हैं; वे कभी भी प्रशिक्षण, वर्दी या लैपटॉप सुरक्षा के पैसे नहीं लेते।',
+      row1Scam: '"पंजीकरण", "लैपटॉप सुरक्षा जमा" या "HR पृष्ठभूमि जांच" के लिए ₹500–₹5,000 की मांग करते हैं।',
+      row2Title: 'बैंकिंग क्रेडेंशियल और OTP',
+      row2Legit: 'केवल वेतन जमा करने के लिए बैंक खाता संख्या और IFSC एकत्र करते हैं। कभी भी OTP या UPI पिन नहीं मांगते।',
+      row2Scam: '6-अंकीय OTP मांगते हैं, "वेतन प्राप्त करने" के लिए UPI QR कोड स्कैन करने को कहते हैं, या डेबिट कार्ड पिन मांगते हैं।',
+      row3Title: 'भर्तीकर्ता का ईमेल डोमेन',
+      row3Legit: 'हमेशा सत्यापित कॉर्पोरेट या आधिकारिक सरकारी डोमेन से (उदा. @tcs.com, @gov.in)।',
+      row3Scam: 'मुफ्त वेबमेल खातों का उपयोग करते हैं: @gmail.com, @yahoo.com, या नकली डोमेन (उदा. @tcs-careers.in)।',
+      row4Title: 'चयन प्रक्रिया',
+      row4Legit: 'संरचित बहु-चरणीय तकनीकी मूल्यांकन, साक्षात्कार और औपचारिक सत्यापन।',
+      row4Scam: 'बिना किसी तकनीकी मूल्यांकन या साक्षात्कार के सीधे व्हाट्सएप या टेलीग्राम पर नियुक्ति पत्र जारी करना।',
+      row5Title: 'भर्ती की जल्दबाजी और दबाव',
+      row5Legit: 'स्वीकृति के लिए उचित समय सीमा प्रदान करते हैं (आमतौर पर 3–14 कार्य दिवस)।',
+      row5Scam: 'अत्यधिक जल्दबाजी: "ऑफ़र 2 घंटे में समाप्त हो जाएगा। अभी भुगतान करें अन्यथा कानूनी कार्रवाई की जाएगी।"',
     },
     guidelines: {
       title: 'छात्र सुरक्षा दिशानिर्देश',
       rule1: 'नियुक्ति पत्र प्राप्त करने के लिए कभी भी UPI द्वारा पैसे न भेजें।',
       rule2: 'हमेशा कंपनी के डोमेन whois रिकॉर्ड और आधिकारिक संपर्क सूची सत्यापित करें।',
       rule3: 'सरकारी भर्ती परीक्षा शुल्क केवल अधिकृत SBI Collect / Bharatkosh गेटवे के माध्यम से लिया जाता है।',
+      subtitle: 'कैंपस भर्तीकर्ताओं, फ्रीलांस ऑफ़र या छात्रवृत्ति घोषणाओं का सामना करने वाले भारतीय छात्रों के लिए मुख्य सुरक्षा सिद्धांत।',
+      rule4: 'आधार या पैन साझा करने से पहले हमेशा आधिकारिक MCA21 पोर्टल पर कॉर्पोरेट पहचान संख्या (CIN) की पुष्टि करें।',
+      doubtHelp: 'नौकरी पोस्टिंग के बारे में संदेह है? ऊपर जांच में पूरा टेक्स्ट पेस्ट करें।',
+      helplineTitle: 'धोखेबाज को पैसे ट्रांसफर कर दिए?',
+      goldenHour: 'भारत में वित्तीय धोखाधड़ी में "गोल्डन ऑवर" की महत्वपूर्ण भूमिका होती है। धोखाधड़ी के लेन-देन के 2 से 4 घंटे के भीतर रिपोर्ट करने से साइबर पुलिस को जालसाज के बैंक खाते को फ्रीज करने का सबसे अच्छा मौका मिलता है।',
+      tollFreeLabel: 'राष्ट्रीय साइबर अपराध हेल्पलाइन',
+      tollFreeSub: 'गृह मंत्रालय के भारतीय साइबर अपराध समन्वय केंद्र (I4C) द्वारा संचालित 24x7 टोल-फ्री हेल्पलाइन।',
+      lodgeOnline: 'ऑनलाइन औपचारिक डिजिटल साइबर शिकायत दर्ज करें:',
     },
     footer: {
       helplineTitle: 'राष्ट्रीय साइबर अपराध हेल्पलाइन: 1930',
@@ -807,6 +1082,32 @@ export const translations: Record<'en' | 'hi' | 'kn', TranslationDictionary> = {
       privacy: 'गोपनीयता नीति',
       terms: 'उपयोग की शर्तें',
       about: 'हमारे बारे में',
+      advisoryTitle: 'सार्वजनिक सेवा सुरक्षा परामर्श',
+      advisoryBody: 'जांच भारतीय छात्रों के लिए एक स्वतंत्र जनहित पहल है। सभी स्वचालित मूल्यांकन सटीक और गोपनीयता-सुरक्षित हैं। न तो सरकारी संस्थाएं और न ही वैध निजी नियोक्ता नौकरी के प्रस्तावों के लिए सुरक्षा जमा, प्रशिक्षण शुल्क या बैंकिंग OTP की मांग करते हैं।',
+    },
+    riskBanner: {
+      highTitle: 'जोखिम स्तर: उच्च जोखिम',
+      highSub: 'उच्च जोखिम / खतरा',
+      highDesc: 'धोखाधड़ी की अत्यधिक संभावना। अग्रिम शुल्क की मांग, असत्यापित कार्य या अनधिकृत माध्यमों से भर्ती पाई गई।',
+      highUrgency: 'तत्काल ध्यान आवश्यक',
+      highProtocol: 'गंभीर खतरे का मूल्यांकन',
+      cautionTitle: 'जोखिम स्तर: सावधानी',
+      cautionSub: 'सावधानी / समीक्षा आवश्यक',
+      cautionDesc: 'संदिग्ध संकेतक या असत्यापित संपर्क माध्यम पाए गए। आगे बढ़ने से पहले स्वतंत्र सत्यापन की सिफारिश की जाती है।',
+      cautionUrgency: 'मैन्युअल सत्यापन आवश्यक',
+      cautionProtocol: 'सुरक्षा चेतावनी',
+      safeTitle: 'जोखिम स्तर: संभावित वास्तविक',
+      safeSub: 'संभावित वास्तविक / सुरक्षित',
+      safeDesc: 'वैध संचार की उच्च संभावना। कोई शोषणकारी शुल्क मांग या क्रेडेंशियल चोरी का पैटर्न नहीं मिला।',
+      safeUrgency: 'सत्यापित मानक',
+      safeProtocol: 'सुरक्षा प्रोटोकॉल',
+      mlTelemetry: 'ML टेलीमेट्री',
+      ruleTelemetry: 'नियम टेलीमेट्री',
+      mlScamProbability: 'ML धोखाधड़ी संभावना:',
+      ruleConfidence: 'नियम विश्वसनीयता:',
+      statusLabelHigh: 'उच्च धोखाधड़ी संभावना',
+      statusLabelCaution: 'संदिग्ध संकेतक',
+      statusLabelSafe: 'कम जोखिम मानक',
     },
     auth: {
       signInTitle: 'जांच में साइन इन करें',
@@ -1031,6 +1332,17 @@ export const translations: Record<'en' | 'hi' | 'kn', TranslationDictionary> = {
       jumpNavTitle: 'सेक्शन पर जाएं',
       shareWhatsApp: 'व्हाट्सएप पर चेतावनी साझा करें',
       shareWhatsAppDesc: 'केवल पुष्ट चेतावनियां और हेल्पलाइन लिंक साझा किए जाते हैं। छात्र का मूल संदेश कभी नहीं भेजा जाता।',
+      feeDemanded: 'मांगा गया शुल्क',
+      upiTarget: 'UPI लक्ष्य',
+      demandsOtp: 'OTP / PIN की मांग',
+      actionsAndExport: 'कार्रवाई और निर्यात',
+      emergency1930: 'आपातकालीन: 1930',
+      emergencyDesc: 'राष्ट्रीय साइबर अपराध हेल्पलाइन (गृह मंत्रालय / I4C)। वित्तीय धोखाधड़ी की सूचना गोल्डन ऑवर में दें।',
+      call1930Now: 'अभी 1930 पर कॉल करें',
+      uncorroborated: 'असत्यापित दावे',
+      positiveRule1: 'संचार में कहीं भी अग्रिम शुल्क या पंजीकरण जमा राशि नहीं मांगी गई है',
+      positiveRule2: 'मानक साक्षात्कार और मूल्यांकन चरणों के साथ वैध भर्ती प्रक्रिया',
+      neutralDefault: 'ऑफ़र टेक्स्ट में कोई प्रत्यक्ष धोखाधड़ी संकेत नहीं मिले',
     },
     reportDialog: {
       triggerBtn: 'संदिग्ध संकेतक की रिपोर्ट करें',
@@ -1114,6 +1426,9 @@ export const translations: Record<'en' | 'hi' | 'kn', TranslationDictionary> = {
     },
   },
   kn: {
+    topBanner: {
+      helplineAlert: '1930 ರಾಷ್ಟ್ರೀಯ ಸೈಬರ್ ಅಪರಾಧ ಸಹಾಯವಾಣಿ — ವಂಚನೆಯನ್ನು ತಕ್ಷಣ cybercrime.gov.in ನಲ್ಲಿ ವರದಿ ಮಾಡಿ',
+    },
     navigation: {
       brand: 'ಜಾಂಚ್.',
       tagline: 'ಭಾರತೀಯ ವಿದ್ಯಾರ್ಥಿಗಳಿಗೆ ಡಿಜಿಟಲ್ ನಂಬಿಕೆ ಮತ್ತು ಸುರಕ್ಷತೆ',
@@ -1134,6 +1449,19 @@ export const translations: Record<'en' | 'hi' | 'kn', TranslationDictionary> = {
       subtitle: 'ಭಾರತೀಯ ವಿದ್ಯಾರ್ಥಿಗಳಿಗೆ ತ್ವರಿತ, ಉಚಿತ ಮತ್ತು ಗೌಪ್ಯತೆ-ರಕ್ಷಿತ ಆಫರ್ ಪರಿಶೀಲನೆ. ಹಣ ವರ್ಗಾಯಿಸುವ ಅಥವಾ ದಾಖಲೆ ಹಂಚಿಕೊಳ್ಳುವ ಮುನ್ನ ಸ್ವಯಂಚಾಲಿತ ಪರಿಶೀಲನೆ ನಡೆಸಿ.',
       cta: 'ಆಫರ್ ಪರಿಶೀಲಿಸಿ',
       secondaryCta: 'ಲಿಂಕ್ ಪರಿಶೀಲಿಸಿ',
+      learnMore: 'ಇನ್ನಷ್ಟು ತಿಳಿಯಿರಿ',
+      featureCard1Label1: 'ನೋಂದಣಿ ಶುಲ್ಕ',
+      featureCard1Val1: '₹0 (ಉಚಿತ)',
+      featureCard1Label2: 'ಲ್ಯಾಪ್‌ಟಾಪ್ ಭದ್ರತಾ ಠೇವಣಿ',
+      featureCard1Val2: '₹0 ಅಗತ್ಯವಿದೆ',
+      featureCard2Label1: 'ವೇತನ ವಿತರಣೆ',
+      featureCard2Val1: 'ನೇರ NEFT',
+      featureCard2Label2: 'ಬ್ಯಾಂಕಿಂಗ್ OTP / PIN',
+      featureCard2Val2: 'ಎಂದಿಗೂ ಹಂಚಿಕೊಳ್ಳಬೇಡಿ',
+      featureCard3Label1: 'ಕಳುಹಿಸಿದವರ ಡೊಮೇನ್',
+      featureCard3Val1: '@company.com',
+      featureCard3Label2: 'ಉಚಿತ ವೆಬ್‌ಮೇಲ್ (@gmail)',
+      featureCard3Val2: 'ಅನುಮಾನಾಸ್ಪದ',
     },
     features: {
       zeroFeesTitle: 'ಶೂನ್ಯ ಮುಂಗಡ ಶುಲ್ಕ',
@@ -1156,6 +1484,20 @@ export const translations: Record<'en' | 'hi' | 'kn', TranslationDictionary> = {
       dropPdf: 'ಆಫರ್ ಪತ್ರದ PDF ಇಲ್ಲಿ ಡ್ರಾಪ್ ಮಾಡಿ ಅಥವಾ ಬ್ರೌಸ್ ಮಾಡಲು ಕ್ಲಿಕ್ ಮಾಡಿ',
       aiConsent: 'AI-ಸಹಾಯದ ಆಳವಾದ ವಿಶ್ಲೇಷಣೆಗೆ ಅನುಮತಿಸಿ (ಐಚ್ಛಿಕ, ಯಾವುದೇ ವೈಯಕ್ತಿಕ ಮಾಹಿತಿ ಹಂಚಿಕೊಳ್ಳಲಾಗುವುದಿಲ್ಲ)',
       shareIndicators: 'ವಿದ್ಯಾರ್ಥಿ ಸುರಕ್ಷತಾ ಡೇಟಾಬೇಸ್‌ಗೆ ಅನಾಮಧೇಯ ಸಂಕೇತಗಳನ್ನು ನೀಡಿ',
+      tabPaste: 'ಸಂದೇಶ ಪಠ್ಯ ಅಂಟಿಸಿ',
+      tabUpload: 'ದಾಖಲೆ ಅಪ್‌ಲೋಡ್ ಮಾಡಿ',
+      pasteClipboard: 'ಕ್ಲಿಪ್‌ಬೋರ್ಡ್‌ನಿಂದ ಅಂಟಿಸಿ',
+      badgeSanitized: 'ಯಾವುದೇ ಡೇಟಾ ಹಂಚಿಕೊಳ್ಳುವುದಿಲ್ಲ • ಬ್ರೌಸರ್‌ನಲ್ಲಿ ಸ್ವಚ್ಛಗೊಳಿಸಲಾಗಿದೆ',
+      testScenarioPrompt: 'ನೈಜ ಪರೀಕ್ಷಾ ಸನ್ನಿವೇಶವನ್ನು ಪ್ರಯತ್ನಿಸಿ:',
+      scenario1: '1. ನೈಜ ಇಂಟರ್ನ್‌ಶಿಪ್',
+      scenario2: '2. ಮುಂಗಡ ಶುಲ್ಕ ವಂಚನೆ',
+      scenario3: '3. OTP ಫಿಶಿಂಗ್ ವಂಚನೆ',
+      outputLabel: 'ಫಲಿತಾಂಶ:',
+      outputGenuine: 'ನೈಜ ಆಫರ್ ಮಾದರಿ',
+      outputScam: 'ವಂಚನೆ ಮಾದರಿ ಪತ್ತೆಯಾಗಿದೆ',
+      readyForAudit: 'ಆಫರ್ ಪರಿಶೀಲನೆಗೆ ಸಿದ್ಧವಾದಾಗ ಫಲಿತಾಂಶ ಇಲ್ಲಿ ಕಾಣಿಸುತ್ತದೆ',
+      dropzoneSupported: 'ಸ್ಕ್ಯಾನ್ ಮಾಡಿದ PDF, PNG, JPG ನೇಮಕಾತಿ ಪತ್ರಗಳನ್ನು ಬೆಂಬಲಿಸುತ್ತದೆ',
+      dropzonePrivacy: 'ಬ್ರೌಸರ್‌ನಲ್ಲಿ ಸ್ಥಳೀಯ OCR — ಸರ್ವರ್‌ಗೆ ಅಪ್‌ಲೋಡ್ ಇಲ್ಲ',
     },
     auditSteps: {
       step1Title: '1. ಇನ್‌ಪುಟ್ ಮತ್ತು ಗೌಪ್ಯತೆ ಶುದ್ಧೀಕರಣ',
@@ -1164,12 +1506,49 @@ export const translations: Record<'en' | 'hi' | 'kn', TranslationDictionary> = {
       step2Desc: '8 ಸ್ವಯಂಚಾಲಿತ ನಿಯಮಗಳು ಮುಂಗಡ ಶುಲ್ಕ, ಬ್ಯಾಂಕಿಂಗ್ OTP ಬೇಡಿಕೆಗಳು, ನಕಲಿ ಡೊಮೇನ್‌ಗಳು ಮತ್ತು ಒತ್ತಡದ ಸಂದೇಶಗಳನ್ನು ಪರೀಕ್ಷಿಸುತ್ತವೆ.',
       step3Title: '3. ಸಾಕ್ಷ್ಯ ಮತ್ತು ಮುಂದಿನ ಕ್ರಮಗಳು',
       step3Desc: 'ಸ್ಪಷ್ಟ ತೀರ್ಪು (ಬಹುಶಃ ನೈಜ, ಪರಿಶೀಲನೆ ಅಗತ್ಯ, ಅಥವಾ ತೀವ್ರ ಕಳವಳ) ಮತ್ತು ನಿಖರ ಸುರಕ್ಷತಾ ಸಲಹೆಗಳನ್ನು ಪಡೆಯಿರಿ.',
+      badge: 'ಪರಿಶೀಲನಾ ಪ್ರಕ್ರಿಯೆ',
+      heading: 'ಜಾಂಚ್ 3 ಹಂತಗಳಲ್ಲಿ ಆಫರ್ ಅನ್ನು ಹೇಗೆ ಆಡಿಟ್ ಮಾಡುತ್ತದೆ',
+      step1Badge: 'ಸ್ವೀಕಾರ ಮತ್ತು ಸ್ವಚ್ಛತೆ',
+      step1Bottom: 'ಸ್ಥಳೀಯ ವೈಯಕ್ತಿಕ ಮಾಹಿತಿ ಸ್ವಚ್ಛತೆ',
+      step2Badge: 'ಹೋಲಿಕೆ ತಪಾಸಣೆ',
+      step2Bottom: 'MCA21 ಮತ್ತು EPFO ದಾಖಲೆ ಪರಿಶೀಲನೆ',
+      step3Badge: 'ತೀರ್ಪು ಮತ್ತು ಕ್ರಮ',
+      step3Bottom: 'ಸೂಕ್ತ ಕ್ರಮಗಳು ಮತ್ತು ಸುರಕ್ಷತೆ',
+    },
+    featureMatrix: {
+      heading: 'ನಕಲಿ ವಿದ್ಯಾರ್ಥಿ ಆಫರ್ ಅನ್ನು ಗುರುತಿಸುವುದು ಹೇಗೆ',
+      colFactor: 'ಮೌಲ್ಯಮಾಪನ ಅಂಶ',
+      colLegit: 'ನೈಜ ಆಫರ್',
+      colScam: 'ವಂಚನೆಯ ಸಂಕೇತ',
+      row1Title: 'ಮುಂಗಡ ಹಣದ ಬೇಡಿಕೆ',
+      row1Legit: '₹0 ಶುಲ್ಕ. ನೈಜ ಉದ್ಯೋಗದಾತರು ನಿಮಗೆ ಹಣ ಪಾವತಿಸುತ್ತಾರೆ; ತರಬೇತಿ, ಸಮವಸ್ತ್ರ ಅಥವಾ ಲ್ಯಾಪ್‌ಟಾಪ್ ಠೇವಣಿಗಾಗಿ ಎಂದಿಗೂ ಶುಲ್ಕ ವಿಧಿಸುವುದಿಲ್ಲ.',
+      row1Scam: '"ನೋಂದಣಿ", "ಲ್ಯಾಪ್‌ಟಾಪ್ ಭದ್ರತಾ ಠೇವಣಿ" ಅಥವಾ "HR ಹಿನ್ನೆಲೆ ಪರಿಶೀಲನೆ"ಗಾಗಿ ₹500–₹5,000 ಬೇಡಿಕೆ ಇಡುತ್ತಾರೆ.',
+      row2Title: 'ಬ್ಯಾಂಕಿಂಗ್ ವಿವರಗಳು ಮತ್ತು OTP',
+      row2Legit: 'ವೇತನ ಜಮೆಗಾಗಿ ಮಾತ್ರ ಬ್ಯಾಂಕ್ ಖಾತೆ ಸಂಖ್ಯೆ ಮತ್ತು IFSC ಸಂಗ್ರಹಿಸುತ್ತಾರೆ. ಎಂದಿಗೂ OTP ಅಥವಾ UPI ಪಿನ್ ಕೇಳುವುದಿಲ್ಲ.',
+      row2Scam: '6-ಅಂಕಿಯ OTP ಕೇಳುತ್ತಾರೆ, "ವೇತನ ಪಡೆಯಲು" UPI QR ಕೋಡ್ ಸ್ಕ್ಯಾನ್ ಮಾಡಲು ಹೇಳುತ್ತಾರೆ ಅಥವಾ ಡೆಬಿಟ್ ಕಾರ್ಡ್ ಪಿನ್ ಕೇಳುತ್ತಾರೆ.',
+      row3Title: 'ನೇಮಕಾತಿದಾರರ ಇಮೇಲ್ ಡೊಮೇನ್',
+      row3Legit: 'ಯಾವಾಗಲೂ ಅಧಿಕೃತ ಕಾರ್ಪೊರೇಟ್ ಅಥವಾ ಸರ್ಕಾರಿ ಡೊಮೇನ್‌ನಿಂದ (ಉದಾ. @tcs.com, @gov.in).',
+      row3Scam: 'ಉಚಿತ ವೆಬ್‌ಮೇಲ್ ಖಾತೆಗಳನ್ನು ಬಳಸುತ್ತಾರೆ: @gmail.com, @yahoo.com, ಅಥವಾ ನಕಲಿ ಡೊಮೇನ್‌ಗಳು (ಉದಾ. @tcs-careers.in).',
+      row4Title: 'ಆಯ್ಕೆ ಪ್ರಕ್ರಿಯೆ',
+      row4Legit: 'ಹಂತ-ಹಂತದ ತಾಂತ್ರಿಕ ಪರೀಕ್ಷೆ, ಸಂದರ್ಶನ ಮತ್ತು ಅಧಿಕೃತ ಪರಿಶೀಲನೆ.',
+      row4Scam: 'ಯಾವುದೇ ತಾಂತ್ರಿಕ ಪರೀಕ್ಷೆ ಅಥವಾ ಸಂದರ್ಶನವಿಲ್ಲದೆ ನೇರವಾಗಿ ವಾಟ್ಸಾಪ್ ಅಥವಾ ಟೆಲಿಗ್ರಾಮ್‌ನಲ್ಲಿ ನೇಮಕಾತಿ ಪತ್ರ ನೀಡುವುದು.',
+      row5Title: 'ತುರ್ತು ನೇಮಕಾತಿ ಮತ್ತು ಒತ್ತಡ',
+      row5Legit: 'ಆಫರ್ ಸ್ವೀಕರಿಸಲು ಸೂಕ್ತ ಕಾಲಾವಕಾಶ ನೀಡುತ್ತಾರೆ (ಸಾಮಾನ್ಯವಾಗಿ 3–14 ಕೆಲಸದ ದಿನಗಳು).',
+      row5Scam: 'ವಿಪರೀತ ಒತ್ತಡ: "ಆಫರ್ 2 ಗಂಟೆಗಳಲ್ಲಿ ಮುಕ್ತಾಯವಾಗುತ್ತದೆ. ಈಗಲೇ ಹಣ ಪಾವತಿಸಿ ಇಲ್ಲವೇ ಕಾನೂನು ಕ್ರಮ ಕೈಗೊಳ್ಳಲಾಗುವುದು."',
     },
     guidelines: {
       title: 'ವಿದ್ಯಾರ್ಥಿ ಸುರಕ್ಷತಾ ಮಾರ್ಗಸೂಚಿಗಳು',
       rule1: 'ನೇಮಕಾತಿ ಪತ್ರ ಪಡೆಯಲು ಎಂದಿಗೂ UPI ಮೂಲಕ ಹಣ ವರ್ಗಾಯಿಸಬೇಡಿ.',
       rule2: 'ಯಾವಾಗಲೂ ಕಂಪನಿಯ ಅಧಿಕೃತ ವೆಬ್‌ಸೈಟ್ ಮತ್ತು ಅಧಿಕೃತ ಸಂಪರ್ಕ ವಿವರಗಳನ್ನು ಖಚಿತಪಡಿಸಿಕೊಳ್ಳಿ.',
       rule3: 'ಸರ್ಕಾರಿ ನೇಮಕಾತಿ ಪರೀಕ್ಷಾ ಶುಲ್ಕಗಳನ್ನು ಅಧಿಕೃತ SBI Collect / Bharatkosh ಮೂಲಕ ಮಾತ್ರ ಸ್ವೀಕರಿಸಲಾಗುತ್ತದೆ.',
+      subtitle: 'ಕ್ಯಾಂಪಸ್ ನೇಮಕಾತಿ, ಫ್ರೀಲಾನ್ಸ್ ಆಫರ್‌ಗಳು ಅಥವಾ ಸ್ಕಾಲರ್‌ಶಿಪ್ ಎದುರಿಸುವ ಭಾರತೀಯ ವಿದ್ಯಾರ್ಥಿಗಳಿಗೆ ಮುಖ್ಯ ರಕ್ಷಣಾ ತತ್ವಗಳು.',
+      rule4: 'ಆಧಾರ್ ಅಥವಾ ಪ್ಯಾನ್ ಹಂಚಿಕೊಳ್ಳುವ ಮೊದಲು ಅಧಿಕೃತ MCA21 ಪೋರ್ಟಲ್‌ನಲ್ಲಿ ಕಂಪನಿ ನೋಂದಣಿ ಸಂಖ್ಯೆಯನ್ನು (CIN) ಖಚಿತಪಡಿಸಿಕೊಳ್ಳಿ.',
+      doubtHelp: 'ಉದ್ಯೋಗ ಪ್ರಕಟಣೆಯ ಬಗ್ಗೆ ಸಂದೇಹವಿದೆಯೇ? ಮೇಲಿನ ಜಾಂಚ್‌ನಲ್ಲಿ ಸಂಪೂರ್ಣ ಪಠ್ಯವನ್ನು ಅಂಟಿಸಿ.',
+      helplineTitle: 'ವಂಚಕರಿಗೆ ಹಣ ವರ್ಗಾಯಿಸಿದ್ದೀರಾ?',
+      goldenHour: 'ಭಾರತದಲ್ಲಿ ಆರ್ಥಿಕ ವಂಚನೆಯಲ್ಲಿ "ಗೋಲ್ಡನ್ ಅವರ್" ಪ್ರಮುಖ ಪಾತ್ರ ವಹಿಸುತ್ತದೆ. ವಂಚನೆ ನಡೆದ 2 ರಿಂದ 4 ಗಂಟೆಗಳಲ್ಲಿ ವರದಿ ಮಾಡುವುದರಿಂದ ವಂಚಕರ ಬ್ಯಾಂಕ್ ಖಾತೆಯನ್ನು ಸ್ಥಗಿತಗೊಳಿಸಲು ಸೈಬರ್ ಪೊಲೀಸರಿಗೆ ಉತ್ತಮ ಅವಕಾಶ ದೊರೆಯುತ್ತದೆ.',
+      tollFreeLabel: 'ರಾಷ್ಟ್ರೀಯ ಸೈಬರ್ ಅಪರಾಧ ಸಹಾಯವಾಣಿ',
+      tollFreeSub: 'ಕೇಂದ್ರ ಗೃಹ ಸಚಿವಾಲಯದ I4C ನಿರ್ವಹಿಸುವ 24x7 ಉಚಿತ ಸಹಾಯವಾಣಿ.',
+      lodgeOnline: 'ಆನ್‌ಲೈನ್‌ನಲ್ಲಿ ಅಧಿಕೃತ ಸೈಬರ್ ದೂರು ದಾಖಲಿಸಿ:',
     },
     footer: {
       helplineTitle: 'ರಾಷ್ಟ್ರೀಯ ಸೈಬರ್ ಅಪರಾಧ ಸಹಾಯವಾಣಿ: 1930',
@@ -1178,6 +1557,32 @@ export const translations: Record<'en' | 'hi' | 'kn', TranslationDictionary> = {
       privacy: 'ಗೌಪ್ಯತಾ ನೀತಿ',
       terms: 'ಬಳಕೆಯ ನಿಯಮಗಳು',
       about: 'ನಮ್ಮ ಬಗ್ಗೆ',
+      advisoryTitle: 'ಸಾರ್ವಜನಿಕ ಸೇವಾ ಸುರಕ್ಷತಾ ಸಲಹೆ',
+      advisoryBody: 'ಜಾಂಚ್ ಭಾರತೀಯ ವಿದ್ಯಾರ್ಥಿಗಳಿಗಾಗಿ ಸ್ವತಂತ್ರ ಸಾರ್ವಜನಿಕ ನಂಬಿಕೆಯ ಉಪಕ್ರಮವಾಗಿದೆ. ಎಲ್ಲಾ ಮೌಲ್ಯಮಾಪನಗಳು ನಿಖರ ಮತ್ತು ಗೌಪ್ಯತೆ-ರಕ್ಷಿತವಾಗಿವೆ. ಸರ್ಕಾರಿ ಸಂಸ್ಥೆಗಳಾಗಲಿ ಅಥವಾ ನೈಜ ಉದ್ಯೋಗದಾತರಾಗಲಿ ಉದ್ಯೋಗಕ್ಕಾಗಿ ಭದ್ರತಾ ಠೇವಣಿ, ತರಬೇತಿ ಶುಲ್ಕ ಅಥವಾ ಬ್ಯಾಂಕಿಂಗ್ OTP ಗಳನ್ನು ಎಂದಿಗೂ ಕೇಳುವುದಿಲ್ಲ.',
+    },
+    riskBanner: {
+      highTitle: 'ಅಪಾಯದ ಮಟ್ಟ: ಹೆಚ್ಚಿನ ಅಪಾಯ',
+      highSub: 'ಹೆಚ್ಚಿನ ಅಪಾಯ / ಎಚ್ಚರಿಕೆ',
+      highDesc: 'ವಂಚನೆಯ ಹೆಚ್ಚಿನ ಸಾಧ್ಯತೆ ಇದೆ. ಮುಂಗಡ ಶುಲ್ಕದ ಬೇಡಿಕೆ, ಪರಿಶೀಲಿಸದ ಕಾರ್ಯಗಳು ಅಥವಾ ಅಧಿಕೃತವಲ್ಲದ ನೇಮಕಾತಿ ಪತ್ತೆಯಾಗಿದೆ.',
+      highUrgency: 'ತಕ್ಷಣದ ಗಮನ ಅಗತ್ಯವಿದೆ',
+      highProtocol: 'ಗಂಭೀರ ಅಪಾಯದ ಮೌಲ್ಯಮಾಪನ',
+      cautionTitle: 'ಅಪಾಯದ ಮಟ್ಟ: ಎಚ್ಚರಿಕೆ',
+      cautionSub: 'ಎಚ್ಚರಿಕೆ / ಪರಿಶೀಲನೆ ಅಗತ್ಯವಿದೆ',
+      cautionDesc: 'ಅನುಮಾನಾಸ್ಪದ ಸಂಕೇತಗಳು ಅಥವಾ ಪರಿಶೀಲಿಸದ ಸಂಪರ್ಕ ಮೂಲಗಳು ಪತ್ತೆಯಾಗಿವೆ. ಮುಂದುವರಿಯುವ ಮೊದಲು ಸ್ವತಂತ್ರ ಪರಿಶೀಲನೆ ಶಿಫಾರಸು ಮಾಡಲಾಗಿದೆ.',
+      cautionUrgency: 'ಸ್ವತಂತ್ರ ಪರಿಶೀಲನೆ ಅಗತ್ಯವಿದೆ',
+      cautionProtocol: 'ಸುರಕ್ಷತಾ ಎಚ್ಚರಿಕೆ',
+      safeTitle: 'ಅಪಾಯದ ಮಟ್ಟ: ಬಹುಶಃ ನೈಜ',
+      safeSub: 'ಬಹುಶಃ ನೈಜ / ಸುರಕ್ಷಿತ',
+      safeDesc: 'ನೈಜ ಸಂವಹನದ ಹೆಚ್ಚಿನ ಸಂಭವನೀಯತೆ. ಯಾವುದೇ ಮುಂಗಡ ಶುಲ್ಕದ ಬೇಡಿಕೆ ಅಥವಾ ಮಾಹಿತಿ ಕಳ್ಳತನದ ಲಕ್ಷಣಗಳು ಕಂಡುಬಂದಿಲ್ಲ.',
+      safeUrgency: 'ಪರಿಶೀಲಿಸಿದ ಮಾನದಂಡ',
+      safeProtocol: 'ಸುರಕ್ಷತಾ ಪ್ರೋಟೋಕಾಲ್',
+      mlTelemetry: 'ML ಟೆಲಿಮೆಟ್ರಿ',
+      ruleTelemetry: 'ನಿಯಮ ಟೆಲಿಮೆಟ್ರಿ',
+      mlScamProbability: 'ML ವಂಚನೆಯ ಸಂಭವನೀಯತೆ:',
+      ruleConfidence: 'ನಿಯಮಗಳ ವಿಶ್ವಾಸಾರ್ಹತೆ:',
+      statusLabelHigh: 'ಹೆಚ್ಚಿನ ವಂಚನೆಯ ಸಂಭವನೀಯತೆ',
+      statusLabelCaution: 'ಅನುಮಾನಾಸ್ಪದ ಸಂಕೇತಗಳು',
+      statusLabelSafe: 'ಕಡಿಮೆ ಅಪಾಯದ ಮಾನದಂಡ',
     },
     auth: {
       signInTitle: 'ಜಾಂಚ್‌ಗೆ ಸೈನ್ ಇನ್ ಮಾಡಿ',
@@ -1402,6 +1807,17 @@ export const translations: Record<'en' | 'hi' | 'kn', TranslationDictionary> = {
       jumpNavTitle: 'ವಿಭಾಗಕ್ಕೆ ಜಂಪ್ ಮಾಡಿ',
       shareWhatsApp: 'ವಾಟ್ಸಾಪ್‌ನಲ್ಲಿ ಎಚ್ಚರಿಕೆ ಹಂಚಿಕೊಳ್ಳಿ',
       shareWhatsAppDesc: 'ದೃಢೀಕರಿಸಿದ ಎಚ್ಚರಿಕೆಗಳು ಮತ್ತು ಹೆಲ್ಪ್‌ಲೈನ್ ಲಿಂಕ್‌ಗಳನ್ನು ಮಾತ್ರ ಹಂಚಿಕೊಳ್ಳಲಾಗುತ್ತದೆ. ವಿದ್ಯಾರ್ಥಿಯ ಸಂದೇಶವನ್ನು ಎಂದಿಗೂ ಕಳುಹಿಸುವುದಿಲ್ಲ.',
+      feeDemanded: 'ಕೇಳಲಾದ ಶುಲ್ಕ',
+      upiTarget: 'UPI ಗುರಿ',
+      demandsOtp: 'OTP / PIN ಬೇಡಿಕೆ',
+      actionsAndExport: 'ಕ್ರಮಗಳು ಮತ್ತು ರಫ್ತು',
+      emergency1930: 'ತುರ್ತು ಸಹಾಯವಾಣಿ: 1930',
+      emergencyDesc: 'ರಾಷ್ಟ್ರೀಯ ಸೈಬರ್ ಅಪರಾಧ ಸಹಾಯವಾಣಿ (ಗೃಹ ಸಚಿವಾಲಯ / I4C). ಗೋಲ್ಡನ್ ಅವರ್‌ನಲ್ಲಿ ಆರ್ಥಿಕ ವಂಚನೆಯನ್ನು ವರದಿ ಮಾಡಿ.',
+      call1930Now: 'ಈಗಲೇ 1930 ಗೆ ಕರೆ ಮಾಡಿ',
+      uncorroborated: 'ದೃಢೀಕರಿಸದ ಹೇಳಿಕೆಗಳು',
+      positiveRule1: 'ಸಂವಹನದಲ್ಲಿ ಎಲ್ಲಿಯೂ ಮುಂಗಡ ಶುಲ್ಕ ಅಥವಾ ನೋಂದಣಿ ಠೇವಣಿಯನ್ನು ಕೇಳಲಾಗಿಲ್ಲ',
+      positiveRule2: 'ಪ್ರಮಾಣಿತ ಸಂದರ್ಶನ ಮತ್ತು ಪರೀಕ್ಷಾ ಹಂತಗಳೊಂದಿಗೆ ನೈಜ ನೇಮಕಾತಿ ಪ್ರಕ್ರಿಯೆ',
+      neutralDefault: 'ಆಫರ್ ಪಠ್ಯದಲ್ಲಿ ಯಾವುದೇ ನೇರ ವಂಚನೆಯ ಲಕ್ಷಣಗಳು ಕಂಡುಬಂದಿಲ್ಲ',
     },
     reportDialog: {
       triggerBtn: 'ಶಂಕಾಸ್ಪದ ವಿವರವನ್ನು ವರದಿ ಮಾಡಿ',

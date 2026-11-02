@@ -351,7 +351,7 @@ export function Results() {
           {/* Quick Actions Card */}
           <div id="actions" className="p-4 bg-surface border border-border rounded-card space-y-3">
             <span className="font-mono text-[11px] uppercase text-muted-foreground block font-bold">
-              ACTIONS & EXPORT
+              {t('results.actionsAndExport')}
             </span>
 
             <div className="flex flex-col gap-2">
@@ -379,17 +379,17 @@ export function Results() {
             <div className="flex items-center gap-1.5">
               <PhoneCall size={14} className="text-status-high-concern-fg" />
               <span className="font-mono text-xs font-bold text-status-high-concern-fg uppercase">
-                EMERGENCY 1930
+                {t('results.emergency1930')}
               </span>
             </div>
             <p className="text-[11px] text-muted-foreground leading-relaxed">
-              If money was transferred, call 1930 within 2 hours or file a formal complaint at cybercrime.gov.in.
+              {t('results.emergencyDesc')}
             </p>
             <a
               href="tel:1930"
               className="inline-flex items-center gap-1 text-xs font-bold text-status-high-concern-fg hover:underline"
             >
-              <span>Call 1930 Now</span>
+              <span>{t('results.call1930Now')}</span>
               <ExternalLink size={11} />
             </a>
           </div>

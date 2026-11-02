@@ -164,7 +164,7 @@ export function SubmissionCard() {
               }`}
             >
               <FileText size={15} aria-hidden="true" />
-              <span className="uppercase tracking-wider">Paste Message Text</span>
+              <span className="uppercase tracking-wider">{t('submissionCard.tabPaste')}</span>
             </button>
 
             <button
@@ -177,7 +177,7 @@ export function SubmissionCard() {
               }`}
             >
               <Upload size={15} aria-hidden="true" />
-              <span className="uppercase tracking-wider">Upload Document</span>
+              <span className="uppercase tracking-wider">{t('submissionCard.tabUpload')}</span>
             </button>
           </div>
 
@@ -188,7 +188,7 @@ export function SubmissionCard() {
               className="inline-flex items-center gap-1.5 text-xs border border-neo-border shadow-neo-sm bg-neo-sky text-foreground font-bold px-3 py-1.5 hover:bg-neo-sky-light hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all my-2 group cursor-pointer"
             >
               <Clipboard size={13} aria-hidden="true" />
-              <span>Paste from clipboard</span>
+              <span>{t('submissionCard.pasteClipboard')}</span>
             </button>
           )}
         </div>
@@ -202,7 +202,7 @@ export function SubmissionCard() {
                   {t('submissionCard.title')}
                 </label>
                 <span className="text-[11px] font-mono text-muted-foreground">
-                  Zero Data Shared • In-Browser Sanitized
+                  {t('submissionCard.badgeSanitized')}
                 </span>
               </div>
 
@@ -279,7 +279,7 @@ export function SubmissionCard() {
               <div className="pt-2">
                 <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-muted-foreground mb-2.5">
                   <Sparkles size={13} className="text-terracotta" />
-                  <span>Try a real test scenario:</span>
+                  <span>{t('submissionCard.testScenarioPrompt')}</span>
                 </div>
                 <div className="flex flex-wrap gap-2.5">
                   <button
@@ -289,7 +289,7 @@ export function SubmissionCard() {
                     className="flex items-center gap-1.5 px-3 py-1.5 text-xs border-2 border-neo-border shadow-neo-sm bg-neo-mint text-foreground font-bold hover:bg-neo-sky-light hover:text-foreground hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all cursor-pointer"
                   >
                     <CheckCircle2 size={13} className="text-status-likely-genuine-fg shrink-0" />
-                    <span>1. Genuine Internship</span>
+                    <span>{t('submissionCard.scenario1')}</span>
                   </button>
                   <button
                     type="button"
@@ -298,7 +298,7 @@ export function SubmissionCard() {
                     className="flex items-center gap-1.5 px-3 py-1.5 text-xs border-2 border-neo-border shadow-neo-sm bg-neo-peach text-foreground font-bold hover:bg-neo-sky-light hover:text-foreground hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all cursor-pointer"
                   >
                     <AlertTriangle size={13} className="text-status-high-concern-fg shrink-0" />
-                    <span>2. Upfront Fee Scam</span>
+                    <span>{t('submissionCard.scenario2')}</span>
                   </button>
                   <button
                     type="button"
@@ -307,7 +307,7 @@ export function SubmissionCard() {
                     className="flex items-center gap-1.5 px-3 py-1.5 text-xs border-2 border-neo-border shadow-neo-sm bg-neo-pink text-foreground font-bold hover:bg-neo-sky-light hover:text-foreground hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all cursor-pointer"
                   >
                     <ShieldAlert size={13} className="text-status-high-concern-fg shrink-0" />
-                    <span>3. OTP Phishing Scam</span>
+                    <span>{t('submissionCard.scenario3')}</span>
                   </button>
                 </div>
               </div>
@@ -319,7 +319,7 @@ export function SubmissionCard() {
                   {quickOutput ? (
                     <div className="flex items-center gap-2 flex-wrap">
                       <span className="font-mono text-[10px] text-muted-foreground uppercase font-bold tracking-wider">
-                        OUTPUT:
+                        {t('submissionCard.outputLabel')}
                       </span>
                       <div
                         data-testid="live-audit-badge"
@@ -381,7 +381,7 @@ export function SubmissionCard() {
                     </div>
                   ) : (
                     <span className="text-xs text-muted-foreground font-mono">
-                      Output appears here when offer is ready for audit
+                      {t('submissionCard.readyForAudit')}
                     </span>
                   )}
                 </div>

@@ -21,7 +21,7 @@ export function GuidelinesAndHelpline() {
                 </h3>
               </div>
               <p className="text-xs sm:text-sm text-muted-foreground mb-6 font-medium">
-                Core defense principles for Indian students encountering campus recruiters, freelance offers, or scholarship announcements.
+                {t('guidelines.subtitle')}
               </p>
 
               <ul className="space-y-3.5 text-xs sm:text-sm">
@@ -48,7 +48,7 @@ export function GuidelinesAndHelpline() {
                     04
                   </span>
                   <span className="text-foreground leading-relaxed">
-                    Always cross-reference the Corporate Identification Number (CIN) on the official MCA21 portal before sharing Aadhaar or PAN.
+                    {t('guidelines.rule4')}
                   </span>
                 </li>
               </ul>
@@ -56,7 +56,7 @@ export function GuidelinesAndHelpline() {
 
             <div className="mt-8 pt-4 border-t-2 border-neo-border/20 text-xs text-muted-foreground flex items-center gap-2 font-medium">
               <HelpCircle size={15} className="text-terracotta shrink-0" />
-              <span>Doubtful about a job posting? Paste the entire text in Jaanch above.</span>
+              <span>{t('guidelines.doubtHelp')}</span>
             </div>
           </div>
 
@@ -68,18 +68,18 @@ export function GuidelinesAndHelpline() {
                   <AlertTriangle size={20} aria-hidden="true" />
                 </div>
                 <h3 className="font-serif text-2xl font-bold text-status-high-concern-fg">
-                  Transferred Money to a Scammer?
+                  {t('guidelines.helplineTitle')}
                 </h3>
               </div>
               <p className="text-xs sm:text-sm text-foreground/85 leading-relaxed mb-6">
-                Financial fraud in India has a critical <strong>"Golden Hour"</strong> window. Reporting within 2 to 4 hours of a fraudulent UPI or IMPS transaction gives cyber police the best chance of freezing the fraudster’s bank account.
+                {t('guidelines.goldenHour')}
               </p>
 
               <div className="p-5 bg-surface border-2 border-neo-border shadow-neo mb-6">
                 <div className="flex items-center justify-between gap-4">
                   <div>
                     <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground block">
-                      National Cybercrime Helpline
+                      {t('guidelines.tollFreeLabel')}
                     </span>
                     <a
                       href="tel:1930"
@@ -93,13 +93,13 @@ export function GuidelinesAndHelpline() {
                   </div>
                 </div>
                 <p className="text-xs text-muted-foreground mt-2 font-medium">
-                  Toll-free 24x7 helpline operated by Indian Cyber Crime Coordination Centre (I4C), MHA.
+                  {t('guidelines.tollFreeSub')}
                 </p>
               </div>
             </div>
 
             <div className="pt-4 border-t-2 border-neo-border/20 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
-              <span className="text-foreground/85 font-medium">Lodge formal digital cyber complaints online:</span>
+              <span className="text-foreground/85 font-medium">{t('guidelines.lodgeOnline')}</span>
               <a
                 href="https://cybercrime.gov.in"
                 target="_blank"

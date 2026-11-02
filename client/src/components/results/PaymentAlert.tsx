@@ -32,17 +32,17 @@ export function PaymentAlert({ amount, upiHandle, hasOtpDemand }: PaymentAlertPr
             <div className="pt-1 flex flex-wrap gap-2 text-[11px] font-mono">
               {amount && (
                 <span className="px-2 py-0.5 bg-surface border border-status-high-concern-border rounded text-foreground">
-                  Fee Demanded: <strong>{amount}</strong>
+                  {t('results.feeDemanded')}: <strong>{amount}</strong>
                 </span>
               )}
               {upiHandle && (
                 <span className="px-2 py-0.5 bg-surface border border-status-high-concern-border rounded text-foreground">
-                  UPI Target: <strong>{upiHandle}</strong>
+                  {t('results.upiTarget')}: <strong>{upiHandle}</strong>
                 </span>
               )}
               {hasOtpDemand && (
                 <span className="px-2 py-0.5 bg-surface border border-status-high-concern-border rounded text-status-high-concern-fg font-semibold">
-                  Demands Banking OTP / PIN
+                  {t('results.demandsOtp')}
                 </span>
               )}
             </div>

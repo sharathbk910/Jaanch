@@ -5,7 +5,8 @@ import {
   CheckCircle2,
   Sparkles,
 } from 'lucide-react';
-import { type VerificationStatus, type AnalyzeResult } from '@jaanch/shared';
+import { type VerificationStatus } from '@jaanch/shared';
+import { useLanguage } from '../../i18n/LanguageContext.js';
 
 export interface RiskLevelBannerProps {
   status: VerificationStatus;
@@ -21,12 +22,11 @@ export function RiskLevelBanner({
   confidenceScore,
   mlScore,
   mlProbability,
-  riskLevel,
   summary,
 }: RiskLevelBannerProps) {
+  const { t } = useLanguage();
   const isHigh = status === 'HIGH_CONCERN' || status === 'CONFIRMED_SCAM';
   const isCaution = status === 'NEEDS_REVIEW';
-  const isSafe = status === 'LIKELY_GENUINE';
 
   const effectiveMl = mlScore ?? mlProbability;
 
@@ -40,13 +40,14 @@ export function RiskLevelBanner({
           'bg-red-200/70 text-red-900 border border-red-300 dark:bg-status-high-concern-border/40 dark:text-status-high-concern-fg dark:border-status-high-concern-border',
         arcColorClass: 'text-red-600 dark:text-red-500',
         textColorClass: 'text-red-700 dark:text-red-400',
-        statusLabel: 'High Fraud Probability',
+        statusLabel: t('riskBanner.statusLabelHigh'),
         icon: ShieldAlert,
         iconClass: 'text-red-600 dark:text-status-high-concern-fg',
-        title: 'RISK LEVEL: HIGH RISK',
-        subLabel: 'HIGH RISK / DANGER',
-        defaultExplanation:
-          'High probability of fraudulent activity. Demanding upfront fees, unverified tasks, or off-platform recruitment detected.',
+        title: t('riskBanner.highTitle'),
+        subLabel: t('riskBanner.highSub'),
+        urgency: t('riskBanner.highUrgency'),
+        protocol: t('riskBanner.highProtocol'),
+        defaultExplanation: t('riskBanner.highDesc'),
       }
     : isCaution
       ? {
@@ -58,13 +59,14 @@ export function RiskLevelBanner({
             'bg-amber-200/70 text-amber-900 border border-amber-300 dark:bg-status-review-border/40 dark:text-status-review-fg dark:border-status-review-border',
           arcColorClass: 'text-amber-500 dark:text-amber-400',
           textColorClass: 'text-amber-700 dark:text-amber-400',
-          statusLabel: 'Suspicious Indicators',
+          statusLabel: t('riskBanner.statusLabelCaution'),
           icon: AlertTriangle,
           iconClass: 'text-amber-600 dark:text-status-review-fg',
-          title: 'RISK LEVEL: CAUTION',
-          subLabel: 'CAUTION / NEEDS REVIEW',
-          defaultExplanation:
-            'Suspicious indicators or unverified contact channels detected. Independent verification recommended before proceeding.',
+          title: t('riskBanner.cautionTitle'),
+          subLabel: t('riskBanner.cautionSub'),
+          urgency: t('riskBanner.cautionUrgency'),
+          protocol: t('riskBanner.cautionProtocol'),
+          defaultExplanation: t('riskBanner.cautionDesc'),
         }
       : {
           containerClass:
@@ -75,13 +77,14 @@ export function RiskLevelBanner({
             'bg-emerald-200/70 text-emerald-900 border border-emerald-300 dark:bg-status-likely-genuine-border/40 dark:text-status-likely-genuine-fg dark:border-status-likely-genuine-border',
           arcColorClass: 'text-teal-600 dark:text-teal-400',
           textColorClass: 'text-teal-700 dark:text-teal-400',
-          statusLabel: 'Low Risk Benchmark',
+          statusLabel: t('riskBanner.statusLabelSafe'),
           icon: CheckCircle2,
           iconClass: 'text-emerald-600 dark:text-status-likely-genuine-fg',
-          title: 'RISK LEVEL: LIKELY GENUINE',
-          subLabel: 'LIKELY GENUINE / SAFE',
-          defaultExplanation:
-            'High probability of legitimate communication. No predatory fee demands or credential theft patterns identified.',
+          title: t('riskBanner.safeTitle'),
+          subLabel: t('riskBanner.safeSub'),
+          urgency: t('riskBanner.safeUrgency'),
+          protocol: t('riskBanner.safeProtocol'),
+          defaultExplanation: t('riskBanner.safeDesc'),
         };
 
   const IconComponent = config.icon;
@@ -108,12 +111,12 @@ export function RiskLevelBanner({
             {config.subLabel}
           </span>
           <span className="font-mono text-[11px] font-semibold opacity-75 uppercase tracking-wide">
-            {isHigh ? 'IMMEDIATE ATTENTION REQUIRED' : isCaution ? 'MANUAL RECONCILIATION NEEDED' : 'VERIFIED BENCHMARK'}
+            {config.urgency}
           </span>
         </div>
 
         <div className="hidden sm:flex items-center gap-1.5 font-mono text-[11px] font-semibold opacity-70 uppercase tracking-wider">
-          <span>{isHigh ? 'CRITICAL THREAT EVALUATION' : isCaution ? 'HEURISTIC ALERT' : 'SAFETY PROTOCOL'}</span>
+          <span>{config.protocol}</span>
         </div>
       </div>
 
@@ -183,14 +186,14 @@ export function RiskLevelBanner({
             <div className="flex items-center gap-1.5">
               <Sparkles size={12} className="shrink-0 opacity-80" />
               <span className="font-mono text-[10px] sm:text-xs font-bold tracking-wider uppercase opacity-75">
-                {effectiveMl !== undefined ? 'ML Telemetry' : 'Rule Telemetry'}
+                {effectiveMl !== undefined ? t('riskBanner.mlTelemetry') : t('riskBanner.ruleTelemetry')}
               </span>
             </div>
 
             <span className="font-mono text-xs sm:text-sm font-bold tracking-tight text-foreground/90 mt-0.5">
               {effectiveMl !== undefined
-                ? `ML Scam Probability: ${(effectiveMl * 100).toFixed(1)}%`
-                : `Rule Confidence: ${confidenceScore}%`}
+                ? `${t('riskBanner.mlScamProbability')} ${(effectiveMl * 100).toFixed(1)}%`
+                : `${t('riskBanner.ruleConfidence')} ${confidenceScore}%`}
             </span>
 
             <span className="text-[11px] font-semibold opacity-75 mt-0.5">
@@ -204,4 +207,3 @@ export function RiskLevelBanner({
 }
 
 export default RiskLevelBanner;
-

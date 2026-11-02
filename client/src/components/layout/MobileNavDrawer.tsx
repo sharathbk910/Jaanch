@@ -120,7 +120,7 @@ export function MobileNavDrawer({ isOpen, onClose }: MobileNavDrawerProps) {
                 <div className="flex items-center gap-1 mt-0.5 select-none">
                   <span className="w-1 h-1 bg-terracotta shrink-0 rounded-[1px]" aria-hidden="true" />
                   <span className="font-mono text-[7.5px] font-bold uppercase tracking-[0.16em] text-foreground/75">
-                    CHECK BEFORE YOU TRUST
+                    {t('navigation.tagline')}
                   </span>
                 </div>
               </div>
@@ -270,7 +270,7 @@ export function MobileNavDrawer({ isOpen, onClose }: MobileNavDrawerProps) {
           {/* Quick Helpline Callout */}
           <div className="flex items-center gap-2 p-3 bg-status-high-concern-bg text-status-high-concern-fg border border-status-high-concern-border rounded-card text-xs">
             <ShieldAlert size={16} className="shrink-0" aria-hidden="true" />
-            <span>Cyber Fraud Helpline: <strong>1930</strong></span>
+            <span>{t('footer.helplineTitle')}</span>
           </div>
         </div>
       </div>

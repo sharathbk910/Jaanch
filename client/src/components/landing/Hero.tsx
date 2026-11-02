@@ -293,16 +293,16 @@ export function Hero() {
             {/* Inner Wireframe Preview Box (MotherDuck visual signature) */}
             <div className="mt-5 p-3.5 bg-surface border-2 border-neo-border shadow-neo-sm text-xs font-mono space-y-1.5">
               <div className="flex justify-between items-center text-muted-foreground">
-                <span>Registration Fee</span>
-                <span className="text-status-likely-genuine-fg font-bold">₹0 (Free)</span>
+                <span>{t('hero.featureCard1Label1')}</span>
+                <span className="text-status-likely-genuine-fg font-bold">{t('hero.featureCard1Val1')}</span>
               </div>
               <div className="flex justify-between items-center text-muted-foreground">
-                <span>Laptop Security</span>
-                <span className="text-status-likely-genuine-fg font-bold">₹0 Required</span>
+                <span>{t('hero.featureCard1Label2')}</span>
+                <span className="text-status-likely-genuine-fg font-bold">{t('hero.featureCard1Val2')}</span>
               </div>
             </div>
             <div className="mt-4 pt-2.5 border-t-2 border-neo-border/20 flex items-center justify-between font-mono text-xs font-bold uppercase tracking-wider text-foreground hover:translate-x-1 transition-transform cursor-pointer">
-              <span>LEARN MORE</span>
+              <span>{t('hero.learnMore')}</span>
               <ArrowRight size={14} />
             </div>
           </div>
@@ -328,16 +328,16 @@ export function Hero() {
             {/* Inner Wireframe Preview Box */}
             <div className="mt-5 p-3.5 bg-surface border-2 border-neo-border shadow-neo-sm text-xs font-mono space-y-1.5">
               <div className="flex justify-between items-center text-muted-foreground">
-                <span>Stipend Disbursement</span>
-                <span className="text-foreground font-semibold">Direct NEFT</span>
+                <span>{t('hero.featureCard2Label1')}</span>
+                <span className="text-foreground font-semibold">{t('hero.featureCard2Val1')}</span>
               </div>
               <div className="flex justify-between items-center text-muted-foreground">
-                <span>Banking OTP / PIN</span>
-                <span className="text-status-high-concern-fg font-bold">Never Shared</span>
+                <span>{t('hero.featureCard2Label2')}</span>
+                <span className="text-status-high-concern-fg font-bold">{t('hero.featureCard2Val2')}</span>
               </div>
             </div>
             <div className="mt-4 pt-2.5 border-t-2 border-neo-border/20 flex items-center justify-between font-mono text-xs font-bold uppercase tracking-wider text-foreground hover:translate-x-1 transition-transform cursor-pointer">
-              <span>LEARN MORE</span>
+              <span>{t('hero.learnMore')}</span>
               <ArrowRight size={14} />
             </div>
           </div>
@@ -363,16 +363,16 @@ export function Hero() {
             {/* Inner Wireframe Preview Box */}
             <div className="mt-5 p-3.5 bg-surface border-2 border-neo-border shadow-neo-sm text-xs font-mono space-y-1.5">
               <div className="flex justify-between items-center text-muted-foreground">
-                <span>Sender Domain</span>
-                <span className="text-status-likely-genuine-fg font-bold">@company.com</span>
+                <span>{t('hero.featureCard3Label1')}</span>
+                <span className="text-status-likely-genuine-fg font-bold">{t('hero.featureCard3Val1')}</span>
               </div>
               <div className="flex justify-between items-center text-muted-foreground">
-                <span>Free Webmail (@gmail)</span>
-                <span className="text-status-high-concern-fg font-bold">Flagged</span>
+                <span>{t('hero.featureCard3Label2')}</span>
+                <span className="text-status-high-concern-fg font-bold">{t('hero.featureCard3Val2')}</span>
               </div>
             </div>
             <div className="mt-4 pt-2.5 border-t-2 border-neo-border/20 flex items-center justify-between font-mono text-xs font-bold uppercase tracking-wider text-foreground hover:translate-x-1 transition-transform cursor-pointer">
-              <span>LEARN MORE</span>
+              <span>{t('hero.learnMore')}</span>
               <ArrowRight size={14} />
             </div>
           </div>

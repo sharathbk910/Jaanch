@@ -1,42 +1,39 @@
 import React from 'react';
 import { Check, X, ShieldAlert, ShieldCheck } from 'lucide-react';
+import { useLanguage } from '../../i18n/LanguageContext.js';
 import { DoodleCloud } from '../ui/DoodleCloud.js';
 
-interface MatrixRow {
-  aspect: string;
-  legitimate: string;
-  scam: string;
-}
-
-const MATRIX_DATA: MatrixRow[] = [
-  {
-    aspect: 'Upfront Money Demands',
-    legitimate: '₹0 charged. Legitimate employers pay you; they never charge for training, uniforms, or laptop security.',
-    scam: 'Demands ₹500–₹5,000 for "registration", "laptop security deposit", or "HR background check".',
-  },
-  {
-    aspect: 'Banking Credentials & OTP',
-    legitimate: 'Collects bank account number & IFSC only for salary credit. Never asks for OTP or UPI PIN.',
-    scam: 'Demands 6-digit OTP, asks you to scan a UPI QR code to "receive stipend", or requires debit card PIN.',
-  },
-  {
-    aspect: 'Recruiter Email Domain',
-    legitimate: 'Always from verified corporate or official government domain (e.g., @tcs.com, @gov.in).',
-    scam: 'Uses free webmail accounts: @gmail.com, @yahoo.com, or spoofed lookalike domains (e.g., @tcs-careers.in).',
-  },
-  {
-    aspect: 'Selection Process',
-    legitimate: 'Structured multi-round technical assessment, interview, and formal verification.',
-    scam: 'Direct appointment letter issued over WhatsApp or Telegram without any technical assessment or interview.',
-  },
-  {
-    aspect: 'Hiring Urgency & Coercion',
-    legitimate: 'Provides reasonable acceptance deadlines (typically 3–14 business days).',
-    scam: 'Aggressive urgency: "Offer expires in 2 hours. Pay now or legal action will be initiated against you."',
-  },
-];
-
 export function FeatureMatrix() {
+  const { t } = useLanguage();
+
+  const rows = [
+    {
+      aspect: t('featureMatrix.row1Title'),
+      legitimate: t('featureMatrix.row1Legit'),
+      scam: t('featureMatrix.row1Scam'),
+    },
+    {
+      aspect: t('featureMatrix.row2Title'),
+      legitimate: t('featureMatrix.row2Legit'),
+      scam: t('featureMatrix.row2Scam'),
+    },
+    {
+      aspect: t('featureMatrix.row3Title'),
+      legitimate: t('featureMatrix.row3Legit'),
+      scam: t('featureMatrix.row3Scam'),
+    },
+    {
+      aspect: t('featureMatrix.row4Title'),
+      legitimate: t('featureMatrix.row4Legit'),
+      scam: t('featureMatrix.row4Scam'),
+    },
+    {
+      aspect: t('featureMatrix.row5Title'),
+      legitimate: t('featureMatrix.row5Legit'),
+      scam: t('featureMatrix.row5Scam'),
+    },
+  ];
+
   return (
     <section className="w-full py-16 border-t-2 border-neo-border bg-background relative overflow-hidden">
       {/* Decorative MotherDuck Floating Cloud */}
@@ -45,7 +42,7 @@ export function FeatureMatrix() {
       <div className="max-w-editorial mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center max-w-2xl mx-auto mb-10">
           <h2 className="font-serif text-3xl sm:text-4xl font-bold tracking-tight text-foreground">
-            How to Spot a Fake Student Offer
+            {t('featureMatrix.heading')}
           </h2>
         </div>
 
@@ -54,25 +51,25 @@ export function FeatureMatrix() {
             <thead>
               <tr className="border-b-2 border-neo-border bg-neo-yellow/30">
                 <th className="py-4 px-4 font-bold uppercase tracking-wider text-foreground w-1/4 border-r-2 border-neo-border">
-                  Evaluation Factor
+                  {t('featureMatrix.colFactor')}
                 </th>
                 <th className="py-4 px-4 font-bold uppercase tracking-wider text-status-likely-genuine-fg w-3/8 bg-status-likely-genuine-bg/50 border-r-2 border-neo-border">
                   <div className="flex items-center gap-1.5">
                     <ShieldCheck size={16} aria-hidden="true" />
-                    <span>Legitimate Offer</span>
+                    <span>{t('featureMatrix.colLegit')}</span>
                   </div>
                 </th>
                 <th className="py-4 px-4 font-bold uppercase tracking-wider text-status-high-concern-fg w-3/8 bg-status-high-concern-bg/50">
                   <div className="flex items-center gap-1.5">
                     <ShieldAlert size={16} aria-hidden="true" />
-                    <span>Scam Indicator</span>
+                    <span>{t('featureMatrix.colScam')}</span>
                   </div>
                 </th>
               </tr>
             </thead>
             <tbody className="divide-y-2 divide-neo-border">
-              {MATRIX_DATA.map((row) => (
-                <tr key={row.aspect} className="hover:bg-muted-subtle/5 transition-colors">
+              {rows.map((row, idx) => (
+                <tr key={idx} className="hover:bg-muted-subtle/5 transition-colors">
                   <td className="py-4 px-4 font-bold text-foreground align-top border-r-2 border-neo-border">
                     {row.aspect}
                   </td>

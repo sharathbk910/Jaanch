@@ -23,7 +23,7 @@ export function Navbar() {
           rel="noopener noreferrer"
           className="inline-flex items-center gap-2 hover:underline truncate"
         >
-          <span className="truncate">1930 NATIONAL CYBER CRIME HELPLINE — REPORT FRAUD IMMEDIATELY AT CYBERCRIME.GOV.IN</span>
+          <span className="truncate">{t('topBanner.helplineAlert')}</span>
           <span aria-hidden="true" className="shrink-0 font-bold">→</span>
         </a>
       </div>
@@ -50,7 +50,7 @@ export function Navbar() {
               <div className="flex items-center gap-1.5 mt-0.5 select-none">
                 <span className="w-1.5 h-1.5 bg-terracotta shrink-0 rounded-[1px]" aria-hidden="true" />
                 <span className="font-mono text-[8px] sm:text-[9px] font-bold uppercase tracking-[0.18em] text-foreground/75 whitespace-nowrap">
-                  CHECK BEFORE YOU TRUST
+                  {t('navigation.tagline')}
                 </span>
               </div>
             </div>
