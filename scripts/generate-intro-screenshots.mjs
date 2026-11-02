@@ -50,3 +50,4 @@ captureIntroScreenshots().catch((err) => {
   console.error('Error generating screenshots:', err);
   process.exit(1);
 });
+

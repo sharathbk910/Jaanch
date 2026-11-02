@@ -162,5 +162,9 @@ export const AnalyzeResultSchema = z.object({
   intelMatch: IntelMatchSchema.optional(),
   aiStatus: AiStatusSchema.optional(),
   aiOverview: z.string().optional(),
+  riskLevel: z.string().optional(),
+  mlScore: z.number().optional(),
+  mlProbability: z.number().optional(),
+  summary: z.string().optional(),
 });
 export type AnalyzeResult = z.infer<typeof AnalyzeResultSchema>;

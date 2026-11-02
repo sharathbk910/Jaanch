@@ -17,6 +17,7 @@ const HARD_DISQUALIFIER_RULES = new Set([
   'RULE_BANK_OTP_DEBIT',
   'RULE_OFFICIAL_GOV_FEES',
   'RULE_LOOKALIKE_DOMAIN',
+  'RULE_PHISHING_LINK_STRUCTURAL',
   'RULE_OTP_SHARING',
   'RULE_PHISHING_URGENT_ACTION',
   'RULE_IMPERSONATION_AUTHORITY',
@@ -50,7 +51,9 @@ export function computeStatus(
     COERCIVE_OR_FREE_MAIL_RULES.has(s.ruleId)
   );
   const hasPositiveEvidence =
-    signalRuleIds.has('RULE_GENUINE_DISCLAIMER') || sender?.isOfficialCorporateDomain === true;
+    signalRuleIds.has('RULE_GENUINE_DISCLAIMER') ||
+    signalRuleIds.has('RULE_OFFICIAL_VERIFIED_DOMAIN') ||
+    sender?.isOfficialCorporateDomain === true;
 
   const negativeSignals = signals.filter(
     (s) => s.ruleId !== 'RULE_GENUINE_DISCLAIMER' && s.severity !== 'info'

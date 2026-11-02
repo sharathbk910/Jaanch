@@ -1,7 +1,7 @@
 import type { Signal, ExtractedEntities, SenderDetails, SignalCategory } from '../schemas/index.js';
 import { isNegatedInClause } from './negation.js';
 import { findSpan } from '../normalize/index.js';
-import { detectLookalikeDomain } from '../links/index.js';
+import { detectLookalikeDomain, isIpAddressHost, isPunycode } from '../links/index.js';
 
 export interface RuleDefinition {
   id: string;
@@ -200,6 +200,83 @@ export const RULE_LOOKALIKE_DOMAIN: RuleDefinition = {
   },
 };
 
+export const RULE_PHISHING_LINK_STRUCTURAL: RuleDefinition = {
+  id: 'RULE_PHISHING_LINK_STRUCTURAL',
+  title: 'Deceptive Phishing Link, Raw Numeric IP, or Subdomain Spoofing Detected',
+  category: 'brand_impersonation',
+  whyItMatters:
+    'Legitimate recruitment communications never use raw IP hosts, deceptive subdomains mimicking government or brand portals, or punycode characters.',
+  isHardDisqualifier: true,
+  evaluate: (_normalizedText, _rawText, entities) => {
+    for (const domain of entities.domains) {
+      const lower = domain.toLowerCase();
+
+      // 1. Raw numeric IP address host (e.g. 192.168.1.100)
+      if (isIpAddressHost(lower)) {
+        return {
+          id: 'SIG-IP-HOSTNAME-PHISHING',
+          ruleId: 'RULE_PHISHING_LINK_STRUCTURAL',
+          category: 'brand_impersonation',
+          title: 'Direct Numeric IP Address Phishing Link Detected',
+          whyItMatters:
+            'Links using raw numeric IP addresses instead of authenticated domain names are a hallmark of phishing and credential harvesting attacks.',
+          evidence: `Suspect host: ${domain}`,
+          severity: 'critical',
+        };
+      }
+
+      // 2. Punycode / IDN encoding
+      if (isPunycode(lower)) {
+        return {
+          id: 'SIG-PUNYCODE-PHISHING',
+          ruleId: 'RULE_PHISHING_LINK_STRUCTURAL',
+          category: 'brand_impersonation',
+          title: 'Punycode / IDN Homograph Phishing Link Detected',
+          whyItMatters:
+            'Punycode character encoding is frequently used to disguise deceptive homoglyph characters mimicking legitimate enterprise brands.',
+          evidence: `Suspect domain: ${domain}`,
+          severity: 'critical',
+        };
+      }
+
+      // 3. Subdomain brand spoofing
+      // e.g. secure-login-scholarships-gov.in.account-verification-update.com
+      // Official government domains (.gov.in / .nic.in) are authentic and must never trigger spoofing
+      if (lower.endsWith('.gov.in') || lower.endsWith('.nic.in')) {
+        continue;
+      }
+
+      const parts = lower.split('.');
+      if (parts.length >= 3) {
+        const rootDomain = parts.slice(-2).join('.');
+        const subdomain = parts.slice(0, -2).join('.');
+        const brandSpoof =
+          /\b(?:gov|nic|scholarships?|aicte|tcs|infosys|wipro|google|microsoft|amazon|sbi|hdfc|icici|paypal|login|verify|security)\b/i;
+        if (
+          brandSpoof.test(subdomain) &&
+          rootDomain !== 'gov.in' &&
+          rootDomain !== 'nic.in' &&
+          !rootDomain.endsWith('.gov.in') &&
+          !rootDomain.endsWith('.nic.in') &&
+          !['google.com', 'microsoft.com', 'tcs.com', 'infosys.com', 'wipro.com'].includes(rootDomain)
+        ) {
+          return {
+            id: 'SIG-SUBDOMAIN-BRAND-SPOOF',
+            ruleId: 'RULE_PHISHING_LINK_STRUCTURAL',
+            category: 'brand_impersonation',
+            title: 'Subdomain Brand Spoofing Phishing Link Detected',
+            whyItMatters:
+              'The link embeds authentic organization or government keywords inside a subdomain on an unrelated root domain to trick users into trusting a fraudulent page.',
+            evidence: `Deceptive domain: ${domain} (root: ${rootDomain})`,
+            severity: 'critical',
+          };
+        }
+      }
+    }
+    return null;
+  },
+};
+
 export const RULE_OFFICIAL_GOV_FEES: RuleDefinition = {
   id: 'RULE_OFFICIAL_GOV_FEES',
   title: 'Government Scheme Demanding Upfront Fee or Using Non-Gov Domain',
@@ -265,8 +342,22 @@ export const RULE_UNVERIFIED_LISTING: RuleDefinition = {
     'The opportunity lacks an independently matched listing on the company careers page or verified portal.',
   isHardDisqualifier: false,
   evaluate: (_normalizedText, _rawText, entities, sender) => {
+    // Check if any extracted domain already matches an authentic corporate or government domain
+    const hasMatchingOfficialDomain = entities.domains.some((d) => {
+      const lower = d.toLowerCase();
+      if (lower.endsWith('.gov.in') || lower.endsWith('.nic.in')) return true;
+      if (entities.organization) {
+        const orgLower = entities.organization.toLowerCase();
+        if (orgLower === 'google' && (lower === 'google.com' || lower.endsWith('.google.com'))) return true;
+        if (orgLower === 'tcs' && (lower === 'tcs.com' || lower.endsWith('.tcs.com'))) return true;
+        if (orgLower === 'infosys' && (lower === 'infosys.com' || lower.endsWith('.infosys.com'))) return true;
+        if (orgLower === 'wipro' && (lower === 'wipro.com' || lower.endsWith('.wipro.com'))) return true;
+      }
+      return false;
+    });
+
     // Fires when an offer mentions an organization but has no official domain verification
-    if (entities.organization && !sender?.isOfficialCorporateDomain) {
+    if (entities.organization && !sender?.isOfficialCorporateDomain && !hasMatchingOfficialDomain) {
       return {
         id: 'SIG-UNVERIFIED-LISTING',
         ruleId: 'RULE_UNVERIFIED_LISTING',
@@ -277,6 +368,53 @@ export const RULE_UNVERIFIED_LISTING: RuleDefinition = {
         evidence: `Unverified claim: ${entities.organization}`,
         severity: 'low',
       };
+    }
+    return null;
+  },
+};
+
+export const RULE_OFFICIAL_VERIFIED_DOMAIN: RuleDefinition = {
+  id: 'RULE_OFFICIAL_VERIFIED_DOMAIN',
+  title: 'Verified Official Organization or Government Portal Link Present',
+  category: 'official_disclaimer',
+  whyItMatters:
+    'The communication links directly to an authentic official government or enterprise domain.',
+  isHardDisqualifier: false,
+  evaluate: (_normalizedText, _rawText, entities) => {
+    const OFFICIAL_HOST_SUFFIXES = [
+      '.gov.in',
+      '.nic.in',
+      'gov.in',
+      'nic.in',
+      'aicte-india.org',
+      'ncs.gov.in',
+      'scholarships.gov.in',
+      'mca.gov.in',
+      'google.com',
+      'tcs.com',
+      'infosys.com',
+      'wipro.com',
+      'microsoft.com',
+      'amazon.com',
+    ];
+
+    for (const domain of entities.domains) {
+      const lower = domain.toLowerCase();
+      const isOfficial = OFFICIAL_HOST_SUFFIXES.some(
+        (suffix) => lower === suffix || lower.endsWith('.' + suffix) || lower.endsWith(suffix)
+      );
+      if (isOfficial) {
+        return {
+          id: 'SIG-OFFICIAL-VERIFIED-DOMAIN',
+          ruleId: 'RULE_OFFICIAL_VERIFIED_DOMAIN',
+          category: 'official_disclaimer',
+          title: 'Verified Official Domain Link Corroborated',
+          whyItMatters:
+            'Direct link to recognized official government or enterprise portal verified.',
+          evidence: `Official domain: ${domain}`,
+          severity: 'info',
+        };
+      }
     }
     return null;
   },
@@ -406,14 +544,14 @@ export const RULE_IMPERSONATION_AUTHORITY: RuleDefinition = {
 
 export const RULE_TASK_SCAM: RuleDefinition = {
   id: 'RULE_TASK_SCAM',
-  title: 'Pay-Per-Task or YouTube Video Like/Review Fraud',
+  title: 'Pay-Per-Task, Data Entry, or Social Media Review Fraud',
   category: 'task_fraud',
   whyItMatters:
-    'Offers paying ₹50-₹500 per YouTube like, Telegram task, or hotel review are fraudulent Ponzi schemes designed to bait users into prepaid VIP investment traps.',
+    'Offers paying ₹50-₹500 per task, or daily sums for simple data entry typing tasks, are predatory scams designed to bait students into upfront fee or crypto investment traps.',
   isHardDisqualifier: true,
   evaluate: (normalizedText, rawText) => {
     const taskRegex =
-      /\b(?:pay-per-task|like\s+(?:and\s+subscribe\s+)?youtube\s+videos?\s+(?:to\s+earn|for\s+money)|earn\s+₹?[0-9,]+\s+(?:daily|per\s+day)\s+(?:by\s+liking|for\s+tasks?)|telegram\s+(?:task|rating|review\s+job)|complete\s+tasks?\s+to\s+earn|crypto\s+(?:trading\s+)?task\s+daily|review\s+hotels?\s+and\s+earn|video\s+like\s+karke\s+paise|telegram\s+task\s+karke|video\s+like\s+madi\s+hana)\b/gi;
+      /\b(?:pay-per-task|like\s+(?:and\s+subscribe\s+)?youtube\s+videos?\s+(?:to\s+earn|for\s+money)|earn\s+₹?[0-9,]+(?:\s+to\s+₹?[0-9,]+)?\s*(?:inr|rs\.?)?\s*daily(?:\s+by\s+completing|\s+for|\s+doing)?|(?:simple\s+)?data\s+entry\s+typing\s+tasks?|telegram\s+(?:task|rating|review\s+job)|complete\s+(?:simple\s+)?(?:data\s+entry\s+)?tasks?\s+to\s+earn|crypto\s+(?:trading\s+)?task\s+daily|review\s+hotels?\s+and\s+earn|video\s+like\s+karke\s+paise|telegram\s+task\s+karke|video\s+like\s+madi\s+hana)\b/gi;
 
     let match: RegExpExecArray | null;
     while ((match = taskRegex.exec(normalizedText)) !== null) {
@@ -423,9 +561,9 @@ export const RULE_TASK_SCAM: RuleDefinition = {
           id: 'SIG-TASK-SCAM',
           ruleId: 'RULE_TASK_SCAM',
           category: 'task_fraud',
-          title: 'Pay-Per-Task or Social Media Review Fraud',
+          title: 'Pay-Per-Task or Data Entry Review Fraud',
           whyItMatters:
-            'Legitimate corporate employers do not hire students for unvetted video-liking or Telegram rating tasks.',
+            'Legitimate corporate employers do not hire students for daily typing batches or unvetted Telegram review tasks.',
           evidence: evidence || match[0],
           severity: 'critical',
         };
@@ -534,8 +672,10 @@ export const RULE_CATALOG: RuleDefinition[] = [
   RULE_COERCIVE_DEADLINE,
   RULE_FREE_EMAIL_CLAIMING_ORG,
   RULE_LOOKALIKE_DOMAIN,
+  RULE_PHISHING_LINK_STRUCTURAL,
   RULE_OFFICIAL_GOV_FEES,
   RULE_UNVERIFIED_LISTING,
+  RULE_OFFICIAL_VERIFIED_DOMAIN,
   RULE_GENUINE_DISCLAIMER,
   RULE_OTP_SHARING,
   RULE_PHISHING_URGENT_ACTION,

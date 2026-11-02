@@ -1,10 +1,11 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Clipboard, ArrowRight, Upload, AlertCircle, Sparkles, Check, FileText, CheckCircle2, AlertTriangle, ShieldAlert } from 'lucide-react';
 import { useLanguage } from '../../i18n/LanguageContext.js';
 import { Button } from '../ui/Button.js';
 import { fireCelebrationConfetti } from '../ui/Confetti.js';
 import { sound } from '../../lib/sound.js';
+import { apiClient } from '../../lib/apiClient.js';
 import { validateOfferInput, analyzeOffer, type AnalyzeResult } from '@jaanch/shared';
 
 export const SCENARIO_GENUINE =
@@ -36,6 +37,66 @@ export function SubmissionCard() {
       return null;
     }
   }, [text, isMinMet]);
+
+  // Extract link if text contains a URL
+  const detectedUrl = useMemo(() => {
+    const match = text.match(/(https?:\/\/[^\s]+|www\.[^\s]+)/i);
+    return match ? match[0] : null;
+  }, [text]);
+
+  const [linkData, setLinkData] = useState<{
+    url: string;
+    riskLevel: 'NO_MAJOR_WARNING_SIGNS' | 'HIGH_RISK' | 'CAUTION';
+    mlScore?: number;
+    mlRiskLevel?: 'safe' | 'suspicious' | 'danger';
+    trigger_factors?: string[];
+  } | null>(null);
+  const [isEvaluatingLink, setIsEvaluatingLink] = useState(false);
+
+  useEffect(() => {
+    if (!detectedUrl) {
+      setLinkData(null);
+      setIsEvaluatingLink(false);
+      return;
+    }
+
+    let isCurrent = true;
+    setIsEvaluatingLink(true);
+
+    const timer = setTimeout(async () => {
+      try {
+        const res = await apiClient.checkLink(detectedUrl);
+        if (isCurrent && res) {
+          setLinkData(res);
+        }
+      } catch {
+        // fail-soft to local rule output
+      } finally {
+        if (isCurrent) {
+          setIsEvaluatingLink(false);
+        }
+      }
+    }, 250);
+
+    return () => {
+      isCurrent = false;
+      clearTimeout(timer);
+    };
+  }, [detectedUrl]);
+
+  // Evaluate combined risk from deterministic rules and ML model
+  const isScam = useMemo(() => {
+    if (quickOutput?.status === 'HIGH_CONCERN' || quickOutput?.status === 'CONFIRMED_SCAM') return true;
+    if (linkData?.riskLevel === 'HIGH_RISK' || linkData?.mlRiskLevel === 'danger') return true;
+    return false;
+  }, [quickOutput, linkData]);
+
+  const isGenuine = useMemo(() => {
+    if (isScam) return false;
+    if (quickOutput?.status === 'LIKELY_GENUINE') return true;
+    if (detectedUrl && (linkData?.riskLevel === 'NO_MAJOR_WARNING_SIGNS' || linkData?.mlRiskLevel === 'safe')) return true;
+    return false;
+  }, [isScam, quickOutput, detectedUrl, linkData]);
 
   const handlePasteClipboard = async () => {
     try {
@@ -261,37 +322,60 @@ export function SubmissionCard() {
                         OUTPUT:
                       </span>
                       <div
+                        data-testid="live-audit-badge"
                         className={`inline-flex items-center gap-1.5 px-3 py-1.5 border-2 border-neo-border shadow-neo-sm font-mono text-xs font-bold uppercase tracking-wider ${
-                          quickOutput.status === 'LIKELY_GENUINE'
+                          isGenuine
                             ? 'bg-neo-mint text-foreground'
-                            : quickOutput.status === 'NEEDS_REVIEW'
-                              ? 'bg-neo-sky text-foreground'
-                              : 'bg-neo-peach text-foreground'
+                            : isScam
+                              ? 'bg-neo-peach text-foreground'
+                              : 'bg-neo-sky text-foreground'
                         }`}
                       >
-                        {quickOutput.status === 'LIKELY_GENUINE' && (
+                        {isGenuine && (
                           <>
                             <CheckCircle2 size={13} className="text-status-likely-genuine-fg shrink-0" />
-                            <span>Likely Genuine (Safe)</span>
+                            <span>
+                              {detectedUrl ? 'NO RISK (GENUINE LINK • LIKELY GENUINE)' : 'NO RISK (LIKELY GENUINE)'}
+                            </span>
                           </>
                         )}
-                        {quickOutput.status === 'NEEDS_REVIEW' && (
-                          <>
-                            <AlertTriangle size={13} className="text-status-review-fg shrink-0" />
-                            <span>Needs Verification</span>
-                          </>
-                        )}
-                        {(quickOutput.status === 'HIGH_CONCERN' || quickOutput.status === 'CONFIRMED_SCAM') && (
+                        {isScam && (
                           <>
                             <ShieldAlert size={13} className="text-status-high-concern-fg shrink-0" />
-                            <span>High Concern (Scam Flag)</span>
+                            <span>
+                              {detectedUrl ? 'HIGH RISK (SCAM DETECTED • HIGH CONCERN)' : 'HIGH RISK (HIGH CONCERN)'}
+                            </span>
+                          </>
+                        )}
+                        {!isGenuine && !isScam && (
+                          <>
+                            <AlertTriangle size={13} className="text-status-review-fg shrink-0" />
+                            <span>NEEDS VERIFICATION</span>
                           </>
                         )}
                       </div>
 
+                      {/* ML Phishing Probability Signal */}
+                      {linkData?.mlScore !== undefined && (
+                        <span className={`text-[11px] font-mono font-bold px-2 py-0.5 border border-neo-border shadow-neo-sm ${
+                          linkData.mlRiskLevel === 'danger'
+                            ? 'bg-status-high-concern-bg text-status-high-concern-fg'
+                            : 'bg-status-likely-genuine-bg text-status-likely-genuine-fg'
+                        }`}>
+                          ML: {(linkData.mlScore * 100).toFixed(1)}% {linkData.mlRiskLevel === 'danger' ? 'PHISHING RISK' : 'SAFE'}
+                        </span>
+                      )}
+
+                      {/* Trigger or Rule explanation badge */}
                       {quickOutput.signals.length > 0 && (
                         <span className="text-xs text-muted-foreground font-mono truncate max-w-xs hidden md:inline">
                           [{quickOutput.signals[0].title}]
+                        </span>
+                      )}
+
+                      {isEvaluatingLink && (
+                        <span className="text-[10px] font-mono text-muted-foreground animate-pulse">
+                          Verifying link with ML...
                         </span>
                       )}
                     </div>

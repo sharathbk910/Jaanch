@@ -97,6 +97,23 @@ describe('Phase 6C – Results & PDF (Results.tsx / ResultsPage.tsx)', () => {
     expect(container.querySelector('#next-steps')).toBeInTheDocument();
   });
 
+  it('renders prominent Risk Level & ML Confidence Banner on Results page', () => {
+    const customResult: AnalyzeResult = {
+      ...SAMPLE_CONCERN_RESULT,
+      riskLevel: 'HIGH RISK',
+      mlScore: 0.972,
+      summary: 'High probability of fraudulent activity. Demanding upfront fees and off-platform recruitment detected.',
+    };
+
+    renderResultsWithResult(customResult);
+    expect(screen.getByTestId('risk-level-banner')).toBeInTheDocument();
+    expect(screen.getByText(/RISK LEVEL: HIGH RISK/i)).toBeInTheDocument();
+    expect(screen.getByText(/ML Scam Probability: 97.2%/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/High probability of fraudulent activity. Demanding upfront fees and off-platform recruitment detected./i)
+    ).toBeInTheDocument();
+  });
+
   it('does not render StatusBanner on Results page per user request', () => {
     const { container } = renderResultsWithResult(SAMPLE_GENUINE_RESULT);
     expect(container.querySelector('#status-banner')).not.toBeInTheDocument();

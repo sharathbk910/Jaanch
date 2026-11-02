@@ -31,7 +31,13 @@ export function validateOfferInput(rawText: string): InputValidationResult {
     };
   }
 
-  // 2. Repetitive characters / low entropy rule
+  // 2. Direct URL link submission (e.g. pasted genuine or scam link)
+  const isDirectUrl = /^(https?:\/\/|www\.)\S+$/i.test(trimmed);
+  if (isDirectUrl) {
+    return { isValid: true };
+  }
+
+  // 3. Repetitive characters / low entropy rule
   const charWithoutSpace = trimmed.replace(/\s+/g, '');
   const uniqueChars = new Set(charWithoutSpace.toLowerCase());
   if (charWithoutSpace.length >= 25 && uniqueChars.size < 4) {

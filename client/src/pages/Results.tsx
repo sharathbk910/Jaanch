@@ -26,6 +26,7 @@ import { useLanguage } from '../i18n/LanguageContext.js';
 import { getGuestAnalysis } from '../lib/guestSession.js';
 import { Button } from '../components/ui/Button.js';
 import { Card } from '../components/ui/Card.js';
+import { RiskLevelBanner } from '../components/results/RiskLevelBanner.js';
 import { PaymentAlert } from '../components/results/PaymentAlert.js';
 import { WhyThisStatus } from '../components/results/WhyThisStatus.js';
 import { PortalChecklist } from '../components/results/PortalChecklist.js';
@@ -289,6 +290,16 @@ export function Results() {
               {t('results.disclaimer')}
             </p>
           </div>
+
+          {/* Hero Risk Level & Verification Status Banner */}
+          <RiskLevelBanner
+            status={result.status}
+            confidenceScore={result.confidenceScore}
+            mlScore={result.mlScore}
+            mlProbability={result.mlProbability}
+            riskLevel={result.riskLevel}
+            summary={result.summary}
+          />
 
           {/* 1b. Shared Threat Intelligence Match Card & WhatsApp Scam Alert */}
           {result.intelMatch && (

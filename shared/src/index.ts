@@ -79,8 +79,19 @@ export function analyzeOffer(rawRequest: AnalyzeRequestInput): AnalyzeResult {
   // 5. Generate deterministic audit ID
   const auditId = `audit_${Date.now()}_${Math.random().toString(36).slice(2, 9)}`;
 
+  const isHigh = statusResult.status === 'HIGH_CONCERN' || statusResult.status === 'CONFIRMED_SCAM';
+  const isSafe = statusResult.status === 'LIKELY_GENUINE';
+  const riskLevel = isHigh ? 'HIGH RISK' : isSafe ? 'SAFE' : 'CAUTION';
+  const summary = isHigh
+    ? (signals.length > 0 ? `High probability of fraudulent activity. ${signals[0].title} detected.` : 'High probability of fraudulent activity detected.')
+    : isSafe
+      ? 'High probability of legitimate communication. No predatory fee or credential theft patterns identified.'
+      : 'Suspicious indicators or unverified details detected. Independent verification recommended.';
+
   const result: AnalyzeResult = {
     status: statusResult.status,
+    riskLevel,
+    summary,
     signals,
     unverified: statusResult.unverified,
     extractedEntities: returnedEntities,
