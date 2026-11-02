@@ -2,7 +2,7 @@ services:
   - type: web
     name: jaanch-server
     runtime: node
-    plan: starter
+    plan: free
     region: oregon
     buildCommand: npm ci && npm run build -w shared && npm run build -w server
     startCommand: npm run start -w server
