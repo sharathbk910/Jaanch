@@ -201,9 +201,6 @@ export function SubmissionCard() {
                 <label htmlFor="offer-text" className="text-xs font-bold uppercase tracking-wider text-foreground">
                   {t('submissionCard.title')}
                 </label>
-                <span className="text-[11px] font-mono text-muted-foreground">
-                  {t('submissionCard.badgeSanitized')}
-                </span>
               </div>
 
               {/* Textarea with 2px border */}
@@ -366,24 +363,13 @@ export function SubmissionCard() {
                         </span>
                       )}
 
-                      {/* Trigger or Rule explanation badge */}
-                      {quickOutput.signals.length > 0 && (
-                        <span className="text-xs text-muted-foreground font-mono truncate max-w-xs hidden md:inline">
-                          [{quickOutput.signals[0].title}]
-                        </span>
-                      )}
-
                       {isEvaluatingLink && (
                         <span className="text-[10px] font-mono text-muted-foreground animate-pulse">
                           Verifying link with ML...
                         </span>
                       )}
                     </div>
-                  ) : (
-                    <span className="text-xs text-muted-foreground font-mono">
-                      {t('submissionCard.readyForAudit')}
-                    </span>
-                  )}
+                  ) : null}
                 </div>
 
                 <Button
