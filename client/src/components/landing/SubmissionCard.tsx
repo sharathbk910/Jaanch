@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Clipboard, ArrowRight, Upload, AlertCircle, Sparkles, Check, FileText, CheckCircle2, AlertTriangle, ShieldAlert } from 'lucide-react';
 import { useLanguage } from '../../i18n/LanguageContext.js';
 import { Button } from '../ui/Button.js';
 import { fireCelebrationConfetti } from '../ui/Confetti.js';
 import { sound } from '../../lib/sound.js';
-import { validateOfferInput } from '@jaanch/shared';
+import { validateOfferInput, analyzeOffer, type AnalyzeResult } from '@jaanch/shared';
 
 export const SCENARIO_GENUINE =
   'Subject: Infosys Springboard Internship Selection. Dear Candidate, you have been selected for the 8-week software engineering internship program. There are no registration or training fees. Stipend is ₹25,000/month. Access details at https://springboard.infosys.com.';
@@ -27,6 +27,15 @@ export function SubmissionCard() {
 
   const charCount = text.length;
   const isMinMet = charCount >= 25;
+
+  const quickOutput = useMemo<AnalyzeResult | null>(() => {
+    if (!isMinMet) return null;
+    try {
+      return analyzeOffer({ text });
+    } catch {
+      return null;
+    }
+  }, [text, isMinMet]);
 
   const handlePasteClipboard = async () => {
     try {
@@ -89,8 +98,8 @@ export function SubmissionCard() {
               onClick={() => setActiveTab('paste')}
               className={`flex items-center gap-2 px-4 sm:px-6 py-3.5 text-xs font-bold transition-all cursor-pointer ${
                 activeTab === 'paste'
-                  ? 'bg-neo-yellow text-foreground border-r-2 border-neo-border'
-                  : 'text-muted-foreground hover:bg-neo-sky hover:text-foreground border-r border-neo-border/40'
+                  ? 'bg-neo-sky text-foreground border-r-2 border-neo-border'
+                  : 'text-muted-foreground hover:bg-neo-sky-light hover:text-foreground border-r border-neo-border/40'
               }`}
             >
               <FileText size={15} aria-hidden="true" />
@@ -102,8 +111,8 @@ export function SubmissionCard() {
               onClick={() => setActiveTab('upload')}
               className={`flex items-center gap-2 px-4 sm:px-6 py-3.5 text-xs font-bold transition-all cursor-pointer ${
                 activeTab === 'upload'
-                  ? 'bg-neo-yellow text-foreground border-r-2 border-neo-border'
-                  : 'text-muted-foreground hover:bg-neo-sky hover:text-foreground border-r border-neo-border/40'
+                  ? 'bg-neo-sky text-foreground border-r-2 border-neo-border'
+                  : 'text-muted-foreground hover:bg-neo-sky-light hover:text-foreground border-r border-neo-border/40'
               }`}
             >
               <Upload size={15} aria-hidden="true" />
@@ -242,15 +251,64 @@ export function SubmissionCard() {
                 </div>
               </div>
 
-              {/* Submit CTA with Vibrant Blue Button */}
-              <div className="pt-4 border-t-2 border-neo-border flex items-center justify-end">
+              {/* Submit CTA with Output on Left Side */}
+              <div className="pt-4 border-t-2 border-neo-border flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+                {/* Real-time Audit Output (Left side of the audit button) */}
+                <div className="flex-1 min-w-0" data-testid="audit-output-left">
+                  {quickOutput ? (
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span className="font-mono text-[10px] text-muted-foreground uppercase font-bold tracking-wider">
+                        OUTPUT:
+                      </span>
+                      <div
+                        className={`inline-flex items-center gap-1.5 px-3 py-1.5 border-2 border-neo-border shadow-neo-sm font-mono text-xs font-bold uppercase tracking-wider ${
+                          quickOutput.status === 'LIKELY_GENUINE'
+                            ? 'bg-neo-mint text-foreground'
+                            : quickOutput.status === 'NEEDS_REVIEW'
+                              ? 'bg-neo-sky text-foreground'
+                              : 'bg-neo-peach text-foreground'
+                        }`}
+                      >
+                        {quickOutput.status === 'LIKELY_GENUINE' && (
+                          <>
+                            <CheckCircle2 size={13} className="text-status-likely-genuine-fg shrink-0" />
+                            <span>Likely Genuine (Safe)</span>
+                          </>
+                        )}
+                        {quickOutput.status === 'NEEDS_REVIEW' && (
+                          <>
+                            <AlertTriangle size={13} className="text-status-review-fg shrink-0" />
+                            <span>Needs Verification</span>
+                          </>
+                        )}
+                        {(quickOutput.status === 'HIGH_CONCERN' || quickOutput.status === 'CONFIRMED_SCAM') && (
+                          <>
+                            <ShieldAlert size={13} className="text-status-high-concern-fg shrink-0" />
+                            <span>High Concern (Scam Flag)</span>
+                          </>
+                        )}
+                      </div>
+
+                      {quickOutput.signals.length > 0 && (
+                        <span className="text-xs text-muted-foreground font-mono truncate max-w-xs hidden md:inline">
+                          [{quickOutput.signals[0].title}]
+                        </span>
+                      )}
+                    </div>
+                  ) : (
+                    <span className="text-xs text-muted-foreground font-mono">
+                      Output appears here when offer is ready for audit
+                    </span>
+                  )}
+                </div>
+
                 <Button
                   type="submit"
                   variant="primary"
                   size="md"
                   disabled={!isMinMet}
                   data-testid="check-offer-btn"
-                  className="w-full sm:w-auto border-2 border-neo-border shadow-neo bg-neo-sky text-foreground font-bold uppercase tracking-wider hover:bg-neo-sky-light hover:text-foreground hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-neo-sm active:translate-x-[3px] active:translate-y-[3px] active:shadow-none transition-all px-6 py-2.5 rounded-none disabled:opacity-50 disabled:pointer-events-none group cursor-pointer"
+                  className="w-full sm:w-auto border-2 border-neo-border shadow-neo bg-neo-sky text-foreground font-bold uppercase tracking-wider hover:bg-neo-sky-light hover:text-foreground hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-neo-sm active:translate-x-[3px] active:translate-y-[3px] active:shadow-none transition-all px-6 py-2.5 rounded-none disabled:opacity-50 disabled:pointer-events-none group cursor-pointer shrink-0"
                 >
                   <span>{t('submissionCard.analyzeBtn')}</span>
                   <ArrowRight size={15} className="ml-2 group-hover:translate-x-1 transition-transform" />

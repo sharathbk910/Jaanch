@@ -35,10 +35,35 @@ async function request<T>(
   }
 
   const url = `${API_BASE}${endpoint}`;
-  const res = await fetch(url, {
-    ...options,
-    headers,
-  });
+  let res: Response;
+  try {
+    res = await fetch(url, {
+      ...options,
+      headers,
+    });
+  } catch (networkError: unknown) {
+    // If direct request failed and API_BASE was configured, try relative /api proxy fallback
+    if (API_BASE && endpoint.startsWith('/api')) {
+      try {
+        res = await fetch(endpoint, {
+          ...options,
+          headers,
+        });
+      } catch {
+        throw new ApiError(
+          'Unable to connect to the Jaanch analysis backend. Please ensure the backend server is running on port 8080 (run: npm run dev).',
+          503,
+          'BACKEND_OFFLINE'
+        );
+      }
+    } else {
+      throw new ApiError(
+        'Unable to connect to the Jaanch analysis backend. Please ensure the backend server is running on port 8080 (run: npm run dev).',
+        503,
+        'BACKEND_OFFLINE'
+      );
+    }
+  }
 
   const body = await res.json().catch(() => ({}));
 

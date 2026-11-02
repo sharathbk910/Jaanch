@@ -1,0 +1,82 @@
+rules:
+  # ---------------------------------------------------------------------------
+  # Safety Invariant 2: Pre-Tokenization PII Redaction
+  # ---------------------------------------------------------------------------
+  - id: jaanch-require-pii-redaction
+    patterns:
+      - pattern: $DETECTOR.model.predict_proba([$RAW])
+      - pattern-not: $DETECTOR.model.predict_proba([redact_pii(...)])
+      - pattern-not: $DETECTOR.model.predict_proba([$SANITIZED])
+    message: |
+      [Jaanch Invariant 2 Violation] ML model input must always be sanitized with redact_pii()
+      before passing to predict_proba(). Raw PII (phones, emails, UPI, IDs) must never reach model.
+    languages: [python]
+    severity: ERROR
+
+  # ---------------------------------------------------------------------------
+  # Safety Invariant 3: Severity Hard-Capped at Medium
+  # ---------------------------------------------------------------------------
+  - id: jaanch-forbid-ml-high-severity
+    patterns:
+      - pattern-either:
+          - pattern: |
+              {"severity": "high", ...}
+          - pattern: |
+              {"severity": "critical", ...}
+          - pattern: |
+              severity = "high"
+          - pattern: |
+              severity = "critical"
+    paths:
+      include:
+        - "**/models/detector.py"
+        - "**/models/evaluate.py"
+        - "**/models/server.py"
+    message: |
+      [Jaanch Invariant 3 Violation] The ML model severity must NEVER be 'high' or 'critical'.
+      It must be programmatically clamped to 'medium', 'low', or 'none'.
+    languages: [python]
+    severity: ERROR
+
+  # ---------------------------------------------------------------------------
+  # Safety Invariant 1: Mandatory User Consent Check
+  # ---------------------------------------------------------------------------
+  - id: jaanch-enforce-consent-in-evaluate
+    patterns:
+      - pattern: |
+          def evaluate($SELF, $TEXT, ...):
+            ...
+      - pattern-not: |
+          def evaluate($SELF, $TEXT, ..., consent=..., ...):
+            ...
+            if not consent:
+              ...
+    paths:
+      include:
+        - "**/models/detector.py"
+    message: |
+      [Jaanch Invariant 1 Violation] The evaluate() method must strictly accept and enforce
+      a mandatory `consent` boolean check before processing text.
+    languages: [python]
+    severity: ERROR
+
+  # ---------------------------------------------------------------------------
+  # Backend Security: Enforce safeFetch against SSRF in server
+  # ---------------------------------------------------------------------------
+  - id: jaanch-server-use-safefetch-against-ssrf
+    patterns:
+      - pattern: fetch($URL, ...)
+      - pattern-not: safeFetch($URL, ...)
+      - pattern-inside: |
+          ...
+          router.$METHOD($ROUTE, ..., async ($REQ, $RES) => {
+            ...
+          })
+    paths:
+      include:
+        - "**/server/src/routes/**"
+    message: |
+      [Backend Security Warning] Direct use of global fetch() inside route handlers can lead to SSRF vulnerabilities.
+      Use safeFetch() from '../lib/safeFetch.js' which enforces IP pinning, private subnet blocking, and timeouts.
+    languages: [typescript, javascript]
+    severity: WARNING

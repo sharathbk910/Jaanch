@@ -124,10 +124,18 @@ export default {
         },
       },
       fontFamily: {
-        serif: ['Newsreader', 'Georgia', 'serif'],
-        sans: [
-          'Plus Jakarta Sans',
+        serif: [
           'Inter',
+          'Plus Jakarta Sans',
+          '-apple-system',
+          'BlinkMacSystemFont',
+          '"Segoe UI"',
+          'Roboto',
+          'sans-serif',
+        ],
+        sans: [
+          'Inter',
+          'Plus Jakarta Sans',
           'Noto Sans Devanagari',
           'Noto Sans Kannada',
           '-apple-system',

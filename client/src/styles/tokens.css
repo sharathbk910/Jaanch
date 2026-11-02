@@ -35,9 +35,9 @@
   --color-neo-sky-hover: #1D4ED8;
   --color-neo-sky-hover-fg: #FFFFFF;
   --color-neo-sky-light: #E0F2FE;
-  --color-neo-peach: #FFE2CC;
-  --color-neo-blue: #7BC5F3;
-  --color-neo-mint: #C7F7EC;
+  --color-neo-peach: #FFD2B2;
+  --color-neo-blue: #A2D2FF;
+  --color-neo-mint: #B7E4C7;
   --color-neo-pink: #FFE5EC;
   --color-neo-yellow: #FEF08A;
 
@@ -58,9 +58,9 @@
   --color-status-confirmed-fg: #FFFFFF;
   --color-status-confirmed-border: #7F1D1D;
 
-  /* Fonts */
-  --font-sans: 'Plus Jakarta Sans', 'Inter', 'Noto Sans Devanagari', 'Noto Sans Kannada', sans-serif;
-  --font-serif: 'Newsreader', Georgia, serif;
+  /* Fonts (MotherDuck Clean Grotesque / Geometric Sans-Serif Typographic System) */
+  --font-sans: 'Inter', 'Plus Jakarta Sans', 'Noto Sans Devanagari', 'Noto Sans Kannada', sans-serif;
+  --font-serif: 'Inter', 'Plus Jakarta Sans', sans-serif;
   --font-mono: 'JetBrains Mono', Menlo, monospace;
   --font-devanagari: 'Noto Sans Devanagari', sans-serif;
   --font-kannada: 'Noto Sans Kannada', sans-serif;

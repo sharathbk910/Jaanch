@@ -14,7 +14,6 @@ import {
   RotateCcw,
   PhoneCall,
   ExternalLink,
-  Compass,
   Layers,
   HelpCircle,
   Shield,
@@ -27,12 +26,8 @@ import { useLanguage } from '../i18n/LanguageContext.js';
 import { getGuestAnalysis } from '../lib/guestSession.js';
 import { Button } from '../components/ui/Button.js';
 import { Card } from '../components/ui/Card.js';
-import { StatusBanner } from '../components/results/StatusBanner.js';
 import { PaymentAlert } from '../components/results/PaymentAlert.js';
-import { StopProtectCallout } from '../components/results/StopProtectCallout.js';
 import { WhyThisStatus } from '../components/results/WhyThisStatus.js';
-import { SignalCard } from '../components/results/SignalCard.js';
-import { UnverifiedPanel } from '../components/results/UnverifiedPanel.js';
 import { PortalChecklist } from '../components/results/PortalChecklist.js';
 import { ResponseGenerators } from '../components/results/ResponseGenerators.js';
 import { LinkInspector } from '../components/results/LinkInspector.js';
@@ -273,50 +268,14 @@ export function Results() {
     <main className="w-full max-w-editorial mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
       {/* Eyebrow & Top Navigation Bar */}
       <div className="flex items-center justify-between pb-3 mb-6 border-b border-border/60">
-        <div className="flex items-center gap-2">
-          <button
-            type="button"
-            onClick={() => navigate('/analyze')}
-            className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground font-medium"
-          >
-            <ArrowLeft size={14} />
-            <span>{t('results.checkAnother')}</span>
-          </button>
-          <span className="text-border">/</span>
-          <span className="font-mono text-[11px] text-muted-foreground uppercase">
-            {isLocal ? 'LOCAL GUEST AUDIT' : `SAVED AUDIT / ${result.auditId}`}
-          </span>
-        </div>
-        <span className="font-mono text-[11px] text-muted-foreground">
-          {new Date().toISOString().split('T')[0]}
-        </span>
-      </div>
-
-      {/* Mobile Sticky Section Chips (< lg) */}
-      <div className="flex lg:hidden overflow-x-auto gap-2 py-2 sticky top-[53px] z-20 bg-background/95 backdrop-blur border-b border-border text-xs select-none mb-6">
-        <a href="#verdict" className="px-2.5 py-1 bg-surface border border-border rounded-chip text-[11px] font-medium shrink-0">
-          Verdict
-        </a>
-        {hasFeeOrOtp && (
-          <a href="#stop-protect" className="px-2.5 py-1 bg-status-high-concern-bg text-status-high-concern-fg border border-status-high-concern-border rounded-chip text-[11px] font-semibold shrink-0">
-            Stop & Protect
-          </a>
-        )}
-        <a href="#why-status" className="px-2.5 py-1 bg-surface border border-border rounded-chip text-[11px] font-medium shrink-0">
-          Why Status
-        </a>
-        <a href="#signals" className="px-2.5 py-1 bg-surface border border-border rounded-chip text-[11px] font-medium shrink-0">
-          Signals ({result.signals.length})
-        </a>
-        <a href="#response-generators" className="px-2.5 py-1 bg-surface border border-border rounded-chip text-[11px] font-medium shrink-0">
-          Inquiries
-        </a>
-        <a href="#link-inspector" className="px-2.5 py-1 bg-surface border border-border rounded-chip text-[11px] font-medium shrink-0">
-          Link Check
-        </a>
-        <a href="#next-steps" className="px-2.5 py-1 bg-surface border border-border rounded-chip text-[11px] font-medium shrink-0">
-          Next Steps
-        </a>
+        <button
+          type="button"
+          onClick={() => navigate('/analyze')}
+          className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground font-medium"
+        >
+          <ArrowLeft size={14} />
+          <span>{t('results.checkAnother')}</span>
+        </button>
       </div>
 
       {/* Two-Column Responsive Grid */}
@@ -331,16 +290,6 @@ export function Results() {
             </p>
           </div>
 
-          {/* 1. Verdict Banner */}
-          <div id="verdict">
-            <StatusBanner
-              status={result.status}
-              confidenceScore={result.confidenceScore}
-              checksEvaluatedCount={8}
-              totalChecks={8}
-            />
-          </div>
-
           {/* 1b. Shared Threat Intelligence Match Card & WhatsApp Scam Alert */}
           {result.intelMatch && (
             <div id="intel-match" className="space-y-4">
@@ -352,14 +301,6 @@ export function Results() {
                 />
               )}
             </div>
-          )}
-
-          {/* 2. Stop & Protect Callout (High Concern / Payment signals) */}
-          {isHighConcern && (
-            <StopProtectCallout
-              amount={amount}
-              upiHandle={upi}
-            />
           )}
 
           {/* 2b. Payment & Banking Alert */}
@@ -380,52 +321,9 @@ export function Results() {
             />
           </div>
 
-          {/* 4. Observed Signals List */}
-          <div id="signals" className="space-y-3">
-            <div className="flex items-center justify-between pb-1">
-              <h3 className="text-xs sm:text-sm font-bold text-foreground uppercase tracking-wide">
-                {t('results.signalsTitle')} ({result.signals.length})
-              </h3>
-            </div>
-
-            {result.signals.length === 0 ? (
-              <div className="p-5 bg-surface border border-border rounded-card text-xs text-muted-foreground text-center">
-                {t('results.signalsEmpty')}
-              </div>
-            ) : (
-              <div className="space-y-3">
-                {result.signals.map((signal) => (
-                  <SignalCard key={signal.id} signal={signal} />
-                ))}
-              </div>
-            )}
-          </div>
-
-          {/* 5. Unverified Details Panel */}
-          <div id="unverified">
-            <UnverifiedPanel unverified={result.unverified} />
-          </div>
-
-          {/* 6. Safe Reply & Challenge Email Generators */}
-          <div id="response-generators">
-            <ResponseGenerators
-              status={result.status}
-              claimedOrg={result.extractedEntities.organization || undefined}
-              senderEmail={result.extractedEntities.emails?.[0]}
-              domain={result.extractedEntities.domains?.[0]}
-            />
-          </div>
-
           {/* 8. Link Inspector UI */}
           <div id="link-inspector">
             <LinkInspector detectedUrls={result.extractedEntities.urls} />
-          </div>
-
-          {/* 9. Extracted Opportunity Indicators */}
-          <div id="extracted-entities">
-            <ExtractedEntitiesCard
-              entities={result.extractedEntities}
-            />
           </div>
 
           {/* 10. Actionable Next Steps */}
@@ -439,81 +337,6 @@ export function Results() {
 
         {/* Sticky Sidebar Column (4 cols) */}
         <aside className="hidden lg:block lg:col-span-4 lg:sticky lg:top-20 space-y-4">
-          {/* Jump Navigation Card */}
-          <div className="p-4 bg-surface border border-border rounded-card space-y-3">
-            <div className="flex items-center gap-1.5 pb-2 border-b border-border/60">
-              <Compass size={14} className="text-foreground" />
-              <span className="font-mono text-xs uppercase font-bold text-foreground tracking-wider">
-                {t('results.jumpNavTitle')}
-              </span>
-            </div>
-
-            <nav className="flex flex-col space-y-1 text-xs">
-              <a
-                href="#verdict"
-                className="px-2.5 py-1.5 rounded-chip hover:bg-background text-foreground/90 hover:text-foreground font-medium transition-colors flex items-center justify-between"
-              >
-                <span>{t('results.verdictLabel')}</span>
-                <span className="font-mono text-[10px] text-muted-foreground uppercase">{result.status}</span>
-              </a>
-
-              {hasFeeOrOtp && (
-                <a
-                  href="#stop-protect"
-                  className="px-2.5 py-1.5 rounded-chip bg-status-high-concern-bg/40 text-status-high-concern-fg font-semibold transition-colors flex items-center justify-between"
-                >
-                  <span>{t('results.stopProtectTitle')}</span>
-                  <AlertOctagon size={12} />
-                </a>
-              )}
-
-              <a
-                href="#why-status"
-                className="px-2.5 py-1.5 rounded-chip hover:bg-background text-muted-foreground hover:text-foreground transition-colors"
-              >
-                {t('results.whyTitle')}
-              </a>
-
-              <a
-                href="#signals"
-                className="px-2.5 py-1.5 rounded-chip hover:bg-background text-muted-foreground hover:text-foreground transition-colors flex items-center justify-between"
-              >
-                <span>{t('results.signalsTitle')}</span>
-                <span className="font-mono text-[10px] bg-background border border-border px-1.5 py-0.5 rounded-pill">
-                  {result.signals.length}
-                </span>
-              </a>
-
-              <a
-                href="#unverified"
-                className="px-2.5 py-1.5 rounded-chip hover:bg-background text-muted-foreground hover:text-foreground transition-colors"
-              >
-                {t('results.unverifiedTitle')}
-              </a>
-
-              <a
-                href="#response-generators"
-                className="px-2.5 py-1.5 rounded-chip hover:bg-background text-muted-foreground hover:text-foreground transition-colors"
-              >
-                {t('results.responseGeneratorsTitle')}
-              </a>
-
-              <a
-                href="#link-inspector"
-                className="px-2.5 py-1.5 rounded-chip hover:bg-background text-muted-foreground hover:text-foreground transition-colors"
-              >
-                {t('results.linkInspectorTitle')}
-              </a>
-
-              <a
-                href="#next-steps"
-                className="px-2.5 py-1.5 rounded-chip hover:bg-background text-muted-foreground hover:text-foreground transition-colors"
-              >
-                {t('results.nextStepsTitle')}
-              </a>
-            </nav>
-          </div>
-
           {/* Quick Actions Card */}
           <div id="actions" className="p-4 bg-surface border border-border rounded-card space-y-3">
             <span className="font-mono text-[11px] uppercase text-muted-foreground block font-bold">
@@ -707,20 +530,6 @@ export function SamplePage() {
             </p>
           </div>
 
-          <StatusBanner
-            status={result.status}
-            confidenceScore={result.confidenceScore}
-            checksEvaluatedCount={8}
-            totalChecks={8}
-          />
-
-          {isHighConcern && (
-            <StopProtectCallout
-              amount={result.extractedEntities.amounts?.[0]}
-              upiHandle={result.extractedEntities.upiHandles?.[0]}
-            />
-          )}
-
           {hasFeeOrOtp && (
             <PaymentAlert
               amount={result.extractedEntities.amounts?.[0]}
@@ -735,37 +544,7 @@ export function SamplePage() {
             unverified={result.unverified}
           />
 
-          <div className="space-y-3">
-            <h3 className="text-xs sm:text-sm font-bold text-foreground uppercase tracking-wide">
-              {t('results.signalsTitle')} ({result.signals.length})
-            </h3>
-            {result.signals.length === 0 ? (
-              <div className="p-5 bg-surface border border-border rounded-card text-xs text-muted-foreground text-center">
-                {t('results.signalsEmpty')}
-              </div>
-            ) : (
-              <div className="space-y-3">
-                {result.signals.map((sig) => (
-                  <SignalCard key={sig.id} signal={sig} />
-                ))}
-              </div>
-            )}
-          </div>
-
-          <UnverifiedPanel unverified={result.unverified} />
-
-          <ResponseGenerators
-            status={result.status}
-            claimedOrg={result.extractedEntities.organization || undefined}
-            senderEmail={result.extractedEntities.emails?.[0]}
-            domain={result.extractedEntities.domains?.[0]}
-          />
-
           <LinkInspector detectedUrls={result.extractedEntities.urls} />
-
-          <ExtractedEntitiesCard
-            entities={result.extractedEntities}
-          />
 
           <NextSteps
             status={result.status}

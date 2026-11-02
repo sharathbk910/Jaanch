@@ -17,6 +17,11 @@ export function corsMiddleware(): RequestHandler {
         return callback(null, true);
       }
 
+      // In non-production, allow localhost/127.0.0.1 on any port (e.g. 5173, 5174, 5175)
+      if (process.env.NODE_ENV !== 'production' && /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)) {
+        return callback(null, true);
+      }
+
       return callback(new Error(`CORS blocked: Origin '${origin}' is not authorized`));
     },
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],

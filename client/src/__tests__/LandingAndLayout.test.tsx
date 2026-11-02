@@ -151,6 +151,25 @@ describe('Phase 6A – Layout & Landing Page Components', () => {
       expect(textarea.value.length).toBeGreaterThanOrEqual(25);
       expect(submitBtn).not.toBeDisabled();
     });
+
+    it('displays audit output preview on the left side of the audit button when offer is selected', () => {
+      render(
+        <MemoryRouter>
+          <LanguageProvider>
+            <SubmissionCard />
+          </LanguageProvider>
+        </MemoryRouter>
+      );
+
+      const outputContainer = screen.getByTestId('audit-output-left');
+      expect(outputContainer).toBeInTheDocument();
+
+      // Click Fee Scam scenario
+      fireEvent.click(screen.getByTestId('scenario-fee'));
+
+      expect(outputContainer).toHaveTextContent(/High Concern/i);
+      expect(outputContainer).toHaveTextContent(/OUTPUT:/i);
+    });
   });
 
   describe('Security & Official URLs', () => {

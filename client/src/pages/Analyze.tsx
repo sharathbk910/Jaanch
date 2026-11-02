@@ -6,7 +6,6 @@ import {
   Clipboard,
   Check,
   AlertCircle,
-  ShieldCheck,
   Sparkles,
   ChevronDown,
   ChevronUp,
@@ -298,32 +297,19 @@ export function Analyze() {
       // 1. Client-side PII redaction: only sanitized text is transmitted
       const clientRedacted = redactText(textToAnalyze);
 
-      // 2. Prepare payload per consent specifications
-      // Invariant: If shareIndicators is ON, send indicators; otherwise never send indicators
+      // 2. Prepare payload
       const consentPayload = {
-        aiAnalysis,
-        shareIndicators,
+        aiAnalysis: true,
+        shareIndicators: false,
       };
-
-      const senderPayload =
-        showSenderFields && (senderEmail || senderPhone || senderDomain || effectiveOrganization || emailHeaders)
-          ? {
-              email: senderEmail.trim() || undefined,
-              phone: senderPhone.trim() || undefined,
-              domain: senderDomain.trim() || undefined,
-              organization: effectiveOrganization.trim() || undefined,
-              headers: emailHeaders.trim() || undefined,
-            }
-          : undefined;
 
       const payload = {
         text: clientRedacted.redactedText,
         domain: domainToUse,
         channel,
-        sender: senderPayload,
         consentFlags: consentPayload,
         inputType: uploadedFileName ? 'document_extract' : 'raw_text',
-        saveToHistory: Boolean(user && saveToHistory),
+        saveToHistory: Boolean(user),
       };
 
       // 3. Dispatch typed API request with Zod-validated response
@@ -364,10 +350,6 @@ export function Analyze() {
     <div className="w-full max-w-editorial mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
       {/* Top Header */}
       <div className="mb-8">
-        <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-mono tracking-wider text-terracotta bg-surface border border-pill mb-3">
-          <ShieldCheck className="w-3.5 h-3.5" aria-hidden="true" />
-          <span>{t.analyzer.badge}</span>
-        </div>
         <h1 className="font-serif text-3xl sm:text-4xl font-bold text-primary tracking-tight mb-2">
           {t.analyzer.title}
         </h1>
@@ -383,10 +365,10 @@ export function Analyze() {
           <button
             type="button"
             onClick={() => setActiveTab('paste')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+            className={`flex items-center gap-2 px-4 py-2 border-2 border-neo-border text-xs sm:text-sm font-bold uppercase tracking-wider transition-all cursor-pointer ${
               activeTab === 'paste'
-                ? 'bg-primary text-background'
-                : 'text-body hover:text-primary hover:bg-surface'
+                ? 'bg-neo-sky text-foreground shadow-neo-sm'
+                : 'bg-surface text-body hover:bg-neo-sky-light hover:text-foreground'
             }`}
           >
             <FileText className="w-4 h-4" aria-hidden="true" />
@@ -395,10 +377,10 @@ export function Analyze() {
           <button
             type="button"
             onClick={() => setActiveTab('upload')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+            className={`flex items-center gap-2 px-4 py-2 border-2 border-neo-border text-xs sm:text-sm font-bold uppercase tracking-wider transition-all cursor-pointer ${
               activeTab === 'upload'
-                ? 'bg-primary text-background'
-                : 'text-body hover:text-primary hover:bg-surface'
+                ? 'bg-neo-sky text-foreground shadow-neo-sm'
+                : 'bg-surface text-body hover:bg-neo-sky-light hover:text-foreground'
             }`}
           >
             <Upload className="w-4 h-4" aria-hidden="true" />
@@ -628,231 +610,6 @@ export function Analyze() {
           </div>
         )}
 
-        {/* Structured Context Selects: Domain, Channel, Claimed Org */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6 pt-6 border-t border-border">
-          {/* Domain Select */}
-          <div>
-            <label htmlFor="analyzer-domain-select" className="block text-xs font-semibold text-primary mb-1.5">
-              {t.analyzer.domainLabel}
-            </label>
-            <select
-              id="analyzer-domain-select"
-              value={domain}
-              onChange={(e) => setDomain(e.target.value as OpportunityDomain)}
-              className="w-full px-3 py-2 text-xs rounded-md border border-border bg-background text-primary focus:outline-none focus:ring-1 focus:ring-terracotta transition-colors"
-            >
-              {DOMAIN_OPTIONS.map((opt) => (
-                <option key={opt.value} value={opt.value}>
-                  {t.analyzer.domains[opt.key as keyof typeof t.analyzer.domains]}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          {/* Channel Select */}
-          <div>
-            <label htmlFor="analyzer-channel-select" className="block text-xs font-semibold text-primary mb-1.5">
-              {t.analyzer.channelLabel}
-            </label>
-            <select
-              id="analyzer-channel-select"
-              value={channel}
-              onChange={(e) => setChannel(e.target.value as OpportunityChannel)}
-              className="w-full px-3 py-2 text-xs rounded-md border border-border bg-background text-primary focus:outline-none focus:ring-1 focus:ring-terracotta transition-colors"
-            >
-              {CHANNEL_OPTIONS.map((opt) => (
-                <option key={opt.value} value={opt.value}>
-                  {t.analyzer.channels[opt.key as keyof typeof t.analyzer.channels]}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          {/* Claimed Organization Select */}
-          <div>
-            <label htmlFor="analyzer-org-select" className="block text-xs font-semibold text-primary mb-1.5">
-              {t.analyzer.claimedOrgLabel}
-            </label>
-            <select
-              id="analyzer-org-select"
-              value={claimedOrg}
-              onChange={(e) => setClaimedOrg(e.target.value)}
-              className="w-full px-3 py-2 text-xs rounded-md border border-border bg-background text-primary focus:outline-none focus:ring-1 focus:ring-terracotta transition-colors"
-            >
-              <option value="">-- None / Unknown --</option>
-              {KNOWN_ORGANIZATIONS.map((org) => (
-                <option key={org} value={org}>
-                  {org}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
-
-        {/* Custom Organization Text Input (if Other / Unlisted is selected) */}
-        {claimedOrg === 'Other / Unlisted Organization' && (
-          <div className="mt-3">
-            <Input
-              type="text"
-              value={customOrg}
-              onChange={(e) => setCustomOrg(e.target.value)}
-              placeholder="Enter exact claimed organization name..."
-              className="w-full text-xs"
-            />
-          </div>
-        )}
-
-        {/* Collapsible Sender & Headers Details */}
-        <div className="mt-4 pt-4 border-t border-border">
-          <button
-            type="button"
-            onClick={() => setShowSenderFields(!showSenderFields)}
-            className="flex items-center justify-between w-full py-2 text-left text-xs font-medium text-body hover:text-primary transition-colors focus:outline-none"
-            aria-expanded={showSenderFields}
-          >
-            <span className="font-semibold">{t.analyzer.senderToggle}</span>
-            {showSenderFields ? (
-              <ChevronUp className="w-4 h-4 text-muted" aria-hidden="true" />
-            ) : (
-              <ChevronDown className="w-4 h-4 text-muted" aria-hidden="true" />
-            )}
-          </button>
-
-          {showSenderFields && (
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-3 pb-2">
-              <div>
-                <label htmlFor="sender-email-input" className="block text-xs font-medium text-primary mb-1">
-                  {t.analyzer.senderEmail}
-                </label>
-                <Input
-                  id="sender-email-input"
-                  type="email"
-                  value={senderEmail}
-                  onChange={(e) => setSenderEmail(e.target.value)}
-                  placeholder={t.analyzer.senderEmailPlaceholder}
-                  className="text-xs"
-                />
-              </div>
-              <div>
-                <label htmlFor="sender-phone-input" className="block text-xs font-medium text-primary mb-1">
-                  {t.analyzer.senderPhone}
-                </label>
-                <Input
-                  id="sender-phone-input"
-                  type="tel"
-                  value={senderPhone}
-                  onChange={(e) => setSenderPhone(e.target.value)}
-                  placeholder={t.analyzer.senderPhonePlaceholder}
-                  className="text-xs"
-                />
-              </div>
-              <div>
-                <label htmlFor="sender-domain-input" className="block text-xs font-medium text-primary mb-1">
-                  {t.analyzer.senderDomain}
-                </label>
-                <Input
-                  id="sender-domain-input"
-                  type="text"
-                  value={senderDomain}
-                  onChange={(e) => setSenderDomain(e.target.value)}
-                  placeholder={t.analyzer.senderDomainPlaceholder}
-                  className="text-xs"
-                />
-              </div>
-            </div>
-          )}
-
-          {/* Email Headers Disclosure */}
-          <div className="mt-2">
-            <button
-              type="button"
-              onClick={() => setShowHeaders(!showHeaders)}
-              className="flex items-center justify-between w-full py-1 text-left text-xs text-muted hover:text-primary transition-colors focus:outline-none"
-              aria-expanded={showHeaders}
-            >
-              <span>{t.analyzer.headersToggle}</span>
-              {showHeaders ? (
-                <ChevronUp className="w-3.5 h-3.5" aria-hidden="true" />
-              ) : (
-                <ChevronDown className="w-3.5 h-3.5" aria-hidden="true" />
-              )}
-            </button>
-
-            {showHeaders && (
-              <div className="pt-2">
-                <Textarea
-                  rows={4}
-                  value={emailHeaders}
-                  onChange={(e) => setEmailHeaders(e.target.value)}
-                  placeholder={t.analyzer.headersPlaceholder}
-                  className="font-mono text-xs"
-                />
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* Consent & Privacy Toggles (ALL DEFAULT OFF) */}
-        <div className="mt-6 pt-6 border-t border-border space-y-4">
-          <div className="text-xs font-semibold text-primary uppercase tracking-wider font-mono">
-            Privacy & Threat Intelligence Controls
-          </div>
-
-          {/* Consent 1: AI Analysis */}
-          <label className="flex items-start gap-3 cursor-pointer select-none">
-            <input
-              type="checkbox"
-              checked={aiAnalysis}
-              onChange={(e) => setAiAnalysis(e.target.checked)}
-              className="mt-0.5 h-4 w-4 rounded border-border text-terracotta focus:ring-terracotta"
-            />
-            <div className="text-xs">
-              <span className="font-medium text-primary block">
-                {t.analyzer.consentAi}
-              </span>
-              <span className="text-muted block mt-0.5">
-                {t.analyzer.consentAiSub}
-              </span>
-            </div>
-          </label>
-
-          {/* Consent 2: Share Threat Indicators */}
-          <label className="flex items-start gap-3 cursor-pointer select-none">
-            <input
-              type="checkbox"
-              checked={shareIndicators}
-              onChange={(e) => setShareIndicators(e.target.checked)}
-              className="mt-0.5 h-4 w-4 rounded border-border text-terracotta focus:ring-terracotta"
-            />
-            <div className="text-xs">
-              <span className="font-medium text-primary block">
-                {t.analyzer.consentShare}
-              </span>
-              <span className="text-muted block mt-0.5">
-                {t.analyzer.consentShareSub}
-              </span>
-            </div>
-          </label>
-
-          {/* Consent 3: Save to History */}
-          <label className="flex items-start gap-3 cursor-pointer select-none">
-            <input
-              type="checkbox"
-              checked={saveToHistory}
-              onChange={(e) => setSaveToHistory(e.target.checked)}
-              className="mt-0.5 h-4 w-4 rounded border-border text-terracotta focus:ring-terracotta"
-            />
-            <div className="text-xs">
-              <span className="font-medium text-primary block">
-                {t.analyzer.consentHistory}
-              </span>
-              <span className="text-muted block mt-0.5">
-                {t.analyzer.consentHistorySub} {!user && '(Sign in after audit to save permanently)'}
-              </span>
-            </div>
-          </label>
-        </div>
-
         {/* Live Redaction Preview: What Jaanch Sends Before Submit */}
         {offerText.trim().length > 0 && (
           <div className="mt-6 pt-6 border-t border-border">
@@ -976,12 +733,7 @@ export function Analyze() {
         )}
 
         {/* Submit Action Bar */}
-        <div className="mt-6 pt-6 border-t border-border flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
-          <div className="text-xs text-muted flex items-center gap-1.5">
-            <Lock className="w-3.5 h-3.5 text-terracotta" aria-hidden="true" />
-            <span>Zero file uploads • 100% Client-side sanitization</span>
-          </div>
-
+        <div className="mt-6 pt-6 border-t border-border flex justify-end">
           <Button
             type="button"
             variant="primary"
@@ -1017,7 +769,7 @@ export function Analyze() {
               setClaimedOrg('Tata Consultancy Services (TCS)');
               setActiveTab('paste');
             }}
-            className="px-3 py-1.5 rounded-full text-xs font-medium border border-border bg-background hover:border-primary text-body hover:text-primary transition-colors focus:outline-none focus:ring-1 focus:ring-primary"
+            className="px-3 py-1.5 border-2 border-neo-border shadow-neo-sm bg-neo-sky text-foreground text-xs font-bold uppercase tracking-wider hover:bg-neo-sky-light hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all cursor-pointer"
           >
             1. {t.analyzer.sampleGenuine}
           </button>
@@ -1031,7 +783,7 @@ export function Analyze() {
               setCustomOrg('Apex Tech Careers');
               setActiveTab('paste');
             }}
-            className="px-3 py-1.5 rounded-full text-xs font-medium border border-border bg-background hover:border-terracotta text-body hover:text-terracotta transition-colors focus:outline-none focus:ring-1 focus:ring-terracotta"
+            className="px-3 py-1.5 border-2 border-neo-border shadow-neo-sm bg-neo-sky text-foreground text-xs font-bold uppercase tracking-wider hover:bg-neo-sky-light hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all cursor-pointer"
           >
             2. {t.analyzer.sampleFeeScam}
           </button>
@@ -1044,7 +796,7 @@ export function Analyze() {
               setClaimedOrg('State Bank of India (SBI)');
               setActiveTab('paste');
             }}
-            className="px-3 py-1.5 rounded-full text-xs font-medium border border-border bg-background hover:border-terracotta text-body hover:text-terracotta transition-colors focus:outline-none focus:ring-1 focus:ring-terracotta"
+            className="px-3 py-1.5 border-2 border-neo-border shadow-neo-sm bg-neo-sky text-foreground text-xs font-bold uppercase tracking-wider hover:bg-neo-sky-light hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all cursor-pointer"
           >
             3. {t.analyzer.sampleOtpScam}
           </button>

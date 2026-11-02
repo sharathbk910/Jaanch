@@ -260,7 +260,7 @@ export function ShareAlert({ intelMatch, originalText = '', language: propLang }
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => logShareAudit('share_opened')}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-md text-xs font-semibold text-canvas bg-primary hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-terracotta transition-opacity shadow-sm"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-foreground bg-neo-sky border-2 border-neo-border shadow-neo-sm hover:bg-neo-sky-light hover:text-foreground focus:outline-none focus:ring-2 focus:ring-accent transition-all cursor-pointer"
               >
                 <ExternalLink className="w-3.5 h-3.5" aria-hidden="true" />
                 <span>{t.openWhatsApp}</span>

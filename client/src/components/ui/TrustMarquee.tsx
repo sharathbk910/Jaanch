@@ -17,19 +17,20 @@ const PORTALS: PortalItem[] = [
   { name: 'DigiLocker Verification', authority: 'Digital India MeitY', tag: 'Tamper-Proof', url: 'https://www.digilocker.gov.in' },
   { name: 'National Scholarship Portal', authority: 'Govt of India', tag: 'Scholarship Auth', url: 'https://scholarships.gov.in' },
   { name: 'NCH 1915 Consumer Cell', authority: 'Department of Consumer Affairs', tag: 'Fee Refund', url: 'https://consumerhelpline.gov.in' },
+  { name: 'Chakshu Sanchar Saathi', authority: 'Department of Telecommunications', tag: 'Fraud Detection', url: 'https://sancharsaathi.gov.in' },
 ];
 
 export function TrustMarquee() {
   return (
     <div className="w-full py-4 border-y-2 border-neo-border bg-surface/50 overflow-hidden relative">
-      <Marquee speed={35} direction="right" pauseOnHover={false} className="py-2">
+      <Marquee speed={32} direction="right" pauseOnHover={false} className="py-1">
         {PORTALS.map((portal) => (
           <a
             key={portal.name}
             href={portal.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-3 bg-surface border-2 border-neo-border shadow-neo-sm px-4 py-2.5 hover:bg-neo-sky/30 hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all group shrink-0"
+            className="flex items-center gap-3 bg-surface border-2 border-neo-border shadow-neo-sm px-4 py-2.5 hover:bg-neo-sky/30 hover:border-foreground transition-colors duration-150 group shrink-0 cursor-pointer"
           >
             <div className="w-2.5 h-2.5 rounded-full bg-neo-sky border border-neo-border group-hover:bg-primary transition-colors" />
             <div className="text-left">

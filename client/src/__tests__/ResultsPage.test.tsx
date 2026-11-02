@@ -79,63 +79,32 @@ describe('Phase 6C – Results & PDF (Results.tsx / ResultsPage.tsx)', () => {
     ).toBeInTheDocument();
   });
 
-  it('renders two-column layout with sticky sidebar jump navigation', () => {
+  it('renders two-column layout with sticky sidebar actions and helpline', () => {
     const { container } = renderResultsWithResult(SAMPLE_CONCERN_RESULT);
-
-    // Sidebar jump navigation links
-    const jumpNav = screen.getByText(/Jump to Section/i);
-    expect(jumpNav).toBeInTheDocument();
 
     const aside = container.querySelector('aside');
     expect(aside).toBeInTheDocument();
     expect(aside).toHaveClass('lg:sticky');
 
-    // Section anchors exist
-    expect(container.querySelector('#verdict')).toBeInTheDocument();
-    expect(container.querySelector('#stop-protect')).toBeInTheDocument();
+    // Section anchors exist / omitted per user request
+    expect(container.querySelector('#verdict')).not.toBeInTheDocument();
+    expect(container.querySelector('#stop-protect')).not.toBeInTheDocument();
     expect(container.querySelector('#why-status')).toBeInTheDocument();
-    expect(container.querySelector('#signals')).toBeInTheDocument();
-    expect(container.querySelector('#unverified')).toBeInTheDocument();
-    expect(container.querySelector('#response-generators')).toBeInTheDocument();
+    expect(container.querySelector('#signals')).not.toBeInTheDocument();
+    expect(container.querySelector('#unverified')).not.toBeInTheDocument();
+    expect(container.querySelector('#response-generators')).not.toBeInTheDocument();
     expect(container.querySelector('#link-inspector')).toBeInTheDocument();
     expect(container.querySelector('#next-steps')).toBeInTheDocument();
   });
 
-  it('renders StatusBanner for each status (Likely Genuine, Needs Review, High Concern)', () => {
-    // 1. Likely Genuine
-    const { unmount: unmount1 } = renderResultsWithResult(SAMPLE_GENUINE_RESULT);
-    expect(screen.getByRole('heading', { level: 2, name: /Likely Genuine/i })).toBeInTheDocument();
-    expect(screen.getByText(/Confidence: 94%/i)).toBeInTheDocument();
-    unmount1();
-
-    // 2. Needs Review
-    const { unmount: unmount2 } = renderResultsWithResult(SAMPLE_REVIEW_RESULT);
-    expect(screen.getByRole('heading', { level: 2, name: /Needs Review/i })).toBeInTheDocument();
-    expect(screen.getByText(/Confidence: 68%/i)).toBeInTheDocument();
-    unmount2();
-
-    // 3. High Concern
-    renderResultsWithResult(SAMPLE_CONCERN_RESULT);
-    expect(screen.getByRole('heading', { level: 2, name: /High Concern/i })).toBeInTheDocument();
-    expect(screen.getByText(/Confidence: 96%/i)).toBeInTheDocument();
-    expect(screen.getByText(/Independent checks evaluated: 8 of 8/i)).toBeInTheDocument();
+  it('does not render StatusBanner on Results page per user request', () => {
+    const { container } = renderResultsWithResult(SAMPLE_GENUINE_RESULT);
+    expect(container.querySelector('#status-banner')).not.toBeInTheDocument();
   });
 
-  it('renders "Stop and protect yourself" callout for high concern with 1930 and cybercrime.gov.in', () => {
+  it('does not render "Stop and protect yourself" callout on Results page per user request', () => {
     renderResultsWithResult(SAMPLE_CONCERN_RESULT);
-
-    const callout = document.querySelector('#stop-protect');
-    expect(callout).toBeInTheDocument();
-    expect(within(callout as HTMLElement).getByText(/Stop and Protect Yourself/i)).toBeInTheDocument();
-    expect(within(callout as HTMLElement).getByText(/CRITICAL FRAUD ALERT – 1930 HELPLINE/i)).toBeInTheDocument();
-
-    const call1930Link = within(callout as HTMLElement).getByRole('link', { name: /Call 1930/i });
-    expect(call1930Link).toHaveAttribute('href', 'tel:1930');
-
-    const cybercrimeLink = within(callout as HTMLElement).getByRole('link', { name: /cybercrime\.gov\.in/i });
-    expect(cybercrimeLink).toHaveAttribute('href', 'https://cybercrime.gov.in');
-    expect(cybercrimeLink).toHaveAttribute('target', '_blank');
-    expect(cybercrimeLink).toHaveAttribute('rel', 'noopener noreferrer');
+    expect(document.querySelector('#stop-protect')).not.toBeInTheDocument();
   });
 
   it('does not render official portal verification checklist per user request', () => {
@@ -143,43 +112,9 @@ describe('Phase 6C – Results & PDF (Results.tsx / ResultsPage.tsx)', () => {
     expect(document.querySelector('#portal-checklist')).not.toBeInTheDocument();
   });
 
-  it('renders Challenge Email generator and Safe Reply generator with copy buttons', async () => {
-    const user = userEvent.setup();
-    const writeTextSpy = vi.spyOn(navigator.clipboard, 'writeText').mockResolvedValue(undefined);
-
-    // Test on genuine / review offer where Safe Reply is allowed
+  it('does not render ResponseGenerators communication templates per user request', () => {
     renderResultsWithResult(SAMPLE_REVIEW_RESULT);
-
-    const responseSection = document.querySelector('#response-generators');
-    expect(responseSection).toBeInTheDocument();
-
-    // Challenge Email tab
-    const challengeTab = screen.getByRole('button', { name: /Challenge Email Template/i });
-    await user.click(challengeTab);
-    expect(screen.getByText(/Formal verification inquiry requesting official company email/i)).toBeInTheDocument();
-
-    const copyBtn = screen.getByRole('button', { name: /Copy Template/i });
-    await user.click(copyBtn);
-    expect(writeTextSpy).toHaveBeenCalled();
-    expect(screen.getByText(/Copied to clipboard!/i)).toBeInTheDocument();
-
-    // Safe Reply tab
-    const safeReplyTab = screen.getByRole('button', { name: /Safe Reply Template/i });
-    await user.click(safeReplyTab);
-    expect(screen.getByText(/Polite response asking for official careers link/i)).toBeInTheDocument();
-  });
-
-  it('hides Safe Reply generator when offer has High Concern (Decision D8)', async () => {
-    const user = userEvent.setup();
-    renderResultsWithResult(SAMPLE_CONCERN_RESULT);
-
-    const safeReplyTab = screen.getByRole('button', { name: /Safe Reply Template/i });
-    await user.click(safeReplyTab);
-
-    // Warning alert displayed instead of reply text
-    expect(
-      screen.getByText(/Safe reply is disabled for high-concern offers. Do not engage, reply, or negotiate/i)
-    ).toBeInTheDocument();
+    expect(document.querySelector('#response-generators')).not.toBeInTheDocument();
   });
 
   it('renders Link-check UI with the 3 labelled levels', async () => {
@@ -243,7 +178,7 @@ describe('Phase 6C – Results & PDF (Results.tsx / ResultsPage.tsx)', () => {
     expect(container.querySelectorAll('script').length).toBe(0);
 
     // Verify text content is escaped as plain text strings
-    expect(screen.getByText(/<script>window\.pwned=1;<\/script>/i)).toBeInTheDocument();
+    expect(screen.getByText(/<img src=x onerror=alert\("why-xss"\)>/i)).toBeInTheDocument();
     expect(screen.getAllByText(/<script>alert\("xss-title"\)<\/script>/i).length).toBeGreaterThan(0);
   });
 
@@ -272,17 +207,17 @@ describe('Phase 6C – Results & PDF (Results.tsx / ResultsPage.tsx)', () => {
 
     // Initial: Genuine
     expect(screen.getByRole('heading', { level: 1, name: /Sample Report Walkthrough/i })).toBeInTheDocument();
-    expect(screen.getByRole('heading', { level: 2, name: /Likely Genuine/i })).toBeInTheDocument();
+    expect(screen.getByText(/Verified corporate internship offer with transparent terms/i)).toBeInTheDocument();
 
     // Switch to Needs Review
     const reviewTab = screen.getByRole('button', { name: /Needs Review/i });
     await user.click(reviewTab);
-    expect(screen.getByRole('heading', { level: 2, name: /Needs Review/i })).toBeInTheDocument();
+    expect(screen.getByText(/Informal freelance opportunity using free email/i)).toBeInTheDocument();
 
     // Switch to Fee Scam
     const feeScamTab = screen.getByRole('button', { name: /Fee Scam/i });
     await user.click(feeScamTab);
-    expect(screen.getByRole('heading', { level: 2, name: /High Concern/i })).toBeInTheDocument();
+    expect(screen.getByText(/Impersonation scam demanding an upfront refundable laptop security deposit/i)).toBeInTheDocument();
   });
 
   it('passes axe accessibility audit on Results page across all 3 statuses', async () => {

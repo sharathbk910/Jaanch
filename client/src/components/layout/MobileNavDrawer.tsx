@@ -247,7 +247,7 @@ export function MobileNavDrawer({ isOpen, onClose }: MobileNavDrawerProps) {
               <Link
                 to="/signup"
                 onClick={onClose}
-                className="w-full min-h-[44px] flex items-center justify-center text-sm font-medium text-background bg-primary rounded-chip hover:opacity-90"
+                className="w-full min-h-[44px] flex items-center justify-center text-sm font-bold uppercase tracking-wider text-foreground bg-neo-sky border-2 border-neo-border shadow-neo-sm hover:bg-neo-sky-light"
               >
                 {t('navigation.signup')}
               </Link>

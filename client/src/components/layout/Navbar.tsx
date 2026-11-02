@@ -15,16 +15,16 @@ export function Navbar() {
 
   return (
     <>
-      {/* Top Helpline Alert Bar in Exactly 1 Line */}
-      <div className="w-full bg-terracotta text-white py-1.5 px-4 text-xs font-semibold tracking-wide text-center border-b-2 border-neo-border select-none whitespace-nowrap overflow-hidden text-ellipsis flex items-center justify-center z-50">
+      {/* Top Helpline Alert Bar (MotherDuck Orange Banner Style) */}
+      <div className="w-full bg-terracotta text-white py-1.5 px-4 text-xs font-mono font-bold uppercase tracking-wider text-center border-b-2 border-neo-border select-none whitespace-nowrap overflow-hidden text-ellipsis flex items-center justify-center z-50">
         <a
           href="https://cybercrime.gov.in"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 hover:underline truncate"
+          className="inline-flex items-center gap-2 hover:underline truncate"
         >
-          <span className="truncate">1930 National Cyber Crime Helpline — Report fraud immediately at cybercrime.gov.in</span>
-          <span aria-hidden="true" className="shrink-0">→</span>
+          <span className="truncate">1930 NATIONAL CYBER CRIME HELPLINE — REPORT FRAUD IMMEDIATELY AT CYBERCRIME.GOV.IN</span>
+          <span aria-hidden="true" className="shrink-0 font-bold">→</span>
         </a>
       </div>
 

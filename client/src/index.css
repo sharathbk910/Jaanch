@@ -6,6 +6,8 @@
 @import '@fontsource/inter/400.css';
 @import '@fontsource/inter/500.css';
 @import '@fontsource/inter/600.css';
+@import '@fontsource/inter/700.css';
+@import '@fontsource/inter/800.css';
 @import '@fontsource/jetbrains-mono/400.css';
 @import '@fontsource/jetbrains-mono/500.css';
 @import '@fontsource/noto-sans-devanagari/400.css';
@@ -40,30 +42,36 @@
 /* Continuous Infinite Marquee Parallax (Left-to-Right & Right-to-Left) */
 @keyframes marquee-scroll-right {
   0% {
-    transform: translate3d(calc(-100% - var(--marquee-gap, 1.5rem)), 0, 0);
+    transform: translate3d(-25%, 0, 0);
   }
   100% {
-    transform: translate3d(0, 0, 0);
+    transform: translate3d(0%, 0, 0);
   }
 }
 
 @keyframes marquee-scroll-left {
   0% {
-    transform: translate3d(0, 0, 0);
+    transform: translate3d(0%, 0, 0);
   }
   100% {
-    transform: translate3d(calc(-100% - var(--marquee-gap, 1.5rem)), 0, 0);
+    transform: translate3d(-25%, 0, 0);
   }
 }
 
 .animate-marquee-right {
   animation: marquee-scroll-right var(--marquee-duration, 35s) linear infinite !important;
   will-change: transform;
+  transform: translate3d(-25%, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
 }
 
 .animate-marquee-left {
   animation: marquee-scroll-left var(--marquee-duration, 35s) linear infinite !important;
   will-change: transform;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
 }
 
 /* Floating Doodle Clouds & Micro-Interactions */

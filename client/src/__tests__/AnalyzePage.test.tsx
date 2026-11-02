@@ -81,56 +81,23 @@ describe('Phase 6B – Analyzer Page (AnalyzePage.tsx)', () => {
     const textarea = screen.getByRole('textbox', { name: /Offer Message or Email Text/i }) as HTMLTextAreaElement;
     expect(textarea.value).toBe(SCENARIO_GENUINE);
 
-    const select = screen.getByRole('combobox', { name: /Opportunity Category/i }) as HTMLSelectElement;
-    expect(select.value).toBe('internship');
-
     // Test fee scam scenario
     const feeBtn = screen.getByRole('button', { name: /Upfront Fee Scam/i });
     await user.click(feeBtn);
     expect(textarea.value).toBe(SCENARIO_FEE_SCAM);
-    expect(select.value).toBe('job');
 
     // Test OTP scam scenario
     const otpBtn = screen.getByRole('button', { name: /OTP Phishing Scam/i });
     await user.click(otpBtn);
     expect(textarea.value).toBe(SCENARIO_OTP_SCAM);
-    expect(select.value).toBe('scholarship');
   });
 
-  it('expands optional sender details and captures recruiter metadata', async () => {
-    const user = userEvent.setup();
+  it('renders a streamlined analyzer interface without redundant form controls', () => {
     renderAnalyzePage();
 
-    const senderToggle = screen.getByRole('button', { name: /Add Sender & Contact Details/i });
-    await user.click(senderToggle);
-
-    expect(screen.getByLabelText(/Recruiter \/ Sender Email/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/Recruiter Phone \/ WhatsApp/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/Company Website \/ Domain/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/Claimed Organization/i)).toBeInTheDocument();
-
-    await user.type(screen.getByLabelText(/Recruiter \/ Sender Email/i), 'careers@infosys-jobs.org');
-    await user.type(screen.getByLabelText(/Recruiter Phone \/ WhatsApp/i), '+91 98765 43210');
-
-    expect(screen.getByLabelText(/Recruiter \/ Sender Email/i)).toHaveValue('careers@infosys-jobs.org');
-    expect(screen.getByLabelText(/Recruiter Phone \/ WhatsApp/i)).toHaveValue('+91 98765 43210');
-  });
-
-  it('allows toggling AI analysis and indicator sharing consent flags', async () => {
-    const user = userEvent.setup();
-    renderAnalyzePage();
-
-    const aiCheckbox = screen.getByRole('checkbox', { name: /Allow AI Deep Analysis/i });
-    const shareCheckbox = screen.getByRole('checkbox', { name: /Contribute Anonymous Threat Indicators/i });
-
-    expect(aiCheckbox).not.toBeChecked();
-    expect(shareCheckbox).not.toBeChecked();
-
-    await user.click(aiCheckbox);
-    expect(aiCheckbox).toBeChecked();
-
-    await user.click(shareCheckbox);
-    expect(shareCheckbox).toBeChecked();
+    expect(screen.queryByLabelText(/Recruiter \/ Sender Email/i)).not.toBeInTheDocument();
+    expect(screen.queryByLabelText(/Company Website \/ Domain/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/Privacy & Threat Intelligence Controls/i)).not.toBeInTheDocument();
   });
 
   it('submits valid analysis, calls apiClient, and navigates to local results for guest', async () => {
@@ -186,7 +153,7 @@ describe('Phase 6B – Analyzer Page (AnalyzePage.tsx)', () => {
     expect(interceptedCall.text).toContain('[UPI]');
     expect(interceptedCall.text).not.toContain('tcs.hr@okaxis');
     expect(interceptedCall.consentFlags).toEqual({
-      aiAnalysis: false,
+      aiAnalysis: true,
       shareIndicators: false,
     });
     expect(interceptedCall.saveToHistory).toBe(false);
@@ -257,18 +224,9 @@ describe('Phase 6B – Analyzer Page (AnalyzePage.tsx)', () => {
     expect(screen.getByRole('button', { name: /Verify Offer Now/i })).toBeDisabled();
   });
 
-  it('guarantees consent defaults are all false and never transmits raw PII', async () => {
+  it('guarantees client-side PII redaction and never transmits raw personal identifiers', async () => {
     const user = userEvent.setup();
     renderAnalyzePage();
-
-    // Verify all consent checkboxes default to unchecked
-    const aiCheckbox = screen.getByRole('checkbox', { name: /Allow AI Deep Analysis/i });
-    const shareCheckbox = screen.getByRole('checkbox', { name: /Contribute Anonymous Threat Indicators/i });
-    const historyCheckbox = screen.getByRole('checkbox', { name: /Save Audit to Private History/i });
-
-    expect(aiCheckbox).not.toBeChecked();
-    expect(shareCheckbox).not.toBeChecked();
-    expect(historyCheckbox).not.toBeChecked();
 
     // Input text containing Aadhaar and Phone
     const textarea = screen.getByRole('textbox', { name: /Offer Message or Email Text/i });
@@ -289,11 +247,11 @@ describe('Phase 6B – Analyzer Page (AnalyzePage.tsx)', () => {
     });
 
     const callPayload = vi.mocked(apiClient.analyzeOffer).mock.calls[0][0];
-    console.log('\n--- VERIFIED NETWORK PAYLOAD WITH CONSENT DEFAULTS & PII REDACTION ---');
+    console.log('\n--- VERIFIED NETWORK PAYLOAD WITH PII REDACTION ---');
     console.log(JSON.stringify(callPayload, null, 2));
 
     expect(callPayload.consentFlags).toEqual({
-      aiAnalysis: false,
+      aiAnalysis: true,
       shareIndicators: false,
     });
     expect(callPayload.saveToHistory).toBe(false);
