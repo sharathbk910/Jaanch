@@ -622,9 +622,6 @@ export function LinkCheckPage() {
     <main className="w-full max-w-editorial mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
       <div className="max-w-2xl mx-auto space-y-6">
         <div>
-          <span className="font-mono text-xs text-muted-foreground block mb-1 font-medium uppercase">
-            HEURISTIC SAFETY TOOL
-          </span>
           <h1 className="font-serif text-2xl sm:text-3xl font-bold text-foreground">
             {t('results.linkInspectorTitle')}
           </h1>

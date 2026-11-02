@@ -83,7 +83,6 @@ export function LinkInspector({ initialUrl, detectedUrls = [] }: LinkInspectorPr
           <span className="font-mono text-[11px] text-muted-foreground uppercase font-medium">
             URL INTEGRITY & TYPOSQUATTING
           </span>
-          <span className="font-mono text-[11px] text-muted-foreground">3-Level Heuristics</span>
         </div>
         <h3 className="font-serif text-lg sm:text-xl font-bold text-foreground">
           {t('results.linkInspectorTitle')}

@@ -575,9 +575,6 @@ export function HistoryPage() {
   if (!user && !authLoading) {
     return (
       <div className="w-full max-w-editorial mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16">
-        <span className="font-mono text-xs text-muted block mb-1">
-          {t.history.eyebrow}
-        </span>
         <h1 className="font-serif text-3xl font-bold text-primary tracking-tight mb-2">
           {t.history.title}
         </h1>
@@ -631,9 +628,6 @@ export function HistoryPage() {
     <div className="w-full max-w-editorial mx-auto px-4 sm:px-6 lg:px-8 py-10">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
         <div>
-          <span className="font-mono text-xs text-muted block mb-1">
-            {t.history.eyebrow}
-          </span>
           <h1 className="font-serif text-2xl sm:text-3xl font-bold text-primary tracking-tight">
             {t.history.title}
           </h1>
