@@ -6,7 +6,7 @@
 [![TypeScript Strict](https://img.shields.io/badge/TypeScript-Strict-blue.svg)](https://www.typescriptlang.org/)
 [![Node Version](https://img.shields.io/badge/Node->=%2020.0.0-green.svg)](https://nodejs.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Tests Passing](https://img.shields.io/badge/Tests-457%20Passing%20(100%25)-brightgreen.svg)]()
+[![Tests Passing](https://img.shields.io/badge/Tests-465%20Passing%20(100%25)-brightgreen.svg)]()
 [![Corpus Eval](https://img.shields.io/badge/Eval-25%2F25%20(100%25)-brightgreen.svg)]()
 [![Acceptance](https://img.shields.io/badge/Acceptance-10%2F10%20Verified-brightgreen.svg)]()
 [![WCAG AA](https://img.shields.io/badge/Accessibility-WCAG%202.2%20AA-success.svg)](https://www.w3.org/WAI/standards-guidelines/wcag/)
@@ -212,7 +212,7 @@ Every update is verified across our full automated regression harness:
 
 | Command | Scope | Live Verification Status |
 | :--- | :--- | :--- |
-| `npm test` | Monorepo test suite (Vitest) | **457 tests passed** across 46 files (100%) |
+| `npm test` | Monorepo test suite (Vitest) | **465 tests passed** across 47 files (100%) |
 | `npm run eval` | Deterministic benchmark corpus | **25/25 passed** (100% accuracy, 0 false negatives) |
 | `npm run eval:ml` | ML model threshold calibration | Verified similarity & confidence calibration |
 | `npm run test:acceptance` | Core user journey compliance | **10/10 criteria verified** (100% PASS) |
