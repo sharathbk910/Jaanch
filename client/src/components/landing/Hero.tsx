@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Link2, ShieldCheck, Building, GraduationCap, Briefcase, FileCheck, CheckCircle2, Volume2, VolumeX, Sparkles, ExternalLink } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -21,6 +21,17 @@ export function Hero() {
   const [isPlayingAudio, setIsPlayingAudio] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.defaultMuted = true;
+      videoRef.current.muted = true;
+      const promise = videoRef.current.play();
+      if (promise && typeof promise.catch === 'function') {
+        promise.catch(() => {});
+      }
+    }
+  }, []);
 
   const toggleSound = () => {
     try {
@@ -70,7 +81,10 @@ export function Hero() {
 
     if (videoRef.current) {
       videoRef.current.muted = false;
-      videoRef.current.play().catch(() => {});
+      const promise = videoRef.current.play();
+      if (promise && typeof promise.catch === 'function') {
+        promise.catch(() => {});
+      }
     }
   };
 
@@ -159,10 +173,12 @@ export function Hero() {
                   <video
                     ref={videoRef}
                     src="/whatsapp-demo.mp4"
+                    poster="/poster.jpg"
                     autoPlay
                     loop
-                    muted={isMuted}
+                    muted
                     playsInline
+                    preload="auto"
                     className="w-full h-full object-cover"
                   />
                 </div>

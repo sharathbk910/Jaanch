@@ -1,4 +1,5 @@
 import { logger } from '../lib/logger.js';
+import { loadEnv } from '../config/env.js';
 import {
   detectLookalikeDomain,
   isPunycode,
@@ -61,8 +62,9 @@ export class LinkService {
    * Enforces fail-open resilience: returns null on network failures, timeouts, or 5xx errors.
    */
   public static async fetchMLSignal(url: string): Promise<MLUrlSignalResponse | null> {
-    const apiUrl = (process.env.ML_API_URL || 'http://localhost:8000').replace(/\/+$/, '');
-    const timeoutMs = process.env.NODE_ENV === 'test' ? 500 : parseInt(process.env.ML_TIMEOUT_MS || '3000', 10);
+    const env = loadEnv();
+    const apiUrl = env.ML_API_URL.replace(/\/+$/, '');
+    const timeoutMs = env.NODE_ENV === 'test' ? 500 : env.ML_TIMEOUT_MS;
     const endpoint = `${apiUrl}/ml/url-signal`;
 
     const controller = new AbortController();

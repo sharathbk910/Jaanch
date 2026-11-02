@@ -1,4 +1,5 @@
 import { logger } from '../lib/logger.js';
+import { loadEnv } from '../config/env.js';
 
 export interface MLSignalResult {
   source: 'ml';
@@ -25,8 +26,9 @@ export class MLService {
       return null;
     }
 
-    const apiUrl = (process.env.ML_API_URL || 'http://localhost:8000').replace(/\/+$/, '');
-    const timeoutMs = parseInt(process.env.ML_TIMEOUT_MS || '3000', 10);
+    const env = loadEnv();
+    const apiUrl = env.ML_API_URL.replace(/\/+$/, '');
+    const timeoutMs = env.ML_TIMEOUT_MS;
     const endpoint = `${apiUrl}/ml/signal`;
 
     const controller = new AbortController();

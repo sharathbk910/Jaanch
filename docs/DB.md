@@ -144,3 +144,21 @@ If a clean repository rollback to Phase 3 is required:
 git reset --hard phase-3-done
 ```
 
+---
+
+## 6. Reserved Schema & Future Evolution Tables
+
+The following 8 tables declared in `supabase/migrations/0001_enums_tables.sql` are **reserved for future phases** and are not yet wired into production server routes:
+
+1. `analyses` (historical offer analysis runs; current system persists via `submissions` and `detection_results`)
+2. `analysis_signals` (normalized relational signals per analysis)
+3. `analysis_unknowns` (normalized unverified items per analysis)
+4. `checklist_items` (user portal verification checklist items)
+5. `analysis_checks` (individual sub-check run results)
+6. `link_checks` (persisted link analysis history)
+7. `recruiter_challenges` (generated challenge emails audit log)
+8. `scam_reports` (individual scam incident reports; currently managed via `intel_records`)
+
+These tables are preserved in migrations with complete down-migration scripts for forward compatibility without incurring schema migration debt.
+
+

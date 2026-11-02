@@ -38,13 +38,25 @@ router.post(
 router.post(
   '/feedback/page',
   validateBody(PageFeedbackSchema),
-  (req: Request, res: Response) => {
+  async (req: Request, res: Response) => {
     logger.info({
       msg: 'Page feedback received',
       requestId: req.id,
       path: '/api/feedback/page',
       statusCode: 200,
     });
+
+    if (req.supabase) {
+      try {
+        await req.supabase.from('page_feedback').insert({
+          page: req.body.page,
+          rating: req.body.rating ?? null,
+          message: req.body.message ?? null,
+        });
+      } catch (err) {
+        logger.warn({ err, msg: 'Failed to persist page feedback to Supabase' });
+      }
+    }
 
     res.status(200).json({
       status: 'received',

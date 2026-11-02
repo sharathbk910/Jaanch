@@ -13,7 +13,7 @@
 - **Current Phase:** Phase 11 – Deployment & Runbook Complete (Human Gate H2 Reached)
 - **Current Tag:** `phase-11-done`
 - **Node Version:** v24.19.0 (LTS >= 20 required)
-- **Repository State:** Green monorepo; `@jaanch/shared`, `@jaanch/server`, and `@jaanch/client` fully compiled, typechecked, linted, and tested (425 tests passing across 42 test suites, 25/25 eval fixtures matching 100%, eval:ml harness passing, 10/10 acceptance criteria PASS, doctor PASS, smoke PASS)
+- **Repository State:** Green monorepo; `@jaanch/shared`, `@jaanch/server`, and `@jaanch/client` fully compiled, typechecked, linted, and tested (455 tests passing across 46 test suites, 25/25 eval fixtures matching 100%, eval:ml harness passing, 10/10 acceptance criteria PASS, doctor PASS, smoke PASS)
 
 ---
 
@@ -69,7 +69,7 @@
   - [x] Visual Proof Screenshots (`scripts/generate-landing-screenshots.mjs` & `scripts/generate-analyzer-screenshots.mjs`):
     - 18 landing screenshots in `docs/ui-shots/landing/`
     - 18 analyzer screenshots in `docs/ui-shots/analyzer/` across 360px, 768px, and 1280px viewports in Light/Dark themes and EN/HI/KN languages
-  - [x] Unit & Integration Tests: 226 passed across 24 test suites; 25/25 eval fixtures matching 100%
+  - [x] Unit & Integration Tests: 455 passed across 46 test suites; 25/25 eval fixtures matching 100%
 - **Phase 6B Verification Checklist:**
   - [x] `Analyze.tsx` & `AnalyzePage.tsx`: Full textarea with live character counter, min 25-char validation, clipboard paste action with visual notification
   - [x] Opportunity domain selector (7 domains: internship, job, scholarship, freelance, competition, general_message, other)

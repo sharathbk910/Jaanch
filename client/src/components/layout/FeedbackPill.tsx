@@ -14,23 +14,38 @@ export function FeedbackPill() {
   const [dismissed, setDismissed] = useState(() => {
     if (isTestEnv) return false;
     try {
-      return typeof window !== 'undefined' && Boolean(sessionStorage.getItem('jaanch_feedback_dismissed'));
+      return (
+        typeof window !== 'undefined' &&
+        (Boolean(sessionStorage.getItem('jaanch_feedback_dismissed')) ||
+         Boolean(localStorage.getItem('jaanch_feedback_submitted')))
+      );
     } catch {
       return false;
     }
   });
+  const [isVisible, setIsVisible] = useState(() => isTestEnv);
 
-  // Automatically dismiss the thank-you notice after 3.5 seconds
+  // For real users, wait 8 seconds before surfacing the feedback pill so they can explore first
+  useEffect(() => {
+    if (isTestEnv || dismissed) return;
+    const timer = setTimeout(() => {
+      setIsVisible(true);
+    }, 8000);
+    return () => clearTimeout(timer);
+  }, [isTestEnv, dismissed]);
+
+  // Automatically dismiss the thank-you notice after 3 seconds
   useEffect(() => {
     if (submitted && !isTestEnv) {
       try {
         sessionStorage.setItem('jaanch_feedback_dismissed', 'true');
+        localStorage.setItem('jaanch_feedback_submitted', 'true');
       } catch {
         // Ignore storage errors in private browsing
       }
       const timer = setTimeout(() => {
         setDismissed(true);
-      }, 3500);
+      }, 3000);
       return () => clearTimeout(timer);
     }
   }, [submitted, isTestEnv]);
@@ -61,7 +76,7 @@ export function FeedbackPill() {
     }
   };
 
-  if (dismissed) {
+  if (dismissed || !isVisible) {
     return null;
   }
 

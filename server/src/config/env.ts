@@ -40,6 +40,10 @@ const RawEnvSchema = z.object({
   RDAP_BASE_URL: z.string().url().default('https://rdap.org'),
   RDAP_TIMEOUT_MS: z.coerce.number().int().positive().default(5000),
 
+  // ML Microservice
+  ML_API_URL: z.string().default('http://localhost:8000'),
+  ML_TIMEOUT_MS: z.coerce.number().int().positive().default(3000),
+
   // Rate limits
   RATE_LIMIT_GLOBAL_PER_15MIN: z.coerce.number().int().positive().default(100),
   RATE_LIMIT_ANALYZE_GUEST_PER_HOUR: z.coerce.number().int().positive().default(30),
@@ -70,6 +74,8 @@ export interface ServerEnv {
   DEMO_MODE: boolean;
   RDAP_BASE_URL: string;
   RDAP_TIMEOUT_MS: number;
+  ML_API_URL: string;
+  ML_TIMEOUT_MS: number;
   RATE_LIMIT_GLOBAL_PER_15MIN: number;
   RATE_LIMIT_ANALYZE_GUEST_PER_HOUR: number;
   RATE_LIMIT_ANALYZE_USER_PER_HOUR: number;
@@ -141,6 +147,8 @@ export function loadEnv(): ServerEnv {
     DEMO_MODE: raw.DEMO_MODE,
     RDAP_BASE_URL: raw.RDAP_BASE_URL,
     RDAP_TIMEOUT_MS: raw.RDAP_TIMEOUT_MS,
+    ML_API_URL: raw.ML_API_URL,
+    ML_TIMEOUT_MS: raw.ML_TIMEOUT_MS,
     RATE_LIMIT_GLOBAL_PER_15MIN: raw.RATE_LIMIT_GLOBAL_PER_15MIN,
     RATE_LIMIT_ANALYZE_GUEST_PER_HOUR: raw.RATE_LIMIT_ANALYZE_GUEST_PER_HOUR,
     RATE_LIMIT_ANALYZE_USER_PER_HOUR: raw.RATE_LIMIT_ANALYZE_USER_PER_HOUR,
