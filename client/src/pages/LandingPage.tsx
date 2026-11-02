@@ -11,8 +11,9 @@ export function LandingPage() {
     <div className="w-full">
       <SEOHead
         canonicalPath="/"
-        title="Jaanch AI – Digital Trust & Safety Platform for Indian Students | Scam Verification"
-        description="Free, privacy-first scam verification for Indian students and job seekers. Instantly verify internship offer letters, fake recruiters, upfront deposit traps, and scholarship fraud across MCA, AICTE, and NCS official portals."
+        title="Internship Scam Detector & Verification Tool | Jaanch"
+        description="Free online internship scam detector and fake job offer verification tool for Indian students. Instantly check offer letters for deposit traps, fake recruiters, and advance fees using 15 explainable heuristic rules and official portal cross-checks."
+        keywords="internship scam detector, internship scam checker, fake internship detection, internship verification India, fake job offer detector, verify internship offer online, internship fraud detection, fake internship website checker, online internship verification, job scam detection India"
       />
       {/* 1. MotherDuck Hero Section */}
       <Hero />

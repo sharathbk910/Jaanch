@@ -160,6 +160,9 @@ describe('Technical & On-Page SEO Suite', () => {
       expect(html).toContain('rel="apple-touch-icon"');
       expect(html).toContain('property="og:image"');
       expect(html).toContain('name="twitter:card"');
+      expect(html).toContain('<title>Internship Scam Detector &amp; Verification Tool | Jaanch</title>');
+      expect(html).toContain('internship scam detector');
+      expect(html).toContain('fake job offer');
       expect(html).toContain('"@type": "WebSite"');
       expect(html).toContain('"@type": "WebApplication"');
       expect(html).toContain('"@type": "Organization"');

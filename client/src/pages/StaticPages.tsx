@@ -114,9 +114,9 @@ export function AboutPage() {
     <div className="w-full max-w-editorial mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <SEOHead
         canonicalPath="/about"
-        title="About Jaanch AI – Mission, Heuristic Audit Architecture & Trust Framework"
-        description="Learn how Jaanch AI protects Indian college students and job seekers with 15 explainable heuristic rules, client-side privacy redaction, and community threat intelligence."
-        keywords="about Jaanch AI, student scam prevention mission, explainable heuristic fraud detection, digital trust India"
+        title="How to Detect Internship Scams & Verify Job Offers | Jaanch"
+        description="Comprehensive guide on how to identify fake internships, detect employment scams in India, and verify offer letters using Jaanch's 15 heuristic rules."
+        keywords="how to identify fake internships, internship scam detector India, fake job offer detector, verify internship offer online, detect internship fraud India, common internship fraud warning signs"
       />
       <div className="max-w-3xl mx-auto">
         <span className="font-mono text-xs text-terracotta font-semibold uppercase tracking-wider block mb-1">
@@ -151,6 +151,77 @@ export function AboutPage() {
               </p>
             </div>
           </div>
+
+          {/* Dedicated SEO Educational Content Guide */}
+          <Card padding="lg" className="space-y-6">
+            <div className="border-b border-border pb-4">
+              <span className="font-mono text-xs text-terracotta font-bold uppercase tracking-wider block mb-1">
+                Student Defense Handbook
+              </span>
+              <h2 className="font-serif text-2xl font-bold text-foreground">
+                How to Identify Fake Internships & Detect Job Scams in India
+              </h2>
+              <p className="text-xs text-muted-foreground mt-1">
+                A practical guide to evaluating offer letters, spotting recruiter red flags, and avoiding advance-fee traps.
+              </p>
+            </div>
+
+            <div className="space-y-4">
+              <h3 className="font-bold text-base text-foreground">
+                1. Common Internship Fraud Warning Signs in India
+              </h3>
+              <ul className="space-y-2.5 text-xs text-muted-foreground list-disc list-inside">
+                <li>
+                  <strong className="text-foreground">Upfront Fees or Laptop Security Deposits:</strong> Legitimate employers never ask students to pay for onboarding, laptop courier charges, document verification, or gate passes. Demanding money is a 100% scam signal.
+                </li>
+                <li>
+                  <strong className="text-foreground">Free Webmail or Lookalike Domains:</strong> Unofficial recruiters contact candidates from free webmail addresses (e.g. <code>hr.tcs.careers@gmail.com</code>) or typosquatted domains (e.g. <code>@micros0ft.org</code>, <code>@infosys-careers.net</code>).
+                </li>
+                <li>
+                  <strong className="text-foreground">Communication Exclusively via Messaging Apps:</strong> Conducting entire hiring processes over Telegram, WhatsApp channels, or SMS without an official video interview or corporate email trail.
+                </li>
+                <li>
+                  <strong className="text-foreground">Immediate Selection Without Assessment:</strong> Receiving an appointment letter within hours of applying, without technical evaluation, portfolio review, or structured interviews.
+                </li>
+                <li>
+                  <strong className="text-foreground">Coercive 24-Hour Deadlines:</strong> Artificial urgency demanding immediate fee transfer or banking details within 24 hours to "reserve" an allotted internship slot.
+                </li>
+              </ul>
+            </div>
+
+            <div className="space-y-4 pt-2 border-t border-border/60">
+              <h3 className="font-bold text-base text-foreground">
+                2. Step-by-Step: How to Verify Internship Offers Online
+              </h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                <div className="p-3 bg-background border border-border rounded-md">
+                  <h4 className="font-bold text-foreground mb-1">Step 1: Check MCA21 Registration</h4>
+                  <p className="text-muted-foreground">Verify the company's Corporate Identification Number (CIN) on the official Ministry of Corporate Affairs portal (mca.gov.in).</p>
+                </div>
+                <div className="p-3 bg-background border border-border rounded-md">
+                  <h4 className="font-bold text-foreground mb-1">Step 2: AICTE & NCS Portals</h4>
+                  <p className="text-muted-foreground">Cross-reference whether the internship is registered on the AICTE Internship Portal or National Career Service (NCS).</p>
+                </div>
+                <div className="p-3 bg-background border border-border rounded-md">
+                  <h4 className="font-bold text-foreground mb-1">Step 3: WHOIS Domain Age</h4>
+                  <p className="text-muted-foreground">Inspect the recruiter's web domain age. Fraudulent websites are usually registered less than 60 days before outreach.</p>
+                </div>
+                <div className="p-3 bg-background border border-border rounded-md">
+                  <h4 className="font-bold text-foreground mb-1">Step 4: Analyze with Jaanch</h4>
+                  <p className="text-muted-foreground">Paste the offer text or upload the letter into Jaanch to run an instant heuristic scan with zero data storage.</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="space-y-2 pt-2 border-t border-border/60 text-xs">
+              <h3 className="font-bold text-base text-foreground">
+                3. How Jaanch Helps Students Stay Safe
+              </h3>
+              <p className="text-muted-foreground">
+                Jaanch acts as an automated, privacy-first internship scam detector. By redacting your personal details (Aadhaar, phone numbers, bank details) on your local machine, our 15 deterministic heuristic rules evaluate language patterns, domain reputations, and fee traps without exposing your private information.
+              </p>
+            </div>
+          </Card>
         </div>
       </div>
     </div>
