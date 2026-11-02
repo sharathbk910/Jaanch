@@ -68,8 +68,18 @@ async function request<T>(
   const body = await res.json().catch(() => ({}));
 
   if (!res.ok) {
+    let msg = body?.error?.message;
+    if (!msg) {
+      if (res.status === 404) {
+        msg = 'Backend service is starting up. Please click Retry Analysis in a few moments.';
+      } else if (res.status === 502 || res.status === 503) {
+        msg = 'Backend service is waking up (Render cold-start). Please retry in 10-15 seconds.';
+      } else {
+        msg = `Request failed with status ${res.status}`;
+      }
+    }
     throw new ApiError(
-      body?.error?.message || `Request failed with status ${res.status}`,
+      msg,
       res.status,
       body?.error?.code || 'UNKNOWN_ERROR',
       body?.error?.details

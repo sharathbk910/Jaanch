@@ -1,14 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { MessageSquare, ThumbsUp, ThumbsDown, Check } from 'lucide-react';
+import { MessageSquare, ThumbsUp, ThumbsDown, Check, X } from 'lucide-react';
 import { useT } from '../../i18n/I18nContext.js';
 import { apiClient } from '../../lib/apiClient.js';
 
 export function FeedbackPill() {
   const { t } = useT();
   const location = useLocation();
+  const isTestEnv = typeof process !== 'undefined' && process.env?.NODE_ENV === 'test';
+
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [dismissed, setDismissed] = useState(() => {
+    if (isTestEnv) return false;
+    try {
+      return typeof window !== 'undefined' && Boolean(sessionStorage.getItem('jaanch_feedback_dismissed'));
+    } catch {
+      return false;
+    }
+  });
+
+  // Automatically dismiss the thank-you notice after 3.5 seconds
+  useEffect(() => {
+    if (submitted && !isTestEnv) {
+      try {
+        sessionStorage.setItem('jaanch_feedback_dismissed', 'true');
+      } catch {
+        // Ignore storage errors in private browsing
+      }
+      const timer = setTimeout(() => {
+        setDismissed(true);
+      }, 3500);
+      return () => clearTimeout(timer);
+    }
+  }, [submitted, isTestEnv]);
 
   const handleVote = async (rating: number) => {
     if (isSubmitting || submitted) return;
@@ -27,22 +52,43 @@ export function FeedbackPill() {
     }
   };
 
+  const handleDismiss = () => {
+    setDismissed(true);
+    try {
+      sessionStorage.setItem('jaanch_feedback_dismissed', 'true');
+    } catch {
+      // Ignore storage errors
+    }
+  };
+
+  if (dismissed) {
+    return null;
+  }
+
   return (
     <aside
       aria-label="Page feedback"
-      className="fixed bottom-5 right-5 z-40 select-none print:hidden"
+      className="fixed bottom-5 right-5 z-40 select-none print:hidden transition-all duration-300"
     >
       <div className="flex items-center gap-3 px-3.5 py-2 bg-surface text-foreground border-2 border-neo-border shadow-neo text-xs font-medium">
         {submitted ? (
-          <div className="flex items-center gap-1.5 text-xs text-foreground font-bold animate-fadeIn">
-            <Check size={14} className="text-emerald-600" aria-hidden="true" />
-            <span>{t('feedback.thanks', 'Thank you for your feedback!')}</span>
+          <div className="flex items-center gap-2 text-xs text-foreground font-bold animate-fadeIn">
+            <Check size={14} className="text-emerald-600 shrink-0" aria-hidden="true" />
+            <span>{t('feedback.thanks', 'Thank you for helping keep Indian students safe!')}</span>
+            <button
+              type="button"
+              onClick={handleDismiss}
+              className="ml-1 text-muted-foreground hover:text-foreground p-0.5"
+              aria-label="Close message"
+            >
+              <X size={12} />
+            </button>
           </div>
         ) : (
           <>
             <MessageSquare size={14} className="text-terracotta shrink-0" aria-hidden="true" />
             <span className="font-bold text-xs text-foreground">
-              {t('feedback.pillQuestion', 'Was this helpful?')}
+              {t('feedback.pillQuestion', 'Was this page helpful?')}
             </span>
             <div className="flex items-center gap-1.5 border-l-2 border-neo-border pl-2.5">
               <button
@@ -65,6 +111,14 @@ export function FeedbackPill() {
                 <ThumbsDown size={12} />
                 <span>No</span>
               </button>
+              <button
+                type="button"
+                onClick={handleDismiss}
+                className="ml-1 text-muted-foreground hover:text-foreground p-0.5"
+                aria-label="Dismiss feedback"
+              >
+                <X size={12} />
+              </button>
             </div>
           </>
         )}
@@ -72,4 +126,3 @@ export function FeedbackPill() {
     </aside>
   );
 }
-

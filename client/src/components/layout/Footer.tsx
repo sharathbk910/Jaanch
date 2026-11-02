@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { Phone, ExternalLink, ShieldCheck } from 'lucide-react';
 import { useLanguage } from '../../i18n/LanguageContext.js';
 import { LangSwitch } from './LangSwitch.js';
-import { FeedbackPill } from './FeedbackPill.js';
 
 export function Footer() {
   const { t } = useLanguage();
@@ -82,9 +81,6 @@ export function Footer() {
           </div>
         </div>
       </footer>
-
-      {/* Floating Feedback Pill on all pages */}
-      <FeedbackPill />
     </>
   );
 }

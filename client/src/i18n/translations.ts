@@ -466,6 +466,52 @@ export interface TranslationDictionary {
     no: string;
     thanks: string;
   };
+  staticPages: {
+    resourcesBadge: string;
+    resourcesTitle: string;
+    resourcesSubtitle: string;
+    officialBadge: string;
+    portals: {
+      mcaName: string;
+      mcaDesc: string;
+      ncsName: string;
+      ncsDesc: string;
+      nspName: string;
+      nspDesc: string;
+      aicteName: string;
+      aicteDesc: string;
+      ugcName: string;
+      ugcDesc: string;
+      cybercrimeName: string;
+      cybercrimeDesc: string;
+    };
+    aboutBadge: string;
+    aboutTitle: string;
+    aboutMissionTitle: string;
+    aboutMissionP1: string;
+    aboutMissionP2: string;
+    aboutDetTitle: string;
+    aboutDetDesc: string;
+    aboutPrivTitle: string;
+    aboutPrivDesc: string;
+    privacyBadge: string;
+    privacyTitle: string;
+    privacyCardTitle: string;
+    privacyCardDesc: string;
+    privacyKeyTitle: string;
+    privacyItem1Title: string;
+    privacyItem1Desc: string;
+    privacyItem2Title: string;
+    privacyItem2Desc: string;
+    privacyItem3Title: string;
+    privacyItem3Desc: string;
+    privacyItem4Title: string;
+    privacyItem4Desc: string;
+    notFoundBadge: string;
+    notFoundTitle: string;
+    notFoundDesc: string;
+    notFoundReturn: string;
+  };
   skipLink: string;
   languages: {
     en: string;
@@ -943,6 +989,52 @@ export const translations: Record<'en' | 'hi' | 'kn', TranslationDictionary> = {
       no: 'No',
       thanks: 'Thank you for helping keep Indian students safe!',
     },
+    staticPages: {
+      resourcesBadge: 'Government & Apex Directories',
+      resourcesTitle: 'Official Verification Resources',
+      resourcesSubtitle: 'Never rely on offer letters received via WhatsApp, Telegram, or Gmail. Cross-verify credentials against India’s authorized government databases.',
+      officialBadge: 'Official .gov.in',
+      portals: {
+        mcaName: 'Ministry of Corporate Affairs (MCA)',
+        mcaDesc: 'Verify whether a private limited company or LLP is legally incorporated in India using Company Master Data.',
+        ncsName: 'National Career Service (NCS)',
+        ncsDesc: 'Ministry of Labour & Employment initiative connecting verified jobseekers with authentic Indian employers.',
+        nspName: 'National Scholarship Portal (NSP)',
+        nspDesc: 'Unified central portal for Government of India pre-matric and post-matric scholarship verification.',
+        aicteName: 'AICTE Internship Portal',
+        aicteDesc: 'Official All India Council for Technical Education portal offering vetted and legitimate internships for college students.',
+        ugcName: 'University Grants Commission (UGC)',
+        ugcDesc: 'List of fake universities and recognized institutions published by the higher education apex regulatory body.',
+        cybercrimeName: 'National Cybercrime Reporting Portal',
+        cybercrimeDesc: 'Lodge formal cybercrime complaints online or dial toll-free 1930 immediately if money has been defrauded.',
+      },
+      aboutBadge: 'About Jaanch',
+      aboutTitle: 'Digital Trust & Safety for Indian Students',
+      aboutMissionTitle: 'Our Mission',
+      aboutMissionP1: 'Every year, thousands of college students and fresh graduates in India lose their savings to predatory employment fraud. Fraudulent recruiters exploit hope and urgency by demanding upfront "laptop security deposits," "training certification fees," or "document processing charges."',
+      aboutMissionP2: 'JAANCH was built from scratch as an open, free, and privacy-preserving public service. It empowers students with deterministic heuristics and threat intelligence before they transfer a single rupee or compromise private documents.',
+      aboutDetTitle: 'Deterministic Detection',
+      aboutDetDesc: 'We do not rely on generative AI hallucinations. Our core checks run on 8 strict, deterministic heuristic rules rooted in Indian law and employment standards.',
+      aboutPrivTitle: 'Privacy by Architecture',
+      aboutPrivDesc: 'Guest audits never touch a database. All sensitive PII (names, emails, phones) is sanitized on your device before analysis.',
+      privacyBadge: 'Privacy Architecture',
+      privacyTitle: 'Privacy Policy & Data Protection',
+      privacyCardTitle: 'Zero Guest Storage Guarantee',
+      privacyCardDesc: 'When you use Jaanch without signing in, nothing is saved to our databases. Your submission is evaluated in memory, results are returned directly to your browser session, and the memory is discarded immediately.',
+      privacyKeyTitle: 'Key Data Protections',
+      privacyItem1Title: 'Client-Side PII Scrubbing',
+      privacyItem1Desc: 'Phone numbers, personal email addresses, UPI handles, and Aadhaar-like numbers are redacted before heuristic execution.',
+      privacyItem2Title: 'Account Privacy & RLS',
+      privacyItem2Desc: 'For logged-in users, submission records are strictly sandboxed using PostgreSQL Row Level Security (RLS). Other users or moderators cannot read your private submissions.',
+      privacyItem3Title: 'Complete Erasure',
+      privacyItem3Desc: 'You can purge your entire history at any time with a single click in Settings.',
+      privacyItem4Title: 'No Tracking or Ad Pixels',
+      privacyItem4Desc: 'We do not run Google Analytics, Meta Pixel, or third-party behavioral trackers.',
+      notFoundBadge: '404 / NOT FOUND',
+      notFoundTitle: 'Lost in Navigation',
+      notFoundDesc: 'The safety resource or page you requested does not exist or has moved. Return to the main portal to audit an offer.',
+      notFoundReturn: 'Return to Safety Portal',
+    },
     skipLink: 'Skip to main content',
     languages: {
       en: 'English',
@@ -1418,6 +1510,52 @@ export const translations: Record<'en' | 'hi' | 'kn', TranslationDictionary> = {
       no: 'नहीं',
       thanks: 'भारतीय छात्रों को सुरक्षित रखने में मदद के लिए धन्यवाद!',
     },
+    staticPages: {
+      resourcesBadge: 'सरकारी और शीर्ष निर्देशिकाएं',
+      resourcesTitle: 'आधिकारिक सत्यापन संसाधन',
+      resourcesSubtitle: 'व्हाट्सएप, टेलीग्राम या जीमेल पर प्राप्त ऑफर लेटर पर कभी भरोसा न करें। भारत के अधिकृत सरकारी डेटाबेस के विरुद्ध विवरण सत्यापित करें।',
+      officialBadge: 'आधिकारिक .gov.in',
+      portals: {
+        mcaName: 'कॉर्पोरेट कार्य मंत्रालय (MCA)',
+        mcaDesc: 'कंपनी मास्टर डेटा का उपयोग करके जांचें कि क्या कोई प्राइवेट लिमिटेड कंपनी या एलएलपी भारत में कानूनी रूप से पंजीकृत है।',
+        ncsName: 'राष्ट्रीय करियर सेवा (NCS)',
+        ncsDesc: 'श्रम और रोजगार मंत्रालय की पहल जो सत्यापित नौकरी चाहने वालों को प्रामाणिक भारतीय नियोक्ताओं से जोड़ती है।',
+        nspName: 'राष्ट्रीय छात्रवृत्ति पोर्टल (NSP)',
+        nspDesc: 'भारत सरकार की प्री-मैट्रिक और पोस्ट-मैट्रिक छात्रवृत्ति सत्यापन के लिए एकीकृत केंद्रीय पोर्टल।',
+        aicteName: 'एआईसीटीई इंटर्नशिप पोर्टल',
+        aicteDesc: 'कॉलेज छात्रों के लिए जांची-परखी और वैध इंटर्नशिप प्रदान करने वाला आधिकारिक अखिल भारतीय तकनीकी शिक्षा परिषद पोर्टल।',
+        ugcName: 'विश्वविद्यालय अनुदान आयोग (UGC)',
+        ugcDesc: 'उच्च शिक्षा शीर्ष नियामक निकाय द्वारा प्रकाशित फर्जी विश्वविद्यालयों और मान्यता प्राप्त संस्थानों की सूची।',
+        cybercrimeName: 'राष्ट्रीय साइबर अपराध रिपोर्टिंग पोर्टल',
+        cybercrimeDesc: 'ऑनलाइन औपचारिक साइबर अपराध शिकायत दर्ज करें या यदि पैसे की धोखाधड़ी हुई है तो तुरंत टोल-फ्री 1930 डायल करें।',
+      },
+      aboutBadge: 'जाँच के बारे में',
+      aboutTitle: 'भारतीय छात्रों के लिए डिजिटल सुरक्षा और विश्वास',
+      aboutMissionTitle: 'हमारा मिशन',
+      aboutMissionP1: 'हर साल भारत में हजारों कॉलेज छात्र और नए स्नातक फर्जी रोजगार घोटालों में अपनी बचत गंवा देते हैं। धोखेबाज भर्तीकर्ता अग्रिम "लैपटॉप सुरक्षा जमा", "प्रशिक्षण प्रमाणन शुल्क" या "दस्तावेज़ प्रसंस्करण शुल्क" मांगकर उम्मीदों और जल्दबाजी का फायदा उठाते हैं।',
+      aboutMissionP2: 'JAANCH को एक खुली, मुफ्त और गोपनीयता-संरक्षण सार्वजनिक सेवा के रूप में बनाया गया है। यह छात्रों को एक भी रुपया ट्रांसफर करने या निजी दस्तावेज़ साझा करने से पहले निष्पक्ष नियमों और खतरे की जानकारी से सशक्त बनाता है।',
+      aboutDetTitle: 'नियम-आधारित पहचान',
+      aboutDetDesc: 'हम एआई के भ्रम पर निर्भर नहीं हैं। हमारी मुख्य जांच भारतीय कानून और रोजगार मानकों पर आधारित 8 सख्त, सटीक नियमों पर चलती है।',
+      aboutPrivTitle: 'गोपनीयता-केंद्रित डिज़ाइन',
+      aboutPrivDesc: 'अतिथि ऑडिट कभी डेटाबेस को नहीं छूते। विश्लेषण से पहले आपके डिवाइस पर सभी संवेदनशील व्यक्तिगत जानकारी (नाम, ईमेल, फोन) हटा दी जाती है।',
+      privacyBadge: 'गोपनीयता वास्तुकला',
+      privacyTitle: 'गोपनीयता नीति और डेटा सुरक्षा',
+      privacyCardTitle: 'शून्य अतिथि संग्रहण गारंटी',
+      privacyCardDesc: 'जब आप साइन इन किए बिना जाँच का उपयोग करते हैं, तो हमारे डेटाबेस में कुछ भी सहेजा नहीं जाता है। आपका डेटा मेमोरी में जांचा जाता है, परिणाम तुरंत आपके ब्राउज़र को लौटाए जाते हैं, और मेमोरी को तुरंत हटा दिया जाता है।',
+      privacyKeyTitle: 'प्रमुख डेटा सुरक्षा उपाय',
+      privacyItem1Title: 'डिवाइस पर व्यक्तिगत डेटा हटाना',
+      privacyItem1Desc: 'विश्लेषण से पहले फोन नंबर, व्यक्तिगत ईमेल पते, यूपीआई आईडी और आधार जैसी संख्याओं को हटा दिया जाता है।',
+      privacyItem2Title: 'खाता गोपनीयता और आरएलएस',
+      privacyItem2Desc: 'लॉग-इन उपयोगकर्ताओं के रिकॉर्ड पोस्टग्रेएसक्यूएल रो-लेवल सिक्योरिटी (RLS) के तहत पूरी तरह सुरक्षित हैं। कोई अन्य उपयोगकर्ता या मॉडरेटर आपके निजी सबमिशन नहीं देख सकता।',
+      privacyItem3Title: 'पूर्ण निष्कासन',
+      privacyItem3Desc: 'आप सेटिंग्स में एक क्लिक से किसी भी समय अपना पूरा इतिहास मिटा सकते हैं।',
+      privacyItem4Title: 'कोई ट्रैकिंग या विज्ञापन पिक्सेल नहीं',
+      privacyItem4Desc: 'हम गूगल एनालिटिक्स, मेटा पिक्सेल या किसी भी तीसरे पक्ष के ट्रैकर का उपयोग नहीं करते हैं।',
+      notFoundBadge: '404 / पृष्ठ नहीं मिला',
+      notFoundTitle: 'नेविगेशन त्रुटि',
+      notFoundDesc: 'आपके द्वारा अनुरोधित सुरक्षा संसाधन या पृष्ठ मौजूद नहीं है या स्थानांतरित कर दिया गया है।',
+      notFoundReturn: 'मुख्य पोर्टल पर लौटें',
+    },
     skipLink: 'मुख्य सामग्री पर जाएँ',
     languages: {
       en: 'English',
@@ -1892,6 +2030,52 @@ export const translations: Record<'en' | 'hi' | 'kn', TranslationDictionary> = {
       yes: 'ಹೌದು',
       no: 'ಇಲ್ಲ',
       thanks: 'ಭಾರತೀಯ ವಿದ್ಯಾರ್ಥಿಗಳನ್ನು ಸುರಕ್ಷಿತವಾಗಿರಿಸಲು ಸಹಾಯ ಮಾಡಿದ್ದಕ್ಕಾಗಿ ಧನ್ಯವಾದಗಳು!',
+    },
+    staticPages: {
+      resourcesBadge: 'ಸರ್ಕಾರಿ ಮತ್ತು ಉನ್ನತ ಸಂಸ್ಥೆಗಳ ಡೈರೆಕ್ಟರಿಗಳು',
+      resourcesTitle: 'ಅಧಿಕೃತ ಪರಿಶೀಲನಾ ಸಂಪನ್ಮೂಲಗಳು',
+      resourcesSubtitle: 'ವಾಟ್ಸಾಪ್, ಟೆಲಿಗ್ರಾಮ್ ಅಥವಾ ಜಿಮೇಲ್ ಮೂಲಕ ಬಂದ ಆಫರ್ ಲೆಟರ್‌ಗಳನ್ನು ಎಂದಿಗೂ ನಂಬಬೇಡಿ. ಭಾರತ ಸರ್ಕಾರದ ಅಧಿಕೃತ ಡೇಟಾಬೇಸ್‌ಗಳೊಂದಿಗೆ ದೃಢೀಕರಿಸಿ.',
+      officialBadge: 'ಅಧಿಕೃತ .gov.in',
+      portals: {
+        mcaName: 'ಕಾರ್ಪೊರೇಟ್ ವ್ಯವಹಾರಗಳ ಸಚಿವಾಲಯ (MCA)',
+        mcaDesc: 'ಕಂಪನಿ ಮಾಸ್ಟರ್ ಡೇಟಾ ಬಳಸಿ ಖಾಸಗಿ ಲಿಮಿಟೆಡ್ ಕಂಪನಿ ಅಥವಾ ಎಲ್ಎಲ್‌ಪಿ ಭಾರತದಲ್ಲಿ ಕಾನೂನುಬದ್ಧವಾಗಿ ನೋಂದಾಯಿಸಲ್ಪಟ್ಟಿದೆಯೇ ಎಂದು ಪರಿಶೀಲಿಸಿ.',
+        ncsName: 'ರಾಷ್ಟ್ರೀಯ ವೃತ್ತಿ ಸೇವೆ (NCS)',
+        ncsDesc: 'ಕಾರ್ಮಿಕ ಮತ್ತು ಉದ್ಯೋಗ ಸಚಿವಾಲಯದ ಉಪಕ್ರಮ, ಇದು ಪರಿಶೀಲಿಸಿದ ಉದ್ಯೋಗಾಕಾಂಕ್ಷಿಗಳನ್ನು ನಿಜವಾದ ಭಾರತೀಯ ಉದ್ಯೋಗದಾತರೊಂದಿಗೆ ಸಂಪರ್ಕಿಸುತ್ತದೆ.',
+        nspName: 'ರಾಷ್ಟ್ರೀಯ ವಿದ್ಯಾರ್ಥಿವೇತನ ಪೋರ್ಟಲ್ (NSP)',
+        nspDesc: 'ಭಾರತ ಸರ್ಕಾರದ ಮೆಟ್ರಿಕ್ ಪೂರ್ವ ಮತ್ತು ನಂತರದ ವಿದ್ಯಾರ್ಥಿವೇತನ ಪರಿಶೀಲನೆಗಾಗಿ ಏಕೀಕೃತ ಕೇಂದ್ರ ಪೋರ್ಟಲ್.',
+        aicteName: 'ಎಐಸಿಟಿಇ ಇಂಟರ್ನ್‌ಶಿಪ್ ಪೋರ್ಟಲ್',
+        aicteDesc: 'ಕಾಲೇಜು ವಿದ್ಯಾರ್ಥಿಗಳಿಗೆ ಕಾನೂನುಬದ್ಧ ಇಂಟರ್ನ್‌ಶಿಪ್ ಒದಗಿಸುವ ಅಧಿಕೃತ ಅಖಿಲ ಭಾರತ ತಾಂತ್ರಿಕ ಶಿಕ್ಷಣ ಮಂಡಳಿ ಪೋರ್ಟಲ್.',
+        ugcName: 'ವಿಶ್ವವಿದ್ಯಾಲಯ ಧನಸಹಾಯ ಆಯೋಗ (UGC)',
+        ugcDesc: 'ಉನ್ನತ ಶಿಕ್ಷಣ ನಿಯಂತ್ರಣ ಸಂಸ್ಥೆ ಪ್ರಕಟಿಸಿದ ನಕಲಿ ವಿಶ್ವವಿದ್ಯಾಲಯಗಳು ಮತ್ತು ಮಾನ್ಯತೆ ಪಡೆದ ಸಂಸ್ಥೆಗಳ ಪಟ್ಟಿ.',
+        cybercrimeName: 'ರಾಷ್ಟ್ರೀಯ ಸೈಬರ್ ಕ್ರೈಮ್ ವರದಿ ಪೋರ್ಟಲ್',
+        cybercrimeDesc: 'ಆನ್‌ಲೈನ್‌ನಲ್ಲಿ ಸೈಬರ್ ಅಪರಾಧ ದೂರು ದಾಖಲಿಸಿ ಅಥವಾ ಹಣ ವಂಚನೆಯಾಗಿದ್ದರೆ ತಕ್ಷಣ 1930 ಟೋಲ್-ಫ್ರೀ ಸಂಖ್ಯೆಗೆ ಕರೆ ಮಾಡಿ.',
+      },
+      aboutBadge: 'ಜಾಂಚ್ ಬಗ್ಗೆ',
+      aboutTitle: 'ಭಾರತೀಯ ವಿದ್ಯಾರ್ಥಿಗಳಿಗೆ ಡಿಜಿಟಲ್ ನಂಬಿಕೆ ಮತ್ತು ಸುರಕ್ಷತೆ',
+      aboutMissionTitle: 'ನಮ್ಮ ಧ್ಯೇಯ',
+      aboutMissionP1: 'ಪ್ರತಿ ವರ್ಷ ಭಾರತದಲ್ಲಿ ಸಾವಿರಾರು ಕಾಲೇಜು ವಿದ್ಯಾರ್ಥಿಗಳು ನಕಲಿ ಉದ್ಯೋಗ ವಂಚನೆಗೆ ತಮ್ಮ ಉಳಿತಾಯವನ್ನು ಕಳೆದುಕೊಳ್ಳುತ್ತಾರೆ. ವಂಚಕರು "ಲ್ಯಾಪ್‌ಟಾಪ್ ಭದ್ರತಾ ಠೇವಣಿ", "ತರಬೇತಿ ಶುಲ್ಕ" ಅಥವಾ "ದಾಖಲೆ ಪ್ರಕ್ರಿಯೆ ಶುಲ್ಕ" ಕೇಳಿ ಆಸೆಯನ್ನು ದುರುಪಯೋಗಪಡಿಸಿಕೊಳ್ಳುತ್ತಾರೆ.',
+      aboutMissionP2: 'JAANCH ಅನ್ನು ಉಚಿತ, ಗೌಪ್ಯತೆ-ರಕ್ಷಿಸುವ ಸಾರ್ವಜನಿಕ ಸೇವೆಯಾಗಿ ನಿರ್ಮಿಸಲಾಗಿದೆ. ವಿದ್ಯಾರ್ಥಿಗಳು ಹಣ ವರ್ಗಾಯಿಸುವ ಅಥವಾ ಖಾಸಗಿ ದಾಖಲೆಗಳನ್ನು ಹಂಚಿಕೊಳ್ಳುವ ಮೊದಲು ನಿಖರವಾದ ನಿಯಮಗಳೊಂದಿಗೆ ಜಾಗೃತರಾಗಲು ಇದು ಸಹಾಯ ಮಾಡುತ್ತದೆ.',
+      aboutDetTitle: 'ನಿಯಮ-ಆಧಾರಿತ ಪತ್ತೆಹಚ್ಚುವಿಕೆ',
+      aboutDetDesc: 'ನಾವು ಭ್ರಮಾತ್ಮಕ ಎಐ ಮೇಲೆ ಅವಲಂಬಿತವಾಗಿಲ್ಲ. ನಮ್ಮ ತಪಾಸಣೆಗಳು ಭಾರತೀಯ ಕಾನೂನು ಮತ್ತು ಉದ್ಯೋಗ ಮಾನದಂಡಗಳನ್ನು ಆಧರಿಸಿದ 8 ಕಟ್ಟುನಿಟ್ಟಾದ ನಿಯಮಗಳ ಮೇಲೆ ಕಾರ್ಯನಿರ್ವಹಿಸುತ್ತವೆ.',
+      aboutPrivTitle: 'ವಿನ್ಯಾಸದಲ್ಲೇ ಗೌಪ್ಯತೆ',
+      aboutPrivDesc: 'ಅತಿಥಿ ತಪಾಸಣೆಗಳು ಡೇಟಾಬೇಸ್‌ಗೆ ಹೋಗುವುದಿಲ್ಲ. ವಿಶ್ಲೇಷಣೆಯ ಮೊದಲು ನಿಮ್ಮ ಸಾಧನದಲ್ಲೇ ಎಲ್ಲಾ ಸೂಕ್ಷ್ಮ ವೈಯಕ್ತಿಕ ವಿವರಗಳನ್ನು ತೆಗೆದುಹಾಕಲಾಗುತ್ತದೆ.',
+      privacyBadge: 'ಗೌಪ್ಯತೆ ವಿನ್ಯಾಸ',
+      privacyTitle: 'ಗೌಪ್ಯತಾ ನೀತಿ ಮತ್ತು ಡೇಟಾ ಸಂರಕ್ಷಣೆ',
+      privacyCardTitle: 'ಶೂನ್ಯ ಅತಿಥಿ ಸಂಗ್ರಹಣೆಯ ಖಾತರಿ',
+      privacyCardDesc: 'ನೀವು ಸೈನ್ ಇನ್ ಮಾಡದೆ ಜಾಂಚ್ ಬಳಸಿದಾಗ, ನಮ್ಮ ಡೇಟಾಬೇಸ್‌ನಲ್ಲಿ ಏನನ್ನೂ ಉಳಿಸಲಾಗುವುದಿಲ್ಲ. ಫಲಿತಾಂಶಗಳನ್ನು ತಕ್ಷಣ ನಿಮ್ಮ ಬ್ರೌಸರ್‌ಗೆ ಹಿಂತಿರುಗಿಸಲಾಗುತ್ತದೆ ಮತ್ತು ಮೆಮೊರಿಯನ್ನು ತಕ್ಷಣ ಅಳಿಸಲಾಗುತ್ತದೆ.',
+      privacyKeyTitle: 'ಪ್ರಮುಖ ಡೇಟಾ ಸಂರಕ್ಷಣೆಗಳು',
+      privacyItem1Title: 'ಸಾಧನದಲ್ಲೇ ವೈಯಕ್ತಿಕ ವಿವರ ತೆಗೆಯುವುದು',
+      privacyItem1Desc: 'ವಿಶ್ಲೇಷಣೆಗೆ ಮುಂಚಿತವಾಗಿ ಫೋನ್ ಸಂಖ್ಯೆಗಳು, ಇಮೇಲ್ ವಿಳಾಸಗಳು, ಯುಪಿಐ ಐಡಿಗಳು ಮತ್ತು ಆಧಾರ್ ಸಂಖ್ಯೆಗಳನ್ನು ತೆಗೆದುಹಾಕಲಾಗುತ್ತದೆ.',
+      privacyItem2Title: 'ಖಾತೆ ಗೌಪ್ಯತೆ ಮತ್ತು ಆರ್ಎಲ್ಎಸ್',
+      privacyItem2Desc: 'ಲಾಗಿನ್ ಆದ ಬಳಕೆದಾರರ ದಾಖಲೆಗಳು PostgreSQL Row Level Security (RLS) ಅಡಿಯಲ್ಲಿ ಸಂಪೂರ್ಣ ಸುರಕ್ಷಿತವಾಗಿರುತ್ತವೆ.',
+      privacyItem3Title: 'ಸಂಪೂರ್ಣ ಅಳಿಸುವಿಕೆ',
+      privacyItem3Desc: 'ನೀವು ಸೆಟ್ಟಿಂಗ್ಸ್‌ನಲ್ಲಿ ಒಂದೇ ಕ್ಲಿಕ್ ಮೂಲಕ ನಿಮ್ಮ ಎಲ್ಲಾ ಇತಿಹಾಸವನ್ನು ಯಾವುದೇ ಸಮಯದಲ್ಲಿ ಅಳಿಸಬಹುದು.',
+      privacyItem4Title: 'ಯಾವುದೇ ಟ್ರ್ಯಾಕಿಂಗ್ ಅಥವಾ ಜಾಹೀರಾತು ಪಿಕ್ಸೆಲ್‌ಗಳಿಲ್ಲ',
+      privacyItem4Desc: 'ನಾವು ಗೂಗಲ್ ಅನಾಲಿಟಿಕ್ಸ್, ಮೆಟಾ ಪಿಕ್ಸೆಲ್ ಅಥವಾ ಮೂರನೇ ವ್ಯಕ್ತಿಯ ಟ್ರ್ಯಾಕರ್‌ಗಳನ್ನು ಬಳಸುವುದಿಲ್ಲ.',
+      notFoundBadge: '404 / ಪುಟ ಕಂಡುಬಂದಿಲ್ಲ',
+      notFoundTitle: 'ನ್ಯಾವಿಗೇಷನ್ ದೋಷ',
+      notFoundDesc: 'ನೀವು ವಿನಂತಿಸಿದ ಪುಟ ಅಸ್ತಿತ್ವದಲ್ಲಿಲ್ಲ ಅಥವಾ ಸ್ಥಳಾಂತರಿಸಲಾಗಿದೆ.',
+      notFoundReturn: 'ಮುಖ್ಯ ಪೋರ್ಟಲ್‌ಗೆ ಹಿಂತಿರುಗಿ',
     },
     skipLink: 'ಮುಖ್ಯ ವಿಷಯಕ್ಕೆ ಹೋಗಿ',
     languages: {
