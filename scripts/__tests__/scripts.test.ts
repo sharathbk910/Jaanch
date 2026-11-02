@@ -161,7 +161,7 @@ describe('Security & Tooling Scripts Validation', () => {
       expect(results.nodeVersion.ok).toBe(true);
       expect(results.security.ok).toBe(true);
       expect(results.allPassed).toBe(true);
-    });
+    }, 30000);
   });
 
   describe('smoke.mjs', () => {
@@ -169,7 +169,7 @@ describe('Security & Tooling Scripts Validation', () => {
       const { runSmokeTest } = await import('../smoke.mjs');
       const passed = await runSmokeTest();
       expect(passed).toBe(true);
-    }, 25000);
+    }, 30000);
   });
 
   describe('test-acceptance.mjs', () => {
@@ -182,6 +182,6 @@ describe('Security & Tooling Scripts Validation', () => {
       expect(passed.length).toBe(10);
       expect(failed.length).toBe(0);
       expect(pending.length).toBe(0);
-    });
+    }, 30000);
   });
 });

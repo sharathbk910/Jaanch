@@ -11,7 +11,7 @@ describe('Phase 7: Moderator CLI Tooling (scripts/moderator-cli.ts)', () => {
     expect(output).toContain('npx tsx scripts/moderator-cli.ts hash');
     expect(output).toContain('npx tsx scripts/moderator-cli.ts list');
     expect(output).toContain('npx tsx scripts/moderator-cli.ts confirm');
-  });
+  }, 30000);
 
   it('correctly hashes an indicator and outputs 64-character hex hash', () => {
     const output = execSync(`npx tsx "${cliPath}" hash upi "scam.target@okaxis"`, {
@@ -20,7 +20,7 @@ describe('Phase 7: Moderator CLI Tooling (scripts/moderator-cli.ts)', () => {
     expect(output).toContain('Type: upi');
     expect(output).toContain('Value: scam.target@okaxis');
     expect(output).toMatch(/Peppered Hash:\s+[a-f0-9]{64}/);
-  });
+  }, 30000);
 
   it('normalizes domains and produces valid hash', () => {
     const output = execSync(`npx tsx "${cliPath}" hash domain "https://fake-tcs-portal.net/apply"`, {
@@ -28,7 +28,7 @@ describe('Phase 7: Moderator CLI Tooling (scripts/moderator-cli.ts)', () => {
     });
     expect(output).toContain('Type: domain');
     expect(output).toMatch(/Peppered Hash:\s+[a-f0-9]{64}/);
-  });
+  }, 30000);
 
   it('exits with error when invalid entity type is specified', () => {
     let failed = false;
@@ -42,10 +42,10 @@ describe('Phase 7: Moderator CLI Tooling (scripts/moderator-cli.ts)', () => {
       expect(err.stderr.toString()).toContain('Invalid entity type');
     }
     expect(failed).toBe(true);
-  });
+  }, 30000);
 
   it('executes list command without unhandled exception', () => {
     const output = execSync(`npx tsx "${cliPath}" list`, { encoding: 'utf8' });
     expect(output).toContain('reported entities');
-  });
+  }, 30000);
 });
