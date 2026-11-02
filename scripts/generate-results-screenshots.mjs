@@ -47,56 +47,177 @@ function createStaticServer(dist) {
   });
 }
 
-const SAMPLE_CONCERN_DATA = {
-  inputText: 'Deposit Rs 3500 refundable laptop deposit',
-  domain: 'job',
-  channel: 'web_form',
-  timestamp: new Date().toISOString(),
-  result: {
-    status: 'HIGH_CONCERN',
-    confidenceScore: 96,
-    signals: [
-      {
-        id: 'sig_fee',
-        ruleId: 'RULE_UPFRONT_FEE',
-        title: 'Upfront Security Deposit Demanded',
-        whyItMatters: 'Legitimate employers never demand payment for laptops, training, or job offers.',
-        evidence: 'Deposit ₹3,500 refundable laptop security deposit within 2 hours via UPI to tcs.hr@okaxis',
-        severity: 'critical',
+const VERDICT_STATES = [
+  {
+    name: 'likely-genuine',
+    data: {
+      inputText: 'Selected for 8-week software engineering internship program. Stipend is Rs 25,000/month. No registration fees.',
+      domain: 'internship',
+      channel: 'email',
+      timestamp: new Date().toISOString(),
+      result: {
+        status: 'LIKELY_GENUINE',
+        confidenceScore: 92,
+        mlScore: 0.08,
+        riskLevel: 'LIKELY GENUINE',
+        summary: 'High probability of legitimate communication. No predatory fee demands or credential theft patterns identified.',
+        signals: [],
+        unverified: [],
+        extractedEntities: {
+          urls: ['https://springboard.infosys.com'],
+          domains: ['infosys.com'],
+          emails: ['internships@infosys.com'],
+          phones: [],
+          upiHandles: [],
+          amounts: ['₹25,000/month'],
+          organization: 'Infosys',
+        },
+        recommendedActions: [
+          'Verify email sender domain is @infosys.com.',
+          'Review terms on official springboard.infosys.com portal.',
+        ],
+        auditId: 'audit_sample_genuine',
       },
-      {
-        id: 'sig_urgency',
-        ruleId: 'RULE_COERCIVE_DEADLINE',
-        title: 'Coercive Time Pressure Tactics',
-        whyItMatters: 'Fraudsters create artificial 2-hour urgency to prevent candidates from verifying with real employers.',
-        evidence: 'within 2 hours via UPI or your job offer stands cancelled',
-        severity: 'high',
-      },
-    ],
-    unverified: [
-      'Email address is not an official @tcs.com corporate email.',
-      'Appointment letter is not corroborated in TCS Careers portal.',
-    ],
-    extractedEntities: {
-      urls: ['http://tcs-careers.net/appointment'],
-      domains: ['tcs-careers.net'],
-      emails: ['careers@tcs-careers.net'],
-      phones: ['+91 98765 43210'],
-      upiHandles: ['tcs.hr@okaxis'],
-      amounts: ['₹3,500'],
-      organization: 'TCS',
     },
-    recommendedActions: [
-      'Do not transfer any money or pay via UPI. This pattern matches known job recruitment scams.',
-      'Block the recruiter on WhatsApp, Telegram, and email immediately.',
-      'If you have already paid, dial 1930 immediately or file a report at cybercrime.gov.in.',
-    ],
-    auditId: 'audit_sample_concern',
   },
-};
+  {
+    name: 'needs-review',
+    data: {
+      inputText: 'Freelance typing job. Contact Telegram @priya_hr for weekly payout.',
+      domain: 'job',
+      channel: 'telegram',
+      timestamp: new Date().toISOString(),
+      result: {
+        status: 'NEEDS_REVIEW',
+        confidenceScore: 68,
+        mlScore: 0.45,
+        riskLevel: 'CAUTION',
+        summary: 'Suspicious indicators or unverified contact channels detected. Independent verification recommended before proceeding.',
+        signals: [
+          {
+            id: 'sig_telegram',
+            ruleId: 'RULE_UNOFFICIAL_CHANNEL',
+            title: 'Recruitment via Unofficial Messaging Channel',
+            whyItMatters: 'Enterprise recruiters do not hire exclusively through Telegram handles.',
+            evidence: 'Contact Telegram @priya_hr',
+            severity: 'medium',
+          },
+        ],
+        unverified: ['No official company website or corporate domain provided.'],
+        extractedEntities: {
+          urls: [],
+          domains: [],
+          emails: [],
+          phones: [],
+          upiHandles: [],
+          amounts: [],
+          organization: 'Unknown',
+        },
+        recommendedActions: [
+          'Request an official corporate email from the recruiter.',
+          'Do not share personal documents or Aadhaar until company is verified on MCA21.',
+        ],
+        auditId: 'audit_sample_review',
+      },
+    },
+  },
+  {
+    name: 'high-concern',
+    data: {
+      inputText: 'Deposit Rs 3500 refundable laptop deposit within 2 hours via UPI to tcs.hr@okaxis or job cancelled.',
+      domain: 'job',
+      channel: 'whatsapp',
+      timestamp: new Date().toISOString(),
+      result: {
+        status: 'HIGH_CONCERN',
+        confidenceScore: 96,
+        mlScore: 0.972,
+        riskLevel: 'HIGH RISK',
+        summary: 'High probability of fraudulent activity. Demanding upfront fees and off-platform recruitment detected.',
+        signals: [
+          {
+            id: 'sig_fee',
+            ruleId: 'RULE_UPFRONT_FEE',
+            title: 'Upfront Security Deposit Demanded',
+            whyItMatters: 'Legitimate employers never demand payment for laptops, training, or job offers.',
+            evidence: 'Deposit ₹3,500 refundable laptop security deposit within 2 hours via UPI to tcs.hr@okaxis',
+            severity: 'critical',
+          },
+          {
+            id: 'sig_urgency',
+            ruleId: 'RULE_COERCIVE_DEADLINE',
+            title: 'Coercive Time Pressure Tactics',
+            whyItMatters: 'Fraudsters create artificial 2-hour urgency to prevent candidates from verifying with real employers.',
+            evidence: 'within 2 hours via UPI or your job offer stands cancelled',
+            severity: 'high',
+          },
+        ],
+        unverified: [
+          'Email address is not an official @tcs.com corporate email.',
+          'Appointment letter is not corroborated in TCS Careers portal.',
+        ],
+        extractedEntities: {
+          urls: ['http://tcs-careers.net/appointment'],
+          domains: ['tcs-careers.net'],
+          emails: ['careers@tcs-careers.net'],
+          phones: ['+91 98765 43210'],
+          upiHandles: ['tcs.hr@okaxis'],
+          amounts: ['₹3,500'],
+          organization: 'TCS',
+        },
+        recommendedActions: [
+          'Do not transfer any money or pay via UPI. This pattern matches known job recruitment scams.',
+          'Block the recruiter on WhatsApp, Telegram, and email immediately.',
+          'If you have already paid, dial 1930 immediately or file a report at cybercrime.gov.in.',
+        ],
+        auditId: 'audit_sample_concern',
+      },
+    },
+  },
+  {
+    name: 'confirmed-scam',
+    data: {
+      inputText: 'Confirmed fraudulent recruitment campaign impersonating IT services with reported UPI.',
+      domain: 'job',
+      channel: 'sms',
+      timestamp: new Date().toISOString(),
+      result: {
+        status: 'CONFIRMED_SCAM',
+        confidenceScore: 99,
+        mlScore: 0.995,
+        riskLevel: 'HIGH RISK',
+        summary: 'Verified fraudulent pattern matching confirmed community scam reports.',
+        signals: [
+          {
+            id: 'sig_confirmed',
+            ruleId: 'RULE_COMMUNITY_INTEL',
+            title: 'Confirmed Community Threat Intelligence Record',
+            whyItMatters: 'Multiple independent students have reported this exact payment handle.',
+            evidence: 'Matching UPI handle tcs.scam@okaxis in active cyber threat database.',
+            severity: 'critical',
+          },
+        ],
+        unverified: [],
+        extractedEntities: {
+          urls: [],
+          domains: ['tcs-fake.org'],
+          emails: [],
+          phones: [],
+          upiHandles: ['tcs.scam@okaxis'],
+          amounts: ['₹5,000'],
+          organization: 'TCS Impersonator',
+        },
+        recommendedActions: [
+          'Report indicator to cybercrime.gov.in and dial 1930.',
+        ],
+        auditId: 'audit_sample_confirmed',
+      },
+    },
+  },
+];
 
 async function generateScreenshots() {
-  console.log('=== JAANCH RESULTS SCREENSHOT GENERATOR (360px, 768px, 1280px in Light/Dark & EN/HI/KN) ===\n');
+  console.log('=== JAANCH RESULTS SCREENSHOT GENERATOR (4 Verdict States @ 360px, 768px, 1280px in Light/Dark & EN/HI/KN) ===\n');
 
   if (!fs.existsSync(distDir)) {
     throw new Error(`client/dist does not exist at ${distDir}. Please run "npm run build -w client" first.`);
@@ -127,6 +248,7 @@ async function generateScreenshots() {
   try {
     browser = await chromium.launch({ headless: true });
 
+    // 1. Generate full matrix of 18 standard screenshots (high-concern baseline)
     for (const vp of viewports) {
       for (const theme of themes) {
         for (const lang of languages) {
@@ -136,17 +258,16 @@ async function generateScreenshots() {
           });
 
           const page = await context.newPage();
+          const concernData = VERDICT_STATES.find((s) => s.name === 'high-concern').data;
 
-          // Pre-seed localStorage and sessionStorage before navigation
           await page.addInitScript(({ t, l, sampleData }) => {
             window.localStorage.setItem('jaanch_theme', t);
             window.localStorage.setItem('jaanch_language', l);
             window.sessionStorage.setItem('jaanch_guest_analysis', JSON.stringify(sampleData));
-          }, { t: theme, l: lang, sampleData: SAMPLE_CONCERN_DATA });
+          }, { t: theme, l: lang, sampleData: concernData });
 
           await page.goto(`${baseUrl}/results/local`, { waitUntil: 'networkidle' });
 
-          // Ensure theme and lang are accurately applied to DOM
           await page.evaluate(({ t, l }) => {
             document.documentElement.lang = l;
             if (t === 'dark') {
@@ -158,27 +279,75 @@ async function generateScreenshots() {
             }
           }, { t: theme, l: lang });
 
-          // Wait for fonts to be ready
           await page.evaluate(async () => {
             await document.fonts.ready;
           });
 
-          // Small settling delay for layout stability
-          await page.waitForTimeout(250);
+          await page.waitForTimeout(200);
 
           const fileName = `results-${lang}-${theme}-${vp.name}px.png`;
           const filePath = path.join(outDir, fileName);
 
           await page.screenshot({ path: filePath, fullPage: true });
           count++;
-          console.log(`[${count}/18] Saved: docs/ui-shots/results/${fileName} (${vp.name}px, ${theme}, ${lang})`);
+          console.log(`[${count}] Saved: docs/ui-shots/results/${fileName}`);
 
           await context.close();
         }
       }
     }
 
-    console.log(`\n✅ Generated all 18 visual proof screenshots successfully in docs/ui-shots/results/`);
+    // 2. Generate explicit state-named screenshots for all 4 verdict states (360/768/1280, light/dark, en/hi/kn)
+    for (const verdict of VERDICT_STATES) {
+      for (const vp of viewports) {
+        for (const theme of themes) {
+          for (const lang of ['en']) { // comprehensive en proofs for all states
+            const context = await browser.newContext({
+              viewport: { width: vp.width, height: vp.height },
+              deviceScaleFactor: 1.5,
+            });
+
+            const page = await context.newPage();
+
+            await page.addInitScript(({ t, l, sampleData }) => {
+              window.localStorage.setItem('jaanch_theme', t);
+              window.localStorage.setItem('jaanch_language', l);
+              window.sessionStorage.setItem('jaanch_guest_analysis', JSON.stringify(sampleData));
+            }, { t: theme, l: lang, sampleData: verdict.data });
+
+            await page.goto(`${baseUrl}/results/local`, { waitUntil: 'networkidle' });
+
+            await page.evaluate(({ t, l }) => {
+              document.documentElement.lang = l;
+              if (t === 'dark') {
+                document.documentElement.classList.add('dark');
+                document.documentElement.setAttribute('data-theme', 'dark');
+              } else {
+                document.documentElement.classList.remove('dark');
+                document.documentElement.setAttribute('data-theme', 'light');
+              }
+            }, { t: theme, l: lang });
+
+            await page.evaluate(async () => {
+              await document.fonts.ready;
+            });
+
+            await page.waitForTimeout(200);
+
+            const fileName = `verdict-${verdict.name}-${theme}-${vp.name}px.png`;
+            const filePath = path.join(outDir, fileName);
+
+            await page.screenshot({ path: filePath, fullPage: true });
+            count++;
+            console.log(`[${count}] Saved: docs/ui-shots/results/${fileName} (Verdict: ${verdict.name})`);
+
+            await context.close();
+          }
+        }
+      }
+    }
+
+    console.log(`\n✅ Generated all visual proof screenshots successfully in docs/ui-shots/results/`);
   } finally {
     if (browser) await browser.close();
     server.close();
@@ -189,4 +358,3 @@ generateScreenshots().catch((err) => {
   console.error('\n❌ Screenshot generation failed:', err.message);
   process.exit(1);
 });
-

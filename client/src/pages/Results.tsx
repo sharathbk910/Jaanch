@@ -541,6 +541,16 @@ export function SamplePage() {
             </p>
           </div>
 
+          {/* Hero Risk Level & Verification Status Banner */}
+          <RiskLevelBanner
+            status={result.status}
+            confidenceScore={result.confidenceScore}
+            mlScore={result.mlScore}
+            mlProbability={result.mlProbability}
+            riskLevel={result.riskLevel}
+            summary={result.summary}
+          />
+
           {hasFeeOrOtp && (
             <PaymentAlert
               amount={result.extractedEntities.amounts?.[0]}

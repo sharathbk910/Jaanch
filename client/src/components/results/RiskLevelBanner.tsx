@@ -25,178 +25,145 @@ export function RiskLevelBanner({
   summary,
 }: RiskLevelBannerProps) {
   const { t } = useLanguage();
-  const isHigh = status === 'HIGH_CONCERN' || status === 'CONFIRMED_SCAM';
+  const isConfirmedScam = status === 'CONFIRMED_SCAM';
+  const isHighConcern = status === 'HIGH_CONCERN';
   const isCaution = status === 'NEEDS_REVIEW';
 
   const effectiveMl = mlScore ?? mlProbability;
 
-  const config = isHigh
+  const config = isConfirmedScam
     ? {
-        containerClass:
-          'bg-red-50 text-red-700 border-2 border-red-200 dark:bg-status-high-concern-bg dark:text-status-high-concern-fg dark:border-status-high-concern-border',
+        stripeClass: 'border-l-4 border-l-status-confirmed-scam-fg',
         badgeClass:
-          'bg-red-100 text-red-800 border border-red-300 dark:bg-status-high-concern-border/30 dark:text-status-high-concern-fg dark:border-status-high-concern-border',
-        pillClass:
-          'bg-red-200/70 text-red-900 border border-red-300 dark:bg-status-high-concern-border/40 dark:text-status-high-concern-fg dark:border-status-high-concern-border',
-        arcColorClass: 'text-red-600 dark:text-red-500',
-        textColorClass: 'text-red-700 dark:text-red-400',
+          'bg-status-high-concern-bg/40 text-status-high-concern-fg border border-status-high-concern-border/60',
         statusLabel: t('riskBanner.statusLabelHigh'),
         icon: ShieldAlert,
-        iconClass: 'text-red-600 dark:text-status-high-concern-fg',
+        iconClass: 'text-status-high-concern-fg',
         title: t('riskBanner.highTitle'),
-        subLabel: t('riskBanner.highSub'),
+        subLabel: 'CONFIRMED SCAM / DANGER',
         urgency: t('riskBanner.highUrgency'),
         protocol: t('riskBanner.highProtocol'),
         defaultExplanation: t('riskBanner.highDesc'),
       }
-    : isCaution
+    : isHighConcern
       ? {
-          containerClass:
-            'bg-amber-50 text-amber-700 border-2 border-amber-200 dark:bg-status-review-bg dark:text-status-review-fg dark:border-status-review-border',
+          stripeClass: 'border-l-4 border-l-status-high-concern-fg',
           badgeClass:
-            'bg-amber-100 text-amber-800 border border-amber-300 dark:bg-status-review-border/30 dark:text-status-review-fg dark:border-status-review-border',
-          pillClass:
-            'bg-amber-200/70 text-amber-900 border border-amber-300 dark:bg-status-review-border/40 dark:text-status-review-fg dark:border-status-review-border',
-          arcColorClass: 'text-amber-500 dark:text-amber-400',
-          textColorClass: 'text-amber-700 dark:text-amber-400',
-          statusLabel: t('riskBanner.statusLabelCaution'),
-          icon: AlertTriangle,
-          iconClass: 'text-amber-600 dark:text-status-review-fg',
-          title: t('riskBanner.cautionTitle'),
-          subLabel: t('riskBanner.cautionSub'),
-          urgency: t('riskBanner.cautionUrgency'),
-          protocol: t('riskBanner.cautionProtocol'),
-          defaultExplanation: t('riskBanner.cautionDesc'),
+            'bg-status-high-concern-bg/40 text-status-high-concern-fg border border-status-high-concern-border/60',
+          statusLabel: t('riskBanner.statusLabelHigh'),
+          icon: ShieldAlert,
+          iconClass: 'text-status-high-concern-fg',
+          title: t('riskBanner.highTitle'),
+          subLabel: t('riskBanner.highSub'),
+          urgency: t('riskBanner.highUrgency'),
+          protocol: t('riskBanner.highProtocol'),
+          defaultExplanation: t('riskBanner.highDesc'),
         }
-      : {
-          containerClass:
-            'bg-emerald-50 text-emerald-700 border-2 border-emerald-200 dark:bg-status-likely-genuine-bg dark:text-status-likely-genuine-fg dark:border-status-likely-genuine-border',
-          badgeClass:
-            'bg-emerald-100 text-emerald-800 border border-emerald-300 dark:bg-status-likely-genuine-border/30 dark:text-status-likely-genuine-fg dark:border-status-likely-genuine-border',
-          pillClass:
-            'bg-emerald-200/70 text-emerald-900 border border-emerald-300 dark:bg-status-likely-genuine-border/40 dark:text-status-likely-genuine-fg dark:border-status-likely-genuine-border',
-          arcColorClass: 'text-teal-600 dark:text-teal-400',
-          textColorClass: 'text-teal-700 dark:text-teal-400',
-          statusLabel: t('riskBanner.statusLabelSafe'),
-          icon: CheckCircle2,
-          iconClass: 'text-emerald-600 dark:text-status-likely-genuine-fg',
-          title: t('riskBanner.safeTitle'),
-          subLabel: t('riskBanner.safeSub'),
-          urgency: t('riskBanner.safeUrgency'),
-          protocol: t('riskBanner.safeProtocol'),
-          defaultExplanation: t('riskBanner.safeDesc'),
-        };
+      : isCaution
+        ? {
+            stripeClass: 'border-l-4 border-l-status-needs-review-fg',
+            badgeClass:
+              'bg-status-needs-review-bg/50 text-status-needs-review-fg border border-status-needs-review-border/60',
+            statusLabel: t('riskBanner.statusLabelCaution'),
+            icon: AlertTriangle,
+            iconClass: 'text-status-needs-review-fg',
+            title: t('riskBanner.cautionTitle'),
+            subLabel: t('riskBanner.cautionSub'),
+            urgency: t('riskBanner.cautionUrgency'),
+            protocol: t('riskBanner.cautionProtocol'),
+            defaultExplanation: t('riskBanner.cautionDesc'),
+          }
+        : {
+            stripeClass: 'border-l-4 border-l-status-likely-genuine-fg',
+            badgeClass:
+              'bg-status-likely-genuine-bg/50 text-status-likely-genuine-fg border border-status-likely-genuine-border/60',
+            statusLabel: t('riskBanner.statusLabelSafe'),
+            icon: CheckCircle2,
+            iconClass: 'text-status-likely-genuine-fg',
+            title: t('riskBanner.safeTitle'),
+            subLabel: t('riskBanner.safeSub'),
+            urgency: t('riskBanner.safeUrgency'),
+            protocol: t('riskBanner.safeProtocol'),
+            defaultExplanation: t('riskBanner.safeDesc'),
+          };
 
   const IconComponent = config.icon;
   const explanation = summary || config.defaultExplanation;
 
-  // Percentage value for the circular donut meter
-  const rawPercent = effectiveMl !== undefined ? effectiveMl * 100 : confidenceScore;
-  const boundedPercent = Math.min(100, Math.max(0, rawPercent));
-  const circumference = 238.76; // 2 * Math.PI * 38
-  const dashOffset = circumference - (boundedPercent / 100) * circumference;
-  const percentDisplay =
-    boundedPercent % 1 === 0 ? boundedPercent.toFixed(0) : boundedPercent.toFixed(1);
+  const displayTitle =
+    config.title === 'RISK LEVEL: HIGH RISK'
+      ? 'Risk Level: High Risk'
+      : config.title === 'RISK LEVEL: CAUTION'
+        ? 'Risk Level: Caution'
+        : config.title === 'RISK LEVEL: LIKELY GENUINE'
+          ? 'Risk Level: Likely Genuine'
+          : config.title;
 
   return (
     <div
       id="risk-level-banner"
       data-testid="risk-level-banner"
-      className={`${config.containerClass} rounded-card p-5 sm:p-6 shadow-sm relative overflow-hidden transition-all`}
+      className={`bg-surface border border-border ${config.stripeClass} rounded-card p-6 sm:p-7 shadow-sm relative overflow-hidden transition-all`}
     >
-      {/* Top Meta Bar: Severity Badge + Urgency Text */}
-      <div className="flex flex-wrap items-center justify-between gap-2.5 pb-3.5 mb-3.5 border-b border-current/20">
-        <div className="flex items-center gap-2">
-          <span className={`${config.badgeClass} px-2.5 py-1 text-xs font-mono font-bold uppercase tracking-wider rounded-sm`}>
+      {/* Top Meta Bar: Eyebrow-style label row using --color-muted-subtle, mono text, right-aligned secondary text */}
+      <div className="flex flex-wrap items-center justify-between gap-3 pb-3.5 mb-5 border-b border-border/70">
+        <div className="flex items-center gap-2.5">
+          {/* Status badge: small pill, subdued fill (10-15% opacity) with status color text */}
+          <span className={`${config.badgeClass} px-2.5 py-0.5 text-xs font-mono font-bold uppercase tracking-wider rounded-pill`}>
             {config.subLabel}
           </span>
-          <span className="font-mono text-[11px] font-semibold opacity-75 uppercase tracking-wide">
+          <span className="font-mono text-xs font-semibold text-muted-subtle uppercase tracking-wider">
             {config.urgency}
           </span>
         </div>
 
-        <div className="hidden sm:flex items-center gap-1.5 font-mono text-[11px] font-semibold opacity-70 uppercase tracking-wider">
+        <div className="hidden sm:flex items-center gap-1.5 font-mono text-xs font-semibold text-muted-subtle uppercase tracking-wider text-right">
           <span>{config.protocol}</span>
         </div>
       </div>
 
-      {/* Main Section: Left = Icon + Title + Explanation; Right = Circular Donut Meter */}
-      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-5 sm:gap-6">
+      {/* Main Section: Left = Icon in square bordered box + Editorial Serif Title + Constrained Paragraph; Right = Separate Bordered Sub-card */}
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
         <div className="flex items-start gap-4 flex-1">
-          <div className="p-2.5 rounded-chip bg-white/70 dark:bg-black/20 border border-current/20 shrink-0 mt-0.5 shadow-sm">
-            <IconComponent size={30} className={config.iconClass} aria-hidden="true" />
+          {/* Status Icon in a small bordered square box */}
+          <div className="w-11 h-11 rounded-chip bg-surface border border-border flex items-center justify-center shrink-0 mt-0.5 shadow-sm">
+            <IconComponent size={22} className={config.iconClass} aria-hidden="true" />
           </div>
 
           <div className="flex-1 min-w-0">
-            <h2 className="font-serif text-2xl sm:text-3xl font-extrabold tracking-tight leading-tight">
-              {config.title}
+            {/* Editorial Serif Headline in sentence case */}
+            <h2 className="font-serif text-xl sm:text-2xl font-bold tracking-tight text-foreground leading-snug line-clamp-2">
+              {displayTitle}
             </h2>
 
-            <p className="mt-2 text-xs sm:text-sm font-medium leading-relaxed opacity-90 max-w-2xl">
+            {/* Constrained Supporting Paragraph */}
+            <p className="mt-2 text-xs sm:text-sm font-normal text-muted-foreground leading-relaxed max-w-xl">
               {explanation}
             </p>
           </div>
         </div>
 
-        {/* Circular Donut Gauge Meter (Radial Percentage Display) */}
+        {/* Secondary Info Box: Separate bordered sub-card placed beside headline block */}
         <div
           data-testid="ml-confidence-score"
-          className="flex items-center gap-3.5 sm:gap-4 bg-white/85 dark:bg-black/30 border border-current/20 px-4 py-3 rounded-card shadow-sm shrink-0 self-start lg:self-center"
+          className="bg-surface border border-border rounded-card p-3.5 sm:p-4 flex items-center gap-3.5 shrink-0 self-start lg:self-center shadow-sm"
         >
-          {/* Radial Donut Gauge */}
-          <div className="relative w-14 h-14 sm:w-16 sm:h-16 shrink-0 flex items-center justify-center">
-            <svg
-              className="w-full h-full transform -rotate-90"
-              viewBox="0 0 100 100"
-              aria-hidden="true"
-            >
-              {/* Background circular track */}
-              <circle
-                cx="50"
-                cy="50"
-                r="38"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="13"
-                className="text-black/10 dark:text-white/15"
-              />
-              {/* Active progress arc */}
-              <circle
-                cx="50"
-                cy="50"
-                r="38"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="13"
-                strokeDasharray="238.76"
-                strokeDashoffset={dashOffset}
-                strokeLinecap="butt"
-                className={`transition-all duration-700 ease-out ${config.arcColorClass}`}
-              />
-            </svg>
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <span className={`font-mono font-bold text-xs sm:text-sm tracking-tight ${config.textColorClass}`}>
-                {percentDisplay}%
-              </span>
-            </div>
+          <div className="w-9 h-9 rounded-chip bg-muted-subtle/10 border border-border flex items-center justify-center shrink-0 text-muted-foreground">
+            <Sparkles size={16} aria-hidden="true" />
           </div>
 
-          {/* Telemetry info */}
-          <div className="flex flex-col pr-1">
-            <div className="flex items-center gap-1.5">
-              <Sparkles size={12} className="shrink-0 opacity-80" />
-              <span className="font-mono text-[10px] sm:text-xs font-bold tracking-wider uppercase opacity-75">
-                {effectiveMl !== undefined ? t('riskBanner.mlTelemetry') : t('riskBanner.ruleTelemetry')}
-              </span>
-            </div>
+          <div className="flex flex-col">
+            <span className="font-mono text-[10px] sm:text-xs font-semibold text-muted-subtle uppercase tracking-wider">
+              {effectiveMl !== undefined ? t('riskBanner.mlTelemetry') : t('riskBanner.ruleTelemetry')}
+            </span>
 
-            <span className="font-mono text-xs sm:text-sm font-bold tracking-tight text-foreground/90 mt-0.5">
+            <span className="font-mono text-xs sm:text-sm font-bold text-foreground mt-0.5">
               {effectiveMl !== undefined
                 ? `${t('riskBanner.mlScamProbability')} ${(effectiveMl * 100).toFixed(1)}%`
                 : `${t('riskBanner.ruleConfidence')} ${confidenceScore}%`}
             </span>
 
-            <span className="text-[11px] font-semibold opacity-75 mt-0.5">
+            <span className="text-[11px] font-normal text-muted-foreground mt-0.5">
               {config.statusLabel}
             </span>
           </div>
