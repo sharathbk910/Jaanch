@@ -14,7 +14,7 @@ services:
       - key: PORT
         value: 10000
       - key: CLIENT_ORIGINS
-        sync: false
+        value: https://jaanch-mu.vercel.app
       - key: SUPABASE_URL
         sync: false
       - key: SUPABASE_ANON_KEY
