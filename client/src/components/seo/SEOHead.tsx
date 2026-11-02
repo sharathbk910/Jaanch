@@ -18,7 +18,7 @@ const DEFAULT_DESC =
   'Free, privacy-first scam verification for Indian students and job seekers. Instantly verify internship offer letters, fake recruiters, upfront deposit traps, and scholarship fraud across MCA, AICTE, and NCS official portals.';
 const DEFAULT_KEYWORDS =
   'fake internship check, job scam detector India, internship letter verification, laptop security deposit scam, scholarship fraud check, AICTE internship verification, MCA company check, 1930 cyber crime helpline, Indian student safety';
-const DEFAULT_OG_IMAGE = `${DEFAULT_BASE_URL}/poster.jpg`;
+const DEFAULT_OG_IMAGE = `${DEFAULT_BASE_URL}/og-image.jpg`;
 
 export function SEOHead({
   title = DEFAULT_TITLE,
