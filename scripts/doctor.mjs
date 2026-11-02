@@ -119,8 +119,20 @@ export async function runDoctor(options = { silent: false }) {
   // 2. Load Environments
   const serverEnvFile = path.join(ROOT_DIR, 'server', '.env');
   const clientEnvFile = path.join(ROOT_DIR, 'client', '.env');
-  const serverEnv = { ...parseEnvFile(serverEnvFile), ...process.env };
-  const clientEnv = { ...parseEnvFile(clientEnvFile), ...process.env };
+  const serverEnvExample = path.join(ROOT_DIR, 'server', '.env.example');
+  const clientEnvExample = path.join(ROOT_DIR, 'client', '.env.example');
+
+  // Layer defaults from .env.example, then .env, then process.env
+  const serverEnv = {
+    ...parseEnvFile(serverEnvExample),
+    ...parseEnvFile(serverEnvFile),
+    ...process.env,
+  };
+  const clientEnv = {
+    ...parseEnvFile(clientEnvExample),
+    ...parseEnvFile(clientEnvFile),
+    ...process.env,
+  };
 
   log('\n--- Checking Server Environment Variable Names ---');
   const requiredServerVars = [

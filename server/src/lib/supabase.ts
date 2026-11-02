@@ -1,6 +1,11 @@
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 import { loadEnv } from '../config/env.js';
 
+// Polyfill minimal WebSocket if running in an environment without native WebSocket (e.g. Node < 22)
+if (typeof globalThis.WebSocket === 'undefined') {
+  (globalThis as any).WebSocket = class WebSocket {};
+}
+
 let publicClient: SupabaseClient | null = null;
 
 /**
