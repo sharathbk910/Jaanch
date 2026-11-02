@@ -40,7 +40,8 @@ export function LoginPage() {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const from = (location.state as any)?.from?.pathname || '/';
+  const rawFrom = (location.state as any)?.from?.pathname || '/';
+  const from = (rawFrom === '/login' || rawFrom === '/signup' || rawFrom === '/logout') ? '/' : rawFrom;
 
   // Redirect if already authenticated
   useEffect(() => {
@@ -244,7 +245,8 @@ export function SignupPage() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const from = (location.state as any)?.from?.pathname || '/';
+  const rawFrom = (location.state as any)?.from?.pathname || '/';
+  const from = (rawFrom === '/login' || rawFrom === '/signup' || rawFrom === '/logout') ? '/' : rawFrom;
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
