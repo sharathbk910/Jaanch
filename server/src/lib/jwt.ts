@@ -66,6 +66,27 @@ export async function verifySupabaseJwt(token: string): Promise<AuthenticatedUse
       throw err;
     }
 
+    // In development / production, if local signature verification failed (e.g. SUPABASE_JWT_SECRET not set),
+    // fall back to verifying the token against the Supabase Auth API directly.
+    if (process.env.NODE_ENV !== 'test') {
+      try {
+        const { getPublicSupabaseClient } = await import('./supabase.js');
+        const supabase = getPublicSupabaseClient();
+        const { data, error } = await supabase.auth.getUser(token);
+        if (!error && data?.user) {
+          const u = data.user;
+          const rawRole = (u.app_metadata?.role || u.user_metadata?.role || 'user') as string;
+          return {
+            id: u.id,
+            email: u.email,
+            role: rawRole === 'moderator' ? 'moderator' : 'user',
+          };
+        }
+      } catch {
+        // Fallback failed, proceed to error classification
+      }
+    }
+
     if (err && typeof err === 'object' && 'code' in err) {
       const joseErr = err as { code: string; message: string };
       if (joseErr.code === 'ERR_JWT_EXPIRED') {

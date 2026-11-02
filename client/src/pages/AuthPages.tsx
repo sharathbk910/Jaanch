@@ -40,7 +40,7 @@ export function LoginPage() {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const from = (location.state as any)?.from?.pathname || '/history';
+  const from = (location.state as any)?.from?.pathname || '/';
 
   // Redirect if already authenticated
   useEffect(() => {
@@ -254,7 +254,7 @@ export function SignupPage() {
 
   useEffect(() => {
     if (user && !authLoading) {
-      navigate('/history', { replace: true });
+      navigate('/', { replace: true });
     }
   }, [user, authLoading, navigate]);
 
@@ -293,7 +293,7 @@ export function SignupPage() {
         setError(signUpError.message || 'Failed to create account.');
       } else {
         setSuccessNotice('Account created successfully! Redirecting...');
-        setTimeout(() => navigate('/history', { replace: true }), 1200);
+        setTimeout(() => navigate('/', { replace: true }), 1200);
       }
     } catch {
       setError('An unexpected error occurred during signup.');
