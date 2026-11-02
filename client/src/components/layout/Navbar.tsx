@@ -51,7 +51,7 @@ export function Navbar() {
               </span>
               <div className="flex items-center gap-1.5 mt-0.5 select-none">
                 <span className="w-1.5 h-1.5 bg-terracotta shrink-0 rounded-[1px]" aria-hidden="true" />
-                <span className="font-mono text-[8px] sm:text-[9px] font-bold uppercase tracking-[0.18em] text-foreground/75 whitespace-nowrap">
+                <span className="font-mono text-[8px] sm:text-[9px] font-bold uppercase tracking-[0.12em] text-foreground/75 whitespace-nowrap max-w-[130px] sm:max-w-none truncate">
                   {t('navigation.tagline')}
                 </span>
               </div>
@@ -59,7 +59,7 @@ export function Navbar() {
           </Link>
 
           {/* Center: Desktop Navigation Links (Properly Spaced in 1 Line) */}
-          <nav className="hidden md:flex items-center gap-5 lg:gap-7 shrink-0 whitespace-nowrap" aria-label="Main Navigation">
+          <nav className="hidden md:flex items-center gap-3 lg:gap-5 xl:gap-6 shrink-0 whitespace-nowrap" aria-label="Main Navigation">
             <NavLink
               to="/analyze"
               className={({ isActive }) =>
@@ -111,7 +111,7 @@ export function Navbar() {
           </nav>
 
           {/* Right: Actions Cluster in 1 Line (LOG IN + Outline Button + Controls) */}
-          <div className="hidden md:flex items-center gap-3 lg:gap-4 shrink-0 whitespace-nowrap">
+          <div className="hidden md:flex items-center gap-2 lg:gap-3 shrink-0 whitespace-nowrap">
             {user ? (
               <div className="flex items-center gap-2 shrink-0 whitespace-nowrap">
                 <Link
@@ -137,12 +137,12 @@ export function Navbar() {
               </Link>
             )}
 
-            {/* Blue Action Button (like MotherDuck START FREE in screenshot) */}
-            <Link to="/analyze" className="shrink-0">
+            {/* Blue Action Button (shown on large screens where space permits) */}
+            <Link to="/analyze" className="hidden xl:inline-flex shrink-0">
               <Button
                 variant="primary"
                 size="sm"
-                className="bg-neo-sky text-foreground border-2 border-neo-border shadow-neo-sm font-bold uppercase tracking-wider text-xs px-3.5 py-1.5 hover:bg-neo-sky-light hover:text-foreground hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all rounded-none whitespace-nowrap"
+                className="bg-neo-sky text-foreground border-2 border-neo-border shadow-neo-sm font-bold uppercase tracking-wider text-xs px-3 py-1.5 hover:bg-neo-sky-light hover:text-foreground hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all rounded-none whitespace-nowrap"
               >
                 {t('navigation.verifyOffer')}
               </Button>

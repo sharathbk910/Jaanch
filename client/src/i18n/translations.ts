@@ -35,6 +35,10 @@ export interface TranslationDictionary {
     featureCard3Val1: string;
     featureCard3Label2: string;
     featureCard3Val2: string;
+    officialPortalsTitle: string;
+    officialPortalsBadge: string;
+    tapForSound: string;
+    playingSound: string;
   };
   features: {
     zeroFeesTitle: string;
@@ -558,6 +562,10 @@ export const translations: Record<'en' | 'hi' | 'kn', TranslationDictionary> = {
       featureCard3Val1: '@company.com',
       featureCard3Label2: 'Free Webmail (@gmail)',
       featureCard3Val2: 'Flagged',
+      officialPortalsTitle: 'Official Indian Verification Portals',
+      officialPortalsBadge: 'GOVT VERIFIED',
+      tapForSound: '◀ TAP FOR SOUND',
+      playingSound: '🔊 PLAYING SOUND',
     },
     features: {
       zeroFeesTitle: 'Zero Upfront Fees',
@@ -1048,8 +1056,8 @@ export const translations: Record<'en' | 'hi' | 'kn', TranslationDictionary> = {
     },
     navigation: {
       brand: 'जांच.',
-      tagline: 'भारतीय छात्रों के लिए डिजिटल सुरक्षा और विश्वास',
-      verifyOffer: 'ऑफर की जांच करें',
+      tagline: 'डिजिटल सुरक्षा और विश्वास',
+      verifyOffer: 'अभी जांचें',
       linkCheck: 'लिंक जांच',
       resources: 'सत्यापन मार्गदर्शिका',
       about: 'हमारे बारे में',
@@ -1079,6 +1087,10 @@ export const translations: Record<'en' | 'hi' | 'kn', TranslationDictionary> = {
       featureCard3Val1: '@company.com',
       featureCard3Label2: 'निःशुल्क वेबमेल (@gmail)',
       featureCard3Val2: 'संदिग्ध चिह्नित',
+      officialPortalsTitle: 'आधिकारिक भारतीय सत्यापन पोर्टल',
+      officialPortalsBadge: 'सरकार द्वारा सत्यापित',
+      tapForSound: '◀ आवाज़ के लिए टैप करें',
+      playingSound: '🔊 आवाज़ चल रही है',
     },
     features: {
       zeroFeesTitle: 'शून्य अग्रिम शुल्क',
@@ -1569,8 +1581,8 @@ export const translations: Record<'en' | 'hi' | 'kn', TranslationDictionary> = {
     },
     navigation: {
       brand: 'ಜಾಂಚ್.',
-      tagline: 'ಭಾರತೀಯ ವಿದ್ಯಾರ್ಥಿಗಳಿಗೆ ಡಿಜಿಟಲ್ ನಂಬಿಕೆ ಮತ್ತು ಸುರಕ್ಷತೆ',
-      verifyOffer: 'ಆಫರ್ ಪರಿಶೀಲಿಸಿ',
+      tagline: 'ಡಿಜಿಟಲ್ ನಂಬಿಕೆ ಮತ್ತು ಸುರಕ್ಷತೆ',
+      verifyOffer: 'ಈಗಲೇ ಪರಿಶೀಲಿಸಿ',
       linkCheck: 'ಲಿಂಕ್ ಪರಿಶೀಲನೆ',
       resources: 'ಪರಿಶೀಲನಾ ಮಾರ್ಗದರ್ಶಿ',
       about: 'ನಮ್ಮ ಬಗ್ಗೆ',
@@ -1600,6 +1612,10 @@ export const translations: Record<'en' | 'hi' | 'kn', TranslationDictionary> = {
       featureCard3Val1: '@company.com',
       featureCard3Label2: 'ಉಚಿತ ವೆಬ್‌ಮೇಲ್ (@gmail)',
       featureCard3Val2: 'ಅನುಮಾನಾಸ್ಪದ',
+      officialPortalsTitle: 'ಅಧಿಕೃತ ಭಾರತೀಯ ಪರಿಶೀಲನಾ ಪೋರ್ಟಲ್‌ಗಳು',
+      officialPortalsBadge: 'ಸರ್ಕಾರ ಪರಿಶೀಲಿತ',
+      tapForSound: '◀ ಧ್ವನಿಗಾಗಿ ಟ್ಯಾಪ್ ಮಾಡಿ',
+      playingSound: '🔊 ಧ್ವನಿ ಚಾಲನೆಯಲ್ಲಿದೆ',
     },
     features: {
       zeroFeesTitle: 'ಶೂನ್ಯ ಮುಂಗಡ ಶುಲ್ಕ',

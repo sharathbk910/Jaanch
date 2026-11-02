@@ -195,12 +195,12 @@ export function Hero() {
                   {isPlayingAudio ? (
                     <>
                       <Volume2 size={14} className="text-foreground shrink-0 group-hover:scale-110 transition-transform animate-pulse" />
-                      <span>🔊 PLAYING SOUND</span>
+                      <span>{t('hero.playingSound', '🔊 PLAYING SOUND')}</span>
                     </>
                   ) : (
                     <>
                       <VolumeX size={14} className="text-foreground shrink-0 group-hover:scale-110 transition-transform" />
-                      <span>◀ TAP FOR SOUND</span>
+                      <span>{t('hero.tapForSound', '◀ TAP FOR SOUND')}</span>
                     </>
                   )}
                 </button>
@@ -213,10 +213,10 @@ export function Hero() {
         <div className="mt-12 pt-8 border-t-2 border-neo-border">
           <div className="flex items-center justify-between pb-3 mb-4">
             <span className="font-mono text-xs font-bold uppercase tracking-widest text-muted-foreground">
-              Official Indian Verification Portals
+              {t('hero.officialPortalsTitle', 'Official Indian Verification Portals')}
             </span>
             <ShimmerBadge>
-              GOVT VERIFIED
+              {t('hero.officialPortalsBadge', 'GOVT VERIFIED')}
             </ShimmerBadge>
           </div>
 
