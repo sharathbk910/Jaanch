@@ -377,40 +377,6 @@ export function Hero() {
             </div>
           </div>
         </div>
-
-        {/* MotherDuck Style Brutalist Wide Testimonial Block with Solid Offset Shadow */}
-        <div className="mt-14 relative">
-          <div className="bg-surface border-2 border-neo-border shadow-[8px_8px_0px_var(--color-neo-border)] p-6 sm:p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative z-10">
-            {/* Left: Giant Terracotta Quote + Testimonial Body */}
-            <div className="flex items-start gap-4 flex-1">
-              <span className="text-terracotta text-5xl sm:text-6xl font-serif font-black leading-none select-none shrink-0" aria-hidden="true">
-                “
-              </span>
-              <p className="font-sans text-sm sm:text-base text-foreground leading-relaxed">
-                We're seeing an epidemic of fake job postings targeting fresh graduates across Telegram and WhatsApp. Integrating Jaanch into our verification workflow intercepts 98% of upfront fee scams before students transfer any money or OTPs. It is our non-negotiable campus safety benchmark.
-              </p>
-            </div>
-
-            {/* Right: Author & Organization Identity */}
-            <div className="shrink-0 flex items-center md:flex-col md:items-start gap-3 md:gap-1.5 pl-0 md:pl-6 md:border-l-2 md:border-neo-border/20">
-              <div className="flex items-center gap-2 font-mono font-bold text-xs sm:text-sm text-foreground uppercase tracking-wider">
-                <ShieldCheck size={20} className="text-terracotta" />
-                <span>DAVID AI / CAMPUS TRUST</span>
-              </div>
-              <div>
-                <div className="font-sans font-bold text-sm text-foreground">Ben Wiley</div>
-                <div className="font-sans text-xs text-muted-foreground">Co-Founder & CTO</div>
-              </div>
-            </div>
-          </div>
-
-          {/* Whimsical Doodle Clouds Beneath Testimonial (Matching screenshot) */}
-          <div className="flex justify-between items-center px-6 -mt-3 opacity-60 pointer-events-none select-none">
-            <DoodleCloud size={85} className="text-foreground animate-float" />
-            <DoodleCloud size={110} className="text-foreground animate-float-delayed hidden sm:block" />
-            <DoodleCloud size={75} className="text-foreground animate-float" />
-          </div>
-        </div>
       </div>
     </section>
   );
