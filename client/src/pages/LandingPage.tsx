@@ -1,4 +1,5 @@
 import React from 'react';
+import { SEOHead } from '../components/seo/SEOHead.js';
 import { Hero } from '../components/landing/Hero.js';
 import { SubmissionCard } from '../components/landing/SubmissionCard.js';
 import { AuditSteps } from '../components/landing/AuditSteps.js';
@@ -8,6 +9,11 @@ import { GuidelinesAndHelpline } from '../components/landing/GuidelinesAndHelpli
 export function LandingPage() {
   return (
     <div className="w-full">
+      <SEOHead
+        canonicalPath="/"
+        title="Jaanch AI – Digital Trust & Safety Platform for Indian Students | Scam Verification"
+        description="Free, privacy-first scam verification for Indian students and job seekers. Instantly verify internship offer letters, fake recruiters, upfront deposit traps, and scholarship fraud across MCA, AICTE, and NCS official portals."
+      />
       {/* 1. MotherDuck Hero Section */}
       <Hero />
 

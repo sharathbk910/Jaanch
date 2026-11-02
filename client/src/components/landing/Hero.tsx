@@ -179,6 +179,7 @@ export function Hero() {
                     muted
                     playsInline
                     preload="auto"
+                    aria-label="Walkthrough demonstration of Jaanch AI verifying student job and internship offers"
                     className="w-full h-full object-cover"
                   />
                 </div>

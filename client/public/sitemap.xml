@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <!-- 1. Home / Landing -->
+  <url>
+    <loc>https://jaanch-mu.vercel.app/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://jaanch-mu.vercel.app/" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://jaanch-mu.vercel.app/?lang=hi" />
+    <xhtml:link rel="alternate" hreflang="kn" href="https://jaanch-mu.vercel.app/?lang=kn" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://jaanch-mu.vercel.app/" />
+  </url>
+
+  <!-- 2. Offer Analysis & Verification Engine -->
+  <url>
+    <loc>https://jaanch-mu.vercel.app/analyze</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://jaanch-mu.vercel.app/analyze" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://jaanch-mu.vercel.app/analyze?lang=hi" />
+    <xhtml:link rel="alternate" hreflang="kn" href="https://jaanch-mu.vercel.app/analyze?lang=kn" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://jaanch-mu.vercel.app/analyze" />
+  </url>
+
+  <!-- 3. Government Portals & Helpline 1930 Resources -->
+  <url>
+    <loc>https://jaanch-mu.vercel.app/resources</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://jaanch-mu.vercel.app/resources" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://jaanch-mu.vercel.app/resources?lang=hi" />
+    <xhtml:link rel="alternate" hreflang="kn" href="https://jaanch-mu.vercel.app/resources?lang=kn" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://jaanch-mu.vercel.app/resources" />
+  </url>
+
+  <!-- 4. About & Trust Framework -->
+  <url>
+    <loc>https://jaanch-mu.vercel.app/about</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://jaanch-mu.vercel.app/about" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://jaanch-mu.vercel.app/about?lang=hi" />
+    <xhtml:link rel="alternate" hreflang="kn" href="https://jaanch-mu.vercel.app/about?lang=kn" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://jaanch-mu.vercel.app/about" />
+  </url>
+
+  <!-- 5. Interactive Scam Scenarios & Training -->
+  <url>
+    <loc>https://jaanch-mu.vercel.app/sample</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://jaanch-mu.vercel.app/sample" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://jaanch-mu.vercel.app/sample?lang=hi" />
+    <xhtml:link rel="alternate" hreflang="kn" href="https://jaanch-mu.vercel.app/sample?lang=kn" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://jaanch-mu.vercel.app/sample" />
+  </url>
+
+  <!-- 6. Recruiter Link & Domain Authenticity Checker -->
+  <url>
+    <loc>https://jaanch-mu.vercel.app/link-check</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://jaanch-mu.vercel.app/link-check" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://jaanch-mu.vercel.app/link-check?lang=hi" />
+    <xhtml:link rel="alternate" hreflang="kn" href="https://jaanch-mu.vercel.app/link-check?lang=kn" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://jaanch-mu.vercel.app/link-check" />
+  </url>
+
+  <!-- 7. Privacy & Client-Side PII Architecture -->
+  <url>
+    <loc>https://jaanch-mu.vercel.app/privacy</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://jaanch-mu.vercel.app/privacy" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://jaanch-mu.vercel.app/privacy?lang=hi" />
+    <xhtml:link rel="alternate" hreflang="kn" href="https://jaanch-mu.vercel.app/privacy?lang=kn" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://jaanch-mu.vercel.app/privacy" />
+  </url>
+
+</urlset>

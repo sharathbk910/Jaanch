@@ -65,6 +65,15 @@ export function Footer() {
             </div>
 
             <div className="flex flex-wrap items-center justify-center gap-6 text-xs text-muted-foreground">
+              <Link to="/analyze" className="hover:text-foreground font-medium transition-colors min-h-[44px] flex items-center">
+                {t('navigation.analyze')}
+              </Link>
+              <Link to="/sample" className="hover:text-foreground font-medium transition-colors min-h-[44px] flex items-center">
+                {t('navigation.sample')}
+              </Link>
+              <Link to="/link-check" className="hover:text-foreground font-medium transition-colors min-h-[44px] flex items-center">
+                {t('navigation.linkCheck')}
+              </Link>
               <Link to="/resources" className="hover:text-foreground font-medium transition-colors min-h-[44px] flex items-center">
                 {t('navigation.resources')}
               </Link>

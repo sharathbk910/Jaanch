@@ -1,0 +1,33 @@
+# ==========================================
+# Jaanch AI - Robots.txt
+# Digital Trust & Safety Platform for Indian Students
+# Host: https://jaanch-mu.vercel.app
+# ==========================================
+
+User-agent: *
+Allow: /
+Allow: /analyze
+Allow: /resources
+Allow: /about
+Allow: /privacy
+Allow: /sample
+Allow: /link-check
+Allow: /login
+Allow: /signup
+Allow: /assets/
+Allow: /logo-icon.png
+Allow: /poster.jpg
+Allow: /whatsapp-demo.mp4
+
+# Disallow private user workspaces, state-bound callbacks, and internal moderation panels
+Disallow: /moderation
+Disallow: /dashboard
+Disallow: /history
+Disallow: /settings
+Disallow: /reset-password
+Disallow: /logout
+Disallow: /api/
+
+# Sitemap index
+Sitemap: https://jaanch-mu.vercel.app/sitemap.xml
+Host: https://jaanch-mu.vercel.app

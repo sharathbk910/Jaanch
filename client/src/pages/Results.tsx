@@ -23,6 +23,7 @@ import {
 } from 'lucide-react';
 import { type AnalyzeResult, type VerificationStatus } from '@jaanch/shared';
 import { useLanguage } from '../i18n/LanguageContext.js';
+import { SEOHead } from '../components/seo/SEOHead.js';
 import { getGuestAnalysis } from '../lib/guestSession.js';
 import { Button } from '../components/ui/Button.js';
 import { Card } from '../components/ui/Card.js';
@@ -267,6 +268,11 @@ export function Results() {
 
   return (
     <main className="w-full max-w-editorial mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+      <SEOHead
+        noIndex={true}
+        title="Offer Verification Audit Report | Jaanch AI"
+        description="Detailed verification status, heuristic risk factors, and recommended safety next steps."
+      />
       {/* Eyebrow & Top Navigation Bar */}
       <div className="flex items-center justify-between pb-3 mb-6 border-b border-border/60">
         <button
@@ -471,6 +477,12 @@ export function SamplePage() {
 
   return (
     <main className="w-full max-w-editorial mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+      <SEOHead
+        canonicalPath="/sample"
+        title="Interactive Scam & Genuine Offer Samples | Jaanch AI"
+        description="Explore interactive examples of genuine corporate offers, upfront fee deposit scams, and OTP phishing offers with full audit breakdowns."
+        keywords="scam offer sample, genuine internship letter example, fake job offer example India, upfront deposit scam example"
+      />
       {/* Header */}
       <div className="text-center max-w-2xl mx-auto mb-6">
         <span className="font-mono text-xs uppercase tracking-wider text-muted-foreground block mb-2 font-medium">
@@ -620,6 +632,12 @@ export function LinkCheckPage() {
 
   return (
     <main className="w-full max-w-editorial mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+      <SEOHead
+        canonicalPath="/link-check"
+        title="Company Website & Recruiter Domain Authenticity Checker | Jaanch AI"
+        description="Verify recruiter website domains and links to detect typosquatting, free email imposters, and suspicious web redirects."
+        keywords="check recruiter link, company website verification, fake company domain checker India, typosquatting scam check"
+      />
       <div className="max-w-2xl mx-auto space-y-6">
         <div>
           <h1 className="font-serif text-2xl sm:text-3xl font-bold text-foreground">

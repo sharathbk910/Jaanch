@@ -22,6 +22,7 @@ import { apiClient } from '../lib/apiClient.js';
 import { useLanguage } from '../i18n/LanguageContext.js';
 import { Button } from '../components/ui/Button.js';
 import { Input, Textarea } from '../components/ui/Input.js';
+import { SEOHead } from '../components/seo/SEOHead.js';
 
 interface ModerationQueueItem {
   id: string;
@@ -261,6 +262,11 @@ export function ModerationPage() {
 
   return (
     <div className="min-h-screen py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      <SEOHead
+        noIndex={true}
+        title="Threat Intelligence Moderation Portal | Jaanch AI"
+        description="Internal human-in-the-loop threat indicator moderation and allowlist review."
+      />
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-6 border-b border-border">
         <div>

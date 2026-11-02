@@ -40,7 +40,9 @@ export function Navbar() {
           >
             <img
               src="/logo-icon.png"
-              alt="Jaanch"
+              alt="Jaanch AI – Digital Trust and Safety for Indian Students"
+              width={36}
+              height={36}
               className="w-8 h-8 sm:w-9 sm:h-9 object-contain rounded-lg shrink-0 group-hover:scale-105 transition-transform"
             />
             <div className="flex flex-col justify-center leading-none">

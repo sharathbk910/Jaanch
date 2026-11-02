@@ -23,6 +23,7 @@ import {
 } from '@jaanch/shared';
 import { useLanguage } from '../i18n/LanguageContext.js';
 import { useAuth } from '../lib/AuthContext.js';
+import { SEOHead } from '../components/seo/SEOHead.js';
 import { apiClient } from '../lib/apiClient.js';
 import { saveGuestAnalysis } from '../lib/guestSession.js';
 import {
@@ -348,6 +349,12 @@ export function Analyze() {
 
   return (
     <div className="w-full max-w-editorial mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+      <SEOHead
+        canonicalPath="/analyze"
+        title="Analyze & Verify Offer Letter | Free Scam Detector | Jaanch AI"
+        description="Paste offer text or upload offer letter PDF/image to detect advance-fee traps, lookalike recruiter domains, and coercive deadlines with client-side privacy protection."
+        keywords="check fake offer letter, internship offer letter verification, verify job offer online India, deposit scam check, upload offer letter check"
+      />
       {/* Top Header */}
       <div className="mb-8">
         <h1 className="font-serif text-3xl sm:text-4xl font-bold text-primary tracking-tight mb-2">

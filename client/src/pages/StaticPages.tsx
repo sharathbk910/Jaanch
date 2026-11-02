@@ -4,6 +4,7 @@ import { ExternalLink, ShieldCheck, Lock, Building, GraduationCap, Briefcase, Ph
 import { Card } from '../components/ui/Card.js';
 import { Button } from '../components/ui/Button.js';
 import { useLanguage } from '../i18n/LanguageContext.js';
+import { SEOHead } from '../components/seo/SEOHead.js';
 
 export function ResourcesPage() {
   const { dictionary } = useLanguage();
@@ -50,6 +51,12 @@ export function ResourcesPage() {
 
   return (
     <div className="w-full max-w-editorial mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <SEOHead
+        canonicalPath="/resources"
+        title="Official Verification Portals & 1930 Helpline Resources | Jaanch AI"
+        description="Verify employers and internships on official Indian government portals: MCA company master data, NCS job listings, AICTE internship portal, and National Cyber Crime Helpline 1930."
+        keywords="MCA company verification, AICTE internship check, National Career Service portal, 1930 cyber crime number India, report internship scam"
+      />
       <div className="max-w-3xl mx-auto">
         <span className="font-mono text-xs text-terracotta font-semibold uppercase tracking-wider block mb-1">
           {s.resourcesBadge}
@@ -105,6 +112,12 @@ export function AboutPage() {
 
   return (
     <div className="w-full max-w-editorial mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <SEOHead
+        canonicalPath="/about"
+        title="About Jaanch AI – Mission, Heuristic Audit Architecture & Trust Framework"
+        description="Learn how Jaanch AI protects Indian college students and job seekers with 15 explainable heuristic rules, client-side privacy redaction, and community threat intelligence."
+        keywords="about Jaanch AI, student scam prevention mission, explainable heuristic fraud detection, digital trust India"
+      />
       <div className="max-w-3xl mx-auto">
         <span className="font-mono text-xs text-terracotta font-semibold uppercase tracking-wider block mb-1">
           {s.aboutBadge}
@@ -150,6 +163,12 @@ export function PrivacyPage() {
 
   return (
     <div className="w-full max-w-editorial mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <SEOHead
+        canonicalPath="/privacy"
+        title="Privacy Policy & Client-Side PII Redaction Architecture | Jaanch AI"
+        description="Learn how Jaanch AI safeguards student data with client-side regex masking and local WebAssembly OCR. Zero raw user submissions or unmasked PII are shared."
+        keywords="Jaanch AI privacy policy, client-side data protection, Aadhaar masking, private OCR document parsing"
+      />
       <div className="max-w-3xl mx-auto">
         <span className="font-mono text-xs text-terracotta font-semibold uppercase tracking-wider block mb-1">
           {s.privacyBadge}
@@ -198,6 +217,11 @@ export function NotFoundPage() {
 
   return (
     <div className="w-full max-w-editorial mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
+      <SEOHead
+        noIndex={true}
+        title="404 – Page Not Found | Jaanch AI"
+        description="The page you requested could not be found."
+      />
       <div className="max-w-md mx-auto">
         <span className="font-mono text-sm font-bold text-terracotta mb-2 block">
           {s.notFoundBadge}

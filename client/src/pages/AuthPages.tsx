@@ -23,6 +23,7 @@ import { apiClient } from '../lib/apiClient.js';
 import { Card } from '../components/ui/Card.js';
 import { Button } from '../components/ui/Button.js';
 import { Input } from '../components/ui/Input.js';
+import { SEOHead } from '../components/seo/SEOHead.js';
 
 /* -------------------------------------------------------------------------- */
 /*                                 LOGIN PAGE                                 */
@@ -88,6 +89,11 @@ export function LoginPage() {
 
   return (
     <div className="w-full max-w-sm mx-auto px-4 py-12 sm:py-16">
+      <SEOHead
+        canonicalPath="/login"
+        title="Sign In | Jaanch AI"
+        description="Sign in to your Jaanch account to access saved offer audits and verification history."
+      />
       <div className="text-center mb-6">
         <div className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-surface border border-border text-terracotta mb-3">
           <Lock className="w-5 h-5" aria-hidden="true" />
@@ -324,6 +330,11 @@ export function SignupPage() {
 
   return (
     <div className="w-full max-w-sm mx-auto px-4 py-12 sm:py-16">
+      <SEOHead
+        canonicalPath="/signup"
+        title="Create Free Account | Jaanch AI"
+        description="Create a free Jaanch account to save and track your internship and job offer audits."
+      />
       <div className="text-center mb-6">
         <div className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-surface border border-border text-terracotta mb-3">
           <Shield className="w-5 h-5" aria-hidden="true" />
@@ -613,6 +624,11 @@ export function HistoryPage() {
   if (!user && !authLoading) {
     return (
       <div className="w-full max-w-editorial mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16">
+        <SEOHead
+          noIndex={true}
+          title="Verification History | Jaanch AI"
+          description="Access your saved verification history and checklists."
+        />
         <h1 className="font-serif text-3xl font-bold text-primary tracking-tight mb-2">
           {t.history.title}
         </h1>
@@ -664,6 +680,11 @@ export function HistoryPage() {
   // 2. Authenticated View
   return (
     <div className="w-full max-w-editorial mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      <SEOHead
+        noIndex={true}
+        title="Saved Verification History | Jaanch AI"
+        description="Review your past verified offers and audit reports."
+      />
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
         <div>
           <h1 className="font-serif text-2xl sm:text-3xl font-bold text-primary tracking-tight">
