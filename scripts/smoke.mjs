@@ -30,9 +30,15 @@ async function loadServerModules() {
     const envMod = await import('../server/dist/config/env.js');
     return { createApp: appMod.createApp, loadEnv: envMod.loadEnv };
   } else {
-    const appMod = await import('../server/src/app.js');
-    const envMod = await import('../server/src/config/env.js');
-    return { createApp: appMod.createApp, loadEnv: envMod.loadEnv };
+    try {
+      const appMod = await import('../server/src/app.ts');
+      const envMod = await import('../server/src/config/env.ts');
+      return { createApp: appMod.createApp, loadEnv: envMod.loadEnv };
+    } catch {
+      const appMod = await import('../server/src/app.js');
+      const envMod = await import('../server/src/config/env.js');
+      return { createApp: appMod.createApp, loadEnv: envMod.loadEnv };
+    }
   }
 }
 

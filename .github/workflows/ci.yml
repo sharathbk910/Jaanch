@@ -46,20 +46,12 @@ jobs:
         run: |
           cp server/.env.example server/.env
           cp client/.env.example client/.env
-      - name: Build Shared Workspace
-        run: npm run build -w shared
-      - name: Run Vitest Suite
+      - name: Build Shared and Server Workspaces
         run: |
-          set -o pipefail
-          npx vitest run --reporter=verbose --testTimeout=30000 2>&1 | tee vitest_output.log || {
-            grep -E "FAIL|Error|failed|timed out" vitest_output.log | tail -n 10 | while IFS= read -r line; do
-              echo "::error title=VitestFail::$line"
-            done
-            tail -n 30 vitest_output.log | while IFS= read -r line; do
-              echo "::warning title=VitestTail::$line"
-            done
-            exit 1
-          }
+          npm run build -w shared
+          npm run build -w server
+      - name: Run Vitest Suite
+        run: npm test -- --testTimeout=30000
       - name: Run Golden Scam Fixtures Evaluation (25/25)
         run: npm run eval -w shared
       - name: Run Acceptance Criteria Harness (10/10)
