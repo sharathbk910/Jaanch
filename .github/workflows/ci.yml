@@ -19,6 +19,8 @@ jobs:
           cache: 'npm'
       - name: Install dependencies
         run: npm ci
+      - name: Build Shared Workspace
+        run: npm run build -w shared
       - name: Verify Secrets, Policies & Types
         run: npm run lint
       - name: Verify Database Migrations
@@ -36,6 +38,8 @@ jobs:
           cache: 'npm'
       - name: Install dependencies
         run: npm ci
+      - name: Build Shared Workspace
+        run: npm run build -w shared
       - name: Run Vitest Suite
         run: npm test
       - name: Run Golden Scam Fixtures Evaluation (25/25)
