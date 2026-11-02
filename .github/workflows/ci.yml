@@ -52,10 +52,12 @@ jobs:
         run: |
           set -o pipefail
           npx vitest run --reporter=verbose --testTimeout=30000 2>&1 | tee vitest_output.log || {
-            echo "## ❌ Vitest Suite Failed" >> $GITHUB_STEP_SUMMARY
-            echo '```text' >> $GITHUB_STEP_SUMMARY
-            tail -n 120 vitest_output.log >> $GITHUB_STEP_SUMMARY
-            echo '```' >> $GITHUB_STEP_SUMMARY
+            grep -E "FAIL|Error|failed|timed out" vitest_output.log | tail -n 10 | while IFS= read -r line; do
+              echo "::error title=VitestFail::$line"
+            done
+            tail -n 30 vitest_output.log | while IFS= read -r line; do
+              echo "::warning title=VitestTail::$line"
+            done
             exit 1
           }
       - name: Run Golden Scam Fixtures Evaluation (25/25)
