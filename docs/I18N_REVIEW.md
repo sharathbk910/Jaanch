@@ -60,12 +60,12 @@ This document lists all localized UI strings across Hindi (`hi`) and Kannada (`k
 | Key | English (`en`) | Hindi (`hi`) | Kannada (`kn`) | Status |
 | :--- | :--- | :--- | :--- | :--- |
 | `submissionCard.title` | Paste your offer message, letter, or job communication | अपना ऑफर संदेश, पत्र या ईमेल यहां पेस्ट करें | ನಿಮ್ಮ ಆಫರ್ ಸಂದೇಶ, ನೇಮಕಾತಿ ಪತ್ರ ಅಥವಾ ಇಮೇಲ್ ಇಲ್ಲಿ ಅಂಟಿಸಿ | Pending Native Review |
-| `submissionCard.placeholder` | Paste the email body, WhatsApp text, appointment letter, or offer description (minimum 20 characters)... | ईमेल सामग्री, व्हाट्सएप संदेश, नियुक्ति पत्र या ऑफर विवरण यहां पेस्ट करें (न्यूनतम 20 अक्षर)... | ಇಮೇಲ್ ಪಠ್ಯ, ವಾಟ್ಸಾಪ್ ಸಂದೇಶ, ನೇಮಕಾತಿ ಪತ್ರ ಅಥವಾ ಆಫರ್ ವಿವರಗಳನ್ನು ಇಲ್ಲಿ ಅಂಟಿಸಿ (ಕನಿಷ್ಠ 20 ಅಕ್ಷರಗಳು)... | Pending Native Review |
+| `submissionCard.placeholder` | Paste the email body, WhatsApp text, appointment letter, or offer description (minimum 25 characters)... | ईमेल सामग्री, व्हाट्सएप संदेश, नियुक्ति पत्र या ऑफर विवरण यहां पेस्ट करें (न्यूनतम 25 अक्षर)... | ಇಮೇಲ್ ಪಠ್ಯ, ವಾಟ್ಸಾಪ್ ಸಂದೇಶ, ನೇಮಕಾತಿ ಪತ್ರ ಅಥವಾ ಆಫರ್ ವಿವರಗಳನ್ನು ಇಲ್ಲಿ ಅಂಟಿಸಿ (ಕನಿಷ್ಠ 25 ಅಕ್ಷರಗಳು)... | Pending Native Review |
 | `submissionCard.sampleOffer1` | Demo Genuine Offer | डेमो वास्तविक ऑफर | ಡೆಮೊ ನೈಜ ಆಫರ್ | Pending Native Review |
 | `submissionCard.sampleOffer2` | Demo Suspicious Offer | डेमो संदिग्ध ऑफर | ಡೆಮೊ ಅನುಮಾನಾಸ್ಪದ ಆಫರ್ | Pending Native Review |
 | `submissionCard.sampleOffer3` | Demo Fee Scam | डेमो फर्जी शुल्क ऑफर | ಡೆಮೊ ವಂಚನೆ ಶುಲ್ಕ ಆಫರ್ | Pending Native Review |
 | `submissionCard.charCount` | characters | अक्षर | ಅಕ್ಷರಗಳು | Pending Native Review |
-| `submissionCard.charMin` | Minimum 20 characters required | कम से कम 20 अक्षर आवश्यक हैं | ಕನಿಷ್ಠ 20 ಅಕ್ಷರಗಳು ಅಗತ್ಯವಿದೆ | Pending Native Review |
+| `submissionCard.charMin` | Minimum 25 characters required | कम से कम 25 अक्षर आवश्यक हैं | ಕನಿಷ್ಠ 25 ಅಕ್ಷರಗಳು ಅಗತ್ಯವಿದೆ | Pending Native Review |
 | `submissionCard.analyzeBtn` | Verify Offer Now | अभी ऑफर की जांच करें | ಈಗಲೇ ಆಫರ್ ಪರಿಶೀಲಿಸಿ | Pending Native Review |
 | `submissionCard.analyzing` | Running 8 deterministic checks... | 8 स्वचालित सुरक्षा जांच जारी हैं... | 8 ಸ್ವಯಂಚಾಲಿತ ನಿಯಮಗಳ ಪರಿಶೀಲನೆ ನಡೆಯುತ್ತಿದೆ... | Pending Native Review |
 | `submissionCard.dropPdf` | Drop offer letter PDF or click to browse | ऑफर पत्र PDF यहां छोड़ें या ब्राउज़ करने के लिए क्लिक करें | ಆಫರ್ ಪತ್ರದ PDF ಇಲ್ಲಿ ಡ್ರಾಪ್ ಮಾಡಿ ಅಥವಾ ಬ್ರೌಸ್ ಮಾಡಲು ಕ್ಲಿಕ್ ಮಾಡಿ | Pending Native Review |
@@ -131,7 +131,7 @@ This document lists all localized UI strings across Hindi (`hi`) and Kannada (`k
 | Key | English (`en`) | Hindi (`hi`) | Kannada (`kn`) | Status |
 | :--- | :--- | :--- | :--- | :--- |
 | `errors.networkError` | Unable to reach the analysis server. Please check your connection and try again. | विश्लेषण सर्वर से संपर्क नहीं हो सका। कृपया अपना इंटरनेट कनेक्शन जांचें और पुनः प्रयास करें। | ಸರ್ವರ್ ಸಂಪರ್ಕ ಸಾಧ್ಯವಾಗುತ್ತಿಲ್ಲ. ದಯವಿಟ್ಟು ನಿಮ್ಮ ಇಂಟರ್ನೆಟ್ ಪರಿಶೀಲಿಸಿ ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ. | Pending Native Review |
-| `errors.validationError` | Please provide at least 20 characters of offer text. | कृपया ऑफर टेक्स्ट के कम से कम 20 अक्षर दर्ज करें। | ದಯವಿಟ್ಟು ಕನಿಷ್ಠ 20 ಅಕ್ಷರಗಳ ಆಫರ್ ವಿವರವನ್ನು ನಮೂದಿಸಿ. | Pending Native Review |
+| `errors.validationError` | Please provide at least 25 characters of offer text. | कृपया ऑफर टेक्स्ट के कम से कम 25 अक्षर दर्ज करें। | ದಯವಿಟ್ಟು ಕನಿಷ್ಠ 25 ಅಕ್ಷರಗಳ ಆಫರ್ ವಿವರವನ್ನು ನಮೂದಿಸಿ। | Pending Native Review |
 | `errors.serverError` | An error occurred while analyzing the offer. Please try again. | ऑफर का विश्लेषण करते समय त्रुटि हुई। कृपया पुनः प्रयास करें। | ಆಫರ್ ವಿಶ್ಲೇಷಿಸುವಾಗ ದೋಷ ಸಂಭವಿಸಿದೆ. ದಯವಿಟ್ಟು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ. | Pending Native Review |
 | `errors.genericError` | Something went wrong. Please refresh the page. | कुछ गड़बड़ हुई। कृपया पृष्ठ को रीफ्रेश करें। | ಏನೋ ತಪ್ಪಾಗಿದೆ. ದಯವಿಟ್ಟು ಪುಟವನ್ನು ರಿಫ್ರೆಶ್ ಮಾಡಿ. | Pending Native Review |
 
