@@ -77,10 +77,14 @@ async function request<T>(
   const body = await res.json().catch(() => ({}));
 
   if (!res.ok) {
-    // If direct request failed with CORS restriction, transparently retry through relative same-origin proxy
-    if ((res.status === 403 || res.status === 0) && body?.error?.code === 'CORS_FORBIDDEN' && API_BASE && endpoint.startsWith('/api')) {
+    // If request failed with CORS restriction, transparently retry through alternate path (direct Render or relative proxy)
+    if (res.status === 403 && body?.error?.code === 'CORS_FORBIDDEN' && endpoint.startsWith('/api')) {
       try {
-        const fallbackRes = await fetch(endpoint, {
+        const alternateUrl = url.startsWith('http')
+          ? endpoint
+          : `https://jaanch-server.onrender.com${endpoint}`;
+
+        const fallbackRes = await fetch(alternateUrl, {
           ...options,
           headers,
         });
@@ -94,6 +98,9 @@ async function request<T>(
     }
 
     let msg = body?.error?.message;
+    if (body?.error?.code === 'CORS_FORBIDDEN') {
+      msg = 'Analysis service is syncing. Please click Retry Analysis.';
+    }
     if (!msg) {
       if (res.status === 404) {
         msg = 'Backend service is starting up. Please click Retry Analysis in a few moments.';

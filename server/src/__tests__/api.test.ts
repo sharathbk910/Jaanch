@@ -232,6 +232,16 @@ describe('Server API Endpoints & Middlewares (api.test.ts)', () => {
         .get('/api/health')
         .set('Origin', 'https://jaanch-preview-stage.vercel.app');
       expect(resPreview.status).toBe(200);
+
+      const resWww = await request(app)
+        .get('/api/health')
+        .set('Origin', 'https://www.jaanch-mu.vercel.app');
+      expect(resWww.status).toBe(200);
+
+      const resLan = await request(app)
+        .get('/api/health')
+        .set('Origin', 'http://192.168.1.50:5173');
+      expect(resLan.status).toBe(200);
     });
 
     it('blocks CORS from unauthorized origins with 403 Forbidden', async () => {

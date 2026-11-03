@@ -7,25 +7,33 @@ export function corsMiddleware(): RequestHandler {
 
   const corsOptions: CorsOptions = {
     origin: (origin, callback) => {
-      // Allow requests with no origin (e.g. mobile apps, curl, same-origin server requests)
-      if (!origin) {
+      // 1. Allow requests with no origin or string "null" (mobile apps, curl, server-to-server, webviews)
+      if (!origin || origin === 'null') {
         return callback(null, true);
       }
 
       const normalizedOrigin = origin.replace(/\/+$/, '');
 
-      // 1. Explicitly configured origins (with trailing slashes stripped)
-      if (configuredOrigins.some((allowed) => allowed === normalizedOrigin)) {
+      // 2. Explicitly configured origins (from CLIENT_ORIGINS env) or wildcard
+      if (
+        configuredOrigins.includes('*') ||
+        configuredOrigins.some((allowed) => allowed === normalizedOrigin)
+      ) {
         return callback(null, true);
       }
 
-      // 2. Allow any official Jaanch Vercel deployment (production & preview subdomains)
-      if (/^https:\/\/jaanch(-[a-z0-9-]+)?\.vercel\.app$/i.test(normalizedOrigin)) {
+      // 3. Allow ANY Vercel deployment (jaanch-mu.vercel.app, www.jaanch-mu.vercel.app, preview branches)
+      if (/^https:\/\/([a-z0-9.-]+\.)?vercel\.app$/i.test(normalizedOrigin)) {
         return callback(null, true);
       }
 
-      // 3. Always allow localhost & 127.0.0.1 on any port (for local dev & pairing)
+      // 4. Always allow localhost & 127.0.0.1 on ANY port (for local dev & pairing)
       if (/^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/i.test(normalizedOrigin)) {
+        return callback(null, true);
+      }
+
+      // 5. Allow private LAN IPs (192.168.x.x, 10.x.x.x, 172.16-31.x.x) on ANY port (for mobile/device testing)
+      if (/^https?:\/\/(192\.168\.\d+\.\d+|10\.\d+\.\d+\.\d+|172\.(1[6-9]|2\d|3[01])\.\d+\.\d+)(:\d+)?$/i.test(normalizedOrigin)) {
         return callback(null, true);
       }
 
