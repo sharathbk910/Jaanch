@@ -71,7 +71,7 @@ export const RULE_BANK_OTP_DEBIT: RuleDefinition = {
   isHardDisqualifier: true,
   evaluate: (normalizedText, rawText) => {
     const credRegex =
-      /\b(?:one[\s-]?time\s+password|share\s+otp|enter\s+otp|send\s+otp|otp\s+required|debit\s+card\s+(?:number|details|pin)|credit\s+card\s+(?:number|cvv)|bank\s+password|netbanking\s+password|cheque\s+overpayment|deposit\s+cheque\s+and\s+return|send\s+(?:part\s+of\s+)?money\s+back|otp\s+bheje|bank\s+password\s+de|otp\s+kodi|pin\s+tilisi)\b/gi;
+      /\b(?:one[\s-]?time\s+password|(?:share|enter|send|provide|give)\s+(?:the\s+|your\s+)?(?:\d+[\s-]?digit\s+)?otp|otp\s+required|debit\s+card\s+(?:number|details|pin)|credit\s+card\s+(?:number|cvv)|bank\s+password|netbanking\s+password|cheque\s+overpayment|deposit\s+cheque\s+and\s+return|send\s+(?:part\s+of\s+)?money\s+back|otp\s+bheje|bank\s+password\s+de|otp\s+kodi|pin\s+tilisi)\b/gi;
 
     let match: RegExpExecArray | null;
     while ((match = credRegex.exec(normalizedText)) !== null) {
@@ -458,7 +458,7 @@ export const RULE_OTP_SHARING: RuleDefinition = {
   isHardDisqualifier: true,
   evaluate: (normalizedText, rawText) => {
     const otpRegex =
-      /\b(?:share\s+(?:your\s+)?otp|enter\s+(?:the\s+)?otp\s+to\s+confirm|forward\s+(?:the\s+)?otp|send\s+(?:the\s+)?otp\s+received|tell\s+(?:me\s+)?(?:the\s+)?otp|otp\s+(?:bhejo|batao|bhejiye|bataye|kodi|tilisi|share\s+kare))\b/gi;
+      /\b(?:(?:share|enter|forward|send|tell|provide|give)\s+(?:me\s+)?(?:the\s+|your\s+)?(?:\d+[\s-]?digit\s+)?otp|otp\s+(?:bhejo|batao|bhejiye|bataye|kodi|tilisi|share\s+kare))\b/gi;
 
     let match: RegExpExecArray | null;
     while ((match = otpRegex.exec(normalizedText)) !== null) {
