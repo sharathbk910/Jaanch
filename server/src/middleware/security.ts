@@ -12,7 +12,7 @@ export function securityMiddleware(): RequestHandler {
       },
     },
     crossOriginEmbedderPolicy: false,
-    crossOriginResourcePolicy: { policy: 'same-site' },
+    crossOriginResourcePolicy: { policy: 'cross-origin' },
     dnsPrefetchControl: { allow: false },
     frameguard: { action: 'deny' },
     hsts: { maxAge: 31536000, includeSubDomains: true, preload: true },

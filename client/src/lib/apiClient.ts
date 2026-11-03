@@ -5,7 +5,16 @@ import {
 } from '@jaanch/shared';
 import { supabase } from './supabase.js';
 
-const API_BASE = import.meta.env.VITE_API_BASE_URL || import.meta.env.VITE_API_URL || '';
+function getApiBase(): string {
+  // When running on Vercel, use same-origin relative path to leverage vercel.json /api rewrite proxy.
+  // This eliminates CORS issues, browser CORP restrictions, and cross-origin preflight latency.
+  if (typeof window !== 'undefined' && (window.location.hostname.endsWith('vercel.app') || window.location.hostname === 'jaanch.vercel.app')) {
+    return '';
+  }
+  return import.meta.env.VITE_API_BASE_URL || import.meta.env.VITE_API_URL || '';
+}
+
+const API_BASE = getApiBase();
 
 export class ApiError extends Error {
   constructor(
@@ -68,6 +77,22 @@ async function request<T>(
   const body = await res.json().catch(() => ({}));
 
   if (!res.ok) {
+    // If direct request failed with CORS restriction, transparently retry through relative same-origin proxy
+    if ((res.status === 403 || res.status === 0) && body?.error?.code === 'CORS_FORBIDDEN' && API_BASE && endpoint.startsWith('/api')) {
+      try {
+        const fallbackRes = await fetch(endpoint, {
+          ...options,
+          headers,
+        });
+        if (fallbackRes.ok) {
+          const fallbackBody = await fallbackRes.json();
+          return fallbackBody.data;
+        }
+      } catch {
+        // Continue to regular error handling below
+      }
+    }
+
     let msg = body?.error?.message;
     if (!msg) {
       if (res.status === 404) {

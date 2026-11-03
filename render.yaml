@@ -7,7 +7,7 @@ services:
     buildCommand: npm ci && npm run build -w shared && npm run build -w server
     startCommand: npm run start -w server
     healthCheckPath: /api/health
-    autoDeploy: false
+    autoDeploy: true
     envVars:
       - key: NODE_ENV
         value: production
