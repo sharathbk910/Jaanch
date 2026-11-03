@@ -48,7 +48,11 @@ export function validateOfferInput(rawText: string): InputValidationResult {
     };
   }
 
-  if (/(.)\1{7,}/.test(trimmed)) {
+  // 4. Repeated character flood rule (e.g. "aaaaaaaa", "xxxxxxxxx").
+  // Restrict to alphabetic characters so standard document divider lines, borders,
+  // underlines, and dot leaders (e.g. "----------", "==========", "..........", "__________")
+  // commonly produced by OCR or ASCII formatting are not incorrectly rejected.
+  if (/([a-zA-Z])\1{7,}/.test(trimmed)) {
     return {
       isValid: false,
       code: 'REPETITIVE_TEXT',

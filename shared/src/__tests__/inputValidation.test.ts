@@ -31,11 +31,37 @@ describe('Rule-Based Input Validation (validateOfferInput)', () => {
     expect(result.message).toContain('at least 25 characters long');
   });
 
+  it('approves offer letters containing OCR horizontal divider lines and dot leaders', () => {
+    const inputWithDividers = `
+========================================
+APPOINTMENT LETTER - TCS CAREERS
+----------------------------------------
+Dear Candidate,
+We are pleased to offer you the position of Systems Engineer at our Bangalore office.
+Stipend: ₹30,000 per month during internship.
+........................................
+HR Contact: hr@tcs-careers.example.com
+________________________________________
+`;
+    const result = validateOfferInput(inputWithDividers);
+    expect(result.isValid).toBe(true);
+    expect(result.message).toBeUndefined();
+  });
+
   it('rejects repetitive placeholder characters as REPETITIVE_TEXT', () => {
     const result = validateOfferInput('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
     expect(result.isValid).toBe(false);
     expect(result.code).toBe('REPETITIVE_TEXT');
     expect(result.message).toContain('repetitive');
+  });
+
+  it('rejects excessive repeated letter floods in offer text as REPETITIVE_TEXT', () => {
+    const result = validateOfferInput(
+      'Dear Candidate, your offer letter for software engineering internship is ready aaaaaaaaaaaaaaaaaaaaaaaaa please contact hr.'
+    );
+    expect(result.isValid).toBe(false);
+    expect(result.code).toBe('REPETITIVE_TEXT');
+    expect(result.message).toContain('excessive repeated characters');
   });
 
   it('rejects single unbroken tokens without word breaks as UNREADABLE', () => {
