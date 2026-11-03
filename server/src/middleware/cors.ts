@@ -3,7 +3,7 @@ import type { RequestHandler } from 'express';
 import { getClientOrigins } from '../config/env.js';
 
 export function corsMiddleware(): RequestHandler {
-  const allowedOrigins = getClientOrigins();
+  const configuredOrigins = getClientOrigins().map((o) => o.replace(/\/+$/, ''));
 
   const corsOptions: CorsOptions = {
     origin: (origin, callback) => {
@@ -12,13 +12,20 @@ export function corsMiddleware(): RequestHandler {
         return callback(null, true);
       }
 
-      const isAllowed = allowedOrigins.includes(origin);
-      if (isAllowed) {
+      const normalizedOrigin = origin.replace(/\/+$/, '');
+
+      // 1. Explicitly configured origins (with trailing slashes stripped)
+      if (configuredOrigins.some((allowed) => allowed === normalizedOrigin)) {
         return callback(null, true);
       }
 
-      // In non-production, allow localhost/127.0.0.1 on any port (e.g. 5173, 5174, 5175)
-      if (process.env.NODE_ENV !== 'production' && /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)) {
+      // 2. Allow any official Jaanch Vercel deployment (production & preview subdomains)
+      if (/^https:\/\/jaanch(-[a-z0-9-]+)?\.vercel\.app$/i.test(normalizedOrigin)) {
+        return callback(null, true);
+      }
+
+      // 3. Always allow localhost & 127.0.0.1 on any port (for local dev & pairing)
+      if (/^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/i.test(normalizedOrigin)) {
         return callback(null, true);
       }
 

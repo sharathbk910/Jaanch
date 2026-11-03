@@ -217,6 +217,23 @@ describe('Server API Endpoints & Middlewares (api.test.ts)', () => {
       expect(res.headers['access-control-allow-origin']).toBe('http://localhost:5173');
     });
 
+    it('allows CORS from production Vercel domain and preview subdomains with or without trailing slash', async () => {
+      const resProd = await request(app)
+        .get('/api/health')
+        .set('Origin', 'https://jaanch-mu.vercel.app');
+      expect(resProd.status).toBe(200);
+
+      const resSlash = await request(app)
+        .get('/api/health')
+        .set('Origin', 'https://jaanch-mu.vercel.app/');
+      expect(resSlash.status).toBe(200);
+
+      const resPreview = await request(app)
+        .get('/api/health')
+        .set('Origin', 'https://jaanch-preview-stage.vercel.app');
+      expect(resPreview.status).toBe(200);
+    });
+
     it('blocks CORS from unauthorized origins with 403 Forbidden', async () => {
       const res = await request(app)
         .get('/api/health')

@@ -60,6 +60,7 @@ export function errorHandler(
   if (err.message && err.message.startsWith('CORS blocked')) {
     logger.warn({
       msg: 'CORS rejection',
+      details: err.message,
       requestId,
       statusCode: 403,
       errorCode: 'CORS_FORBIDDEN',
