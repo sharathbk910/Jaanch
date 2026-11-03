@@ -120,6 +120,7 @@ export function Analyze() {
 
   // File Upload & OCR State
   const [uploadedFileName, setUploadedFileName] = useState<string | null>(null);
+  const [uploadedThumbnail, setUploadedThumbnail] = useState<string | null>(null);
   const [uploadedPageCount, setUploadedPageCount] = useState<number | undefined>(undefined);
   const [isOcrFallback, setIsOcrFallback] = useState<boolean>(false);
   const [isExtractingFile, setIsExtractingFile] = useState<boolean>(false);
@@ -135,10 +136,25 @@ export function Analyze() {
   // Clipboard & Notification Feedback
   const [copiedNotice, setCopiedNotice] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const [retryCountdown, setRetryCountdown] = useState<number | null>(null);
 
   // In-Flight Heuristic Progress State
   const [isAnalyzing, setIsAnalyzing] = useState<boolean>(false);
   const [progressStep, setProgressStep] = useState<number>(1);
+
+  // Automatic Cold-Start Retry Countdown
+  useEffect(() => {
+    if (retryCountdown === null) return;
+    if (retryCountdown <= 0) {
+      setRetryCountdown(null);
+      triggerAnalysis();
+      return;
+    }
+    const timer = setTimeout(() => {
+      setRetryCountdown((prev) => (prev !== null ? prev - 1 : null));
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, [retryCountdown]);
 
   const charCount = offerText.length;
   const isMinMet = charCount >= 25;
@@ -215,6 +231,16 @@ export function Analyze() {
       setUploadedFileName(result.fileName);
       setUploadedPageCount(result.pageCount);
       setIsOcrFallback(Boolean(result.isOcrFallback));
+      if (file.type.startsWith('image/')) {
+        try {
+          const thumb = URL.createObjectURL(file);
+          setUploadedThumbnail(thumb);
+        } catch {
+          // Ignore thumbnail creation failure
+        }
+      } else {
+        setUploadedThumbnail(null);
+      }
       setFileError(null);
       setActiveTab('paste'); // Switch to editor so user can review/edit extracted text
     } catch (err: unknown) {
@@ -260,6 +286,7 @@ export function Analyze() {
 
   const clearFile = () => {
     setUploadedFileName(null);
+    setUploadedThumbnail(null);
     setUploadedPageCount(undefined);
     setIsOcrFallback(false);
     setFileError(null);
@@ -341,6 +368,9 @@ export function Analyze() {
 
       if (err instanceof Error) {
         setError(err.message);
+        if (err.message.includes('waking up') || err.message.includes('cold-start') || err.message.includes('BACKEND_OFFLINE')) {
+          setRetryCountdown(5);
+        }
       } else {
         setError(t.errors.serverError);
       }
@@ -448,20 +478,46 @@ export function Analyze() {
             {uploadedFileName && (
               <div className="flex items-center justify-between p-2.5 rounded-md bg-surface border border-border text-xs text-body">
                 <div className="flex items-center gap-2 truncate">
-                  <FileCheck className="w-4 h-4 text-terracotta shrink-0" aria-hidden="true" />
+                  {uploadedThumbnail ? (
+                    <img
+                      src={uploadedThumbnail}
+                      alt="Uploaded document thumbnail"
+                      className="w-7 h-7 rounded border border-border object-cover shrink-0"
+                    />
+                  ) : (
+                    <FileCheck className="w-4 h-4 text-terracotta shrink-0" aria-hidden="true" />
+                  )}
                   <span className="font-medium text-primary truncate">{uploadedFileName}</span>
                   {uploadedPageCount && (
-                    <span className="text-muted">({uploadedPageCount} pages)</span>
+                    <span className="text-muted shrink-0">({uploadedPageCount} pages)</span>
                   )}
                 </div>
                 <button
                   type="button"
                   onClick={clearFile}
-                  className="text-muted hover:text-terracotta flex items-center gap-1 ml-2 shrink-0"
+                  className="text-muted hover:text-terracotta flex items-center gap-1 ml-2 shrink-0 cursor-pointer"
                 >
                   <X className="w-3.5 h-3.5" aria-hidden="true" />
                   <span>{t.analyzer.removeFile}</span>
                 </button>
+              </div>
+            )}
+
+            {/* Low-Contrast / Blurry OCR Alert */}
+            {uploadedFileName && offerText.trim().length > 0 && offerText.trim().length < 25 && (
+              <div
+                role="status"
+                className="flex items-start gap-2.5 p-3 rounded-md bg-surface border border-terracotta/40 text-xs text-primary"
+              >
+                <AlertCircle className="w-4 h-4 text-terracotta shrink-0 mt-0.5" aria-hidden="true" />
+                <div>
+                  <p className="font-semibold text-terracotta">
+                    Low text extraction ({offerText.trim().length} characters recognized).
+                  </p>
+                  <p className="text-muted mt-0.5">
+                    The document may be low-contrast, skewed, or blurry. You can edit the text box directly or try a higher-resolution screenshot.
+                  </p>
+                </div>
               </div>
             )}
 
@@ -716,7 +772,7 @@ export function Analyze() {
           </div>
         )}
 
-        {/* Error Alert with Retry */}
+        {/* Error Alert with Smart Retry Countdown */}
         {error && (
           <div
             role="alert"
@@ -724,18 +780,41 @@ export function Analyze() {
           >
             <div className="flex items-center gap-2 font-medium">
               <AlertCircle className="w-4 h-4 shrink-0" aria-hidden="true" />
-              <span>{error}</span>
+              <span>
+                {error}
+                {retryCountdown !== null && retryCountdown > 0 && (
+                  <span className="font-bold ml-1.5 underline">
+                    Retrying automatically in {retryCountdown}s...
+                  </span>
+                )}
+              </span>
             </div>
-            <Button
-              type="button"
-              variant="outline"
-              size="sm"
-              onClick={() => triggerAnalysis()}
-              className="text-xs shrink-0 self-end sm:self-auto"
-            >
-              <RefreshCw className="w-3.5 h-3.5 mr-1" aria-hidden="true" />
-              Retry Analysis
-            </Button>
+            <div className="flex items-center gap-2 shrink-0 self-end sm:self-auto">
+              {retryCountdown !== null && (
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setRetryCountdown(null)}
+                  className="text-xs"
+                >
+                  Cancel Auto-retry
+                </Button>
+              )}
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  setRetryCountdown(null);
+                  triggerAnalysis();
+                }}
+                className="text-xs"
+              >
+                <RefreshCw className="w-3.5 h-3.5 mr-1" aria-hidden="true" />
+                Retry Analysis
+              </Button>
+            </div>
           </div>
         )}
 

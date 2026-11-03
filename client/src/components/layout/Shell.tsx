@@ -11,7 +11,15 @@ export function Shell() {
       <SkipLink />
       <Header />
       <main id="main-content" tabIndex={-1} className="flex-1 focus:outline-none">
-        <Outlet />
+        <React.Suspense
+          fallback={
+            <div className="min-h-[50vh] flex items-center justify-center">
+              <div className="w-8 h-8 border-4 border-neo-border border-t-terracotta rounded-full animate-spin" />
+            </div>
+          }
+        >
+          <Outlet />
+        </React.Suspense>
       </main>
       <Footer />
       <FeedbackPill />

@@ -20,3 +20,12 @@ ReactDOM.createRoot(rootElement).render(
     </ThemeProvider>
   </React.StrictMode>
 );
+
+// Register PWA service worker in production for offline shell & installability
+if (typeof window !== 'undefined' && 'serviceWorker' in navigator && import.meta.env.PROD) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js').catch(() => {
+      // Ignore service worker registration error in environments where not supported
+    });
+  });
+}

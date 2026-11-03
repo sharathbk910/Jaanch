@@ -1,0 +1,25 @@
+{
+  "name": "Jaanch - Internship Scam Detector",
+  "short_name": "Jaanch",
+  "description": "Free internship and job offer verification tool for Indian students. Detect upfront fee traps, lookalike domains, and OTP phishing.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FAF7F2",
+  "theme_color": "#C85A32",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/logo-icon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/logo-full.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
+

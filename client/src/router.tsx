@@ -4,7 +4,9 @@ import { Shell } from './components/layout/Shell.js';
 import { LandingPage } from './pages/LandingPage.js';
 import { AnalyzePage } from './pages/AnalyzePage.js';
 import { ResultsPage, SamplePage, LinkCheckPage } from './pages/ResultsPage.js';
-import { ResourcesPage, AboutPage, PrivacyPage, NotFoundPage } from './pages/StaticPages.js';
+const NotFoundPage = React.lazy(() =>
+  import('./pages/StaticPages.js').then((m) => ({ default: m.NotFoundPage }))
+);
 import {
   LoginPage,
   SignupPage,
@@ -16,7 +18,19 @@ import {
   LogoutPage,
   ProtectedRoute,
 } from './pages/AuthPages.js';
-import { ModerationPage } from './pages/ModerationPage.js';
+
+const ModerationPage = React.lazy(() =>
+  import('./pages/ModerationPage.js').then((m) => ({ default: m.ModerationPage }))
+);
+const ResourcesPage = React.lazy(() =>
+  import('./pages/StaticPages.js').then((m) => ({ default: m.ResourcesPage }))
+);
+const AboutPage = React.lazy(() =>
+  import('./pages/StaticPages.js').then((m) => ({ default: m.AboutPage }))
+);
+const PrivacyPage = React.lazy(() =>
+  import('./pages/StaticPages.js').then((m) => ({ default: m.PrivacyPage }))
+);
 
 export const router = createBrowserRouter([
   {

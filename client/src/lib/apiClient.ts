@@ -30,7 +30,8 @@ export class ApiError extends Error {
 
 async function request<T>(
   endpoint: string,
-  options: RequestInit = {}
+  options: RequestInit = {},
+  retryCount = 0
 ): Promise<T> {
   const session = (await supabase.auth.getSession()).data.session;
   const headers = new Headers(options.headers || {});
@@ -59,6 +60,10 @@ async function request<T>(
           headers,
         });
       } catch {
+        if (retryCount < 2) {
+          await new Promise((resolve) => setTimeout(resolve, 3000));
+          return request<T>(endpoint, options, retryCount + 1);
+        }
         throw new ApiError(
           'Unable to connect to the Jaanch analysis backend. Please ensure the backend server is running on port 8080 (run: npm run dev).',
           503,
@@ -66,12 +71,22 @@ async function request<T>(
         );
       }
     } else {
+      if (retryCount < 2) {
+        await new Promise((resolve) => setTimeout(resolve, 3000));
+        return request<T>(endpoint, options, retryCount + 1);
+      }
       throw new ApiError(
         'Unable to connect to the Jaanch analysis backend. Please ensure the backend server is running on port 8080 (run: npm run dev).',
         503,
         'BACKEND_OFFLINE'
       );
     }
+  }
+
+  // Handle transparent cold-start retry on 502/503/504
+  if ((res.status === 502 || res.status === 503 || res.status === 504) && retryCount < 2) {
+    await new Promise((resolve) => setTimeout(resolve, 3500));
+    return request<T>(endpoint, options, retryCount + 1);
   }
 
   const body = await res.json().catch(() => ({}));
@@ -122,6 +137,21 @@ async function request<T>(
 }
 
 export const apiClient = {
+  /**
+   * Silently pings the backend to warm up the Render free-tier container in the background
+   */
+  warmupBackend(): void {
+    if (typeof window === 'undefined') return;
+    try {
+      const probeUrl = `${API_BASE}/api/health`;
+      fetch(probeUrl, { method: 'GET', keepalive: true }).catch(() => {
+        fetch('https://jaanch-server.onrender.com/api/health', { method: 'GET', mode: 'no-cors' }).catch(() => {});
+      });
+    } catch {
+      // Ignore background warmup failures
+    }
+  },
+
   /**
    * Submits page feedback via FeedbackPill component
    */

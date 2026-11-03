@@ -31,6 +31,15 @@ export default defineConfig({
           if (id.includes('@supabase')) {
             return 'vendor-supabase';
           }
+          if (id.includes('framer-motion')) {
+            return 'vendor-motion';
+          }
+          if (id.includes('lucide-react')) {
+            return 'vendor-icons';
+          }
+          if (id.includes('zod')) {
+            return 'vendor-zod';
+          }
           if (
             id.includes('node_modules/react/') ||
             id.includes('node_modules/react-dom/') ||
