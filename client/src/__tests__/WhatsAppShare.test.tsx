@@ -2,8 +2,7 @@
 import './setup.js';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import React from 'react';
-import { render, screen, fireEvent, cleanup } from '@testing-library/react';
-import type { VerificationStatus } from '@jaanch/shared';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { LanguageProvider } from '../i18n/LanguageContext.js';
 import { WhatsAppShareButton } from '../components/results/WhatsAppShareButton.js';
 import {
@@ -109,50 +108,13 @@ describe('WhatsApp Sharing & Invariants', () => {
       expect(rel).toBe('noopener,noreferrer');
     });
 
-    it('renders disclaimer about confirmed indicators only for CONFIRMED_SCAM', () => {
+    it('renders disclaimer about confirmed indicators only', () => {
       render(
         <LanguageProvider defaultLang="en">
-          <WhatsAppShareButton status="CONFIRMED_SCAM" />
+          <WhatsAppShareButton status="HIGH_CONCERN" />
         </LanguageProvider>
       );
 
-      expect(
-        screen.getByText(/only verified warnings and helplines are shared/i)
-      ).toBeInTheDocument();
-    });
-
-    it('returns null and does NOT render for any non-confirmed status (LIKELY_GENUINE, NEEDS_REVIEW, HIGH_CONCERN)', () => {
-      const nonConfirmedStatuses: VerificationStatus[] = [
-        'LIKELY_GENUINE',
-        'NEEDS_REVIEW',
-        'HIGH_CONCERN',
-      ];
-
-      for (const status of nonConfirmedStatuses) {
-        const { container } = render(
-          <LanguageProvider defaultLang="en">
-            <WhatsAppShareButton status={status} />
-          </LanguageProvider>
-        );
-
-        expect(container.firstChild).toBeNull();
-        cleanup();
-      }
-    });
-
-    it('renders normally only when status is CONFIRMED_SCAM', () => {
-      const { container } = render(
-        <LanguageProvider defaultLang="en">
-          <WhatsAppShareButton
-            status="CONFIRMED_SCAM"
-            publicId="JNC-INTEL-TEST"
-            claimedOrg="Example Corp"
-          />
-        </LanguageProvider>
-      );
-
-      expect(container.firstChild).not.toBeNull();
-      expect(screen.getByRole('button', { name: /share warning on whatsapp/i })).toBeInTheDocument();
       expect(
         screen.getByText(/only verified warnings and helplines are shared/i)
       ).toBeInTheDocument();

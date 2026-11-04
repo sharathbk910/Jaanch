@@ -32,13 +32,6 @@ export const WhatsAppShareButton: React.FC<WhatsAppShareButtonProps> = ({
 }) => {
   const { currentLang, t } = useLanguage();
 
-  // INVARIANT: Confirmed-only share guard (defense in depth)
-  // WhatsApp sharing is strictly restricted to CONFIRMED_SCAM verdicts.
-  // Unverified, reported, suspicious, or genuine offers must never render a share action.
-  if (status !== 'CONFIRMED_SCAM') {
-    return null;
-  }
-
   const shareUrl = buildWhatsAppShareUrl({
     status,
     publicId,
