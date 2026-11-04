@@ -30,7 +30,6 @@ import { Card } from '../components/ui/Card.js';
 import { RiskLevelBanner } from '../components/results/RiskLevelBanner.js';
 import { PaymentAlert } from '../components/results/PaymentAlert.js';
 import { WhyThisStatus } from '../components/results/WhyThisStatus.js';
-import { PortalChecklist } from '../components/results/PortalChecklist.js';
 import { ResponseGenerators } from '../components/results/ResponseGenerators.js';
 import { LinkInspector } from '../components/results/LinkInspector.js';
 import { ExtractedEntitiesCard } from '../components/results/ExtractedEntitiesCard.js';
@@ -338,9 +337,27 @@ export function Results() {
             />
           </div>
 
+          {/* 4. Extracted Opportunity Indicators */}
+          <div id="extracted-entities">
+            <ExtractedEntitiesCard
+              entities={result.extractedEntities}
+              onReportEntity={handleOpenReport}
+            />
+          </div>
+
           {/* 8. Link Inspector UI */}
           <div id="link-inspector">
             <LinkInspector detectedUrls={result.extractedEntities.urls} />
+          </div>
+
+          {/* 9. Response Generators (Safe Reply & Challenge Email) */}
+          <div id="response-generators">
+            <ResponseGenerators
+              status={result.status}
+              claimedOrg={result.extractedEntities.organization || undefined}
+              senderEmail={result.extractedEntities.emails?.[0]}
+              domain={result.extractedEntities.domains?.[0]}
+            />
           </div>
 
           {/* 10. Actionable Next Steps */}
@@ -349,6 +366,87 @@ export function Results() {
               status={result.status}
               recommendedActions={result.recommendedActions}
             />
+          </div>
+
+          {/* Mobile Quick Actions Block (< 1024px) */}
+          <div className="block lg:hidden mt-8 space-y-4 pt-6 border-t border-border">
+            <div className="p-4 bg-surface border border-border rounded-card space-y-3">
+              <span className="font-mono text-[11px] uppercase text-muted-foreground block font-bold">
+                {t('results.actionsAndExport')}
+              </span>
+
+              <div className="flex flex-col gap-2">
+                {(result.status === 'CONFIRMED_SCAM' || result.intelMatch?.status === 'confirmed') && (
+                  <WhatsAppShareButton
+                    status={result.status}
+                    publicId={result.intelMatch?.publicId}
+                    matchedIndicators={result.intelMatch?.matchedIndicators}
+                    claimedOrg={result.extractedEntities.organization || undefined}
+                  />
+                )}
+
+                <Button
+                  variant="outline"
+                  size="sm"
+                  disabled={downloadingPdf}
+                  onClick={handleDownloadPdf}
+                  className="w-full justify-center text-xs"
+                >
+                  <Download size={13} className="mr-1.5" />
+                  <span>{downloadingPdf ? 'Generating PDF...' : t('results.exportPdf') || 'Download PDF Report'}</span>
+                </Button>
+
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handlePrint}
+                  className="w-full justify-center text-xs"
+                >
+                  <Printer size={13} className="mr-1.5" />
+                  <span>{t('results.exportPrint') || 'Print Audit'}</span>
+                </Button>
+
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleExportJson}
+                  className="w-full justify-center text-xs"
+                >
+                  <FileJson size={13} className="mr-1.5" />
+                  <span>{t('results.exportJson') || 'Export Audit JSON'}</span>
+                </Button>
+
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => navigate('/analyze')}
+                  className="w-full justify-center text-xs text-muted-foreground hover:text-foreground"
+                >
+                  <RotateCcw size={13} className="mr-1.5" />
+                  <span>{t('results.checkAnother')}</span>
+                </Button>
+              </div>
+            </div>
+
+            {/* Helpline Quick Card */}
+            <div className="p-4 bg-status-high-concern-bg/20 border border-status-high-concern-border/40 rounded-card space-y-2">
+              <div className="flex items-center gap-1.5">
+                <PhoneCall size={14} className="text-status-high-concern-fg" />
+                <span className="font-mono text-xs font-bold text-status-high-concern-fg uppercase">
+                  {t('results.emergency1930')}
+                </span>
+              </div>
+              <p className="text-[11px] text-muted-foreground leading-relaxed">
+                {t('results.emergencyDesc')}
+              </p>
+              <a
+                href="tel:1930"
+                className="inline-flex items-center gap-1 text-xs font-bold text-status-high-concern-fg hover:underline"
+              >
+                <span>{t('results.call1930Now')}</span>
+                <ExternalLink size={11} />
+              </a>
+            </div>
           </div>
         </div>
 
@@ -361,12 +459,45 @@ export function Results() {
             </span>
 
             <div className="flex flex-col gap-2">
-              <WhatsAppShareButton
-                status={result.status}
-                publicId={result.intelMatch?.publicId}
-                matchedIndicators={result.intelMatch?.matchedIndicators}
-                claimedOrg={result.extractedEntities.organization || undefined}
-              />
+              {(result.status === 'CONFIRMED_SCAM' || result.intelMatch?.status === 'confirmed') && (
+                <WhatsAppShareButton
+                  status={result.status}
+                  publicId={result.intelMatch?.publicId}
+                  matchedIndicators={result.intelMatch?.matchedIndicators}
+                  claimedOrg={result.extractedEntities.organization || undefined}
+                />
+              )}
+
+              <Button
+                variant="outline"
+                size="sm"
+                disabled={downloadingPdf}
+                onClick={handleDownloadPdf}
+                className="w-full justify-center text-xs"
+              >
+                <Download size={13} className="mr-1.5" />
+                <span>{downloadingPdf ? 'Generating PDF...' : t('results.exportPdf') || 'Download PDF Report'}</span>
+              </Button>
+
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handlePrint}
+                className="w-full justify-center text-xs"
+              >
+                <Printer size={13} className="mr-1.5" />
+                <span>{t('results.exportPrint') || 'Print Audit'}</span>
+              </Button>
+
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleExportJson}
+                className="w-full justify-center text-xs"
+              >
+                <FileJson size={13} className="mr-1.5" />
+                <span>{t('results.exportJson') || 'Export Audit JSON'}</span>
+              </Button>
 
               <Button
                 variant="ghost"
@@ -577,26 +708,142 @@ export function SamplePage() {
             unverified={result.unverified}
           />
 
+          <ExtractedEntitiesCard
+            entities={result.extractedEntities}
+            onReportEntity={handleOpenReport}
+          />
+
           <LinkInspector detectedUrls={result.extractedEntities.urls} />
+
+          <ResponseGenerators
+            status={result.status}
+            claimedOrg={result.extractedEntities?.organization || undefined}
+            senderEmail={result.extractedEntities?.emails?.[0]}
+            domain={result.extractedEntities?.domains?.[0]}
+          />
 
           <NextSteps
             status={result.status}
             recommendedActions={result.recommendedActions}
           />
+
+          {/* Mobile Quick Actions Block for Sample (< 1024px) */}
+          <div className="block lg:hidden mt-8 space-y-4 pt-6 border-t border-border">
+            <div className="p-4 bg-surface border border-border rounded-card space-y-3">
+              <span className="font-mono text-[11px] uppercase text-muted-foreground block font-bold">
+                {t('results.actionsAndExport')}
+              </span>
+
+              <div className="flex flex-col gap-2">
+                {(result.status === 'CONFIRMED_SCAM' || result.intelMatch?.status === 'confirmed') && (
+                  <WhatsAppShareButton
+                    status={result.status}
+                    publicId={result.intelMatch?.publicId}
+                    matchedIndicators={result.intelMatch?.matchedIndicators}
+                    claimedOrg={result.extractedEntities.organization || undefined}
+                  />
+                )}
+
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => downloadPdfReport(result)}
+                  className="w-full justify-center text-xs"
+                >
+                  <Download size={13} className="mr-1.5" />
+                  <span>{t('results.exportPdf') || 'Download PDF Report'}</span>
+                </Button>
+
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => window.print()}
+                  className="w-full justify-center text-xs"
+                >
+                  <Printer size={13} className="mr-1.5" />
+                  <span>{t('results.exportPrint') || 'Print Audit'}</span>
+                </Button>
+
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    const blob = new Blob([JSON.stringify(result, null, 2)], { type: 'application/json' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `jaanch-audit-${result.auditId || 'sample'}.json`;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                  }}
+                  className="w-full justify-center text-xs"
+                >
+                  <FileJson size={13} className="mr-1.5" />
+                  <span>{t('results.exportJson') || 'Export Audit JSON'}</span>
+                </Button>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Sidebar for Sample */}
         <aside className="hidden lg:block lg:col-span-4 lg:sticky lg:top-20 space-y-4">
           <div className="p-4 bg-surface border border-border rounded-card space-y-3">
             <span className="font-mono text-[11px] uppercase text-muted-foreground block font-bold">
-              REFERENCE ACTIONS
+              {t('results.actionsAndExport')}
             </span>
-            <WhatsAppShareButton
-              status={result.status}
-              publicId={result.intelMatch?.publicId}
-              matchedIndicators={result.intelMatch?.matchedIndicators}
-              claimedOrg={result.extractedEntities.organization || undefined}
-            />
+            <div className="flex flex-col gap-2">
+              {(result.status === 'CONFIRMED_SCAM' || result.intelMatch?.status === 'confirmed') && (
+                <WhatsAppShareButton
+                  status={result.status}
+                  publicId={result.intelMatch?.publicId}
+                  matchedIndicators={result.intelMatch?.matchedIndicators}
+                  claimedOrg={result.extractedEntities.organization || undefined}
+                />
+              )}
+
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => downloadPdfReport(result)}
+                className="w-full justify-center text-xs"
+              >
+                <Download size={13} className="mr-1.5" />
+                <span>{t('results.exportPdf') || 'Download PDF Report'}</span>
+              </Button>
+
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => window.print()}
+                className="w-full justify-center text-xs"
+              >
+                <Printer size={13} className="mr-1.5" />
+                <span>{t('results.exportPrint') || 'Print Audit'}</span>
+              </Button>
+
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  const blob = new Blob([JSON.stringify(result, null, 2)], { type: 'application/json' });
+                  const url = URL.createObjectURL(blob);
+                  const a = document.createElement('a');
+                  a.href = url;
+                  a.download = `jaanch-audit-${result.auditId || 'sample'}.json`;
+                  document.body.appendChild(a);
+                  a.click();
+                  document.body.removeChild(a);
+                  URL.revokeObjectURL(url);
+                }}
+                className="w-full justify-center text-xs"
+              >
+                <FileJson size={13} className="mr-1.5" />
+                <span>{t('results.exportJson') || 'Export Audit JSON'}</span>
+              </Button>
+            </div>
           </div>
         </aside>
       </div>
@@ -644,7 +891,7 @@ export function LinkCheckPage() {
             {t('results.linkInspectorTitle')}
           </h1>
           <p className="text-xs sm:text-sm text-muted-foreground mt-1">
-            Analyze untrusted links, numeric IP hosts, Punycode deceptiveness, and lookalike domains before clicking.
+            {t('results.linkInspectorSubtitle') || 'Analyze untrusted links, numeric IP hosts, Punycode deceptiveness, and lookalike domains before clicking.'}
           </p>
         </div>
 

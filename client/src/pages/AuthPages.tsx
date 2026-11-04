@@ -653,7 +653,7 @@ export function HistoryPage() {
               size="md"
               onClick={() => navigate('/login', { state: { from: { pathname: '/history' } } })}
             >
-              Sign In
+              {t.navigation.login || 'Sign In'}
             </Button>
             <Button
               type="button"
@@ -949,10 +949,10 @@ export function SettingsPage() {
         <Card padding="lg" className="py-12 max-w-md mx-auto">
           <User className="w-10 h-10 text-muted mx-auto mb-3" aria-hidden="true" />
           <h2 className="font-serif text-xl font-bold text-primary mb-2">
-            Sign In to Access Settings
+            {t.history.unauthTitle || 'Sign In to Access Settings'}
           </h2>
           <p className="text-xs text-body mb-6">
-            Account settings, data erasure controls, and persistent preferences require signing in.
+            {t.history.unauthDesc || 'Account settings, data erasure controls, and persistent preferences require signing in.'}
           </p>
           <Button
             type="button"
@@ -960,7 +960,7 @@ export function SettingsPage() {
             size="md"
             onClick={() => navigate('/login', { state: { from: { pathname: '/settings' } } })}
           >
-            Sign In
+            {t.navigation.login || 'Sign In'}
           </Button>
         </Card>
       </div>

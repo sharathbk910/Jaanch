@@ -121,8 +121,12 @@ describe('Technical & On-Page SEO Suite', () => {
   });
 
   describe('Static SEO Configuration Files', () => {
+    const clientRoot = fs.existsSync(path.resolve(process.cwd(), 'client/public'))
+      ? path.resolve(process.cwd(), 'client')
+      : process.cwd();
+
     it('verifies robots.txt exists and protects sensitive paths', () => {
-      const robotsPath = path.resolve(process.cwd(), 'client/public/robots.txt');
+      const robotsPath = path.resolve(clientRoot, 'public/robots.txt');
       expect(fs.existsSync(robotsPath)).toBe(true);
 
       const content = fs.readFileSync(robotsPath, 'utf-8');
@@ -136,7 +140,7 @@ describe('Technical & On-Page SEO Suite', () => {
     });
 
     it('verifies sitemap.xml exists and defines valid XML routes with hreflang', () => {
-      const sitemapPath = path.resolve(process.cwd(), 'client/public/sitemap.xml');
+      const sitemapPath = path.resolve(clientRoot, 'public/sitemap.xml');
       expect(fs.existsSync(sitemapPath)).toBe(true);
 
       const xml = fs.readFileSync(sitemapPath, 'utf-8');
@@ -152,7 +156,7 @@ describe('Technical & On-Page SEO Suite', () => {
     });
 
     it('verifies index.html contains all 4 required JSON-LD schemas and favicons', () => {
-      const indexPath = path.resolve(process.cwd(), 'client/index.html');
+      const indexPath = path.resolve(clientRoot, 'index.html');
       expect(fs.existsSync(indexPath)).toBe(true);
 
       const html = fs.readFileSync(indexPath, 'utf-8');

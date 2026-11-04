@@ -92,7 +92,7 @@ describe('Phase 6C – Results & PDF (Results.tsx / ResultsPage.tsx)', () => {
     expect(container.querySelector('#why-status')).toBeInTheDocument();
     expect(container.querySelector('#signals')).not.toBeInTheDocument();
     expect(container.querySelector('#unverified')).not.toBeInTheDocument();
-    expect(container.querySelector('#response-generators')).not.toBeInTheDocument();
+    expect(container.querySelector('#response-generators')).toBeInTheDocument();
     expect(container.querySelector('#link-inspector')).toBeInTheDocument();
     expect(container.querySelector('#next-steps')).toBeInTheDocument();
   });
@@ -129,9 +129,9 @@ describe('Phase 6C – Results & PDF (Results.tsx / ResultsPage.tsx)', () => {
     expect(document.querySelector('#portal-checklist')).not.toBeInTheDocument();
   });
 
-  it('does not render ResponseGenerators communication templates per user request', () => {
+  it('renders ResponseGenerators communication templates on Results page', () => {
     renderResultsWithResult(SAMPLE_REVIEW_RESULT);
-    expect(document.querySelector('#response-generators')).not.toBeInTheDocument();
+    expect(document.querySelector('#response-generators')).toBeInTheDocument();
   });
 
   it('renders Link-check UI with the 3 labelled levels', async () => {
@@ -199,14 +199,12 @@ describe('Phase 6C – Results & PDF (Results.tsx / ResultsPage.tsx)', () => {
     expect(screen.getAllByText(/<script>alert\("xss-title"\)<\/script>/i).length).toBeGreaterThan(0);
   });
 
-  it('does not render PDF download, Print, JSON export, or report buttons per user request', () => {
+  it('renders PDF download, Print, and JSON export buttons in actions card', () => {
     renderResultsWithResult(SAMPLE_CONCERN_RESULT);
 
-    expect(screen.queryByRole('button', { name: /Download PDF Report/i })).not.toBeInTheDocument();
-    expect(screen.queryByRole('button', { name: /Export JSON/i })).not.toBeInTheDocument();
-    expect(screen.queryByRole('button', { name: /Print/i })).not.toBeInTheDocument();
-    expect(screen.queryByRole('button', { name: /Report This Offer/i })).not.toBeInTheDocument();
-    expect(screen.queryByRole('button', { name: /Report Suspicious Indicator/i })).not.toBeInTheDocument();
+    expect(screen.getAllByRole('button', { name: /Download PDF Report/i }).length).toBeGreaterThan(0);
+    expect(screen.getAllByRole('button', { name: /Export JSON/i }).length).toBeGreaterThan(0);
+    expect(screen.getAllByRole('button', { name: /Print/i }).length).toBeGreaterThan(0);
   });
 
   it('renders SamplePage walkthrough and switches scenarios seamlessly', async () => {

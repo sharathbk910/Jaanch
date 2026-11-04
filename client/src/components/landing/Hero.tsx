@@ -318,10 +318,14 @@ export function Hero() {
                 <span className="text-status-likely-genuine-fg font-bold">{t('hero.featureCard1Val2')}</span>
               </div>
             </div>
-            <div className="mt-4 pt-2.5 border-t-2 border-neo-border/20 flex items-center justify-between font-mono text-xs font-bold uppercase tracking-wider text-foreground hover:translate-x-1 transition-transform cursor-pointer">
+            <button
+              type="button"
+              onClick={scrollToCard}
+              className="mt-4 pt-2.5 border-t-2 border-neo-border/20 flex items-center justify-between font-mono text-xs font-bold uppercase tracking-wider text-foreground hover:translate-x-1 transition-transform cursor-pointer w-full text-left bg-transparent"
+            >
               <span>{t('hero.learnMore')}</span>
               <ArrowRight size={14} />
-            </div>
+            </button>
           </div>
 
           {/* Card 2: Sky Blue */}
@@ -353,10 +357,14 @@ export function Hero() {
                 <span className="text-status-high-concern-fg font-bold">{t('hero.featureCard2Val2')}</span>
               </div>
             </div>
-            <div className="mt-4 pt-2.5 border-t-2 border-neo-border/20 flex items-center justify-between font-mono text-xs font-bold uppercase tracking-wider text-foreground hover:translate-x-1 transition-transform cursor-pointer">
+            <button
+              type="button"
+              onClick={scrollToCard}
+              className="mt-4 pt-2.5 border-t-2 border-neo-border/20 flex items-center justify-between font-mono text-xs font-bold uppercase tracking-wider text-foreground hover:translate-x-1 transition-transform cursor-pointer w-full text-left bg-transparent"
+            >
               <span>{t('hero.learnMore')}</span>
               <ArrowRight size={14} />
-            </div>
+            </button>
           </div>
 
           {/* Card 3: Mint Green */}
@@ -388,10 +396,14 @@ export function Hero() {
                 <span className="text-status-high-concern-fg font-bold">{t('hero.featureCard3Val2')}</span>
               </div>
             </div>
-            <div className="mt-4 pt-2.5 border-t-2 border-neo-border/20 flex items-center justify-between font-mono text-xs font-bold uppercase tracking-wider text-foreground hover:translate-x-1 transition-transform cursor-pointer">
+            <button
+              type="button"
+              onClick={scrollToCard}
+              className="mt-4 pt-2.5 border-t-2 border-neo-border/20 flex items-center justify-between font-mono text-xs font-bold uppercase tracking-wider text-foreground hover:translate-x-1 transition-transform cursor-pointer w-full text-left bg-transparent"
+            >
               <span>{t('hero.learnMore')}</span>
               <ArrowRight size={14} />
-            </div>
+            </button>
           </div>
         </div>
       </div>

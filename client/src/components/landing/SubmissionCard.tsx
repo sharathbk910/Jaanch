@@ -393,7 +393,7 @@ export function SubmissionCard() {
                 {t('submissionCard.dropPdf')}
               </h3>
               <p className="text-xs text-muted-foreground mt-1 max-w-sm leading-relaxed">
-                Local in-browser PDF text extraction via pdfjs-dist. Files are never transmitted to server.
+                {t('submissionCard.dropzonePrivacy') || 'Local in-browser PDF text extraction via pdfjs-dist. Files are never transmitted to server.'}
               </p>
               <Button
                 variant="outline"
@@ -401,7 +401,7 @@ export function SubmissionCard() {
                 onClick={() => navigate('/analyze')}
                 className="mt-4 border-2 border-neo-border shadow-neo bg-neo-sky text-foreground font-bold uppercase tracking-wider hover:bg-neo-sky-light hover:text-foreground hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-neo-sm transition-all rounded-none cursor-pointer"
               >
-                Open Analyzer with PDF Support
+                {t('submissionCard.tabUpload')} &rarr;
               </Button>
             </div>
           )}

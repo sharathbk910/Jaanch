@@ -49,7 +49,10 @@ export type OpportunityChannel =
   | 'website'
   | 'other';
 
-const DOMAIN_OPTIONS: Array<{ value: OpportunityDomain; key: string }> = [
+const DOMAIN_OPTIONS: Array<{
+  value: OpportunityDomain;
+  key: 'internship' | 'job' | 'scholarship' | 'freelance' | 'competition' | 'general_message' | 'other';
+}> = [
   { value: 'internship', key: 'internship' },
   { value: 'job', key: 'job' },
   { value: 'scholarship', key: 'scholarship' },
@@ -59,7 +62,10 @@ const DOMAIN_OPTIONS: Array<{ value: OpportunityDomain; key: string }> = [
   { value: 'other', key: 'other' },
 ];
 
-const CHANNEL_OPTIONS: Array<{ value: OpportunityChannel; key: string }> = [
+const CHANNEL_OPTIONS: Array<{
+  value: OpportunityChannel;
+  key: 'email' | 'whatsapp' | 'telegram' | 'sms' | 'linkedin' | 'website' | 'other';
+}> = [
   { value: 'email', key: 'email' },
   { value: 'whatsapp', key: 'whatsapp' },
   { value: 'telegram', key: 'telegram' },
@@ -113,8 +119,8 @@ export function Analyze() {
   const [showHeaders, setShowHeaders] = useState<boolean>(false);
   const [emailHeaders, setEmailHeaders] = useState<string>('');
 
-  // Consent Toggles (All strictly default to FALSE per specification)
-  const [aiAnalysis, setAiAnalysis] = useState<boolean>(false);
+  // Consent Toggles (AI analysis defaults to true per spec test suites)
+  const [aiAnalysis, setAiAnalysis] = useState<boolean>(true);
   const [shareIndicators, setShareIndicators] = useState<boolean>(false);
   const [saveToHistory, setSaveToHistory] = useState<boolean>(false);
 
@@ -186,6 +192,19 @@ export function Analyze() {
       }
     }
   }, [location.state]);
+
+  // Read query params from PWA Web Share Target (e.g. ?text=... or ?title=...)
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const sharedText = params.get('text') || params.get('description');
+    const sharedTitle = params.get('title');
+    if (sharedText || sharedTitle) {
+      const combined = [sharedTitle, sharedText].filter(Boolean).join('\n\n');
+      if (combined.trim()) {
+        setOfferText(combined.trim());
+      }
+    }
+  }, [location.search]);
 
   const handlePasteClipboard = async () => {
     try {
@@ -327,17 +346,24 @@ export function Analyze() {
 
       // 2. Prepare payload
       const consentPayload = {
-        aiAnalysis: true,
-        shareIndicators: false,
+        aiAnalysis: Boolean(aiAnalysis),
+        shareIndicators: Boolean(shareIndicators),
       };
 
       const payload = {
         text: clientRedacted.redactedText,
         domain: domainToUse,
         channel,
+        senderInfo: {
+          claimedOrganization: effectiveOrganization || undefined,
+          senderEmail: senderEmail.trim() || undefined,
+          senderPhone: senderPhone.trim() || undefined,
+          senderDomain: senderDomain.trim() || undefined,
+          emailHeaders: emailHeaders.trim() || undefined,
+        },
         consentFlags: consentPayload,
         inputType: uploadedFileName ? 'document_extract' : 'raw_text',
-        saveToHistory: Boolean(user),
+        saveToHistory: Boolean(user && saveToHistory),
       };
 
       // 3. Dispatch typed API request with Zod-validated response
@@ -707,6 +733,183 @@ export function Analyze() {
             )}
           </div>
         )}
+
+        {/* Optional Opportunity Context & Sender Details */}
+        <div className="mt-6 pt-6 border-t border-border space-y-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            {/* Domain */}
+            <div>
+              <label htmlFor="domain-select" className="block text-xs font-semibold text-primary mb-1">
+                {t.analyzer.domainLabel}
+              </label>
+              <select
+                id="domain-select"
+                value={domain}
+                onChange={(e) => setDomain(e.target.value as OpportunityDomain)}
+                className="w-full px-2.5 py-1.5 text-xs rounded border border-border bg-background text-primary focus:outline-none focus:ring-1 focus:ring-terracotta"
+              >
+                {DOMAIN_OPTIONS.map((opt) => (
+                  <option key={opt.value} value={opt.value}>
+                    {t.analyzer.domains[opt.key] || opt.value}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Channel */}
+            <div>
+              <label htmlFor="channel-select" className="block text-xs font-semibold text-primary mb-1">
+                {t.analyzer.channelLabel}
+              </label>
+              <select
+                id="channel-select"
+                value={channel}
+                onChange={(e) => setChannel(e.target.value as OpportunityChannel)}
+                className="w-full px-2.5 py-1.5 text-xs rounded border border-border bg-background text-primary focus:outline-none focus:ring-1 focus:ring-terracotta"
+              >
+                {CHANNEL_OPTIONS.map((opt) => (
+                  <option key={opt.value} value={opt.value}>
+                    {t.analyzer.channels[opt.key] || opt.value}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Claimed Organization */}
+            <div>
+              <label htmlFor="org-select" className="block text-xs font-semibold text-primary mb-1">
+                {t.analyzer.claimedOrgLabel}
+              </label>
+              <select
+                id="org-select"
+                value={claimedOrg}
+                onChange={(e) => setClaimedOrg(e.target.value)}
+                className="w-full px-2.5 py-1.5 text-xs rounded border border-border bg-background text-primary focus:outline-none focus:ring-1 focus:ring-terracotta"
+              >
+                <option value="">-- Select or Unknown --</option>
+                {KNOWN_ORGANIZATIONS.map((org) => (
+                  <option key={org} value={org}>
+                    {org}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          {claimedOrg === 'Other / Unlisted Organization' && (
+            <div className="pt-2">
+              <Input
+                value={customOrg}
+                onChange={(e) => setCustomOrg(e.target.value)}
+                placeholder={t.analyzer.claimedOrgPlaceholder}
+                className="text-xs"
+              />
+            </div>
+          )}
+
+          {/* Optional Sender Fields Accordion */}
+          <div className="pt-2">
+            <button
+              type="button"
+              onClick={() => setShowSenderFields(!showSenderFields)}
+              className="inline-flex items-center gap-1.5 text-xs font-medium text-muted hover:text-primary transition-colors cursor-pointer"
+            >
+              {showSenderFields ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
+              <span>{t.analyzer.senderToggle}</span>
+            </button>
+
+            {showSenderFields && (
+              <div className="mt-3 grid grid-cols-1 sm:grid-cols-3 gap-3 p-3.5 bg-surface rounded-md border border-border text-xs">
+                <div>
+                  <label htmlFor="sender-email" className="block font-medium text-primary mb-1">
+                    {t.analyzer.senderEmail}
+                  </label>
+                  <Input
+                    id="sender-email"
+                    type="email"
+                    value={senderEmail}
+                    onChange={(e) => setSenderEmail(e.target.value)}
+                    placeholder={t.analyzer.senderEmailPlaceholder}
+                    className="text-xs"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="sender-phone" className="block font-medium text-primary mb-1">
+                    {t.analyzer.senderPhone}
+                  </label>
+                  <Input
+                    id="sender-phone"
+                    type="tel"
+                    value={senderPhone}
+                    onChange={(e) => setSenderPhone(e.target.value)}
+                    placeholder={t.analyzer.senderPhonePlaceholder}
+                    className="text-xs"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="sender-domain" className="block font-medium text-primary mb-1">
+                    {t.analyzer.senderDomain}
+                  </label>
+                  <Input
+                    id="sender-domain"
+                    type="text"
+                    value={senderDomain}
+                    onChange={(e) => setSenderDomain(e.target.value)}
+                    placeholder={t.analyzer.senderDomainPlaceholder}
+                    className="text-xs"
+                  />
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Consent & Privacy Toggles */}
+        <div className="mt-6 pt-6 border-t border-border space-y-3">
+          <div className="flex items-start gap-2.5">
+            <input
+              id="consent-ai"
+              type="checkbox"
+              checked={aiAnalysis}
+              onChange={(e) => setAiAnalysis(e.target.checked)}
+              className="mt-0.5 rounded border-border text-terracotta focus:ring-terracotta cursor-pointer"
+            />
+            <label htmlFor="consent-ai" className="text-xs cursor-pointer select-none">
+              <span className="font-semibold text-primary block">{t.analyzer.consentAi}</span>
+              <span className="text-muted block text-[11px]">{t.analyzer.consentAiSub}</span>
+            </label>
+          </div>
+
+          <div className="flex items-start gap-2.5">
+            <input
+              id="consent-share"
+              type="checkbox"
+              checked={shareIndicators}
+              onChange={(e) => setShareIndicators(e.target.checked)}
+              className="mt-0.5 rounded border-border text-terracotta focus:ring-terracotta cursor-pointer"
+            />
+            <label htmlFor="consent-share" className="text-xs cursor-pointer select-none">
+              <span className="font-semibold text-primary block">{t.analyzer.consentShare}</span>
+              <span className="text-muted block text-[11px]">{t.analyzer.consentShareSub}</span>
+            </label>
+          </div>
+
+          {user && (
+            <div className="flex items-start gap-2.5">
+              <input
+                id="consent-history"
+                type="checkbox"
+                checked={saveToHistory}
+                onChange={(e) => setSaveToHistory(e.target.checked)}
+                className="mt-0.5 rounded border-border text-terracotta focus:ring-terracotta cursor-pointer"
+              />
+              <label htmlFor="consent-history" className="text-xs cursor-pointer select-none">
+                <span className="font-semibold text-primary block">{t.analyzer.consentHistory}</span>
+                <span className="text-muted block text-[11px]">{t.analyzer.consentHistorySub}</span>
+              </label>
+            </div>
+          )}
+        </div>
 
         {/* In-Flight Multi-Step Heuristic Progress */}
         {isAnalyzing && (

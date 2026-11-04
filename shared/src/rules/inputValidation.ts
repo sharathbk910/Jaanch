@@ -48,20 +48,28 @@ export function validateOfferInput(rawText: string): InputValidationResult {
     };
   }
 
-  // 4. Repeated character flood rule (e.g. "aaaaaaaa", "xxxxxxxxx").
-  // Restrict to alphabetic characters so standard document divider lines, borders,
-  // underlines, and dot leaders (e.g. "----------", "==========", "..........", "__________")
-  // commonly produced by OCR or ASCII formatting are not incorrectly rejected.
-  if (/([a-zA-Z])\1{7,}/.test(trimmed)) {
-    return {
-      isValid: false,
-      code: 'REPETITIVE_TEXT',
-      message: 'Invalid input: The text contains excessive repeated characters.',
-    };
+  // 4. Repeated character flood rule (e.g. "aaaaaaaaaaaaaaaaaaaa").
+  // Restrict to repetitive non-masking alphabetic characters so that masked identifiers
+  // (e.g. "XXXXXXXXXXXX" for Aadhaar/PAN/accounts) and OCR vertical divider lines/barcodes ('l', 'L', 'I', 'i')
+  // are not falsely rejected. An isolated OCR glitch or masked identifier in an otherwise legitimate,
+  // multi-word document with verified offer keywords must never disqualify the user's submission.
+  const words = trimmed.split(/\s+/).filter((w) => w.length > 0);
+  const hasSubstantialOfferContext =
+    trimmed.length >= 150 && words.length >= 15 && OFFER_INDICATOR_REGEX.test(trimmed);
+
+  const floodMatch = /(?![xXlLiI])([a-zA-Z])\1{14,}/.exec(trimmed);
+  if (floodMatch) {
+    const floodLength = floodMatch[0].length;
+    if (!hasSubstantialOfferContext || floodLength / trimmed.length > 0.2) {
+      return {
+        isValid: false,
+        code: 'REPETITIVE_TEXT',
+        message: 'Invalid input: The text contains excessive repeated characters.',
+      };
+    }
   }
 
-  // 3. Word separation rule (must have multiple distinct words, not unbroken string)
-  const words = trimmed.split(/\s+/).filter((w) => w.length > 0);
+  // 5. Word separation rule (must have multiple distinct words, not unbroken string)
   if (words.length < 3) {
     return {
       isValid: false,

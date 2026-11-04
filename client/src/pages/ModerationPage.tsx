@@ -183,7 +183,7 @@ export function ModerationPage() {
     return (
       <div className="min-h-[70vh] flex items-center justify-center p-4">
         <div className="max-w-md w-full p-8 bg-surface border border-border rounded-2xl text-center space-y-4">
-          <div className="w-12 h-12 bg-amber-100 text-amber-700 dark:bg-amber-950/40 dark:text-amber-400 rounded-full flex items-center justify-center mx-auto">
+          <div className="w-12 h-12 bg-status-review-bg text-status-review-fg border border-status-review-border rounded-full flex items-center justify-center mx-auto">
             <Lock className="w-6 h-6" />
           </div>
           <h2 className="text-xl font-bold text-foreground">Moderator Sign In Required</h2>
@@ -202,7 +202,7 @@ export function ModerationPage() {
     return (
       <div className="min-h-[70vh] flex items-center justify-center p-4">
         <div className="max-w-md w-full p-8 bg-surface border border-border rounded-2xl text-center space-y-4">
-          <div className="w-12 h-12 bg-rose-100 text-rose-700 dark:bg-rose-950/40 dark:text-rose-400 rounded-full flex items-center justify-center mx-auto">
+          <div className="w-12 h-12 bg-status-high-concern-bg text-status-high-concern-fg border border-status-high-concern-border rounded-full flex items-center justify-center mx-auto">
             <ShieldAlert className="w-6 h-6" />
           </div>
           <h2 className="text-xl font-bold text-foreground">Access Restricted</h2>
@@ -223,25 +223,25 @@ export function ModerationPage() {
     switch (status) {
       case 'confirmed':
         return (
-          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider bg-rose-100 text-rose-800 dark:bg-rose-950/60 dark:text-rose-200">
+          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider bg-status-high-concern-bg text-status-high-concern-fg border border-status-high-concern-border">
             Confirmed Scam
           </span>
         );
       case 'suspicious':
         return (
-          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider bg-amber-100 text-amber-800 dark:bg-amber-950/60 dark:text-amber-200">
+          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider bg-status-review-bg text-status-review-fg border border-status-review-border">
             Suspicious
           </span>
         );
       case 'ai_flagged':
         return (
-          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider bg-orange-100 text-orange-800 dark:bg-orange-950/60 dark:text-orange-200">
+          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider bg-status-review-bg text-status-review-fg border border-status-review-border">
             AI Flagged
           </span>
         );
       case 'disputed':
         return (
-          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider bg-purple-100 text-purple-800 dark:bg-purple-950/60 dark:text-purple-200">
+          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider bg-surface text-foreground border border-border">
             Disputed
           </span>
         );
@@ -313,7 +313,7 @@ export function ModerationPage() {
             Loading threat records...
           </div>
         ) : error ? (
-          <div className="p-4 bg-rose-50 border border-rose-200 text-rose-700 rounded-xl text-xs flex items-center gap-2">
+          <div className="p-4 bg-status-high-concern-bg border border-status-high-concern-border text-status-high-concern-fg rounded-xl text-xs flex items-center gap-2">
             <AlertCircle className="w-4 h-4 shrink-0" />
             <span>{error}</span>
           </div>
@@ -414,7 +414,7 @@ export function ModerationPage() {
                           setActionReason('');
                           setActionError(null);
                         }}
-                        className="text-xs bg-rose-600 hover:bg-rose-700 text-white"
+                        className="text-xs bg-status-high-concern-fg hover:opacity-90 text-white"
                       >
                         <CheckCircle2 className="w-3.5 h-3.5 mr-1" />
                         Confirm Scam
@@ -454,7 +454,7 @@ export function ModerationPage() {
                           setActionReason('');
                           setActionError(null);
                         }}
-                        className="text-xs text-amber-600 hover:text-amber-700"
+                        className="text-xs text-status-review-fg hover:underline"
                       >
                         <RotateCcw className="w-3.5 h-3.5 mr-1" />
                         Retract
@@ -576,7 +576,7 @@ export function ModerationPage() {
             </h3>
 
             {actionModal.action === 'confirm' && (
-              <div className="p-3 bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-900/60 rounded-xl text-xs text-amber-800 dark:text-amber-200">
+              <div className="p-3 bg-status-review-bg border border-status-review-border rounded-xl text-xs text-status-review-fg">
                 <strong>Attention:</strong> Confirming this record will immediately elevate matching offers for all
                 students to <code>CONFIRMED_SCAM</code>. Ensure all evidence has been verified. Domain allowlist is
                 enforced.
@@ -584,7 +584,7 @@ export function ModerationPage() {
             )}
 
             {actionError && (
-              <div className="p-3 bg-rose-50 border border-rose-200 text-rose-700 rounded-xl text-xs flex items-center gap-2">
+              <div className="p-3 bg-status-high-concern-bg border border-status-high-concern-border text-status-high-concern-fg rounded-xl text-xs flex items-center gap-2">
                 <AlertCircle className="w-4 h-4 shrink-0" />
                 <span>{actionError}</span>
               </div>
@@ -635,7 +635,7 @@ export function ModerationPage() {
             </h3>
 
             {editError && (
-              <div className="p-3 bg-rose-50 border border-rose-200 text-rose-700 rounded-xl text-xs flex items-center gap-2">
+              <div className="p-3 bg-status-high-concern-bg border border-status-high-concern-border text-status-high-concern-fg rounded-xl text-xs flex items-center gap-2">
                 <AlertCircle className="w-4 h-4 shrink-0" />
                 <span>{editError}</span>
               </div>

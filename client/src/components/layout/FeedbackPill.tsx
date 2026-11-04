@@ -83,13 +83,13 @@ export function FeedbackPill() {
   return (
     <aside
       aria-label="Page feedback"
-      className="fixed bottom-5 right-5 z-40 select-none print:hidden transition-all duration-300"
+      className="fixed bottom-4 right-4 sm:bottom-5 sm:right-5 z-40 select-none print:hidden transition-all duration-300 max-w-[calc(100vw-2rem)] sm:max-w-md"
     >
-      <div className="flex items-center gap-3 px-3.5 py-2 bg-surface text-foreground border-2 border-neo-border shadow-neo text-xs font-medium">
+      <div className="flex items-center flex-wrap sm:flex-nowrap gap-2 sm:gap-3 px-3 py-1.5 sm:px-3.5 sm:py-2 bg-surface text-foreground border-2 border-neo-border shadow-neo text-xs font-medium">
         {submitted ? (
           <div className="flex items-center gap-2 text-xs text-foreground font-bold animate-fadeIn">
             <Check size={14} className="text-emerald-600 shrink-0" aria-hidden="true" />
-            <span>{t('feedback.thanks', 'Thank you for helping keep Indian students safe!')}</span>
+            <span className="truncate">{t('feedback.thanks', 'Thank you for helping keep Indian students safe!')}</span>
             <button
               type="button"
               onClick={handleDismiss}
@@ -102,34 +102,34 @@ export function FeedbackPill() {
         ) : (
           <>
             <MessageSquare size={14} className="text-terracotta shrink-0" aria-hidden="true" />
-            <span className="font-bold text-xs text-foreground">
+            <span className="font-bold text-xs text-foreground truncate">
               {t('feedback.pillQuestion', 'Was this page helpful?')}
             </span>
-            <div className="flex items-center gap-1.5 border-l-2 border-neo-border pl-2.5">
+            <div className="flex items-center gap-1.5 border-l-2 border-neo-border pl-2 sm:pl-2.5 shrink-0">
               <button
                 type="button"
                 onClick={() => handleVote(5)}
                 disabled={isSubmitting}
-                className="px-2 py-0.5 border border-neo-border bg-background hover:bg-neo-mint font-bold text-xs transition-colors rounded-none focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring flex items-center gap-1"
+                className="px-2 py-0.5 border border-neo-border bg-background hover:bg-neo-mint font-bold text-xs transition-colors rounded-none focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring flex items-center gap-1 cursor-pointer"
                 aria-label={t('feedback.yes', 'Yes')}
               >
                 <ThumbsUp size={12} />
-                <span>Yes</span>
+                <span>{t('feedback.yes', 'Yes')}</span>
               </button>
               <button
                 type="button"
                 onClick={() => handleVote(1)}
                 disabled={isSubmitting}
-                className="px-2 py-0.5 border border-neo-border bg-background hover:bg-neo-pink font-bold text-xs transition-colors rounded-none focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring flex items-center gap-1"
+                className="px-2 py-0.5 border border-neo-border bg-background hover:bg-neo-pink font-bold text-xs transition-colors rounded-none focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring flex items-center gap-1 cursor-pointer"
                 aria-label={t('feedback.no', 'No')}
               >
                 <ThumbsDown size={12} />
-                <span>No</span>
+                <span>{t('feedback.no', 'No')}</span>
               </button>
               <button
                 type="button"
                 onClick={handleDismiss}
-                className="ml-1 text-muted-foreground hover:text-foreground p-0.5"
+                className="ml-1 text-muted-foreground hover:text-foreground p-0.5 cursor-pointer"
                 aria-label="Dismiss feedback"
               >
                 <X size={12} />

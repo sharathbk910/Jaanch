@@ -48,6 +48,45 @@ ________________________________________
     expect(result.message).toBeUndefined();
   });
 
+  it('approves offer letters containing masked identifiers with repeated X tokens', () => {
+    const inputWithMasking = `
+Subject: Selection for Graduate Engineer Trainee
+Dear Candidate,
+Your profile has been selected for the internship position at Tech Corp.
+Aadhaar Verification: XXXXXXXXXXXX
+Bank Account Registered: XXXXXXXXXXXX
+Stipend: ₹20,000 per month.
+Please contact HR at hr@techcorp.example.com for onboarding.
+`;
+    const result = validateOfferInput(inputWithMasking);
+    expect(result.isValid).toBe(true);
+    expect(result.message).toBeUndefined();
+  });
+
+  it('approves real-world OCR scanned offer letters with vertical line artifacts and formatting noise', () => {
+    const ocrInput = `
+= =) XX
+... UMINTERNSHIP #KS01 a. a:
+Announcements = d
+1871072020
+14/10/2026
+== Unified Mentor +9117
+Pay for UMKR | Unified Mentor | IP by Unified Mentor Pvt Ltd
+[PRCT nied Mentor Skill + Project Based Virtual Internship Program | 2026 Registration Form
+Candidate ID: XXXXXXXXXXXX
+Induction Today at 07:00 PM
+Mode: Work From Home
+Internship Highlights:
+Registration Fee: ₹1,500 refundable deposit
+Stipend: ₹12,000 per month upon completion
+llllllllllllllll
+Contact support via WhatsApp or email info@unifiedmentor.example.com
+`;
+    const result = validateOfferInput(ocrInput);
+    expect(result.isValid).toBe(true);
+    expect(result.message).toBeUndefined();
+  });
+
   it('rejects repetitive placeholder characters as REPETITIVE_TEXT', () => {
     const result = validateOfferInput('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
     expect(result.isValid).toBe(false);

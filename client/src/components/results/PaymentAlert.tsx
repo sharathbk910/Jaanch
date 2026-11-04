@@ -1,5 +1,5 @@
-import React from 'react';
-import { AlertCircle, PhoneCall, ExternalLink, ShieldAlert } from 'lucide-react';
+import React, { useState } from 'react';
+import { AlertCircle, PhoneCall, ExternalLink, ShieldAlert, Copy, Check } from 'lucide-react';
 import { useLanguage } from '../../i18n/LanguageContext.js';
 
 export interface PaymentAlertProps {
@@ -10,6 +10,23 @@ export interface PaymentAlertProps {
 
 export function PaymentAlert({ amount, upiHandle, hasOtpDemand }: PaymentAlertProps) {
   const { t } = useLanguage();
+  const [copiedDraft, setCopiedDraft] = useState(false);
+
+  const handleCopyComplaint = () => {
+    const draft = `COMPLAINT SUMMARY FOR CYBERCRIME.GOV.IN / 1930 HELPLINE:
+Category: Advance-Fee Internship & Recruitment Scam
+Amount Demanded / Paid: ${amount || 'Not specified'}
+Suspect UPI ID / Account: ${upiHandle || 'None provided'}
+Bank OTP Interception: ${hasOtpDemand ? 'Yes (Suspect requested 6-digit OTP)' : 'No'}
+Incident Date: ${new Date().toLocaleDateString('en-IN', { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
+Summary: Fraudulent recruiter impersonating corporate hiring demanded advance fee deposit/banking credentials prior to employment. Verified via Jaanch AI Student Safety Engine.`;
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(draft);
+      setCopiedDraft(true);
+      setTimeout(() => setCopiedDraft(false), 2500);
+    }
+  };
 
   return (
     <div
@@ -60,7 +77,16 @@ export function PaymentAlert({ amount, upiHandle, hasOtpDemand }: PaymentAlertPr
           </span>
         </div>
 
-        <div className="flex items-center gap-2 shrink-0">
+        <div className="flex flex-wrap items-center gap-2 shrink-0">
+          <button
+            type="button"
+            onClick={handleCopyComplaint}
+            className="inline-flex items-center gap-1 px-2.5 py-1 bg-surface border border-border rounded text-xs font-semibold text-foreground hover:bg-background transition-colors cursor-pointer"
+            title="Copy pre-filled complaint report for 1930 / cybercrime.gov.in"
+          >
+            {copiedDraft ? <Check size={12} className="text-status-likely-genuine-fg" /> : <Copy size={12} />}
+            <span>{copiedDraft ? 'Copied Draft!' : 'Copy 1930 Complaint Draft'}</span>
+          </button>
           <a
             href="tel:1930"
             className="inline-flex items-center gap-1 px-2.5 py-1 bg-status-high-concern-fg text-surface rounded text-xs font-semibold hover:opacity-90 transition-opacity"

@@ -107,8 +107,29 @@ export function ResourcesPage() {
 }
 
 export function AboutPage() {
-  const { dictionary } = useLanguage();
+  const { dictionary, currentLang } = useLanguage();
   const s = dictionary.staticPages;
+
+  const handbookBadge =
+    currentLang === 'hi'
+      ? 'छात्र सुरक्षा हैंडबुक'
+      : currentLang === 'kn'
+      ? 'ವಿದ್ಯಾರ್ಥಿ ಸುರಕ್ಷತಾ ಕೈಪಿಡಿ'
+      : 'Student Defense Handbook';
+
+  const handbookTitle =
+    currentLang === 'hi'
+      ? 'भारत में फर्जी इंटर्नशिप और नौकरी के घोटालों की पहचान कैसे करें'
+      : currentLang === 'kn'
+      ? 'ಭಾರತದಲ್ಲಿ ನಕಲಿ ಇಂಟರ್ನ್‌ಶಿಪ್ ಮತ್ತು ಉದ್ಯೋಗ ವಂಚನೆಗಳನ್ನು ಗುರುತಿಸುವುದು ಹೇಗೆ'
+      : 'How to Identify Fake Internships & Detect Job Scams in India';
+
+  const handbookSubtitle =
+    currentLang === 'hi'
+      ? 'ऑफ़र लेटर का मूल्यांकन करने, भर्तीकर्ता के संदिग्ध संकेतों को पहचानने और अग्रिम शुल्क धोखाधड़ी से बचने के लिए एक व्यावहारिक मार्गदर्शिका।'
+      : currentLang === 'kn'
+      ? 'ಆಫರ್ ಲೆಟರ್‌ಗಳನ್ನು ಮೌಲ್ಯಮಾಪನ ಮಾಡಲು, ನೇಮಕಾತಿದಾರರ ಅಪಾಯದ ಸಂಕೇತಗಳನ್ನು ಗುರುತಿಸಲು ಮತ್ತು ಶುಲ್ಕ ವಂಚನೆಯಿಂದ ಪಾರಾಗಲು ಪ್ರಾಯೋಗಿಕ ಮಾರ್ಗದರ್ಶಿ.'
+      : 'A practical guide to evaluating offer letters, spotting recruiter red flags, and avoiding advance-fee traps.';
 
   return (
     <div className="w-full max-w-editorial mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -156,13 +177,13 @@ export function AboutPage() {
           <Card padding="lg" className="space-y-6">
             <div className="border-b border-border pb-4">
               <span className="font-mono text-xs text-terracotta font-bold uppercase tracking-wider block mb-1">
-                Student Defense Handbook
+                {handbookBadge}
               </span>
               <h2 className="font-serif text-2xl font-bold text-foreground">
-                How to Identify Fake Internships & Detect Job Scams in India
+                {handbookTitle}
               </h2>
               <p className="text-xs text-muted-foreground mt-1">
-                A practical guide to evaluating offer letters, spotting recruiter red flags, and avoiding advance-fee traps.
+                {handbookSubtitle}
               </p>
             </div>
 

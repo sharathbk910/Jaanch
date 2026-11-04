@@ -27,13 +27,23 @@ export function corsMiddleware(): RequestHandler {
         return callback(null, true);
       }
 
-      // 4. Always allow localhost & 127.0.0.1 on ANY port (for local dev & pairing)
-      if (/^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/i.test(normalizedOrigin)) {
+      // 4. Always allow localhost, 127.0.0.1, and [::1] on ANY port (for local dev & pairing)
+      if (/^https?:\/\/(localhost|127\.0\.0\.1|\[::1\])(:\d+)?$/i.test(normalizedOrigin)) {
         return callback(null, true);
       }
 
       // 5. Allow private LAN IPs (192.168.x.x, 10.x.x.x, 172.16-31.x.x) on ANY port (for mobile/device testing)
       if (/^https?:\/\/(192\.168\.\d+\.\d+|10\.\d+\.\d+\.\d+|172\.(1[6-9]|2\d|3[01])\.\d+\.\d+)(:\d+)?$/i.test(normalizedOrigin)) {
+        return callback(null, true);
+      }
+
+      // 6. Allow Render deployment domains (onrender.com)
+      if (/^https:\/\/([a-z0-9.-]+\.)?onrender\.com$/i.test(normalizedOrigin)) {
+        return callback(null, true);
+      }
+
+      // 7. Allow hybrid mobile/desktop app protocols (Capacitor, Tauri, Chrome extensions)
+      if (/^(capacitor|ionic|tauri|chrome-extension):\/\//i.test(normalizedOrigin)) {
         return callback(null, true);
       }
 
