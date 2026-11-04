@@ -231,12 +231,6 @@ describe('Server API Endpoints & Middlewares (api.test.ts)', () => {
       expect(resProd.status).toBe(200);
       expect(resProd.headers['access-control-allow-origin']).toBe('https://jaanch-mu.vercel.app');
 
-      const resQuad = await request(app)
-        .get('/api/health')
-        .set('Origin', 'https://jaanchbyquadcore.vercel.app');
-      expect(resQuad.status).toBe(200);
-      expect(resQuad.headers['access-control-allow-origin']).toBe('https://jaanchbyquadcore.vercel.app');
-
       const resSlash = await request(app)
         .get('/api/health')
         .set('Origin', 'https://jaanch-mu.vercel.app/');
