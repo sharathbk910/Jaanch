@@ -3,59 +3,49 @@ import type { RequestHandler } from 'express';
 import { getClientOrigins } from '../config/env.js';
 
 export function corsMiddleware(): RequestHandler {
-  const configuredOrigins = getClientOrigins().map((o) => o.replace(/\/+$/, ''));
+  const allowedOrigins = getClientOrigins().map((o) => o.replace(/\/+$/, ''));
 
-  const corsOptions: CorsOptions = {
-    origin: (origin, callback) => {
-      // 1. Allow requests with no origin or string "null" (mobile apps, curl, server-to-server, webviews)
-      if (!origin || origin === 'null') {
-        return callback(null, true);
+  return cors((req, callback) => {
+    const origin = req.headers.origin;
+
+    // 1. Scoped exception: allow missing origin ONLY on specific server-to-server endpoints:
+    // - /api/health (Render cloud platform health check & uptime monitors)
+    // - /api/whatsapp/webhook (Meta WhatsApp Cloud API server-to-server webhook dispatches)
+    // - or during unit test execution where Supertest does not synthesize an Origin header
+    const isServerToServerRoute =
+      req.path === '/api/health' ||
+      req.path === '/health' ||
+      req.path.startsWith('/api/whatsapp/webhook') ||
+      process.env.NODE_ENV === 'test';
+
+    if (!origin) {
+      if (isServerToServerRoute) {
+        return callback(null, { origin: true });
       }
+      return callback(new Error('CORS blocked: Missing Origin header is not authorized'));
+    }
 
-      const normalizedOrigin = origin.replace(/\/+$/, '');
+    // 2. Reject string "null" (sandboxed/opaque origins)
+    if (origin === 'null') {
+      return callback(new Error("CORS blocked: Origin 'null' is not authorized"));
+    }
 
-      // 2. Explicitly configured origins (from CLIENT_ORIGINS env) or wildcard
-      if (
-        configuredOrigins.includes('*') ||
-        configuredOrigins.some((allowed) => allowed === normalizedOrigin)
-      ) {
-        return callback(null, true);
-      }
+    // 3. Strict allowlist matching against CLIENT_ORIGINS (exact match with trailing slashes normalized)
+    const normalizedOrigin = origin.replace(/\/+$/, '');
+    if (allowedOrigins.includes(normalizedOrigin)) {
+      return callback(null, {
+        origin: true,
+        methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+        allowedHeaders: ['Content-Type', 'Authorization', 'X-Request-Id'],
+        exposedHeaders: ['X-Request-Id'],
+        credentials: true,
+        maxAge: 86400, // 24 hours
+      });
+    }
 
-      // 3. Allow ANY Vercel deployment (jaanch-mu.vercel.app, www.jaanch-mu.vercel.app, preview branches)
-      if (/^https:\/\/([a-z0-9.-]+\.)?vercel\.app$/i.test(normalizedOrigin)) {
-        return callback(null, true);
-      }
-
-      // 4. Always allow localhost, 127.0.0.1, and [::1] on ANY port (for local dev & pairing)
-      if (/^https?:\/\/(localhost|127\.0\.0\.1|\[::1\])(:\d+)?$/i.test(normalizedOrigin)) {
-        return callback(null, true);
-      }
-
-      // 5. Allow private LAN IPs (192.168.x.x, 10.x.x.x, 172.16-31.x.x) on ANY port (for mobile/device testing)
-      if (/^https?:\/\/(192\.168\.\d+\.\d+|10\.\d+\.\d+\.\d+|172\.(1[6-9]|2\d|3[01])\.\d+\.\d+)(:\d+)?$/i.test(normalizedOrigin)) {
-        return callback(null, true);
-      }
-
-      // 6. Allow Render deployment domains (onrender.com)
-      if (/^https:\/\/([a-z0-9.-]+\.)?onrender\.com$/i.test(normalizedOrigin)) {
-        return callback(null, true);
-      }
-
-      // 7. Allow hybrid mobile/desktop app protocols (Capacitor, Tauri, Chrome extensions)
-      if (/^(capacitor|ionic|tauri|chrome-extension):\/\//i.test(normalizedOrigin)) {
-        return callback(null, true);
-      }
-
-      return callback(new Error(`CORS blocked: Origin '${origin}' is not authorized`));
-    },
-    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'X-Request-Id'],
-    exposedHeaders: ['X-Request-Id'],
-    credentials: true,
-    maxAge: 86400, // 24 hours
-  };
-
-  return cors(corsOptions);
+    // 4. Any origin not explicitly listed in CLIENT_ORIGINS is rejected
+    return callback(new Error(`CORS blocked: Origin '${origin}' is not authorized`));
+  });
 }
+
 

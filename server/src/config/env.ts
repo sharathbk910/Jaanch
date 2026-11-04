@@ -9,7 +9,7 @@ const DEFAULT_PLACEHOLDER_PEPPER = 'change-this-to-a-secure-random-pepper-at-lea
 const RawEnvSchema = z.object({
   NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
   PORT: z.coerce.number().int().min(1).max(65535).default(8080),
-  CLIENT_ORIGINS: z.string().default('https://jaanch-mu.vercel.app,http://localhost:5173'),
+  CLIENT_ORIGINS: z.string().default('https://jaanch-mu.vercel.app,http://localhost:5173,http://127.0.0.1:5173'),
 
   // Supabase
   SUPABASE_URL: z.string().url().optional(),

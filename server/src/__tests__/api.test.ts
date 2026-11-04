@@ -209,39 +209,33 @@ describe('Server API Endpoints & Middlewares (api.test.ts)', () => {
     });
 
     it('allows CORS from authorized CLIENT_ORIGINS only', async () => {
-      const res = await request(app)
+      const resLocalhost = await request(app)
         .get('/api/health')
         .set('Origin', 'http://localhost:5173');
 
-      expect(res.status).toBe(200);
-      expect(res.headers['access-control-allow-origin']).toBe('http://localhost:5173');
+      expect(resLocalhost.status).toBe(200);
+      expect(resLocalhost.headers['access-control-allow-origin']).toBe('http://localhost:5173');
+
+      const resLoopback = await request(app)
+        .get('/api/health')
+        .set('Origin', 'http://127.0.0.1:5173');
+
+      expect(resLoopback.status).toBe(200);
+      expect(resLoopback.headers['access-control-allow-origin']).toBe('http://127.0.0.1:5173');
     });
 
-    it('allows CORS from production Vercel domain and preview subdomains with or without trailing slash', async () => {
+    it('allows CORS from production Vercel domain with or without trailing slash when listed in CLIENT_ORIGINS', async () => {
       const resProd = await request(app)
         .get('/api/health')
         .set('Origin', 'https://jaanch-mu.vercel.app');
       expect(resProd.status).toBe(200);
+      expect(resProd.headers['access-control-allow-origin']).toBe('https://jaanch-mu.vercel.app');
 
       const resSlash = await request(app)
         .get('/api/health')
         .set('Origin', 'https://jaanch-mu.vercel.app/');
       expect(resSlash.status).toBe(200);
-
-      const resPreview = await request(app)
-        .get('/api/health')
-        .set('Origin', 'https://jaanch-preview-stage.vercel.app');
-      expect(resPreview.status).toBe(200);
-
-      const resWww = await request(app)
-        .get('/api/health')
-        .set('Origin', 'https://www.jaanch-mu.vercel.app');
-      expect(resWww.status).toBe(200);
-
-      const resLan = await request(app)
-        .get('/api/health')
-        .set('Origin', 'http://192.168.1.50:5173');
-      expect(resLan.status).toBe(200);
+      expect(resSlash.headers['access-control-allow-origin']).toBe('https://jaanch-mu.vercel.app/');
     });
 
     it('blocks CORS from unauthorized origins with 403 Forbidden', async () => {
@@ -251,6 +245,37 @@ describe('Server API Endpoints & Middlewares (api.test.ts)', () => {
 
       expect(res.status).toBe(403);
       expect(res.body.error).toHaveProperty('code', 'CORS_FORBIDDEN');
+    });
+
+    it('blocks CORS for origins not in CLIENT_ORIGINS even if on *.vercel.app domain', async () => {
+      const res = await request(app)
+        .get('/api/health')
+        .set('Origin', 'https://jaanch-preview-stage.vercel.app');
+
+      expect(res.status).toBe(403);
+      expect(res.body.error).toHaveProperty('code', 'CORS_FORBIDDEN');
+
+      const resAttacker = await request(app)
+        .get('/api/health')
+        .set('Origin', 'https://malicious-preview.vercel.app');
+
+      expect(resAttacker.status).toBe(403);
+      expect(resAttacker.body.error).toHaveProperty('code', 'CORS_FORBIDDEN');
+    });
+
+    it('blocks CORS for null origin with 403 Forbidden', async () => {
+      const res = await request(app)
+        .get('/api/health')
+        .set('Origin', 'null');
+
+      expect(res.status).toBe(403);
+      expect(res.body.error).toHaveProperty('code', 'CORS_FORBIDDEN');
+    });
+
+    it('allows requests without Origin header on scoped server-to-server health check endpoint', async () => {
+      const res = await request(app).get('/api/health');
+      expect(res.status).toBe(200);
+      expect(res.body.status).toBe('ok');
     });
 
     it('enforces rate limits per IP and returns 429 RATE_LIMIT_EXCEEDED', async () => {
