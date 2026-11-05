@@ -7,8 +7,6 @@ import {
   Check,
   AlertCircle,
   Sparkles,
-  ChevronDown,
-  ChevronUp,
   X,
   FileCheck,
   Loader2,
@@ -33,7 +31,7 @@ import {
 import type { OcrLanguage, OcrProgress } from '../lib/ocrExtractor.js';
 import { Card } from '../components/ui/Card.js';
 import { Button } from '../components/ui/Button.js';
-import { Input, Textarea } from '../components/ui/Input.js';
+import { Textarea } from '../components/ui/Input.js';
 import {
   SCENARIO_GENUINE,
   SCENARIO_FEE_SCAM,
@@ -363,7 +361,7 @@ export function Analyze() {
         },
         consentFlags: consentPayload,
         inputType: uploadedFileName ? 'document_extract' : 'raw_text',
-        saveToHistory: Boolean(user && saveToHistory),
+        saveToHistory: Boolean(user),
       };
 
       // 3. Dispatch typed API request with Zod-validated response
@@ -373,8 +371,8 @@ export function Analyze() {
       clearTimeout(stepTimer2);
       clearTimeout(stepTimer3);
 
-      // Save to guest storage if unauthenticated or not saving to history
-      if (!user || !saveToHistory) {
+      // Save to guest storage if unauthenticated
+      if (!user) {
         saveGuestAnalysis({
           inputText: textToAnalyze,
           domain: domainToUse,
@@ -733,183 +731,6 @@ export function Analyze() {
             )}
           </div>
         )}
-
-        {/* Optional Opportunity Context & Sender Details */}
-        <div className="mt-6 pt-6 border-t border-border space-y-4">
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            {/* Domain */}
-            <div>
-              <label htmlFor="domain-select" className="block text-xs font-semibold text-primary mb-1">
-                {t.analyzer.domainLabel}
-              </label>
-              <select
-                id="domain-select"
-                value={domain}
-                onChange={(e) => setDomain(e.target.value as OpportunityDomain)}
-                className="w-full px-2.5 py-1.5 text-xs rounded border border-border bg-background text-primary focus:outline-none focus:ring-1 focus:ring-terracotta"
-              >
-                {DOMAIN_OPTIONS.map((opt) => (
-                  <option key={opt.value} value={opt.value}>
-                    {t.analyzer.domains[opt.key] || opt.value}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            {/* Channel */}
-            <div>
-              <label htmlFor="channel-select" className="block text-xs font-semibold text-primary mb-1">
-                {t.analyzer.channelLabel}
-              </label>
-              <select
-                id="channel-select"
-                value={channel}
-                onChange={(e) => setChannel(e.target.value as OpportunityChannel)}
-                className="w-full px-2.5 py-1.5 text-xs rounded border border-border bg-background text-primary focus:outline-none focus:ring-1 focus:ring-terracotta"
-              >
-                {CHANNEL_OPTIONS.map((opt) => (
-                  <option key={opt.value} value={opt.value}>
-                    {t.analyzer.channels[opt.key] || opt.value}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            {/* Claimed Organization */}
-            <div>
-              <label htmlFor="org-select" className="block text-xs font-semibold text-primary mb-1">
-                {t.analyzer.claimedOrgLabel}
-              </label>
-              <select
-                id="org-select"
-                value={claimedOrg}
-                onChange={(e) => setClaimedOrg(e.target.value)}
-                className="w-full px-2.5 py-1.5 text-xs rounded border border-border bg-background text-primary focus:outline-none focus:ring-1 focus:ring-terracotta"
-              >
-                <option value="">-- Select or Unknown --</option>
-                {KNOWN_ORGANIZATIONS.map((org) => (
-                  <option key={org} value={org}>
-                    {org}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-
-          {claimedOrg === 'Other / Unlisted Organization' && (
-            <div className="pt-2">
-              <Input
-                value={customOrg}
-                onChange={(e) => setCustomOrg(e.target.value)}
-                placeholder={t.analyzer.claimedOrgPlaceholder}
-                className="text-xs"
-              />
-            </div>
-          )}
-
-          {/* Optional Sender Fields Accordion */}
-          <div className="pt-2">
-            <button
-              type="button"
-              onClick={() => setShowSenderFields(!showSenderFields)}
-              className="inline-flex items-center gap-1.5 text-xs font-medium text-muted hover:text-primary transition-colors cursor-pointer"
-            >
-              {showSenderFields ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
-              <span>{t.analyzer.senderToggle}</span>
-            </button>
-
-            {showSenderFields && (
-              <div className="mt-3 grid grid-cols-1 sm:grid-cols-3 gap-3 p-3.5 bg-surface rounded-md border border-border text-xs">
-                <div>
-                  <label htmlFor="sender-email" className="block font-medium text-primary mb-1">
-                    {t.analyzer.senderEmail}
-                  </label>
-                  <Input
-                    id="sender-email"
-                    type="email"
-                    value={senderEmail}
-                    onChange={(e) => setSenderEmail(e.target.value)}
-                    placeholder={t.analyzer.senderEmailPlaceholder}
-                    className="text-xs"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="sender-phone" className="block font-medium text-primary mb-1">
-                    {t.analyzer.senderPhone}
-                  </label>
-                  <Input
-                    id="sender-phone"
-                    type="tel"
-                    value={senderPhone}
-                    onChange={(e) => setSenderPhone(e.target.value)}
-                    placeholder={t.analyzer.senderPhonePlaceholder}
-                    className="text-xs"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="sender-domain" className="block font-medium text-primary mb-1">
-                    {t.analyzer.senderDomain}
-                  </label>
-                  <Input
-                    id="sender-domain"
-                    type="text"
-                    value={senderDomain}
-                    onChange={(e) => setSenderDomain(e.target.value)}
-                    placeholder={t.analyzer.senderDomainPlaceholder}
-                    className="text-xs"
-                  />
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* Consent & Privacy Toggles */}
-        <div className="mt-6 pt-6 border-t border-border space-y-3">
-          <div className="flex items-start gap-2.5">
-            <input
-              id="consent-ai"
-              type="checkbox"
-              checked={aiAnalysis}
-              onChange={(e) => setAiAnalysis(e.target.checked)}
-              className="mt-0.5 rounded border-border text-terracotta focus:ring-terracotta cursor-pointer"
-            />
-            <label htmlFor="consent-ai" className="text-xs cursor-pointer select-none">
-              <span className="font-semibold text-primary block">{t.analyzer.consentAi}</span>
-              <span className="text-muted block text-[11px]">{t.analyzer.consentAiSub}</span>
-            </label>
-          </div>
-
-          <div className="flex items-start gap-2.5">
-            <input
-              id="consent-share"
-              type="checkbox"
-              checked={shareIndicators}
-              onChange={(e) => setShareIndicators(e.target.checked)}
-              className="mt-0.5 rounded border-border text-terracotta focus:ring-terracotta cursor-pointer"
-            />
-            <label htmlFor="consent-share" className="text-xs cursor-pointer select-none">
-              <span className="font-semibold text-primary block">{t.analyzer.consentShare}</span>
-              <span className="text-muted block text-[11px]">{t.analyzer.consentShareSub}</span>
-            </label>
-          </div>
-
-          {user && (
-            <div className="flex items-start gap-2.5">
-              <input
-                id="consent-history"
-                type="checkbox"
-                checked={saveToHistory}
-                onChange={(e) => setSaveToHistory(e.target.checked)}
-                className="mt-0.5 rounded border-border text-terracotta focus:ring-terracotta cursor-pointer"
-              />
-              <label htmlFor="consent-history" className="text-xs cursor-pointer select-none">
-                <span className="font-semibold text-primary block">{t.analyzer.consentHistory}</span>
-                <span className="text-muted block text-[11px]">{t.analyzer.consentHistorySub}</span>
-              </label>
-            </div>
-          )}
-        </div>
 
         {/* In-Flight Multi-Step Heuristic Progress */}
         {isAnalyzing && (
