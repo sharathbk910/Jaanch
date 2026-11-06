@@ -661,7 +661,7 @@ export function HistoryPage() {
               size="md"
               onClick={() => navigate('/signup')}
             >
-              Create Account
+              {t.auth.signUpBtn || 'Create Account'}
             </Button>
             <Button
               type="button"
